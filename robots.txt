@@ -22,3 +22,5 @@ Disallow: /DEPLOY.md
 
 Sitemap: https://axiomzones.com/sitemap.xml
 Crawl-delay: 10
+
+ 
