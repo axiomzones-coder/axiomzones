@@ -1667,19 +1667,39 @@ function switchPage(id) {
 
 /* ══ DASHBOARD INIT ══ */
 function initDashboard() {
-  // Stats
-  document.getElementById('stat-mrr').textContent = '$' + MOCK_DATA.mrr.toLocaleString();
-  document.getElementById('mrr-change').textContent = MOCK_DATA.mrrChange;
-  document.getElementById('stat-users').textContent = MOCK_DATA.totalUsers.toLocaleString();
-  document.getElementById('users-change').textContent = '+' + MOCK_DATA.usersChange;
-  document.getElementById('stat-subs').textContent = MOCK_DATA.activeSubs;
-  document.getElementById('subs-change').textContent = '+' + MOCK_DATA.subsChange;
-  document.getElementById('stat-churn').textContent = MOCK_DATA.churnRate;
+  // قيم آمنة مبدئية — أصفار حقيقية، وليست أرقاماً مُختلَقة، لحين وصول البيانات الفعلية
+  document.getElementById('stat-mrr').textContent = '$0';
+  document.getElementById('mrr-change').textContent = '—';
+  document.getElementById('stat-users').textContent = '0';
+  document.getElementById('users-change').textContent = '—';
+  document.getElementById('stat-subs').textContent = '0';
+  document.getElementById('subs-change').textContent = '—';
+  document.getElementById('stat-churn').textContent = '—';
 
+  loadRealStats();
+
+  // ملاحظة: الرسم البياني وقائمة المستخدمين وخلاصة النشاط لسه تعتمد على MOCK_DATA
+  // — مؤجَّل حتى تُبنى بنية تتبّع فعلية (تاريخ مبيعات، أحداث دخول) — راجع البند 10 بسجل المؤجَّلات
   drawRevenueChart('30d');
   renderPlatformBreakdown();
   renderRecentUsers();
   renderActivityDash();
+}
+
+/* ══ إحصاءات حقيقية من AZ_USERS_KV عبر /api/owner-stats ══ */
+function loadRealStats() {
+  fetch('/api/owner-stats', { credentials: 'include' })
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(data) {
+      if (!data || !data.ok || !data.stats) return;
+      var s = data.stats;
+      document.getElementById('stat-mrr').textContent = '$' + s.mrr.toLocaleString();
+      document.getElementById('stat-users').textContent = s.totalUsers.toLocaleString();
+      document.getElementById('stat-subs').textContent = s.activeSubs.toLocaleString();
+      // نسب التغيير (mrr-change, users-change, subs-change) تحتاج بيانات تاريخية غير متوفرة بعد
+      // — تُترك '—' بدل اختلاق نسبة نمو وهمية
+    })
+    .catch(function() { /* فشل الاتصال — تبقى القيم الآمنة صفر كما هي، لا رجوع لأرقام Math.random */ });
 }
 
 /* ══ REVENUE CHART ══ */
