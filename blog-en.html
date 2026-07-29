@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Financial Education Blog — Axiom Zones</title>
+<meta name="description" content="Financial education articles about loans, IRR, Islamic finance, and Arab banking. The truth banks don't tell you — in English."/>
+<link rel="canonical" href="https://axiomzones.com/en/blog"/>
+<link rel="alternate" hreflang="ar" href="https://axiomzones.com/blog"/>
+<link rel="alternate" hreflang="en" href="https://axiomzones.com/en/blog"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Axiom Zones Financial Blog","url":"https://axiomzones.com/en/blog","inLanguage":"en"}</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;700&family=Syne:wght@400;600;700&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;line-height:1.8}
+a{color:#c9a84c;text-decoration:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#c9a84c;border-radius:3px}
+.hdr{background:#0a0d1a;border-bottom:1px solid rgba(201,168,76,.15);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.logo{font-family:'Cormorant',serif;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav{display:flex;gap:16px}
+.nav a{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#8892b0;transition:color .22s}
+.nav a:hover,.nav a.active{color:#c9a84c}
+.hero{padding:60px 28px 44px;text-align:center;max-width:860px;margin:0 auto}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:#c9a84c;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hero-tag::before,.hero-tag::after{content:'';width:28px;height:1px;background:#c9a84c}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;letter-spacing:-1.5px;margin-bottom:10px}
+.hero h1 em{color:#8892b0;font-weight:300;font-style:italic}
+.hero p{font-size:.9rem;color:#8892b0;max-width:540px;margin:0 auto}
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px 80px}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;justify-content:center}
+.cat-btn{padding:6px 16px;border-radius:20px;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:#8892b0;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;cursor:pointer;transition:all .22s;text-transform:uppercase}
+.cat-btn:hover,.cat-btn.active{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.08)}
+.featured{background:#0a0d1a;border:1px solid rgba(201,168,76,.2);border-radius:18px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;margin-bottom:36px;cursor:pointer;transition:all .3s;position:relative}
+.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a)}
+.featured:hover{border-color:rgba(201,168,76,.35);transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+@media(max-width:700px){.featured{grid-template-columns:1fr}}
+.feat-content{padding:28px}
+.feat-visual{background:linear-gradient(135deg,rgba(201,168,76,.08),transparent);display:flex;align-items:center;justify-content:center;min-height:200px;font-size:5rem}
+.feat-badge{display:inline-block;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:#c9a84c;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:2px;padding:3px 10px;border-radius:4px;text-transform:uppercase;margin-bottom:10px}
+.feat-title{font-family:'Cormorant',serif;font-size:1.6rem;font-weight:700;margin-bottom:8px;line-height:1.15}
+.feat-excerpt{font-size:.82rem;color:#8892b0;line-height:1.85;margin-bottom:14px}
+.feat-meta{font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b;display:flex;gap:14px;flex-wrap:wrap}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.blog-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s;display:flex;flex-direction:column}
+.blog-card:hover{border-color:rgba(201,168,76,.2);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.card-top{padding:20px 20px 0}
+.card-cat{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.card-title{font-family:'Cormorant',serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;line-height:1.25}
+.card-excerpt{font-size:.8rem;color:#8892b0;line-height:1.75;margin-bottom:12px;flex:1}
+.card-footer{padding:12px 20px 16px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center}
+.card-time{font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b}
+.read-more{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;color:#c9a84c}
+.article-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);backdrop-filter:blur(18px);overflow-y:auto;display:none}
+.article-overlay.open{display:block}
+.article-wrap{max-width:740px;margin:0 auto;padding:28px 24px 80px}
+.article-close{position:fixed;top:20px;left:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#f0f2ff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;z-index:2001}
+.article-close:hover{background:rgba(201,168,76,.15);border-color:#c9a84c;color:#c9a84c}
+.article-cat{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px}
+.article-title{font-family:'Cormorant',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-1px;margin-bottom:12px;line-height:1.05}
+.article-meta{font-family:'DM Mono',monospace;font-size:.66rem;color:#3d4a6b;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.article-body{font-size:.9rem;color:#8892b0;line-height:2}
+.article-body h2{font-family:'Cormorant',serif;font-size:1.5rem;font-weight:700;color:#f0f2ff;margin:24px 0 10px}
+.article-body p{margin-bottom:12px}
+.article-body strong{color:#f0f2ff}
+.article-body ul{padding-left:20px;margin-bottom:12px}
+.article-body li{margin-bottom:5px}
+.article-cta{margin-top:28px;padding:18px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:12px;text-align:center}
+.article-cta h3{font-family:'Cormorant',serif;font-size:1.3rem;margin-bottom:8px;color:#f0f2ff}
+.article-cta p{font-size:.82rem;color:#8892b0;margin-bottom:12px}
+.cta-btn{padding:10px 22px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.84rem;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <a href="/" class="logo">Axiom Zones</a>
+  <nav class="nav">
+    <a href="/en/blog" class="active">Blog EN</a>
+    <a href="/blog">مدونة عربية</a>
+    <a href="/kashf">Kashf</a>
+    <a href="/en/glossary">Glossary</a>
+  </nav>
+</header>
+<div class="hero">
+  <div class="hero-tag">Financial Education</div>
+  <h1>The Truth About<br/><em>Your Money</em></h1>
+  <p>Articles on loans, IRR, Islamic finance and Arab banking. What banks hide — revealed with numbers.</p>
+</div>
+<div class="wrap">
+  <div class="cats">
+    <button class="cat-btn active" onclick="filterCat('all',this)">All</button>
+    <button class="cat-btn" onclick="filterCat('loans',this)">📊 Loans</button>
+    <button class="cat-btn" onclick="filterCat('islamic',this)">☪️ Islamic</button>
+    <button class="cat-btn" onclick="filterCat('smart',this)">💡 Smart Money</button>
+    <button class="cat-btn" onclick="filterCat('guide',this)">📖 Guides</button>
+  </div>
+  <div class="featured" onclick="openArticle(0)">
+    <div class="feat-content">
+      <div class="feat-badge">📌 Featured</div>
+      <div class="feat-title">Bank Says 6%... The Truth Is 11.2%</div>
+      <div class="feat-excerpt">How banks use "loan beautification" to make their offers look cheaper — and how to find the truth in 30 seconds using Kashf.</div>
+      <div class="feat-meta"><span>📊 Loans</span><span>7 min read</span><span>3,102 reads</span></div>
+    </div>
+    <div class="feat-visual">🔍</div>
+  </div>
+  <div class="blog-grid" id="blog-grid"></div>
+</div>
+<div class="article-overlay" id="article-overlay">
+  <button class="article-close" onclick="closeArticle()">✕</button>
+  <div class="article-wrap" id="article-content"></div>
+</div>
+<script>
+var ARTICLES = [
+  {cat:'loans',catLabel:'📊 Loans',icon:'🔍',
+   title:'Bank Says 6%... The Truth Is 11.2%',
+   excerpt:'How banks use loan beautification to make offers look cheaper.',
+   time:'7 min',views:'3,102',date:'March 2024',
+   content:'<h2>Why "6% Interest" Is Not Really 6%</h2><p>When a bank advertises "6% annual interest" — it is not lying. But it is carefully choosing what to show you.</p><p>The 6% is calculated on the <strong>full original balance</strong> throughout the entire loan term. But in reality, your balance decreases with every monthly payment. This is where the difference lies.</p><h2>APR vs IRR — The Critical Difference</h2><p><strong>APR (Annual Percentage Rate):</strong> What the bank advertises. Calculated on original balance regardless of actual decrease.</p><p><strong>IRR (Internal Rate of Return):</strong> The real cost. Accounts for the fact that your balance actually decreases with each payment.</p><h2>Real Example</h2><p>Loan of 100,000 · 48 months · APR 6% advertised:</p><ul><li>Monthly payment: 2,348</li><li>Total you pay: 112,704</li><li>True IRR: <strong style="color:#ef4444">11.2% annually</strong></li><li>Hidden cost: 4,700+ extra</li></ul><h2>5 Tricks Banks Use</h2><p><strong>① Monthly payment instead of total:</strong> "Pay only 2,348/month" hides that you will pay 112,704 total.</p><p><strong>② Simple interest advertising:</strong> They advertise "6% simple" but calculate on original balance throughout.</p><p><strong>③ Term extension:</strong> Lower the payment by extending the term — but total interest doubles.</p><p><strong>④ Hidden fees:</strong> Administrative fees and insurance added to the loan and interest charged on them.</p><p><strong>⑤ Emotional marketing:</strong> "Own your dream car today" bypasses rational thinking.</p>',
+   cta:'Calculate your loan true cost — Free',ctaUrl:'/kashf/car-loan'},
+  {cat:'islamic',catLabel:'☪️ Islamic Finance',icon:'🕌',
+   title:'Murabaha vs Conventional Loan — Which Is Cheaper?',
+   excerpt:'Many assume Islamic finance is always more expensive. The numbers tell a different story.',
+   time:'6 min',views:'1,923',date:'March 2024',
+   content:'<h2>The Common Misconception</h2><p>Many people assume "Islamic banks are more expensive." This belief is often inaccurate. The result depends on actual numbers for each contract.</p><h2>What Is Murabaha?</h2><p>Murabaha is an Islamic contract where the bank buys the asset (car, property, equipment) and sells it to the customer at a higher price including a profit margin — split into monthly payments.</p><p><strong>Key difference:</strong> The margin is known in advance and never changes. No compound interest.</p><h2>Real Example — 100,000 Vehicle</h2><p><strong>Islamic Murabaha:</strong> 20% margin → pay 120,000 total → 2,500/month for 48 months</p><p><strong>Conventional loan "6% APR":</strong> → pay 124,800 total → 2,600/month</p><p>In this example: <strong style="color:#22c55e">Murabaha is cheaper by 4,800!</strong></p><h2>When Is Conventional Cheaper?</h2><p>For short terms (under 24 months) — conventional may be cheaper. For longer terms (36-60 months) — Murabaha is often competitive or cheaper.</p>',
+   cta:'Compare Murabaha vs Conventional',ctaUrl:'/kashf'},
+  {cat:'smart',catLabel:'💡 Smart Money',icon:'⚖️',
+   title:'When Is a Loan Financially Justified? — 4 Critical Tests',
+   excerpt:'Not every loan is bad — and not every savings is wisdom. These 4 tests define when borrowing is smart.',
+   time:'5 min',views:'2,847',date:'March 2024',
+   content:'<h2>Loans Are Not the Enemy</h2><p>True financial wisdom is not "avoid all loans" — it is knowing when a loan is a smart tool and when it is a burden.</p><h2>Test ① — Investment Return > Loan Cost</h2><p>If your loan IRR is 8% but your investment returns 12% — borrowing is a smart financial decision.</p><h2>Test ② — The Asset Appreciates</h2><p>A loan to buy real estate may be an investment. A loan to buy a phone or holiday — a guaranteed loss.</p><h2>Test ③ — DTI Below 36%</h2><p>DTI (Debt-to-Income) = total monthly payments / monthly income. If it exceeds 36% — stop. You are in financial danger.</p><h2>Test ④ — Emergency Fund Ready</h2><p>Never borrow without 3-6 months of expenses saved. If you lose your income — can you still pay?</p>',
+   cta:'Calculate your true loan cost',ctaUrl:'/prism'},
+  {cat:'guide',catLabel:'📖 Guide',icon:'📋',
+   title:'10 Things to Check Before Signing Any Loan',
+   excerpt:'A practical checklist that protects your money — from true IRR to early repayment terms.',
+   time:'4 min',views:'1,456',date:'April 2024',
+   content:'<h2>The Complete Checklist</h2><p>Before signing any loan contract — verify these 10 points:</p><ul><li><strong>① What is the true IRR?</strong> (not just APR) — Use Kashf or Prism</li><li><strong>② What is your total payment?</strong> Multiply monthly payment by number of months</li><li><strong>③ Are there administrative fees?</strong> And is interest charged on them?</li><li><strong>④ What are early repayment terms?</strong> Is there a penalty? How much?</li><li><strong>⑤ Is the rate fixed or variable?</strong> Variable may increase later</li><li><strong>⑥ What insurance is required?</strong> Is it mandatory or optional?</li><li><strong>⑦ What is your DTI after this loan?</strong> Does it stay below 36%?</li><li><strong>⑧ Do you have an emergency fund?</strong> At least 3 months of expenses</li><li><strong>⑨ Did you compare 3+ banks?</strong> The difference can be thousands</li><li><strong>⑩ Is the loan purpose worth the cost?</strong> Does the asset appreciate or depreciate?</li></ul>',
+   cta:'Check your contract with Kashf',ctaUrl:'/kashf'},
+];
+
+var currentCat = 'all';
+
+function renderBlog() {
+  var grid = document.getElementById('blog-grid');
+  var filtered = currentCat === 'all' ? ARTICLES.slice(1) : ARTICLES.slice(1).filter(function(a){ return a.cat === currentCat; });
+  grid.innerHTML = '';
+  filtered.forEach(function(art) {
+    var idx = ARTICLES.indexOf(art);
+    var catColors = {loans:'#c9a84c',islamic:'#22c55e',smart:'#a78bfa',guide:'#f97316'};
+    var col = catColors[art.cat] || '#c9a84c';
+    var card = document.createElement('div');
+    card.className = 'blog-card';
+    card.innerHTML = '<div class="card-top"><div class="card-cat" style="color:'+col+'">'+art.catLabel+'</div><div class="card-title">'+art.title+'</div><div class="card-excerpt">'+art.excerpt+'</div></div><div class="card-footer"><div class="card-time">'+art.time+' · '+art.views+' reads</div><div class="read-more">Read →</div></div>';
+    card.onclick = function(){ openArticle(idx); };
+    grid.appendChild(card);
+  });
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderBlog();
+}
+
+function openArticle(idx) {
+  var art = ARTICLES[idx];
+  if (!art) return;
+  var overlay = document.getElementById('article-overlay');
+  var content = document.getElementById('article-content');
+  var ctaBtn = document.createElement('button');
+  ctaBtn.className = 'cta-btn';
+  ctaBtn.textContent = art.cta;
+  ctaBtn.onclick = function(){ window.location.href = art.ctaUrl; };
+  var wrapper = document.createElement('div');
+  wrapper.innerHTML = '<div class="article-cat">'+art.catLabel+'</div><div class="article-title">'+art.title+'</div><div class="article-meta">'+art.time+' read · '+art.views+' reads · '+art.date+'</div><div class="article-body">'+art.content+'</div><div class="article-cta"><h3>Try It Yourself</h3><p>Free tool — start your analysis now</p></div>';
+  content.innerHTML = '';
+  content.appendChild(wrapper);
+  content.querySelector('.article-cta').appendChild(ctaBtn);
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.scrollTop = 0;
+}
+
+function closeArticle() {
+  document.getElementById('article-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeArticle(); });
+window.addEventListener('load', renderBlog);
+</script>
+</body>
+</html>

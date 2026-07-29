@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Allow: /prism
+Allow: /kashf
+Allow: /dar
+Allow: /aqar
+Allow: /uniuber
+Allow: /dashboard
+Allow: /privacy
+Allow: /terms
+Allow: /disclaimer
+Allow: /blog
+
+Disallow: /admin
+Disallow: /axiomzones-admin.html
+Disallow: /tools/generator
+Disallow: /platform-generator.html
+Disallow: /axiomzones-v4-stable.html
+Disallow: /axiomzones-admin-v1-stable.html
+Disallow: /launch-guide.html
+Disallow: /DEPLOY.md
+
+Sitemap: https://axiomzones.com/sitemap.xml
+Crawl-delay: 10

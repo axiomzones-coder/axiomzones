@@ -1,0 +1,2886 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Axiom Zones — Admin Control Center</title>
+<meta name="description" content="Axiom Zones Admin Panel — Internal Use Only"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,600;0,700;1,300&family=Syne:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ══ DESIGN TOKENS ══ */
+:root{
+  --void:#060912;--ink:#0a0d1a;--deep:#0f1525;--surf:#141c2e;--elev:#1a2338;--edge:#202840;
+  --gold:#c9a84c;--gold2:#e8c86a;--goldd:rgba(201,168,76,.12);
+  --pri:#3b82f6;--pril:#60a5fa;--prig:rgba(59,130,246,.1);
+  --gn:#22c55e;--gng:rgba(34,197,94,.1);
+  --rd:#ef4444;--rdg:rgba(239,68,68,.1);
+  --or:#f97316;--org:rgba(249,115,22,.1);
+  --cy:#06b6d4;--cyg:rgba(6,182,212,.1);
+  --pu:#8b5cf6;--pug:rgba(139,92,246,.1);
+  --t1:#f0f2ff;--t2:#8892b0;--t3:#3d4a6b;
+  --fd:'Cormorant',serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --r8:8px;--r12:12px;--r16:16px;
+}
+[data-theme=light]{
+  --void:#f0f2ff;--ink:#e8ecfa;--deep:#dde2f5;--surf:#d2d8ee;--elev:#c8cfe5;
+  --t1:#0a0d1a;--t2:#3d4a6b;--t3:#8892b0;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px}
+body{background:var(--void);color:var(--t1);font-family:var(--fs);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+::selection{background:rgba(201,168,76,.25)}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
+input,select,textarea,button{font-family:var(--fs)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* ══ LOGIN SCREEN ══ */
+#login-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--void);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.login-box{
+  width:100%;max-width:440px;
+  background:var(--ink);border:1px solid rgba(201,168,76,.2);
+  border-radius:20px;padding:40px;
+  position:relative;overflow:hidden;
+}
+.login-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));
+}
+.login-logo{
+  font-family:var(--fd);font-size:2rem;font-weight:700;
+  background:linear-gradient(135deg,var(--t1),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;text-align:center;margin-bottom:4px;
+}
+.login-sub{
+  font-family:var(--fm);font-size:.6rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--t3);text-align:center;margin-bottom:32px;
+}
+.login-step{display:none}
+.login-step.active{display:block}
+.l-label{font-size:.74rem;color:var(--t2);margin-bottom:6px;display:block}
+.l-inp{
+  width:100%;background:var(--deep);border:1.5px solid rgba(255,255,255,.07);
+  color:var(--t1);padding:12px 14px;border-radius:var(--r8);
+  font-family:var(--fs);font-size:.88rem;outline:none;
+  transition:border-color .25s;margin-bottom:14px;
+}
+.l-inp:focus{border-color:var(--gold)}
+.l-inp.error{border-color:var(--rd);animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.l-btn{
+  width:100%;padding:13px;border-radius:var(--r8);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#0a0d1a;font-weight:700;font-family:var(--fs);font-size:.9rem;
+  border:none;cursor:pointer;transition:all .3s;
+}
+.l-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.l-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.l-err{
+  display:none;padding:10px 12px;border-radius:var(--r8);
+  background:var(--rdg);border:1px solid rgba(239,68,68,.2);
+  color:var(--rd);font-size:.78rem;margin-bottom:12px;text-align:center;
+}
+.l-err.show{display:block}
+.pin-grid{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.pin-inp{
+  width:52px;height:60px;text-align:center;font-size:1.4rem;font-weight:700;
+  font-family:var(--fm);background:var(--deep);
+  border:1.5px solid rgba(255,255,255,.07);color:var(--t1);
+  border-radius:var(--r8);outline:none;transition:border-color .25s;
+}
+.pin-inp:focus{border-color:var(--gold)}
+.l-hint{font-size:.7rem;color:var(--t3);text-align:center;margin-top:10px;font-family:var(--fm)}
+.l-back{background:none;border:none;color:var(--t3);cursor:pointer;font-size:.76rem;text-align:center;width:100%;margin-top:10px;transition:color .2s}
+.l-back:hover{color:var(--t1)}
+.l-progress{display:flex;gap:6px;justify-content:center;margin-bottom:24px}
+.l-prog-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s}
+.l-prog-dot.done{background:var(--gn)}
+.l-prog-dot.active{background:var(--gold);width:20px;border-radius:4px}
+.security-icon{font-size:2.5rem;text-align:center;margin-bottom:12px}
+.l-title{font-family:var(--fd);font-size:1.4rem;font-weight:700;text-align:center;margin-bottom:6px}
+.l-desc{font-size:.8rem;color:var(--t2);text-align:center;margin-bottom:20px;line-height:1.7}
+
+/* ══ MAIN LAYOUT ══ */
+#admin-app{display:none;min-height:100vh}
+.admin-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+@media(max-width:900px){.admin-layout{grid-template-columns:1fr}}
+
+/* ══ SIDEBAR ══ */
+.admin-sidebar{
+  background:var(--ink);border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.admin-sidebar::-webkit-scrollbar{width:2px}
+.sidebar-logo{
+  padding:22px 18px 16px;border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:10px;
+}
+.sidebar-logo-txt{font-family:var(--fd);font-size:1.15rem;font-weight:700;
+  background:linear-gradient(135deg,var(--t1),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sidebar-badge{font-family:var(--fm);font-size:.5rem;letter-spacing:2px;padding:2px 6px;
+  border-radius:3px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.2);
+  color:var(--rd);text-transform:uppercase;flex-shrink:0}
+.sidebar-nav{flex:1;padding:12px 0}
+.nav-section-title{font-family:var(--fm);font-size:.55rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--t3);padding:12px 18px 6px;margin-top:6px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 18px;
+  color:var(--t2);cursor:pointer;transition:all .2s;
+  border:none;background:transparent;width:100%;text-align:start;
+  font-family:var(--fs);font-size:.84rem;border-left:2px solid transparent;
+}
+.nav-item:hover{color:var(--t1);background:rgba(255,255,255,.04)}
+.nav-item.active{color:var(--gold);background:var(--goldd);border-left-color:var(--gold)}
+.nav-icon{font-size:.9rem;width:18px;text-align:center;flex-shrink:0}
+.nav-badge{margin-inline-start:auto;font-family:var(--fm);font-size:.55rem;padding:2px 6px;
+  border-radius:3px;background:var(--rdg);color:var(--rd)}
+.sidebar-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,.06)}
+.admin-user{display:flex;align-items:center;gap:8px}
+.admin-avatar{width:32px;height:32px;border-radius:50%;background:var(--goldd);
+  border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.admin-info{flex:1;min-width:0}
+.admin-name{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-role{font-family:var(--fm);font-size:.58rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
+.logout-btn{background:none;border:none;color:var(--t3);cursor:pointer;font-size:.85rem;
+  transition:color .2s;padding:4px;border-radius:4px}
+.logout-btn:hover{color:var(--rd)}
+
+/* ══ MAIN CONTENT ══ */
+.admin-main{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+
+/* ══ TOP BAR ══ */
+.admin-topbar{
+  padding:14px 28px;background:rgba(10,13,26,.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;flex-shrink:0;
+}
+.topbar-title{font-family:var(--fd);font-size:1.2rem;font-weight:700}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.topbar-btn{
+  padding:7px 14px;border-radius:var(--r8);font-family:var(--fs);font-size:.76rem;
+  font-weight:600;cursor:pointer;transition:all .25s;border:none;
+  display:flex;align-items:center;gap:5px;
+}
+.tb-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0d1a}
+.tb-gold:hover{transform:translateY(-1px)}
+.tb-out{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2)}
+.tb-out:hover{border-color:var(--gold);color:var(--gold)}
+.live-badge{display:flex;align-items:center;gap:5px;font-family:var(--fm);font-size:.62rem;
+  padding:4px 10px;border-radius:20px;background:var(--gng);border:1px solid rgba(34,197,94,.2);color:var(--gn)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--gn);animation:bk 2s infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.3}}
+.tb-theme{width:32px;height:32px;border-radius:var(--r8);border:1px solid rgba(255,255,255,.1);
+  background:transparent;color:var(--t2);cursor:pointer;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;transition:all .25s}
+.tb-theme:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ══ CONTENT AREA ══ */
+.admin-content{flex:1;padding:28px;overflow-y:auto}
+.admin-page{display:none}
+.admin-page.active{display:block}
+
+/* ══ STAT CARDS ══ */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.stats-grid{grid-template-columns:1fr}}
+.stat-card{
+  background:var(--ink);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r12);padding:20px;position:relative;overflow:hidden;
+  transition:all .3s;
+}
+.stat-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc,var(--gold))}
+.stat-icon{font-size:1.3rem;margin-bottom:10px}
+.stat-val{font-family:var(--fd);font-size:2rem;font-weight:700;line-height:1;margin-bottom:4px}
+.stat-label{font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3)}
+.stat-change{display:flex;align-items:center;gap:4px;margin-top:8px;font-family:var(--fm);font-size:.66rem}
+.sc-up{color:var(--gn)}.sc-dn{color:var(--rd)}.sc-neu{color:var(--t3)}
+.stat-sparkline{position:absolute;bottom:0;right:0;width:80px;height:40px;opacity:.3}
+
+/* ══ CARDS & PANELS ══ */
+.panel{background:var(--ink);border:1px solid rgba(255,255,255,.06);border-radius:var(--r12);padding:20px;margin-bottom:20px}
+.panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.panel-title{font-family:var(--fm);font-size:.64rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--t2);display:flex;align-items:center;gap:6px}
+.panel-title::before{content:'';width:10px;height:2px;background:var(--gold);flex-shrink:0}
+.panel-actions{display:flex;gap:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g3{grid-template-columns:1fr}}
+
+/* ══ TABLES ══ */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r8);border:1px solid rgba(255,255,255,.06)}
+.tbl-wrap::-webkit-scrollbar{height:3px}
+table{width:100%;border-collapse:collapse}
+thead th{
+  padding:10px 14px;text-align:start;font-family:var(--fm);font-size:.58rem;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);
+  background:var(--deep);border-bottom:1px solid rgba(255,255,255,.06);
+  white-space:nowrap;
+}
+tbody td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+.td-mono{font-family:var(--fm);font-size:.76rem}
+.td-name{font-weight:600}
+.td-email{color:var(--t2);font-family:var(--fm);font-size:.74rem}
+.td-actions{display:flex;gap:5px}
+
+/* ══ BADGES & STATUS ══ */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font-family:var(--fm);font-size:.6rem;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.b-green{background:var(--gng);color:var(--gn);border:1px solid rgba(34,197,94,.2)}
+.b-red{background:var(--rdg);color:var(--rd);border:1px solid rgba(239,68,68,.2)}
+.b-gold{background:var(--goldd);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.b-blue{background:var(--prig);color:var(--pril);border:1px solid rgba(59,130,246,.2)}
+.b-gray{background:rgba(255,255,255,.04);color:var(--t3);border:1px solid rgba(255,255,255,.07)}
+.b-pu{background:var(--pug);color:var(--pu);border:1px solid rgba(139,92,246,.2)}
+.b-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* ══ BUTTONS ══ */
+.btn{padding:7px 14px;border-radius:var(--r8);font-family:var(--fs);font-size:.76rem;font-weight:600;cursor:pointer;transition:all .22s;border:none;display:inline-flex;align-items:center;gap:5px}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0d1a}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,168,76,.3)}
+.btn-out{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2)}
+.btn-out:hover{border-color:var(--gold);color:var(--gold)}
+.btn-red{background:var(--rdg);border:1px solid rgba(239,68,68,.2);color:var(--rd)}
+.btn-red:hover{background:rgba(239,68,68,.18)}
+.btn-green{background:var(--gng);border:1px solid rgba(34,197,94,.2);color:var(--gn)}
+.btn-green:hover{background:rgba(34,197,94,.18)}
+.btn-sm{padding:4px 10px;font-size:.7rem}
+.btn-icon{width:30px;height:30px;padding:0;justify-content:center;border-radius:6px}
+
+/* ══ FORMS ══ */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+.f-label{font-size:.72rem;color:var(--t2)}
+.f-inp{
+  background:var(--deep);border:1.5px solid rgba(255,255,255,.07);
+  color:var(--t1);padding:9px 12px;border-radius:var(--r8);
+  font-family:var(--fs);font-size:.85rem;outline:none;transition:border-color .25s;
+  width:100%;
+}
+.f-inp:focus{border-color:var(--gold)}
+[data-theme=light] .f-inp{background:var(--surf)}
+.f-select{-webkit-appearance:none;appearance:none;cursor:pointer}
+.f-textarea{resize:vertical;min-height:80px;font-family:var(--fs)}
+.f-hint{font-size:.66rem;color:var(--t3);font-family:var(--fm)}
+
+/* ══ TOGGLE / SWITCH ══ */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-info{flex:1}
+.toggle-label{font-size:.84rem;font-weight:600;margin-bottom:2px}
+.toggle-desc{font-size:.74rem;color:var(--t2)}
+.toggle-sw{position:relative;width:42px;height:24px;cursor:pointer;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:24px;transition:.3s;border:1px solid rgba(255,255,255,.1)}
+.toggle-track::after{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle-sw input:checked + .toggle-track{background:var(--gn);border-color:var(--gn)}
+.toggle-sw input:checked + .toggle-track::after{transform:translateX(18px)}
+
+/* ══ CHART AREA ══ */
+.chart-container{position:relative;width:100%;height:220px;margin-bottom:10px}
+svg.az-chart{width:100%;height:100%;overflow:visible}
+.chart-legend{display:flex;gap:14px;flex-wrap:wrap}
+.c-leg{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--t2)}
+.c-leg-dot{width:20px;height:3px;border-radius:2px;flex-shrink:0}
+
+/* ══ PLATFORM CARDS (admin) ══ */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.plt-card{
+  background:var(--deep);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r12);padding:18px;position:relative;overflow:hidden;
+  transition:all .3s;
+}
+.plt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--pc,var(--gold))}
+.plt-card:hover{border-color:rgba(255,255,255,.12)}
+.plt-hd{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.plt-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.plt-info{flex:1;min-width:0}
+.plt-name{font-family:var(--fd);font-size:1rem;font-weight:700}
+.plt-tag{font-family:var(--fm);font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:1px}
+.plt-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.plt-stat{text-align:center;padding:7px 5px;background:rgba(255,255,255,.03);border-radius:6px}
+.plt-stat-val{font-family:var(--fm);font-size:.82rem;font-weight:700}
+.plt-stat-lbl{font-size:.58rem;color:var(--t3);font-family:var(--fm);letter-spacing:.5px}
+.plt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid rgba(255,255,255,.05)}
+
+/* ══ MODAL ══ */
+.modal-ov{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-ov.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--ink);border:1px solid rgba(201,168,76,.15);border-radius:18px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;position:relative}
+.modal-box::-webkit-scrollbar{width:2px}
+.modal-hd{padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--ink);z-index:1}
+.modal-title{font-family:var(--fd);font-size:1.15rem;font-weight:700}
+.modal-close{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--t2);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.modal-close:hover{border-color:var(--rd);color:var(--rd)}
+.modal-body{padding:20px 22px 22px}
+.modal-footer{padding:14px 22px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end;gap:8px}
+
+/* ══ NOTIFICATION / TOAST ══ */
+#az-notif{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:320px}
+.notif-item{padding:12px 16px;border-radius:var(--r8);display:flex;align-items:flex-start;gap:10px;
+  background:var(--surf);border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 8px 24px rgba(0,0,0,.4);transform:translateX(350px);transition:transform .4s var(--ease);
+  font-size:.8rem;line-height:1.5;
+}
+.notif-item.show{transform:translateX(0)}
+.notif-item.n-success{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.06)}
+.notif-item.n-error{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.06)}
+.notif-item.n-info{border-color:rgba(59,130,246,.25);background:rgba(59,130,246,.06)}
+.notif-item.n-warn{border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.06)}
+.n-icon{font-size:1rem;flex-shrink:0}
+
+/* ══ PROGRESS BAR ══ */
+.prog-bar{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-top:6px}
+.prog-fill{height:100%;border-radius:3px;transition:width .8s var(--ease)}
+
+/* ══ REVENUE CHART ══ */
+.rev-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+@media(max-width:900px){.rev-grid{grid-template-columns:1fr}}
+
+/* ══ ACTIVITY FEED ══ */
+.activity-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.activity-item:last-child{border-bottom:none}
+.act-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;background:var(--surf)}
+.act-content{flex:1;min-width:0}
+.act-text{font-size:.8rem;line-height:1.5}
+.act-text strong{color:var(--t1)}
+.act-time{font-family:var(--fm);font-size:.62rem;color:var(--t3);margin-top:2px}
+
+/* ══ SEARCH BAR ══ */
+.search-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.search-inp{flex:1;min-width:200px;background:var(--deep);border:1.5px solid rgba(255,255,255,.07);color:var(--t1);padding:8px 12px;border-radius:var(--r8);font-family:var(--fs);font-size:.82rem;outline:none;transition:border-color .25s}
+.search-inp:focus{border-color:var(--gold)}
+
+/* ══ PRICING TABLE EDITOR ══ */
+.price-platform{background:var(--deep);border:1px solid rgba(255,255,255,.06);border-radius:var(--r12);padding:18px;margin-bottom:14px}
+.price-platform-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer}
+.price-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.price-tier{background:var(--ink);border:1px solid rgba(255,255,255,.06);border-radius:var(--r8);padding:14px}
+.price-tier-name{font-size:.78rem;font-weight:700;margin-bottom:10px}
+
+/* ══ SCROLL PROGRESS ══ */
+#az-sp{position:fixed;top:0;left:0;height:2px;z-index:9999;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));pointer-events:none;transition:width .1s}
+
+/* Print */
+@media print{.admin-sidebar,#az-notif,#az-sp,.topbar-r{display:none!important}}
+</style>
+</head>
+<body>
+
+<div id="az-sp" aria-hidden="true"></div>
+<div id="az-notif" aria-live="polite"></div>
+
+<!-- ══════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════ -->
+<div id="login-screen" role="main" aria-label="Admin Login">
+  <div class="login-box">
+    <div class="login-logo">Axiom Zones</div>
+    <div class="login-sub">Admin Control Center</div>
+
+    <!-- Step indicators -->
+    <div class="l-progress" aria-label="Login steps">
+      <div class="l-prog-dot active" id="dot-1"></div>
+      <div class="l-prog-dot" id="dot-2"></div>
+    </div>
+
+    <!-- STEP 1: Password -->
+    <div class="login-step active" id="step-1">
+      <div class="security-icon">🔐</div>
+      <div class="l-title">Admin Access</div>
+      <div class="l-desc">Enter your admin password to continue to the control center.</div>
+      <div class="l-err" id="err-1">Incorrect password. Please try again.</div>
+      <label class="l-label" for="admin-pass">Admin Password</label>
+      <input class="l-inp" type="password" id="admin-pass" placeholder="Enter admin password" autocomplete="current-password"/>
+      <button class="l-btn" onclick="checkPassword()" id="pass-btn">Continue →</button>
+      <div class="l-hint">🔒 Secured · Not stored in server · Session only</div>
+    </div>
+
+    <!-- STEP 2: PIN -->
+    <div class="login-step" id="step-2">
+      <div class="security-icon">🛡️</div>
+      <div class="l-title">Two-Factor Verification</div>
+      <div class="l-desc">Enter your 4-digit security PIN to complete authentication.</div>
+      <div class="l-err" id="err-2">Incorrect PIN. Please try again.</div>
+      <div class="pin-grid" role="group" aria-label="4-digit PIN">
+        <input class="pin-inp" type="password" maxlength="1" id="pin-1" inputmode="numeric" aria-label="PIN digit 1"/>
+        <input class="pin-inp" type="password" maxlength="1" id="pin-2" inputmode="numeric" aria-label="PIN digit 2"/>
+        <input class="pin-inp" type="password" maxlength="1" id="pin-3" inputmode="numeric" aria-label="PIN digit 3"/>
+        <input class="pin-inp" type="password" maxlength="1" id="pin-4" inputmode="numeric" aria-label="PIN digit 4"/>
+      </div>
+      <button class="l-btn" onclick="checkPIN()" id="pin-btn">Access Admin Panel →</button>
+      <button class="l-back" onclick="backToPass()">← Back to password</button>
+      <div class="l-hint">Session expires in 8 hours · Each device requires re-auth</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ADMIN APPLICATION
+══════════════════════════════════════ -->
+<div id="admin-app" aria-label="Admin Application">
+  <div class="admin-layout">
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="admin-sidebar" role="navigation" aria-label="Admin Navigation">
+      <div class="sidebar-logo">
+        <div style="width:32px;height:32px;border-radius:8px;background:var(--goldd);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">⚡</div>
+        <div>
+          <div class="sidebar-logo-txt">Axiom Zones</div>
+          <div style="font-family:var(--fm);font-size:.52rem;letter-spacing:2px;color:var(--t3);text-transform:uppercase">Admin Panel</div>
+        </div>
+        <span class="sidebar-badge">ADMIN</span>
+      </div>
+
+      <nav class="sidebar-nav" role="menu">
+        <div class="nav-section-title">Main</div>
+        <button class="nav-item active" onclick="switchPage('dashboard')" role="menuitem">
+          <span class="nav-icon">📊</span>Dashboard
+        </button>
+        <button class="nav-item" onclick="switchPage('analytics')" role="menuitem">
+          <span class="nav-icon">📈</span>Analytics
+        </button>
+        <button class="nav-item" onclick="switchPage('activity')" role="menuitem">
+          <span class="nav-icon">⚡</span>Live Activity
+          <span class="nav-badge" id="activity-count">3</span>
+        </button>
+
+        <div class="nav-section-title">Management</div>
+        <button class="nav-item" onclick="switchPage('platforms')" role="menuitem">
+          <span class="nav-icon">🧩</span>Platforms
+        </button>
+        <button class="nav-item" onclick="switchPage('users')" role="menuitem">
+          <span class="nav-icon">👥</span>Users
+        </button>
+        <button class="nav-item" onclick="switchPage('subscriptions')" role="menuitem">
+          <span class="nav-icon">💳</span>Subscriptions
+        </button>
+        <button class="nav-item" onclick="switchPage('pricing')" role="menuitem">
+          <span class="nav-icon">💰</span>Pricing Control
+        </button>
+
+        <div class="nav-section-title">Finance</div>
+        <button class="nav-item" onclick="switchPage('revenue')" role="menuitem">
+          <span class="nav-icon">💵</span>Revenue
+        </button>
+        <button class="nav-item" onclick="switchPage('payouts')" role="menuitem">
+          <span class="nav-icon">🏦</span>Payment Accounts
+        </button>
+
+        <div class="nav-section-title">System</div>
+        <button class="nav-item" onclick="switchPage('settings')" role="menuitem">
+          <span class="nav-icon">⚙️</span>Settings
+        </button>
+        <button class="nav-item" onclick="switchPage('security')" role="menuitem">
+          <span class="nav-icon">🔐</span>Security
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-user">
+          <div class="admin-avatar">👑</div>
+          <div class="admin-info">
+            <div class="admin-name">Super Admin</div>
+            <div class="admin-role">Owner</div>
+          </div>
+          <button class="logout-btn" onclick="adminLogout()" title="Logout" aria-label="Logout">⎋</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ══ MAIN CONTENT ══ -->
+    <div class="admin-main">
+
+      <!-- TOP BAR -->
+      <header class="admin-topbar">
+        <div>
+          <div class="topbar-title" id="page-title">Dashboard</div>
+          <div style="font-family:var(--fm);font-size:.6rem;color:var(--t3);margin-top:1px" id="page-sub">Welcome back, Admin</div>
+        </div>
+        <div class="topbar-r">
+          <div class="live-badge"><span class="live-dot"></span>Live</div>
+          <button class="topbar-btn tb-out" onclick="exportData()" aria-label="Export data">⬇ Export</button>
+          <button class="topbar-btn tb-gold" onclick="openModal('add-platform')" id="topbar-action">+ Add Platform</button>
+          <button class="tb-theme" onclick="toggleAdminTheme()" id="az-theme-btn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+
+        <!-- ════════════════════════════════
+             PAGE: DASHBOARD
+        ════════════════════════════════ -->
+        <section class="admin-page active" id="page-dashboard" aria-label="Dashboard">
+
+          <!-- Stat Cards -->
+          <div class="stats-grid">
+            <div class="stat-card" style="--sc:#c9a84c">
+              <div class="stat-icon">💵</div>
+              <div class="stat-val" id="stat-mrr" style="color:var(--gold)">$0</div>
+              <div class="stat-label">Monthly Revenue</div>
+              <div class="stat-change sc-up">↑ <span id="mrr-change">0%</span> vs last month</div>
+            </div>
+            <div class="stat-card" style="--sc:#22c55e">
+              <div class="stat-icon">👥</div>
+              <div class="stat-val" id="stat-users" style="color:var(--gn)">0</div>
+              <div class="stat-label">Total Users</div>
+              <div class="stat-change sc-up">↑ <span id="users-change">0</span> this week</div>
+            </div>
+            <div class="stat-card" style="--sc:#3b82f6">
+              <div class="stat-icon">💳</div>
+              <div class="stat-val" id="stat-subs" style="color:var(--pril)">0</div>
+              <div class="stat-label">Active Subscriptions</div>
+              <div class="stat-change sc-up">↑ <span id="subs-change">0</span> this week</div>
+            </div>
+            <div class="stat-card" style="--sc:#8b5cf6">
+              <div class="stat-icon">🔄</div>
+              <div class="stat-val" id="stat-churn" style="color:var(--pu)">0%</div>
+              <div class="stat-label">Churn Rate</div>
+              <div class="stat-change sc-neu">Monthly average</div>
+            </div>
+          </div>
+
+          <div class="rev-grid">
+            <!-- Revenue Chart -->
+            <div class="panel">
+              <div class="panel-hd">
+                <div class="panel-title">Revenue Overview</div>
+                <div class="panel-actions">
+                  <button class="btn btn-out btn-sm" onclick="setChartPeriod('7d')" id="ch-7d">7D</button>
+                  <button class="btn btn-gold btn-sm" onclick="setChartPeriod('30d')" id="ch-30d">30D</button>
+                  <button class="btn btn-out btn-sm" onclick="setChartPeriod('90d')" id="ch-90d">90D</button>
+                </div>
+              </div>
+              <div class="chart-container">
+                <svg class="az-chart" id="revenue-chart" viewBox="0 0 600 200"></svg>
+              </div>
+              <div class="chart-legend">
+                <div class="c-leg"><div class="c-leg-dot" style="background:var(--gold)"></div>Revenue</div>
+                <div class="c-leg"><div class="c-leg-dot" style="background:var(--pri)"></div>Subscriptions</div>
+                <div class="c-leg"><div class="c-leg-dot" style="background:var(--gn)"></div>New Users</div>
+              </div>
+            </div>
+
+            <!-- Platform breakdown -->
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Revenue by Platform</div></div>
+              <div id="platform-breakdown"></div>
+            </div>
+          </div>
+
+          <div class="g2">
+            <!-- Recent Users -->
+            <div class="panel">
+              <div class="panel-hd">
+                <div class="panel-title">Recent Sign-ups</div>
+                <button class="btn btn-out btn-sm" onclick="switchPage('users')">View All →</button>
+              </div>
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>User</th><th>Plan</th><th>Joined</th></tr></thead>
+                  <tbody id="recent-users-tbl"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Live Activity -->
+            <div class="panel">
+              <div class="panel-hd">
+                <div class="panel-title">Live Activity</div>
+                <span class="live-badge" style="font-size:.6rem"><span class="live-dot"></span>Real-time</span>
+              </div>
+              <div id="activity-feed-dash"></div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: ANALYTICS
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-analytics" aria-label="Analytics">
+          <div class="stats-grid">
+            <div class="stat-card" style="--sc:var(--gold)">
+              <div class="stat-icon">🌍</div>
+              <div class="stat-val" style="color:var(--gold)" id="stat-countries">47</div>
+              <div class="stat-label">Countries Reached</div>
+            </div>
+            <div class="stat-card" style="--sc:var(--cy)">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-val" style="color:var(--cy)" id="stat-analyses">0</div>
+              <div class="stat-label">Total Analyses Run</div>
+            </div>
+            <div class="stat-card" style="--sc:var(--gn)">
+              <div class="stat-icon">📈</div>
+              <div class="stat-val" style="color:var(--gn)" id="stat-conversion">0%</div>
+              <div class="stat-label">Free → Paid Conversion</div>
+            </div>
+            <div class="stat-card" style="--sc:var(--or)">
+              <div class="stat-icon">⏱️</div>
+              <div class="stat-val" style="color:var(--or)" id="stat-ltv">$0</div>
+              <div class="stat-label">Avg. Customer LTV</div>
+            </div>
+          </div>
+          <div class="g2">
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Top Countries</div></div>
+              <div id="top-countries"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Top Languages</div></div>
+              <div id="top-langs"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><div class="panel-title">Platform Usage — Monthly Active</div></div>
+            <div id="platform-usage-chart" style="display:flex;flex-direction:column;gap:10px;margin-top:4px"></div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: PLATFORMS
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-platforms" aria-label="Platform Management">
+
+  <!-- ══ PLATFORM MANAGER HEADER ══ -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+    <div>
+      <div style="font-size:1rem;font-weight:700;margin-bottom:4px">🏗️ إدارة المنصات</div>
+      <div style="font-size:.78rem;color:var(--t3)">أضف وعدّل وارتّب بطاقات منصاتك — بدون كود</div>
+    </div>
+    <button onclick="pmToggleForm()" style="padding:9px 18px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.82rem;border:none;cursor:pointer">+ إضافة منصة جديدة</button>
+  </div>
+
+  <!-- ══ ADD / EDIT FORM ══ -->
+  <div id="pm-form-wrap" style="display:none;background:#0a0d1a;border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:22px;margin-bottom:22px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a)"></div>
+    <div style="font-size:.9rem;font-weight:700;margin-bottom:16px" id="pm-form-title">➕ إضافة منصة جديدة</div>
+
+    <!-- Form Grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <div>
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">المعرّف (بالإنجليزية) *</label>
+        <input id="pm-id" type="text" placeholder="مثال: mizan" class="form-inp" style="width:100%;font-family:monospace" oninput="pmUpdatePreview()"/>
+        <div style="font-size:.65rem;color:#3d4a6b;margin-top:3px">سيكون الرابط: /platform?id=[المعرّف]</div>
+      </div>
+      <div>
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">الأيقونة (Emoji) *</label>
+        <input id="pm-icon" type="text" placeholder="مثال: ⚖️" class="form-inp" style="width:100%;font-size:1.3rem;text-align:center" oninput="pmUpdatePreview()"/>
+      </div>
+      <div>
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">الاسم بالعربية *</label>
+        <input id="pm-name-ar" type="text" placeholder="مثال: ميزان برو" class="form-inp" style="width:100%" oninput="pmUpdatePreview()"/>
+      </div>
+      <div>
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">الاسم بالإنجليزية *</label>
+        <input id="pm-name-en" type="text" placeholder="مثال: Mizan Pro" class="form-inp" style="width:100%" oninput="pmUpdatePreview()"/>
+      </div>
+      <div style="grid-column:1/-1">
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">الوصف المختصر *</label>
+        <input id="pm-desc" type="text" placeholder="مثال: احسب نقطة التعادل بدقة لأي عمل" class="form-inp" style="width:100%" oninput="pmUpdatePreview()"/>
+      </div>
+      <div>
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">الرابط الكامل *</label>
+        <input id="pm-path" type="text" placeholder="مثال: /mizan" class="form-inp" style="width:100%;font-family:monospace" oninput="pmUpdatePreview()"/>
+      </div>
+      <div>
+        <label style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase;display:block;margin-bottom:5px">اللون الرئيسي</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="pm-color" type="color" value="#c9a84c" style="width:48px;height:38px;border-radius:8px;border:1.5px solid rgba(255,255,255,.1);background:transparent;cursor:pointer" oninput="pmUpdatePreview()"/>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <div onclick="pmSetColor('#c9a84c')" style="width:24px;height:24px;border-radius:50%;background:#c9a84c;cursor:pointer;border:2px solid transparent" title="ذهبي"></div>
+            <div onclick="pmSetColor('#60a5fa')" style="width:24px;height:24px;border-radius:50%;background:#60a5fa;cursor:pointer;border:2px solid transparent" title="أزرق"></div>
+            <div onclick="pmSetColor('#22c55e')" style="width:24px;height:24px;border-radius:50%;background:#22c55e;cursor:pointer;border:2px solid transparent" title="أخضر"></div>
+            <div onclick="pmSetColor('#a78bfa')" style="width:24px;height:24px;border-radius:50%;background:#a78bfa;cursor:pointer;border:2px solid transparent" title="بنفسجي"></div>
+            <div onclick="pmSetColor('#f97316')" style="width:24px;height:24px;border-radius:50%;background:#f97316;cursor:pointer;border:2px solid transparent" title="برتقالي"></div>
+            <div onclick="pmSetColor('#38bdf8')" style="width:24px;height:24px;border-radius:50%;background:#38bdf8;cursor:pointer;border:2px solid transparent" title="سماوي"></div>
+            <div onclick="pmSetColor('#ef4444')" style="width:24px;height:24px;border-radius:50%;background:#ef4444;cursor:pointer;border:2px solid transparent" title="أحمر"></div>
+            <div onclick="pmSetColor('#ec4899')" style="width:24px;height:24px;border-radius:50%;background:#ec4899;cursor:pointer;border:2px solid transparent" title="وردي"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div style="margin-bottom:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-bottom:10px">👁️ معاينة البطاقة — كيف ستبدو في الموقع</div>
+      <div id="pm-preview-box" style="max-width:300px;background:#060912;border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;transition:all .3s">
+        <div id="pm-preview-bar" style="height:3px;background:#c9a84c;transition:background .3s"></div>
+        <div style="padding:18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <div id="pm-preview-icon" style="width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2)">⚡</div>
+            <div>
+              <div id="pm-preview-name-ar" style="font-family:'Cormorant',serif;font-size:1.1rem;font-weight:700">اسم المنصة</div>
+              <div id="pm-preview-name-en" style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b">Platform Name</div>
+            </div>
+          </div>
+          <div id="pm-preview-desc" style="font-size:.8rem;color:#8892b0;line-height:1.75;margin-bottom:14px">وصف المنصة يظهر هنا...</div>
+          <div style="display:flex;gap:8px">
+            <div id="pm-preview-btn" style="flex:1;padding:8px;border-radius:7px;background:#c9a84c;color:#060912;font-weight:700;font-size:.75rem;text-align:center;transition:background .3s">افتح المنصة</div>
+            <div style="padding:8px 12px;border-radius:7px;border:1px solid rgba(255,255,255,.1);color:#8892b0;font-size:.72rem;text-align:center">تفاصيل</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div style="display:flex;gap:10px">
+      <button onclick="pmSavePlatform()" style="flex:1;padding:11px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;border:none;cursor:pointer">💾 حفظ المنصة</button>
+      <button onclick="pmCancelForm()" style="padding:11px 20px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--t2);font-family:'Syne',sans-serif;font-size:.88rem;cursor:pointer">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- ══ PLATFORMS LIST ══ -->
+  <div id="pm-platforms-list">
+    <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-bottom:12px">المنصات الحالية — اسحب لإعادة الترتيب</div>
+    <div id="pm-sortable-list" style="display:flex;flex-direction:column;gap:10px"></div>
+  </div>
+
+id="page-users" aria-label="User Management">
+          <div class="search-bar">
+            <input class="search-inp" type="search" placeholder="Search by name, email, plan..." id="user-search" oninput="filterUsers()"/>
+            <select class="f-inp f-select" id="user-filter-plan" onchange="filterUsers()" style="max-width:160px">
+              <option value="">All Plans</option>
+              <option value="free">Free</option>
+              <option value="growth">Growth</option>
+              <option value="pro">Pro</option>
+              <option value="expert">Expert</option>
+              <option value="lifetime">Lifetime</option>
+            </select>
+            <select class="f-inp f-select" id="user-filter-status" onchange="filterUsers()" style="max-width:140px">
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <button class="btn btn-gold" onclick="openModal('invite-user')">+ Invite User</button>
+          </div>
+          <div class="panel" style="padding:0">
+            <div class="tbl-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>User</th><th>Plan</th><th>Platforms</th><th>MRR</th>
+                    <th>Joined</th><th>Status</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbl"></tbody>
+              </table>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:8px">
+            <div style="font-family:var(--fm);font-size:.66rem;color:var(--t3)" id="users-count">Showing 0 users</div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-out btn-sm" id="users-prev" onclick="usersPage(-1)">← Prev</button>
+              <button class="btn btn-out btn-sm" id="users-next" onclick="usersPage(1)">Next →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: SUBSCRIPTIONS
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-subscriptions" aria-label="Subscriptions">
+          <div class="stats-grid" style="margin-bottom:20px">
+            <div class="stat-card" style="--sc:var(--gn)"><div class="stat-icon">✅</div><div class="stat-val" style="color:var(--gn)" id="sub-active">0</div><div class="stat-label">Active</div></div>
+            <div class="stat-card" style="--sc:var(--gold)"><div class="stat-icon">🔥</div><div class="stat-val" style="color:var(--gold)" id="sub-lifetime">0</div><div class="stat-label">Lifetime</div></div>
+            <div class="stat-card" style="--sc:var(--or)"><div class="stat-icon">⚠️</div><div class="stat-val" style="color:var(--or)" id="sub-trial">0</div><div class="stat-label">Trial</div></div>
+            <div class="stat-card" style="--sc:var(--rd)"><div class="stat-icon">❌</div><div class="stat-val" style="color:var(--rd)" id="sub-cancelled">0</div><div class="stat-label">Cancelled</div></div>
+          </div>
+          <div class="panel" style="padding:0">
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>User</th><th>Plan</th><th>Amount</th><th>Next Bill</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="subs-tbl"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: PRICING CONTROL
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-pricing" aria-label="Pricing Control">
+
+  <!-- ══ MASTER SWITCH ══ -->
+  <div class="panel" style="margin-bottom:16px;border:1px solid rgba(201,168,76,.3)">
+    <div class="panel-hd">
+      <div class="panel-title">🔑 المفتاح الرئيسي للشراء</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-size:.9rem;font-weight:700;margin-bottom:4px">تفعيل/إيقاف الشراء على كامل الموقع</div>
+        <div style="font-size:.78rem;color:var(--t3)">إيقاف = كل الأزرار تقول "قريباً" | تفعيل = شراء حقيقي</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="checkout-status-label" style="font-family:monospace;font-size:.75rem;color:#ef4444">● موقوف</span>
+        <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer">
+          <input type="checkbox" id="tog-master-checkout" style="display:none" onchange="azToggleMasterCheckout(this.checked)"/>
+          <span id="tog-checkout-slider" style="position:absolute;inset:0;background:#1e2a3a;border-radius:28px;transition:.3s;border:2px solid rgba(255,255,255,.1)"></span>
+          <span id="tog-checkout-thumb" style="position:absolute;width:20px;height:20px;background:#3d4a6b;border-radius:50%;top:2px;right:2px;transition:.3s"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PLATFORMS PRICING ══ -->
+  <div class="panel" style="margin-bottom:16px">
+    <div class="panel-hd">
+      <div class="panel-title">💰 أسعار المنصات — Paddle IDs</div>
+      <button class="btn btn-gold btn-sm" onclick="azSavePricing()">💾 حفظ كل الأسعار</button>
+    </div>
+    <div id="az-pricing-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px"></div>
+    <div id="az-pricing-content"></div>
+  </div>
+
+  <!-- ══ ADD NEW PLATFORM ══ -->
+  <div class="panel" style="margin-bottom:16px;border:1px solid rgba(139,92,246,.2)">
+    <div class="panel-hd">
+      <div class="panel-title">➕ إضافة منصة جديدة</div>
+      <button class="btn btn-sm" style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#a78bfa" onclick="azToggleAddPlatform()">+ إضافة</button>
+    </div>
+    <div id="az-add-platform-form" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div>
+          <label style="font-size:.72rem;color:var(--t3);display:block;margin-bottom:4px">المعرّف (بالإنجليزية بدون مسافات)</label>
+          <input id="new-plt-id" type="text" placeholder="مثال: master365" class="form-inp" style="width:100%"/>
+        </div>
+        <div>
+          <label style="font-size:.72rem;color:var(--t3);display:block;margin-bottom:4px">الاسم بالعربية</label>
+          <input id="new-plt-name-ar" type="text" placeholder="مثال: ماستر 365" class="form-inp" style="width:100%"/>
+        </div>
+        <div>
+          <label style="font-size:.72rem;color:var(--t3);display:block;margin-bottom:4px">الاسم بالإنجليزية</label>
+          <input id="new-plt-name-en" type="text" placeholder="مثال: Master 365" class="form-inp" style="width:100%"/>
+        </div>
+        <div>
+          <label style="font-size:.72rem;color:var(--t3);display:block;margin-bottom:4px">الأيقونة (emoji)</label>
+          <input id="new-plt-icon" type="text" placeholder="مثال: 📊" class="form-inp" style="width:100%"/>
+        </div>
+        <div>
+          <label style="font-size:.72rem;color:var(--t3);display:block;margin-bottom:4px">وصف قصير بالعربية</label>
+          <input id="new-plt-desc-ar" type="text" placeholder="وصف المنصة" class="form-inp" style="width:100%"/>
+        </div>
+        <div>
+          <label style="font-size:.72rem;color:var(--t3);display:block;margin-bottom:4px">اللون (HEX)</label>
+          <input id="new-plt-color" type="color" value="#c9a84c" style="width:100%;height:38px;border-radius:8px;border:1.5px solid rgba(255,255,255,.1);background:transparent;cursor:pointer"/>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-gold" onclick="azAddNewPlatform()" style="flex:1">✅ إضافة المنصة</button>
+        <button class="btn btn-sm" onclick="azToggleAddPlatform()" style="background:rgba(255,255,255,.05)">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BUNDLES ══ -->
+  <div class="panel">
+    <div class="panel-hd">
+      <div class="panel-title">📦 الباقات الشاملة — Bundle Plans</div>
+    </div>
+    <div id="az-bundles-pricing"></div>
+  </div>
+
+id="page-revenue" aria-label="Revenue">
+          <div class="stats-grid">
+            <div class="stat-card" style="--sc:var(--gold)"><div class="stat-icon">💵</div><div class="stat-val" style="color:var(--gold)" id="rev-total">$0</div><div class="stat-label">Total Revenue</div></div>
+            <div class="stat-card" style="--sc:var(--gn)"><div class="stat-icon">🔄</div><div class="stat-val" style="color:var(--gn)" id="rev-mrr">$0</div><div class="stat-label">MRR</div></div>
+            <div class="stat-card" style="--sc:var(--pri)"><div class="stat-icon">📅</div><div class="stat-val" style="color:var(--pril)" id="rev-arr">$0</div><div class="stat-label">ARR (projected)</div></div>
+            <div class="stat-card" style="--sc:var(--pu)"><div class="stat-icon">🔥</div><div class="stat-val" style="color:var(--pu)" id="rev-ltd">$0</div><div class="stat-label">Lifetime Sales</div></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><div class="panel-title">Recent Transactions</div><button class="btn btn-out btn-sm" onclick="exportData()">Export CSV</button></div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>User</th><th>Plan</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+                <tbody id="transactions-tbl"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: PAYMENT ACCOUNTS
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-payouts" aria-label="Payment Accounts">
+          <div class="g2" style="margin-bottom:20px">
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Connected Accounts</div><button class="btn btn-gold btn-sm" onclick="openModal('add-payment')">+ Add Account</button></div>
+              <div id="payment-accounts"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Routing Rules</div></div>
+              <div style="font-size:.8rem;color:var(--t2);line-height:1.8;margin-bottom:12px">Define which payment account receives revenue from each platform.</div>
+              <div id="routing-rules"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><div class="panel-title">Accepted Payment Methods</div></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:4px" id="payment-methods"></div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: LIVE ACTIVITY
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-activity" aria-label="Live Activity">
+          <div class="g2">
+            <div class="panel">
+              <div class="panel-hd">
+                <div class="panel-title">Real-time Events</div>
+                <span class="live-badge"><span class="live-dot"></span>Live</span>
+              </div>
+              <div id="live-activity-feed" style="max-height:500px;overflow-y:auto"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Currently Active Users</div></div>
+              <div id="active-users-now"></div>
+              <div style="margin-top:16px">
+                <div class="panel-title" style="margin-bottom:12px">Platform Sessions</div>
+                <div id="active-sessions"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: SETTINGS
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-settings" aria-label="Settings">
+          <div class="g2">
+            <div>
+              <div class="panel">
+                <div class="panel-hd"><div class="panel-title">General Settings</div></div>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="f-label">Platform Name</label>
+                    <input class="f-inp" type="text" value="Axiom Zones" id="set-name"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="f-label">Admin Email</label>
+                    <input class="f-inp" type="email" value="admin@axiomzones.com" id="set-email"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="f-label">Support Email</label>
+                    <input class="f-inp" type="email" value="support@axiomzones.com" id="set-support"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="f-label">Base Currency</label>
+                    <select class="f-inp f-select" id="set-currency">
+                      <option value="USD" selected>USD — US Dollar</option>
+                      <option value="SAR">SAR — Saudi Riyal</option>
+                      <option value="EUR">EUR — Euro</option>
+                    </select>
+                  </div>
+                  <div class="form-group full">
+                    <label class="f-label">Platform Tagline</label>
+                    <input class="f-inp" type="text" value="The Business Operating System for the Modern World" id="set-tagline"/>
+                  </div>
+                </div>
+                <div style="margin-top:14px">
+                  <button class="btn btn-gold" onclick="saveSettings()">Save Settings</button>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-hd"><div class="panel-title">Notifications</div></div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">New User Alert</div><div class="toggle-desc">Email when a new user registers</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">New Subscription Alert</div><div class="toggle-desc">Email on each new paid subscription</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Cancellation Alert</div><div class="toggle-desc">Email when a subscription is cancelled</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Weekly Revenue Report</div><div class="toggle-desc">Automated weekly summary email</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="panel">
+                <div class="panel-hd"><div class="panel-title">Landing Page Controls</div></div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Maintenance Mode</div><div class="toggle-desc">Show maintenance page to visitors</div></div>
+                  <label class="toggle-sw"><input type="checkbox" id="tog-maintenance"/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Lifetime Deal Banner</div><div class="toggle-desc">Show $399 lifetime deal offer</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Scarcity Counter</div><div class="toggle-desc">Show "X spots remaining" urgency</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Arab World Pricing</div><div class="toggle-desc">Auto 50% discount for Arab countries</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div style="margin-top:14px">
+                  <label class="f-label">Lifetime Spots Remaining</label>
+                  <div style="display:flex;gap:8px;margin-top:5px">
+                    <input class="f-inp" type="number" id="ltd-spots-count" value="73" min="0" max="100" style="max-width:100px"/>
+                    <button class="btn btn-out" onclick="updateLTDSpots()">Update</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-hd"><div class="panel-title">Integrations</div></div>
+                <div id="integrations-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════
+             PAGE: SECURITY
+        ════════════════════════════════ -->
+        <section class="admin-page" id="page-security" aria-label="Security">
+          <div class="g2">
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Change Admin Password</div></div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="form-group">
+                  <label class="f-label">Current Password</label>
+                  <input class="f-inp" type="password" id="sec-cur-pass"/>
+                </div>
+                <div class="form-group">
+                  <label class="f-label">New Password</label>
+                  <input class="f-inp" type="password" id="sec-new-pass" oninput="checkPassStrength()"/>
+                  <div class="prog-bar"><div class="prog-fill" id="pass-strength-bar" style="width:0%;background:var(--rd)"></div></div>
+                  <div class="f-hint" id="pass-strength-txt">Enter a strong password</div>
+                </div>
+                <div class="form-group">
+                  <label class="f-label">Confirm New Password</label>
+                  <input class="f-inp" type="password" id="sec-conf-pass"/>
+                </div>
+                <button class="btn btn-gold" onclick="changePassword()">Update Password</button>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-hd"><div class="panel-title">Change Security PIN</div></div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="form-group">
+                  <label class="f-label">Current PIN</label>
+                  <div class="pin-grid" style="justify-content:flex-start">
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-pin-1" inputmode="numeric"/>
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-pin-2" inputmode="numeric"/>
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-pin-3" inputmode="numeric"/>
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-pin-4" inputmode="numeric"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="f-label">New PIN</label>
+                  <div class="pin-grid" style="justify-content:flex-start">
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-npin-1" inputmode="numeric"/>
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-npin-2" inputmode="numeric"/>
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-npin-3" inputmode="numeric"/>
+                    <input class="pin-inp" type="password" maxlength="1" id="sec-npin-4" inputmode="numeric"/>
+                  </div>
+                </div>
+                <button class="btn btn-gold" onclick="changePIN()">Update PIN</button>
+              </div>
+              <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)">
+                <div class="panel-title" style="margin-bottom:10px">Session Management</div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Auto-logout after 8h</div><div class="toggle-desc">Force re-authentication after 8 hours</div></div>
+                  <label class="toggle-sw"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info"><div class="toggle-label">Remember this device</div><div class="toggle-desc">Skip PIN on trusted devices for 30 days</div></div>
+                  <label class="toggle-sw"><input type="checkbox"/><span class="toggle-track"></span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><div class="panel-title">Login History</div></div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Date & Time</th><th>Status</th><th>Device</th><th>Action</th></tr></thead>
+                <tbody id="login-history-tbl"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /admin-content -->
+    </div><!-- /admin-main -->
+  </div><!-- /admin-layout -->
+</div><!-- /admin-app -->
+
+<!-- ══ MODALS ══ -->
+<div class="modal-ov" id="admin-modal" onclick="closeModal(event)" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <div class="modal-title" id="modal-title-txt">Modal</div>
+      <button class="modal-close" onclick="closeModalDirect()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body-content"></div>
+    <div class="modal-footer" id="modal-footer-content"></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ══════════════════════════════════════════════
+   AXIOM ZONES — ADMIN PANEL v1
+   Security + Dashboard + Full Management
+══════════════════════════════════════════════ */
+
+/* ══ حارس الدخول — يتحقق من جلسة owner-login عبر Cloudflare Function
+   قبل عرض أي محتوى. غير مسجّل دخول؟ يُعاد للرئيسية فوراً بدون رؤية أي شيء. ══ */
+(function azAdminGuard(){
+  document.documentElement.style.visibility = 'hidden';
+  fetch('/api/owner-verify', { credentials: 'include' })
+    .then(function(res){ return res.ok ? res.json() : { valid:false }; })
+    .then(function(data){
+      if (data && data.valid) {
+        document.documentElement.style.visibility = 'visible';
+      } else {
+        window.location.href = '/?login=required&from=admin';
+      }
+    })
+    .catch(function(){
+      /* تعذّر الوصول للسيرفر (معاينة محلية مثلاً) — إعادة توجيه أيضاً بدلاً من عرض المحتوى بلا حماية */
+      window.location.href = '/?login=required&from=admin';
+    });
+})();
+
+/* ══ CONFIG — Change these before deploying ══ */
+
+/* ══════════════════════════════════════════════════════
+   AZ MASTER CONFIG — المرجع المركزي الوحيد
+   غيّر هنا فقط — يؤثر على كل الموقع
+══════════════════════════════════════════════════════ */
+var AZ_MASTER = {
+
+  /* ① إعدادات الدفع العامة */
+  payment: {
+    provider: 'paddle',   // paddle | dodo | stripe
+    enabled:  false,      // false=قريباً | true=مفعّل
+    annual_discount: 30,  // خصم السنوي %
+    arab_discount:   50,  // خصم السوق العربي %
+  },
+
+  /* ② المنصات — أضف هنا فقط */
+  platforms: {
+
+    kashf: {
+      active:    true,
+      name_ar:   'كشف',
+      name_en:   'Kashf',
+      desc_ar:   'كشف الحقيقة المالية لأي قرض',
+      desc_en:   'Loan Truth Analyzer',
+      icon:      '👁️',
+      color:     '#c9a84c',
+      path:      '/kashf',
+      plans: {
+        free:    { price:0,   arab:0,   paddle_m:null, paddle_a:null },
+        pro:     { price:9,   arab:5,   paddle_m:null, paddle_a:null },
+        advisor: { price:29,  arab:15,  paddle_m:null, paddle_a:null },
+        api:     { price:199, arab:99,  paddle_m:null, paddle_a:null },
+      }
+    },
+
+    prism: {
+      active:    true,
+      name_ar:   'Prism Suite',
+      name_en:   'Prism Suite',
+      desc_ar:   'مقارنة القروض والـ IRR الحقيقي',
+      desc_en:   'True IRR Calculator',
+      icon:      '🔮',
+      color:     '#60a5fa',
+      path:      '/prism',
+      plans: {
+        free:   { price:0,  arab:0,  paddle_m:null, paddle_a:null },
+        clear:  { price:7,  arab:4,  paddle_m:null, paddle_a:null },
+        pro:    { price:19, arab:9,  paddle_m:null, paddle_a:null },
+        expert: { price:39, arab:19, paddle_m:null, paddle_a:null },
+      }
+    },
+
+    uniuber: {
+      active:    true,
+      name_ar:   'UniUber',
+      name_en:   'UniUber',
+      desc_ar:   'توريد الزي الموحد عالمياً',
+      desc_en:   'Global Uniform Sourcing',
+      icon:      '👔',
+      color:     '#38bdf8',
+      path:      '/uniuber',
+      plans: {
+        browse:    { price:0,   arab:0,   paddle_m:null, paddle_a:null },
+        sourcer:   { price:99,  arab:49,  paddle_m:null, paddle_a:null },
+        corporate: { price:299, arab:149, paddle_m:null, paddle_a:null },
+      }
+    },
+
+    /* أضف منصة جديدة هنا ↓ */
+    mizan: {
+      active:    false,   // false = مخفية حتى تجهز
+      name_ar:   'ميزان برو',
+      name_en:   'Mizan Pro',
+      desc_ar:   'حاسبة نقطة التعادل والتكاليف',
+      desc_en:   'Break-Even Calculator',
+      icon:      '⚖️',
+      color:     '#a78bfa',
+      path:      '/platform?id=mizan',
+      plans: {
+        free: { price:0,  arab:0,  paddle_m:null, paddle_a:null },
+        pro:  { price:39, arab:19, paddle_m:null, paddle_a:null },
+        corp: { price:149,arab:74, paddle_m:null, paddle_a:null },
+      }
+    },
+
+  },
+
+  /* ③ الباقات الشاملة */
+  bundles: {
+    growth:    { price:29,  arab:14,  paddle_m:null, paddle_a:null },
+    pro_all:   { price:69,  arab:34,  paddle_m:null, paddle_a:null },
+    expert_all:{ price:129, arab:64,  paddle_m:null, paddle_a:null },
+    lifetime:  { price:399, arab:399, paddle_m:null, paddle_a:null },
+  },
+
+};
+
+/* ══ دالة الشراء الموحّدة ══ */
+function azBuy(platform, plan) {
+  if (!AZ_MASTER.payment.enabled) {
+    adminNotif && adminNotif('الشراء غير مفعّل بعد — فعّله من Pricing Control', 'info');
+    return;
+  }
+  var plt = AZ_MASTER.platforms[platform] || { plans: AZ_MASTER.bundles };
+  var planData = platform === 'bundle'
+    ? AZ_MASTER.bundles[plan]
+    : (plt.plans && plt.plans[plan]);
+  if (!planData || !planData.paddle_m) {
+    adminNotif && adminNotif('رابط الدفع لم يُضف بعد لهذه الخطة', 'warning');
+    return;
+  }
+  var isAnnual = localStorage.getItem('az_annual') === '1';
+  var url = isAnnual ? planData.paddle_a : planData.paddle_m;
+  if (!url) { adminNotif && adminNotif('رابط الدفع غير متاح', 'warning'); return; }
+  window.open(url, '_blank');
+}
+
+/* ══ حفظ Config في localStorage ══ */
+function azSaveConfig() {
+  localStorage.setItem('az_master_config', JSON.stringify(AZ_MASTER));
+  /* الحفظ الحقيقي المشترك — يصل لكل الزوار، وليس فقط متصفحك */
+  fetch('/api/config-set', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include',
+    body: JSON.stringify({ config: AZ_MASTER })
+  }).then(function(res){
+    if(!res.ok){ notif('⚠️ تعذّر الحفظ على السيرفر — التغيير محلي فقط حالياً', 'warn'); }
+  }).catch(function(){
+    notif('⚠️ تعذّر الاتصال بالسيرفر — التغيير محلي فقط حالياً', 'warn');
+  });
+}
+
+/* ══ تحميل Config من localStorage (فوري) ثم من السيرفر (المصدر الحقيقي المشترك) ══ */
+function azApplyConfig(parsed) {
+  if (!parsed) return;
+  if (parsed.payment)   Object.assign(AZ_MASTER.payment, parsed.payment);
+  if (parsed.platforms) {
+    Object.keys(parsed.platforms).forEach(function(k) {
+      if (AZ_MASTER.platforms[k]) {
+        Object.assign(AZ_MASTER.platforms[k], parsed.platforms[k]);
+        if (parsed.platforms[k].plans) {
+          Object.assign(AZ_MASTER.platforms[k].plans, parsed.platforms[k].plans);
+        }
+      } else {
+        AZ_MASTER.platforms[k] = parsed.platforms[k];
+      }
+    });
+  }
+  if (parsed.bundles) Object.assign(AZ_MASTER.bundles, parsed.bundles);
+}
+
+(function azLoadConfig() {
+  try {
+    var saved = localStorage.getItem('az_master_config');
+    if (saved) azApplyConfig(JSON.parse(saved));
+  } catch(e) {}
+
+  /* المصدر الحقيقي المشترك (يصل لكل من يفتح اللوحة، لا فقط هذا المتصفح) */
+  fetch('/api/config-get', { credentials: 'include' })
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(data){
+      if (data && data.ok && data.config) {
+        azApplyConfig(data.config);
+        localStorage.setItem('az_master_config', JSON.stringify(AZ_MASTER));
+        if (typeof renderPlatforms === 'function') renderPlatforms();
+      }
+    })
+    .catch(function(){ /* السيرفر غير متاح — نبقى على النسخة المحلية بأمان */ });
+})();
+
+
+var AZ_CONFIG = {
+  ADMIN_PASS: 'AZ@Secure#2024!Alhadery$',   /* Updated */
+  ADMIN_PIN:  '1984',              /* Updated */
+  SESSION_KEY: 'az_admin_session',
+  SESSION_HOURS: 8,
+  PLATFORM_NAME: 'Axiom Zones',
+};
+
+/* ══ STATE ══ */
+var isDark = true;
+var currentPage = 'dashboard';
+var loginAttempts = 0;
+var MAX_ATTEMPTS = 5;
+var chartPeriod = '30d';
+var usersCurrentPage = 0;
+var USERS_PER_PAGE = 10;
+
+/* ══ MOCK DATA — Replace with Supabase later ══ */
+var MOCK_DATA = {
+  mrr: 8250, mrrChange: '+18.4%',
+  totalUsers: 1247, usersChange: 43,
+  activeSubs: 312, subsChange: 28,
+  churnRate: '3.2%',
+  totalRevenue: 47800,
+  arr: 99000,
+  ltdRevenue: 7960,
+  ltdSold: 20,
+  analyses: 28400,
+  conversion: '24.8%',
+  ltv: 156,
+  countries: 47,
+
+  platforms: [
+    {id:'prism',name:'Prism Suite',icon:'🔮',color:'#8b5cf6',users:423,revenue:3200,status:'active',url:'prism-v2r8.html'},
+    {id:'kashf',name:'Kashf',icon:'👁️',color:'#7c3aed',users:318,revenue:2860,status:'active',url:'kashf-v2.html'},
+    {id:'uniuber',name:'UniUber',icon:'👔',color:'#0891b2',users:87,revenue:8700,status:'beta',url:'#'},
+    {id:'master',name:'Master 365',icon:'📊',color:'#0f766e',users:156,revenue:3120,status:'active',url:'#'},
+    {id:'mizan',name:'Mizan Pro',icon:'⚖️',color:'#1d4ed8',users:98,revenue:980,status:'active',url:'#'},
+    {id:'kyanat',name:'Kyanat',icon:'🇸🇦',color:'#047857',users:203,revenue:0,status:'active',url:'#'},
+    {id:'prosuite',name:'ProSuite 365',icon:'💼',color:'#6d28d9',users:34,revenue:340,status:'coming',url:'#'},
+    {id:'tripedia',name:'Tripedia',icon:'✈️',color:'#b45309',users:12,revenue:0,status:'dev',url:'#'},
+  ],
+
+  users: [
+    {id:'u1',name:'Khalid Al-Rashidi',email:'khalid@example.com',plan:'pro',platforms:['prism','kashf'],mrr:19,joined:'2024-01-15',status:'active',country:'🇸🇦'},
+    {id:'u2',name:'Sara Al-Mansoori',email:'sara@example.com',plan:'expert',platforms:['prism','uniuber'],mrr:129,joined:'2024-01-18',status:'active',country:'🇦🇪'},
+    {id:'u3',name:'Mohamed Hassan',email:'mo@example.com',plan:'lifetime',platforms:['all'],mrr:0,joined:'2024-01-22',status:'active',country:'🇪🇬'},
+    {id:'u4',name:'Fatima Al-Zahra',email:'fatima@example.com',plan:'growth',platforms:['prism'],mrr:29,joined:'2024-02-01',status:'active',country:'🇸🇦'},
+    {id:'u5',name:'Ahmed Benali',email:'ahmed@example.com',plan:'pro',platforms:['kashf','master'],mrr:69,joined:'2024-02-05',status:'active',country:'🇩🇿'},
+    {id:'u6',name:'Layla Hassan',email:'layla@example.com',plan:'free',platforms:['prism'],mrr:0,joined:'2024-02-10',status:'active',country:'🇯🇴'},
+    {id:'u7',name:'Omar Khalid',email:'omar@example.com',plan:'pro',platforms:['prism','kashf','master'],mrr:69,joined:'2024-02-12',status:'active',country:'🇰🇼'},
+    {id:'u8',name:'Nour Ibrahim',email:'nour@example.com',plan:'growth',platforms:['kashf'],mrr:29,joined:'2024-02-14',status:'suspended',country:'🇱🇧'},
+    {id:'u9',name:'Yusuf Al-Khatib',email:'yusuf@example.com',plan:'expert',platforms:['all'],mrr:129,joined:'2024-02-18',status:'active',country:'🇶🇦'},
+    {id:'u10',name:'Dina Mahmoud',email:'dina@example.com',plan:'free',platforms:['prism'],mrr:0,joined:'2024-02-20',status:'active',country:'🇲🇦'},
+    {id:'u11',name:'Tariq Al-Rashid',email:'tariq@example.com',plan:'lifetime',platforms:['all'],mrr:0,joined:'2024-02-22',status:'active',country:'🇸🇦'},
+    {id:'u12',name:'Hana Weber',email:'hana@example.com',plan:'pro',platforms:['prism'],mrr:19,joined:'2024-02-25',status:'active',country:'🇩🇪'},
+  ],
+
+  transactions: [
+    {date:'2024-03-01',user:'Sara Al-Mansoori',plan:'Expert',amount:129,method:'Stripe',status:'success'},
+    {date:'2024-03-01',user:'Tariq Al-Rashid',plan:'Lifetime',amount:399,method:'Stripe',status:'success'},
+    {date:'2024-02-28',user:'Yusuf Al-Khatib',plan:'Expert',amount:129,method:'Stripe',status:'success'},
+    {date:'2024-02-28',user:'Omar Khalid',plan:'Pro',amount:69,method:'Stripe',status:'success'},
+    {date:'2024-02-27',user:'Ahmed Benali',plan:'Pro',amount:69,method:'PayPal',status:'success'},
+    {date:'2024-02-26',user:'Fatima Al-Zahra',plan:'Growth',amount:29,method:'Stripe',status:'success'},
+    {date:'2024-02-25',user:'Hana Weber',plan:'Pro',amount:19,method:'Stripe',status:'success'},
+    {date:'2024-02-24',user:'Unknown',plan:'Pro',amount:69,method:'Stripe',status:'failed'},
+  ],
+
+  activities: [
+    {type:'signup',user:'Aisha Al-Farsi',action:'Created account',time:'2 min ago',icon:'👤',country:'🇴🇲'},
+    {type:'payment',user:'Khalid Nasser',action:'Upgraded to Pro — $69/mo',time:'8 min ago',icon:'💳',country:'🇸🇦'},
+    {type:'analysis',user:'Anonymous',action:'Ran Prism Compare analysis',time:'12 min ago',icon:'🔮',country:'🇦🇪'},
+    {type:'payment',user:'John Smith',action:'Purchased Lifetime Deal — $399',time:'25 min ago',icon:'🔥',country:'🇺🇸'},
+    {type:'signup',user:'Maria García',action:'Created account',time:'31 min ago',icon:'👤',country:'🇪🇸'},
+    {type:'cancel',user:'Omar Al-Sayed',action:'Cancelled Growth plan',time:'45 min ago',icon:'❌',country:'🇯🇴'},
+    {type:'analysis',user:'Anonymous',action:'Used Kashf loan checker',time:'52 min ago',icon:'👁️',country:'🇪🇬'},
+    {type:'payment',user:'Rania Khoury',action:'Upgraded to Expert — $129/mo',time:'1h ago',icon:'⭐',country:'🇱🇧'},
+  ],
+
+  revenueData: {
+    '30d': [3200,3800,4100,3900,4500,4200,4800,5100,4700,5200,5600,5100,5800,6100,5900,6300,6700,6200,6800,7100,6900,7400,7800,7500,8000,8250],
+    '7d':  [7600,7800,7900,8100,7950,8200,8250],
+    '90d': [2100,2400,2800,3000,3200,3400,3800,4200,4500,4800,5100,5400,5800,6100,6400,6700,7000,7400,7800,8100,8250],
+  },
+
+  loginHistory: [
+    {dt:'2024-03-01 14:32',status:'success',device:'Chrome / Windows',action:'Full Login'},
+    {dt:'2024-02-29 09:15',status:'success',device:'Safari / iPhone',action:'Full Login'},
+    {dt:'2024-02-28 22:40',status:'failed',device:'Unknown / Unknown',action:'Wrong Password'},
+    {dt:'2024-02-27 11:20',status:'success',device:'Chrome / MacOS',action:'Full Login'},
+  ],
+
+  paymentAccounts: [
+    {id:'pa1',name:'Stripe — Main',type:'stripe',key:'sk_live_...****8X2K',platforms:['prism','kashf'],status:'active'},
+    {id:'pa2',name:'Stripe — UniUber',type:'stripe',key:'sk_live_...****3N7M',platforms:['uniuber'],status:'active'},
+    {id:'pa3',name:'PayPal Business',type:'paypal',key:'paypal@axiomzones.com',platforms:['master','mizan'],status:'active'},
+  ],
+
+  countries: [
+    {flag:'🇸🇦',name:'Saudi Arabia',users:312,pct:25},
+    {flag:'🇦🇪',name:'UAE',users:187,pct:15},
+    {flag:'🇪🇬',name:'Egypt',users:156,pct:12.5},
+    {flag:'🇺🇸',name:'USA',users:98,pct:7.8},
+    {flag:'🇩🇪',name:'Germany',users:67,pct:5.4},
+    {flag:'🇬🇧',name:'UK',users:54,pct:4.3},
+    {flag:'🇯🇴',name:'Jordan',users:48,pct:3.8},
+    {flag:'🇲🇦',name:'Morocco',users:43,pct:3.4},
+  ],
+
+  integrations: [
+    {name:'Stripe',icon:'💳',status:'connected',color:'var(--gn)'},
+    {name:'PayPal',icon:'🅿️',status:'connected',color:'var(--gn)'},
+    {name:'Supabase',icon:'⚡',status:'not connected',color:'var(--or)'},
+    {name:'Vercel',icon:'▲',status:'connected',color:'var(--gn)'},
+    {name:'Google Analytics',icon:'📊',status:'not connected',color:'var(--or)'},
+    {name:'Mailchimp',icon:'🐵',status:'not connected',color:'var(--or)'},
+  ],
+};
+
+/* ══ LOGIN SECURITY ══ */
+function checkPassword() {
+  var pass = document.getElementById('admin-pass').value;
+  var inp = document.getElementById('admin-pass');
+
+  // Check lockout
+  try {
+    var lock = JSON.parse(localStorage.getItem('az_admin_lock')||'{}');
+    if (lock.until && Date.now() < lock.until) {
+      var mins = Math.ceil((lock.until - Date.now()) / 60000);
+      showError('err-1', 'Too many attempts. Try again in ' + mins + ' minute(s).');
+      return;
+    }
+  } catch(e) {}
+
+  if (!pass) { shakeInput(inp); return; }
+
+  if (pass === AZ_CONFIG.ADMIN_PASS) {
+    loginAttempts = 0;
+    try { localStorage.removeItem('az_admin_lock'); } catch(e) {}
+    // Move to PIN step
+    document.getElementById('step-1').classList.remove('active');
+    document.getElementById('step-2').classList.add('active');
+    document.getElementById('dot-1').classList.remove('active');
+    document.getElementById('dot-1').classList.add('done');
+    document.getElementById('dot-2').classList.add('active');
+    setTimeout(function() { document.getElementById('pin-1').focus(); }, 100);
+  } else {
+    loginAttempts++;
+    shakeInput(inp);
+    inp.value = '';
+    if (loginAttempts >= MAX_ATTEMPTS) {
+      try { localStorage.setItem('az_admin_lock', JSON.stringify({until: Date.now() + 15*60000})); } catch(e) {}
+      showError('err-1', 'Too many failed attempts. Locked for 15 minutes.');
+    } else {
+      showError('err-1', 'Incorrect password. ' + (MAX_ATTEMPTS - loginAttempts) + ' attempts remaining.');
+    }
+  }
+}
+
+function checkPIN() {
+  var pin = ['pin-1','pin-2','pin-3','pin-4'].map(function(id) {
+    return document.getElementById(id).value;
+  }).join('');
+
+  if (pin.length < 4) {
+    notif('Please enter all 4 PIN digits.', 'warn');
+    return;
+  }
+
+  if (pin === AZ_CONFIG.ADMIN_PIN) {
+    // Success — create session
+    try {
+      var session = {
+        created: Date.now(),
+        expires: Date.now() + (AZ_CONFIG.SESSION_HOURS * 3600000),
+        user: 'Super Admin',
+      };
+      sessionStorage.setItem(AZ_CONFIG.SESSION_KEY, JSON.stringify(session));
+    } catch(e) {}
+    launchAdmin();
+  } else {
+    showError('err-2', 'Incorrect PIN. Please try again.');
+    ['pin-1','pin-2','pin-3','pin-4'].forEach(function(id) {
+      var el = document.getElementById(id);
+      el.value = '';
+      el.classList.add('error');
+      setTimeout(function() { el.classList.remove('error'); }, 500);
+    });
+    setTimeout(function() { document.getElementById('pin-1').focus(); }, 100);
+  }
+}
+
+function backToPass() {
+  document.getElementById('step-2').classList.remove('active');
+  document.getElementById('step-1').classList.add('active');
+  document.getElementById('dot-2').classList.remove('active');
+  document.getElementById('dot-1').classList.remove('done');
+  document.getElementById('dot-1').classList.add('active');
+  hideError('err-1');
+  document.getElementById('admin-pass').focus();
+}
+
+function showError(id, msg) {
+  var el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.classList.add('show'); }
+}
+function hideError(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+function shakeInput(el) {
+  el.classList.add('error');
+  setTimeout(function() { el.classList.remove('error'); }, 500);
+}
+
+/* PIN auto-advance */
+['pin-1','pin-2','pin-3','pin-4'].forEach(function(id, i) {
+  var el = document.getElementById(id);
+  el.addEventListener('input', function() {
+    if (this.value.length === 1) {
+      var next = document.getElementById('pin-' + (i+2));
+      if (next) next.focus();
+      else checkPIN();
+    }
+  });
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace' && !this.value) {
+      var prev = document.getElementById('pin-' + i);
+      if (prev) prev.focus();
+    }
+    if (e.key === 'Enter') checkPIN();
+  });
+});
+
+document.getElementById('admin-pass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+/* Session check on load */
+function checkSession() {
+  try {
+    var session = JSON.parse(sessionStorage.getItem(AZ_CONFIG.SESSION_KEY) || 'null');
+    if (session && session.expires > Date.now()) {
+      launchAdmin();
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+/* ══ LAUNCH ADMIN ══ */
+function launchAdmin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-app').style.display = 'block';
+  initDashboard();
+  startLiveUpdates();
+  notif('Welcome back, Admin 👑', 'success');
+}
+
+function adminLogout() {
+  try { sessionStorage.removeItem(AZ_CONFIG.SESSION_KEY); } catch(e) {}
+  document.getElementById('admin-app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-pass').value = '';
+  ['pin-1','pin-2','pin-3','pin-4'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  backToPass();
+  notif('Logged out successfully.', 'info');
+}
+
+/* ══ NAVIGATION ══ */
+var PAGE_META = {
+  'dashboard':     {title:'Dashboard', sub:'Platform overview and key metrics', action:'+ Add Platform', actionFn:"openModal('add-platform')"},
+  'analytics':     {title:'Analytics', sub:'Detailed usage and conversion data', action:'Export Report', actionFn:"exportData()"},
+  'activity':      {title:'Live Activity', sub:'Real-time events and sessions', action:'Clear Log', actionFn:"clearActivityLog()"},
+  'platforms':     {title:'Platforms', sub:'Manage all 8 platforms', action:'+ Add Platform', actionFn:"openModal('add-platform')"},
+  'users':         {title:'Users', sub:'Manage registered users', action:'+ Invite User', actionFn:"openModal('invite-user')"},
+  'subscriptions': {title:'Subscriptions', sub:'Active plans and billing', action:'Export CSV', actionFn:"exportData()"},
+  'pricing':       {title:'Pricing Control', sub:'Manage prices and discounts', action:'Save Changes', actionFn:"savePricingSettings()"},
+  'revenue':       {title:'Revenue', sub:'Financial overview and transactions', action:'Export CSV', actionFn:"exportData()"},
+  'payouts':       {title:'Payment Accounts', sub:'Manage payment routing', action:'+ Add Account', actionFn:"openModal('add-payment')"},
+  'settings':      {title:'Settings', sub:'Platform configuration', action:'Save Settings', actionFn:"saveSettings()"},
+  'security':      {title:'Security', sub:'Authentication and access control', action:'View Logs', actionFn:""},
+};
+
+function switchPage(id) {
+  currentPage = id;
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(function(b) { b.classList.remove('active'); });
+  var found = Array.from(document.querySelectorAll('.nav-item')).find(function(b) {
+    return b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'" + id + "'") > -1;
+  });
+  if (found) found.classList.add('active');
+  // Update pages
+  document.querySelectorAll('.admin-page').forEach(function(p) { p.classList.remove('active'); });
+  var page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  // Update header
+  var meta = PAGE_META[id] || {title:id, sub:'', action:'', actionFn:''};
+  document.getElementById('page-title').textContent = meta.title;
+  document.getElementById('page-sub').textContent = meta.sub;
+  var actBtn = document.getElementById('topbar-action');
+  actBtn.textContent = meta.action;
+  actBtn.setAttribute('onclick', meta.actionFn);
+  // Lazy init
+  if (id === 'platforms') renderPlatforms();
+  if (id === 'users') renderUsers();
+  if (id === 'subscriptions') renderSubscriptions();
+  if (id === 'revenue') renderRevenue();
+  if (id === 'pricing') renderPricingEditor();
+  if (id === 'payouts') renderPayments();
+  if (id === 'analytics') renderAnalytics();
+  if (id === 'activity') renderLiveActivity();
+  if (id === 'settings') renderSettings();
+  if (id === 'security') renderSecurity();
+  window.scrollTo(0,0);
+}
+
+/* ══ DASHBOARD INIT ══ */
+function initDashboard() {
+  // Stats
+  document.getElementById('stat-mrr').textContent = '$' + MOCK_DATA.mrr.toLocaleString();
+  document.getElementById('mrr-change').textContent = MOCK_DATA.mrrChange;
+  document.getElementById('stat-users').textContent = MOCK_DATA.totalUsers.toLocaleString();
+  document.getElementById('users-change').textContent = '+' + MOCK_DATA.usersChange;
+  document.getElementById('stat-subs').textContent = MOCK_DATA.activeSubs;
+  document.getElementById('subs-change').textContent = '+' + MOCK_DATA.subsChange;
+  document.getElementById('stat-churn').textContent = MOCK_DATA.churnRate;
+
+  drawRevenueChart('30d');
+  renderPlatformBreakdown();
+  renderRecentUsers();
+  renderActivityDash();
+}
+
+/* ══ REVENUE CHART ══ */
+function drawRevenueChart(period) {
+  chartPeriod = period;
+  ['7d','30d','90d'].forEach(function(p) {
+    var btn = document.getElementById('ch-' + p);
+    if (btn) {
+      btn.className = 'btn btn-sm ' + (p === period ? 'btn-gold' : 'btn-out');
+    }
+  });
+
+  var data = MOCK_DATA.revenueData[period] || MOCK_DATA.revenueData['30d'];
+  var svg = document.getElementById('revenue-chart');
+  if (!svg) return;
+  var W = 600, H = 200, PAD = 40;
+  var max = Math.max.apply(null, data) * 1.1;
+  var min = 0;
+  var n = data.length;
+
+  function sx(i) { return PAD + (i / (n-1)) * (W - PAD*2); }
+  function sy(v) { return H - PAD - ((v-min)/(max-min)) * (H - PAD*2); }
+
+  var points = data.map(function(v,i) { return sx(i) + ',' + sy(v); }).join(' ');
+  var areaPoints = 'M' + sx(0) + ',' + sy(data[0]) + ' ' +
+    data.map(function(v,i) { return 'L' + sx(i) + ',' + sy(v); }).join(' ') +
+    ' L' + sx(n-1) + ',' + H + ' L' + sx(0) + ',' + H + ' Z';
+
+  var html = '<defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c9a84c" stop-opacity=".3"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></linearGradient></defs>';
+
+  // Grid lines
+  for (var g = 0; g <= 4; g++) {
+    var gy = PAD + (g/4) * (H - PAD*2);
+    var gv = max * (1 - g/4);
+    html += '<line x1="' + PAD + '" y1="' + gy + '" x2="' + (W-PAD) + '" y2="' + gy + '" stroke="rgba(255,255,255,.05)" stroke-width="1"/>';
+    html += '<text x="' + (PAD-5) + '" y="' + (gy+4) + '" fill="rgba(255,255,255,.25)" font-size="10" text-anchor="end">$' + Math.round(gv/1000) + 'K</text>';
+  }
+
+  // Area fill
+  html += '<path d="' + areaPoints + '" fill="url(#rg)"/>';
+  // Line
+  html += '<polyline points="' + points + '" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  // Data points (last 5)
+  data.forEach(function(v, i) {
+    if (i % Math.max(1, Math.floor(n/6)) === 0 || i === n-1) {
+      html += '<circle cx="' + sx(i) + '" cy="' + sy(v) + '" r="4" fill="#c9a84c" stroke="var(--ink)" stroke-width="2"/>';
+    }
+  });
+  // Last value label
+  var lastX = sx(n-1), lastY = sy(data[n-1]);
+  html += '<rect x="' + (lastX-28) + '" y="' + (lastY-22) + '" width="56" height="18" rx="4" fill="rgba(201,168,76,.15)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>';
+  html += '<text x="' + lastX + '" y="' + (lastY-10) + '" fill="#c9a84c" font-size="10" text-anchor="middle" font-family="monospace">$' + (data[n-1]/1000).toFixed(1) + 'K</text>';
+
+  svg.innerHTML = html;
+}
+
+function setChartPeriod(p) { drawRevenueChart(p); }
+
+/* ══ PLATFORM BREAKDOWN ══ */
+function renderPlatformBreakdown() {
+  var el = document.getElementById('platform-breakdown');
+  if (!el) return;
+  var total = MOCK_DATA.platforms.reduce(function(a,p){ return a + p.revenue; }, 0);
+  el.innerHTML = '';
+  MOCK_DATA.platforms.filter(function(p){ return p.revenue > 0; }).forEach(function(p) {
+    var pct = total > 0 ? ((p.revenue / total) * 100).toFixed(1) : 0;
+    var div = document.createElement('div');
+    div.style.cssText = 'margin-bottom:12px';
+    div.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.78rem"><span>' + p.icon + ' ' + p.name + '</span><span style="font-family:var(--fm);color:var(--gold)">$' + p.revenue.toLocaleString() + '</span></div><div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%;background:' + p.color + '"></div></div>';
+    el.appendChild(div);
+  });
+}
+
+/* ══ RECENT USERS ══ */
+function renderRecentUsers() {
+  var tbody = document.getElementById('recent-users-tbl');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  MOCK_DATA.users.slice(0,6).forEach(function(u) {
+    var planBadge = {free:'b-gray',growth:'b-blue',pro:'b-pu',expert:'b-gold',lifetime:'b-green'}[u.plan] || 'b-gray';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><div style="display:flex;align-items:center;gap:7px"><span>' + u.country + '</span><div><div class="td-name" style="font-size:.8rem">' + u.name + '</div><div class="td-email">' + u.email + '</div></div></div></td><td><span class="badge ' + planBadge + '">' + u.plan + '</span></td><td style="font-family:var(--fm);font-size:.72rem;color:var(--t3)">' + u.joined + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+/* ══ ACTIVITY FEED ══ */
+function renderActivityDash() {
+  var el = document.getElementById('activity-feed-dash');
+  if (!el) return;
+  el.innerHTML = '';
+  MOCK_DATA.activities.slice(0,6).forEach(function(a) {
+    var div = document.createElement('div');
+    div.className = 'activity-item';
+    div.innerHTML = '<div class="act-avatar">' + a.icon + '</div><div class="act-content"><div class="act-text"><strong>' + a.user + '</strong> ' + a.action + '</div><div class="act-time">' + a.time + ' · ' + a.country + '</div></div>';
+    el.appendChild(div);
+  });
+}
+
+/* ══ PLATFORMS PAGE ══ */
+function renderPlatforms() {
+  var grid = document.getElementById('platforms-grid');
+  if (!grid || grid.children.length > 0) return;
+  MOCK_DATA.platforms.forEach(function(p) {
+    var statusBadge = {active:'b-green',beta:'b-gold',coming:'b-gray',dev:'b-blue'}[p.status] || 'b-gray';
+    var statusText = {active:'Active',beta:'Beta',coming:'Coming Soon',dev:'In Dev'}[p.status] || p.status;
+    var card = document.createElement('div');
+    card.className = 'plt-card';
+    card.style.setProperty('--pc', p.color);
+    card.innerHTML = '<div class="plt-hd"><div class="plt-icon" style="background:' + p.color + '20;border-color:' + p.color + '30">' + p.icon + '</div><div class="plt-info"><div class="plt-name">' + p.name + '</div><div style="display:flex;gap:5px;margin-top:3px"><span class="badge ' + statusBadge + '">' + statusText + '</span></div></div></div><div class="plt-stats"><div class="plt-stat"><div class="plt-stat-val" style="color:' + p.color + '">' + p.users + '</div><div class="plt-stat-lbl">Users</div></div><div class="plt-stat"><div class="plt-stat-val" style="color:var(--gold)">$' + p.revenue.toLocaleString() + '</div><div class="plt-stat-lbl">Revenue</div></div><div class="plt-stat"><div class="plt-stat-val">—</div><div class="plt-stat-lbl">NPS</div></div></div><div class="plt-footer"><div style="display:flex;gap:5px">' + (p.url !== '#' ? '<button class="btn btn-out btn-sm" onclick="window.open(\''+p.url+'\',\'_blank\')">Open →</button>' : '<span style="font-size:.72rem;color:var(--t3)">Not deployed</span>') + '</div><div style="display:flex;gap:5px"><button class="btn btn-out btn-sm btn-icon" onclick="editPlatform(\'' + p.id + '\')" title="Edit">✏️</button><button class="btn btn-red btn-sm btn-icon" onclick="togglePlatform(\'' + p.id + '\')" title="Toggle">👁️</button></div></div>';
+    grid.appendChild(card);
+  });
+}
+
+/* ══ USERS PAGE ══ */
+var filteredUsers = [];
+function renderUsers() {
+  filteredUsers = MOCK_DATA.users;
+  renderUsersTable();
+}
+function filterUsers() {
+  var search = (document.getElementById('user-search').value || '').toLowerCase();
+  var plan = document.getElementById('user-filter-plan').value;
+  var status = document.getElementById('user-filter-status').value;
+  filteredUsers = MOCK_DATA.users.filter(function(u) {
+    var matchSearch = !search || u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search);
+    var matchPlan = !plan || u.plan === plan;
+    var matchStatus = !status || u.status === status;
+    return matchSearch && matchPlan && matchStatus;
+  });
+  usersCurrentPage = 0;
+  renderUsersTable();
+}
+function renderUsersTable() {
+  var tbody = document.getElementById('users-tbl');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  var start = usersCurrentPage * USERS_PER_PAGE;
+  var page = filteredUsers.slice(start, start + USERS_PER_PAGE);
+  page.forEach(function(u) {
+    var planBadge = {free:'b-gray',growth:'b-blue',pro:'b-pu',expert:'b-gold',lifetime:'b-green'}[u.plan] || 'b-gray';
+    var statBadge = {active:'b-green',suspended:'b-red',cancelled:'b-gray'}[u.status] || 'b-gray';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:1rem">' + u.country + '</span><div><div class="td-name">' + u.name + '</div><div class="td-email">' + u.email + '</div></div></div></td><td><span class="badge ' + planBadge + '">' + u.plan + '</span></td><td><span style="font-family:var(--fm);font-size:.72rem;color:var(--t3)">' + u.platforms.join(', ') + '</span></td><td><span style="font-family:var(--fm);font-size:.8rem;color:var(--gold)">' + (u.mrr > 0 ? '$' + u.mrr + '/mo' : 'Free') + '</span></td><td class="td-mono" style="font-size:.72rem;color:var(--t3)">' + u.joined + '</td><td><span class="badge ' + statBadge + '"><span class="b-dot"></span>' + u.status + '</span></td><td><div class="td-actions"><button class="btn btn-out btn-sm btn-icon" onclick="viewUser(\'' + u.id + '\')" title="View">👁️</button><button class="btn btn-out btn-sm btn-icon" onclick="editUser(\'' + u.id + '\')" title="Edit">✏️</button>' + (u.status === 'active' ? '<button class="btn btn-red btn-sm btn-icon" onclick="suspendUser(\'' + u.id + '\')" title="Suspend">🚫</button>' : '<button class="btn btn-green btn-sm btn-icon" onclick="activateUser(\'' + u.id + '\')" title="Activate">✅</button>') + '</div></td>';
+    tbody.appendChild(tr);
+  });
+  document.getElementById('users-count').textContent = 'Showing ' + (start+1) + '-' + Math.min(start+USERS_PER_PAGE, filteredUsers.length) + ' of ' + filteredUsers.length + ' users';
+}
+function usersPage(dir) {
+  var maxPage = Math.ceil(filteredUsers.length / USERS_PER_PAGE) - 1;
+  usersCurrentPage = Math.max(0, Math.min(maxPage, usersCurrentPage + dir));
+  renderUsersTable();
+}
+
+/* ══ SUBSCRIPTIONS ══ */
+function renderSubscriptions() {
+  var active = MOCK_DATA.users.filter(function(u){ return u.status==='active' && u.plan !== 'free'; }).length;
+  var lifetime = MOCK_DATA.users.filter(function(u){ return u.plan==='lifetime'; }).length;
+  var trial = 4; var cancelled = 8;
+  document.getElementById('sub-active').textContent = active;
+  document.getElementById('sub-lifetime').textContent = lifetime;
+  document.getElementById('sub-trial').textContent = trial;
+  document.getElementById('sub-cancelled').textContent = cancelled;
+  var tbody = document.getElementById('subs-tbl');
+  if (!tbody || tbody.children.length > 0) return;
+  MOCK_DATA.users.filter(function(u){ return u.plan !== 'free'; }).forEach(function(u) {
+    var planBadge = {growth:'b-blue',pro:'b-pu',expert:'b-gold',lifetime:'b-green'}[u.plan] || 'b-gray';
+    var nextBill = u.plan === 'lifetime' ? 'Never' : '2024-04-01';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><div class="td-name">' + u.name + '</div><div class="td-email">' + u.email + '</div></td><td><span class="badge ' + planBadge + '">' + u.plan + '</span></td><td style="font-family:var(--fm);color:var(--gold)">' + (u.mrr > 0 ? '$' + u.mrr + '/mo' : '$399 once') + '</td><td class="td-mono" style="font-size:.72rem;color:var(--t3)">' + nextBill + '</td><td><span class="badge b-green"><span class="b-dot"></span>active</span></td><td><div class="td-actions"><button class="btn btn-out btn-sm" onclick="cancelSub(\'' + u.id + '\')">Cancel</button><button class="btn btn-gold btn-sm" onclick="upgradeSub(\'' + u.id + '\')">Upgrade</button></div></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+/* ══ REVENUE PAGE ══ */
+function renderRevenue() {
+  document.getElementById('rev-total').textContent = '$' + MOCK_DATA.totalRevenue.toLocaleString();
+  document.getElementById('rev-mrr').textContent = '$' + MOCK_DATA.mrr.toLocaleString();
+  document.getElementById('rev-arr').textContent = '$' + MOCK_DATA.arr.toLocaleString();
+  document.getElementById('rev-ltd').textContent = '$' + MOCK_DATA.ltdRevenue.toLocaleString();
+  var tbody = document.getElementById('transactions-tbl');
+  if (!tbody || tbody.children.length > 0) return;
+  MOCK_DATA.transactions.forEach(function(t) {
+    var statBadge = t.status === 'success' ? 'b-green' : 'b-red';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td class="td-mono" style="font-size:.72rem;color:var(--t3)">' + t.date + '</td><td class="td-name">' + t.user + '</td><td><span class="badge b-pu">' + t.plan + '</span></td><td style="font-family:var(--fm);color:var(--gold);font-weight:700">$' + t.amount + '</td><td class="td-mono" style="font-size:.74rem">' + t.method + '</td><td><span class="badge ' + statBadge + '"><span class="b-dot"></span>' + t.status + '</span></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+/* ══ PRICING EDITOR ══ */
+var PRICING_CONFIG = {
+  prism:  {tiers:['Free','Clear','Pro','Expert'],prices:['0','7','19','39'],arabPrices:['0','4','9','19']},
+  kashf:  {tiers:['Free','Pro','Advisor','API B2B'],prices:['0','9','29','199'],arabPrices:['0','5','15','99']},
+  uniuber:{tiers:['Browse','Sourcer','Corp','Supplier'],prices:['0','99','299','199'],arabPrices:['0','49','149','99']},
+  master: {tiers:['Free','Team','Corp'],prices:['0','39','149'],arabPrices:['0','19','74']},
+  bundle: {tiers:['Spark','Growth','Pro All','Expert All'],prices:['0','29','69','129'],arabPrices:['0','14','34','64']},
+};
+
+function renderPricingEditor() {
+  var el = document.getElementById('pricing-platforms');
+  if (!el || el.children.length > 0) return;
+  Object.entries(PRICING_CONFIG).forEach(function(entry) {
+    var key = entry[0], cfg = entry[1];
+    var names = {prism:'🔮 Prism Suite',kashf:'👁️ Kashf',uniuber:'👔 UniUber',master:'📊 Master 365',bundle:'⭐ Bundle Plans'};
+    var wrap = document.createElement('div');
+    wrap.className = 'price-platform';
+    var hd = document.createElement('div');
+    hd.className = 'price-platform-hd';
+    hd.innerHTML = '<div style="font-family:var(--fd);font-size:1.05rem;font-weight:700">' + (names[key]||key) + '</div><div style="font-size:.76rem;color:var(--t2)">' + cfg.tiers.length + ' tiers</div>';
+    wrap.appendChild(hd);
+    var grid = document.createElement('div');
+    grid.className = 'price-tiers';
+    cfg.tiers.forEach(function(tier, i) {
+      var tc = document.createElement('div');
+      tc.className = 'price-tier';
+      tc.innerHTML = '<div class="price-tier-name">' + tier + '</div><div class="form-group"><label class="f-label">Global $/mo</label><input class="f-inp" type="number" value="' + cfg.prices[i] + '" id="price-' + key + '-' + i + '" min="0"/></div><div class="form-group"><label class="f-label">Arab World</label><input class="f-inp" type="number" value="' + cfg.arabPrices[i] + '" id="aprice-' + key + '-' + i + '" min="0"/></div>';
+      grid.appendChild(tc);
+    });
+    wrap.appendChild(grid);
+    el.appendChild(wrap);
+  });
+}
+
+/* ══ PAYMENT ACCOUNTS ══ */
+function renderPayments() {
+  var el = document.getElementById('payment-accounts');
+  if (!el || el.children.length > 0) return;
+  MOCK_DATA.paymentAccounts.forEach(function(acc) {
+    var statBadge = acc.status === 'active' ? 'b-green' : 'b-red';
+    var div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:center;gap:10px;padding:12px;background:var(--deep);border-radius:var(--r8);margin-bottom:8px;border:1px solid rgba(255,255,255,.06)';
+    div.innerHTML = '<div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">' + (acc.type==='stripe'?'💳':'🅿️') + '</div><div style="flex:1;min-width:0"><div style="font-size:.82rem;font-weight:600">' + acc.name + '</div><div style="font-family:var(--fm);font-size:.66rem;color:var(--t3)">' + acc.key + '</div></div><span class="badge ' + statBadge + '"><span class="b-dot"></span>' + acc.status + '</span><button class="btn btn-out btn-sm btn-icon" onclick="notif(\'Edit account feature coming soon!\',\'info\')" title="Edit">✏️</button>';
+    el.appendChild(div);
+  });
+  // Payment methods
+  var pm = document.getElementById('payment-methods');
+  if (pm && pm.children.length === 0) {
+    var methods = [
+      {name:'Visa / MC',icon:'💳',status:'active'},
+      {name:'Stripe',icon:'🔷',status:'active'},
+      {name:'PayPal',icon:'🅿️',status:'active'},
+      {name:'Apple Pay',icon:'🍎',status:'active'},
+      {name:'Google Pay',icon:'🟡',status:'active'},
+      {name:'Bank Transfer',icon:'🏦',status:'active'},
+      {name:'Mada (SA)',icon:'🇸🇦',status:'active'},
+      {name:'STC Pay',icon:'📱',status:'coming'},
+    ];
+    methods.forEach(function(m) {
+      var div = document.createElement('div');
+      div.style.cssText = 'padding:12px;background:var(--deep);border-radius:var(--r8);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px';
+      div.innerHTML = '<span style="font-size:1.2rem">' + m.icon + '</span><div><div style="font-size:.78rem;font-weight:600">' + m.name + '</div><span class="badge ' + (m.status==='active'?'b-green':'b-gray') + '">' + m.status + '</span></div>';
+      pm.appendChild(div);
+    });
+  }
+  // Routing rules
+  var rr = document.getElementById('routing-rules');
+  if (rr && rr.children.length === 0) {
+    MOCK_DATA.paymentAccounts.forEach(function(acc) {
+      var div = document.createElement('div');
+      div.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.8rem';
+      div.innerHTML = '<span style="color:var(--t2)">' + acc.name + '</span><span style="font-family:var(--fm);font-size:.7rem;color:var(--gold)">' + acc.platforms.join(', ') + '</span><button class="btn btn-out btn-sm" onclick="notif(\'Edit routing coming soon!\',\'info\')">Edit</button>';
+      rr.appendChild(div);
+    });
+  }
+}
+
+/* ══ ANALYTICS PAGE ══ */
+function renderAnalytics() {
+  document.getElementById('stat-analyses').textContent = MOCK_DATA.analyses.toLocaleString();
+  document.getElementById('stat-conversion').textContent = MOCK_DATA.conversion;
+  document.getElementById('stat-ltv').textContent = '$' + MOCK_DATA.ltv;
+  // Countries
+  var cc = document.getElementById('top-countries');
+  if (cc && cc.children.length === 0) {
+    MOCK_DATA.countries.forEach(function(c) {
+      var div = document.createElement('div');
+      div.style.cssText = 'margin-bottom:12px';
+      div.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.78rem"><span>' + c.flag + ' ' + c.name + '</span><span style="font-family:var(--fm);color:var(--t2)">' + c.users + ' users · ' + c.pct + '%</span></div><div class="prog-bar"><div class="prog-fill" style="width:' + c.pct*4 + '%;background:var(--gold)"></div></div>';
+      cc.appendChild(div);
+    });
+  }
+  // Languages
+  var ll = document.getElementById('top-langs');
+  if (ll && ll.children.length === 0) {
+    var langs = [{name:'Arabic',pct:35,color:'var(--gold)'},{name:'English',pct:28,color:'var(--pri)'},{name:'French',pct:8,color:'var(--cy)'},{name:'German',pct:5,color:'var(--gn)'},{name:'Others (101+)',pct:24,color:'var(--t3)'}];
+    langs.forEach(function(l) {
+      var div = document.createElement('div');
+      div.style.cssText = 'margin-bottom:12px';
+      div.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.78rem"><span>' + l.name + '</span><span style="font-family:var(--fm);color:' + l.color + '">' + l.pct + '%</span></div><div class="prog-bar"><div class="prog-fill" style="width:' + l.pct*2 + '%;background:' + l.color + '"></div></div>';
+      ll.appendChild(div);
+    });
+  }
+  // Platform usage bars
+  var pu = document.getElementById('platform-usage-chart');
+  if (pu && pu.children.length === 0) {
+    MOCK_DATA.platforms.forEach(function(p) {
+      var pct = Math.round((p.users / MOCK_DATA.totalUsers) * 100);
+      var div = document.createElement('div');
+      div.innerHTML = '<div style="display:flex;align-items:center;gap:10px"><div style="width:28px;text-align:center">' + p.icon + '</div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.78rem"><span>' + p.name + '</span><span style="font-family:var(--fm);color:' + p.color + '">' + p.users + ' MAU · ' + pct + '%</span></div><div class="prog-bar"><div class="prog-fill" style="width:' + pct*3 + '%;background:' + p.color + '"></div></div></div></div>';
+      pu.appendChild(div);
+    });
+  }
+}
+
+/* ══ LIVE ACTIVITY ══ */
+function renderLiveActivity() {
+  var el = document.getElementById('live-activity-feed');
+  if (!el) return;
+  el.innerHTML = '';
+  MOCK_DATA.activities.forEach(function(a) {
+    var div = document.createElement('div');
+    div.className = 'activity-item';
+    var typeColor = {signup:'var(--gn)',payment:'var(--gold)',analysis:'var(--cy)',cancel:'var(--rd)'}[a.type] || 'var(--t2)';
+    div.innerHTML = '<div class="act-avatar" style="background:rgba(0,0,0,.2)">' + a.icon + '</div><div class="act-content"><div class="act-text"><strong>' + a.user + '</strong> ' + a.action + '</div><div class="act-time" style="color:' + typeColor + '">' + a.time + ' · ' + a.country + '</div></div>';
+    el.appendChild(div);
+  });
+  // Active users now
+  var aun = document.getElementById('active-users-now');
+  if (aun && aun.children.length === 0) {
+    var activeNow = MOCK_DATA.users.slice(0,4);
+    activeNow.forEach(function(u) {
+      var div = document.createElement('div');
+      div.className = 'activity-item';
+      div.innerHTML = '<div class="act-avatar" style="background:var(--gng);border:1px solid rgba(34,197,94,.2)">' + u.country + '</div><div class="act-content"><div class="act-text"><strong>' + u.name + '</strong></div><div class="act-time" style="color:var(--gn)">● Online · Using ' + u.platforms[0] + '</div></div>';
+      aun.appendChild(div);
+    });
+  }
+  // Active sessions
+  var as = document.getElementById('active-sessions');
+  if (as && as.children.length === 0) {
+    MOCK_DATA.platforms.slice(0,4).forEach(function(p) {
+      var sessions = Math.floor(Math.random()*20)+2;
+      var div = document.createElement('div');
+      div.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.8rem';
+      div.innerHTML = '<span>' + p.icon + '</span><span style="flex:1">' + p.name + '</span><span style="font-family:var(--fm);font-size:.72rem;color:var(--gn)">' + sessions + ' active</span>';
+      as.appendChild(div);
+    });
+  }
+}
+
+/* ══ SETTINGS ══ */
+function renderSettings() {
+  var il = document.getElementById('integrations-list');
+  if (!il || il.children.length > 0) return;
+  MOCK_DATA.integrations.forEach(function(i) {
+    var div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)';
+    div.innerHTML = '<span style="font-size:1.1rem">' + i.icon + '</span><span style="flex:1;font-size:.82rem;font-weight:600">' + i.name + '</span><span class="badge ' + (i.status==='connected'?'b-green':'b-gray') + '">' + i.status + '</span><button class="btn btn-out btn-sm" onclick="notif(\'' + i.name + ' integration settings coming soon!\',\'info\')">' + (i.status==='connected'?'Manage':'Connect') + '</button>';
+    il.appendChild(div);
+  });
+}
+
+/* ══ SECURITY PAGE ══ */
+function renderSecurity() {
+  var tbody = document.getElementById('login-history-tbl');
+  if (!tbody || tbody.children.length > 0) return;
+  MOCK_DATA.loginHistory.forEach(function(l) {
+    var tr = document.createElement('tr');
+    var statBadge = l.status === 'success' ? 'b-green' : 'b-red';
+    tr.innerHTML = '<td class="td-mono" style="font-size:.72rem;color:var(--t3)">' + l.dt + '</td><td><span class="badge ' + statBadge + '"><span class="b-dot"></span>' + l.status + '</span></td><td style="font-size:.78rem;color:var(--t2)">' + l.device + '</td><td style="font-size:.78rem">' + l.action + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+/* ══ ACTIONS ══ */
+function editPlatform(id) {
+  var p = MOCK_DATA.platforms.find(function(x){ return x.id===id; });
+  if (!p) return;
+  openModalContent('Edit Platform — ' + p.name,
+    '<div class="form-grid">' +
+    '<div class="form-group"><label class="f-label">Platform Name</label><input class="f-inp" type="text" value="' + p.name + '" id="edit-pname"/></div>' +
+    '<div class="form-group"><label class="f-label">Status</label><select class="f-inp f-select" id="edit-pstatus"><option value="active"' + (p.status==='active'?' selected':'') + '>Active</option><option value="beta"' + (p.status==='beta'?' selected':'') + '>Beta</option><option value="coming"' + (p.status==='coming'?' selected':'') + '>Coming Soon</option><option value="dev"' + (p.status==='dev'?' selected':'') + '>In Dev</option></select></div>' +
+    '<div class="form-group full"><label class="f-label">Platform URL</label><input class="f-inp" type="text" value="' + p.url + '" id="edit-purl"/></div>' +
+    '</div>',
+    [
+      {label:'Cancel', cls:'btn-out', fn:'closeModalDirect()'},
+      {label:'Save Changes', cls:'btn-gold', fn:'savePlatformEdit("'+id+'")'}
+    ]
+  );
+}
+
+function togglePlatform(id) { notif('Platform visibility toggled.', 'success'); }
+function viewUser(id) { var u = MOCK_DATA.users.find(function(x){return x.id===id;}); if(u) notif('Viewing: ' + u.name, 'info'); }
+function editUser(id) { notif('User edit panel coming soon!', 'info'); }
+function suspendUser(id) { var u = MOCK_DATA.users.find(function(x){return x.id===id;}); if(u){u.status='suspended';notif('User suspended: ' + u.name,'warn');renderUsers();} }
+function activateUser(id) { var u = MOCK_DATA.users.find(function(x){return x.id===id;}); if(u){u.status='active';notif('User activated: ' + u.name,'success');renderUsers();} }
+function cancelSub(id) { notif('Subscription cancel confirmation sent.', 'warn'); }
+function upgradeSub(id) { notif('Upgrade flow coming soon!', 'info'); }
+function savePlatformEdit(id) { notif('Platform updated successfully!', 'success'); closeModalDirect(); }
+function savePricingSettings() { notif('Pricing configuration saved! Changes will reflect on landing page.', 'success'); }
+function saveSettings() { notif('Settings saved successfully!', 'success'); }
+function updateLTDSpots() { var v = document.getElementById('ltd-spots-count').value; notif('Lifetime spots updated to ' + v, 'success'); }
+function exportData() { notif('Export started — CSV will download shortly. (Supabase integration required for real data)', 'info'); }
+function clearActivityLog() { var el = document.getElementById('live-activity-feed'); if(el) el.innerHTML=''; notif('Activity log cleared.', 'success'); }
+
+function changePassword() {
+  var cur = document.getElementById('sec-cur-pass').value;
+  var nw = document.getElementById('sec-new-pass').value;
+  var cf = document.getElementById('sec-conf-pass').value;
+  if (!cur || !nw || !cf) { notif('Please fill all fields.', 'warn'); return; }
+  if (cur !== AZ_CONFIG.ADMIN_PASS) { notif('Current password incorrect.', 'error'); return; }
+  if (nw !== cf) { notif('New passwords do not match.', 'error'); return; }
+  if (nw.length < 8) { notif('Password must be at least 8 characters.', 'warn'); return; }
+  AZ_CONFIG.ADMIN_PASS = nw;
+  notif('Password updated successfully! Store it securely.', 'success');
+  ['sec-cur-pass','sec-new-pass','sec-conf-pass'].forEach(function(id){ var el=document.getElementById(id);if(el)el.value=''; });
+}
+
+function changePIN() {
+  var cur = ['sec-pin-1','sec-pin-2','sec-pin-3','sec-pin-4'].map(function(id){ return document.getElementById(id).value; }).join('');
+  var nw = ['sec-npin-1','sec-npin-2','sec-npin-3','sec-npin-4'].map(function(id){ return document.getElementById(id).value; }).join('');
+  if (cur !== AZ_CONFIG.ADMIN_PIN) { notif('Current PIN incorrect.', 'error'); return; }
+  if (nw.length < 4) { notif('Please enter a full 4-digit PIN.', 'warn'); return; }
+  AZ_CONFIG.ADMIN_PIN = nw;
+  notif('PIN updated successfully!', 'success');
+}
+
+function checkPassStrength() {
+  var pass = document.getElementById('sec-new-pass').value;
+  var bar = document.getElementById('pass-strength-bar');
+  var txt = document.getElementById('pass-strength-txt');
+  if (!bar || !txt) return;
+  var score = 0;
+  if (pass.length >= 8) score++;
+  if (pass.length >= 12) score++;
+  if (/[A-Z]/.test(pass)) score++;
+  if (/[0-9]/.test(pass)) score++;
+  if (/[^A-Za-z0-9]/.test(pass)) score++;
+  var configs = [
+    {pct:0,color:'var(--rd)',label:'Enter a password'},
+    {pct:20,color:'var(--rd)',label:'Very weak'},
+    {pct:40,color:'var(--or)',label:'Weak'},
+    {pct:60,color:'var(--gold)',label:'Fair'},
+    {pct:80,color:'var(--gn)',label:'Strong'},
+    {pct:100,color:'var(--gn)',label:'Very strong ✓'},
+  ];
+  var cfg = configs[score];
+  bar.style.width = cfg.pct + '%';
+  bar.style.background = cfg.color;
+  txt.textContent = cfg.label;
+  txt.style.color = cfg.color;
+}
+
+/* ══ MODAL ══ */
+function openModal(type) {
+  var configs = {
+    'add-platform': {
+      title: 'Add New Platform',
+      body: '<div class="form-grid"><div class="form-group"><label class="f-label">Platform Name</label><input class="f-inp" type="text" id="np-name" placeholder="e.g. Analytics Pro"/></div><div class="form-group"><label class="f-label">Icon (emoji)</label><input class="f-inp" type="text" id="np-icon" placeholder="🚀" maxlength="2"/></div><div class="form-group full"><label class="f-label">Description</label><textarea class="f-inp f-textarea" id="np-desc" placeholder="Brief description of the platform..."></textarea></div><div class="form-group"><label class="f-label">Starting Price ($/mo)</label><input class="f-inp" type="number" id="np-price" value="0" min="0"/></div><div class="form-group"><label class="f-label">Status</label><select class="f-inp f-select" id="np-status"><option value="coming">Coming Soon</option><option value="dev">In Development</option><option value="beta">Beta</option><option value="active">Active</option></select></div><div class="form-group full"><label class="f-label">Platform URL (relative or absolute)</label><input class="f-inp" type="text" id="np-url" placeholder="platform-name.html or https://..."/></div></div>',
+      actions: [{label:'Cancel',cls:'btn-out',fn:'closeModalDirect()'},{label:'Add Platform',cls:'btn-gold',fn:'addPlatform()'}]
+    },
+    'invite-user': {
+      title: 'Invite User',
+      body: '<div class="form-grid"><div class="form-group"><label class="f-label">Full Name</label><input class="f-inp" type="text" id="inv-name" placeholder="John Doe"/></div><div class="form-group full"><label class="f-label">Email Address</label><input class="f-inp" type="email" id="inv-email" placeholder="user@email.com"/></div><div class="form-group"><label class="f-label">Plan</label><select class="f-inp f-select" id="inv-plan"><option value="free">Free</option><option value="growth">Growth</option><option value="pro" selected>Pro</option><option value="expert">Expert</option><option value="lifetime">Lifetime</option></select></div><div class="form-group"><label class="f-label">Trial Days</label><input class="f-inp" type="number" id="inv-trial" value="14"/></div></div><div style="margin-top:10px;padding:10px;background:var(--prig);border-radius:var(--r8);font-size:.78rem;color:var(--pril)">⚡ User will receive an invitation email with account setup link. (Requires Supabase email integration)</div>',
+      actions: [{label:'Cancel',cls:'btn-out',fn:'closeModalDirect()'},{label:'Send Invitation',cls:'btn-gold',fn:'sendInvite()'}]
+    },
+    'add-payment': {
+      title: 'Add Payment Account',
+      body: '<div class="form-grid"><div class="form-group"><label class="f-label">Account Name</label><input class="f-inp" type="text" placeholder="e.g. Stripe — Gulf Region" id="pay-name"/></div><div class="form-group"><label class="f-label">Type</label><select class="f-inp f-select" id="pay-type"><option value="stripe">Stripe</option><option value="paypal">PayPal</option><option value="bank">Bank Transfer</option></select></div><div class="form-group full"><label class="f-label">API Key / Account ID</label><input class="f-inp" type="password" placeholder="sk_live_..." id="pay-key"/></div><div class="form-group full"><label class="f-label">Assign to Platforms</label><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">' + MOCK_DATA.platforms.map(function(p){ return '<label style="display:flex;align-items:center;gap:4px;font-size:.76rem;cursor:pointer;padding:4px 8px;border-radius:5px;border:1px solid rgba(255,255,255,.08);background:var(--deep)"><input type="checkbox" value="'+p.id+'" style="accent-color:var(--gold)"/> '+p.icon+' '+p.name+'</label>'; }).join('') + '</div></div></div>',
+      actions: [{label:'Cancel',cls:'btn-out',fn:'closeModalDirect()'},{label:'Add Account',cls:'btn-gold',fn:'addPaymentAccount()'}]
+    },
+  };
+  var cfg = configs[type];
+  if (!cfg) return;
+  openModalContent(cfg.title, cfg.body, cfg.actions);
+}
+
+function openModalContent(title, body, actions) {
+  document.getElementById('modal-title-txt').textContent = title;
+  document.getElementById('modal-body-content').innerHTML = body;
+  var footer = document.getElementById('modal-footer-content');
+  footer.innerHTML = '';
+  (actions||[]).forEach(function(a) {
+    var btn = document.createElement('button');
+    btn.className = 'btn ' + a.cls;
+    btn.textContent = a.label;
+    btn.onclick = function() {
+      var fnMap = {
+        'closeModalDirect()': closeModalDirect,
+        'sendInvite()': (typeof sendInvite==='function'?sendInvite:function(){}),
+        'addPaymentAccount()': (typeof addPaymentAccount==='function'?addPaymentAccount:function(){}),
+        'addPlatform()': (typeof addPlatform==='function'?addPlatform:function(){})
+      };
+      var fn = fnMap[a.fn];
+      if (typeof fn === 'function') fn();
+    };
+    footer.appendChild(btn);
+  });
+  document.getElementById('admin-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) { if (e.target === document.getElementById('admin-modal')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('admin-modal').classList.remove('open'); document.body.style.overflow = ''; }
+
+function addPlatform() {
+  var name = document.getElementById('np-name').value;
+  var icon = document.getElementById('np-icon').value || '🔧';
+  if (!name) { notif('Platform name is required.', 'warn'); return; }
+  var newP = {id:'p'+Date.now(),name:name,icon:icon,color:'#8892b0',users:0,revenue:0,status:document.getElementById('np-status').value,url:document.getElementById('np-url').value||'#'};
+  MOCK_DATA.platforms.push(newP);
+  var grid = document.getElementById('platforms-grid');
+  if (grid) grid.innerHTML = '';
+  renderPlatforms();
+  closeModalDirect();
+  notif('Platform "' + name + '" added successfully!', 'success');
+}
+
+function sendInvite() {
+  var email = document.getElementById('inv-email').value;
+  if (!email || email.indexOf('@') < 0) { notif('Valid email required.', 'warn'); return; }
+  closeModalDirect();
+  notif('Invitation sent to ' + email + ' · (Requires Supabase email integration)', 'success');
+}
+
+function addPaymentAccount() {
+  var name = document.getElementById('pay-name').value;
+  if (!name) { notif('Account name required.', 'warn'); return; }
+  closeModalDirect();
+  notif('Payment account "' + name + '" added! Connect Supabase to activate.', 'success');
+}
+
+/* ══ NOTIFICATIONS ══ */
+function notif(msg, type) {
+  type = type || 'info';
+  var icons = {success:'✅',error:'❌',warn:'⚠️',info:'ℹ️'};
+  var container = document.getElementById('az-notif');
+  var item = document.createElement('div');
+  item.className = 'notif-item n-' + type;
+  item.innerHTML = '<span class="n-icon">' + icons[type] + '</span><span>' + msg + '</span>';
+  container.appendChild(item);
+  setTimeout(function() { item.classList.add('show'); }, 10);
+  setTimeout(function() {
+    item.classList.remove('show');
+    setTimeout(function() { if (item.parentNode) item.parentNode.removeChild(item); }, 400);
+  }, 4000);
+}
+
+/* ══ THEME ══ */
+function toggleAdminTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  var btn = document.getElementById('az-theme-btn');
+  if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+}
+
+/* ══ LIVE UPDATES (simulated) ══ */
+var liveInterval;
+function startLiveUpdates() {
+  liveInterval = setInterval(function() {
+    // Simulate live MRR ticking
+    var mrr = parseInt(document.getElementById('stat-mrr').textContent.replace(/[^0-9]/g,''));
+    if (Math.random() > 0.7) {
+      mrr += Math.floor(Math.random() * 50);
+      document.getElementById('stat-mrr').textContent = '$' + mrr.toLocaleString();
+    }
+    // Activity count
+    var cnt = document.getElementById('activity-count');
+    if (cnt) cnt.textContent = Math.floor(Math.random()*8)+1;
+    // Scroll progress
+    var sp = document.getElementById('az-sp');
+    if (sp) sp.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+  }, 3000);
+}
+
+/* ══ SCROLL PROGRESS ══ */
+window.addEventListener('scroll', function() {
+  var sp = document.getElementById('az-sp');
+  if (sp) sp.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+}, {passive:true});
+
+/* ══ KEYBOARD SHORTCUTS ══ */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModalDirect();
+  if (!document.getElementById('admin-app').style.display || document.getElementById('admin-app').style.display === 'none') return;
+  if (e.altKey) {
+    var shortcuts = {'1':'dashboard','2':'analytics','3':'platforms','4':'users','5':'pricing','6':'revenue','7':'settings'};
+    if (shortcuts[e.key]) { e.preventDefault(); switchPage(shortcuts[e.key]); }
+  }
+});
+
+/* ══ INIT ══ */
+window.addEventListener('load', function() {
+  if (!checkSession()) {
+    setTimeout(function() { document.getElementById('admin-pass').focus(); }, 300);
+  }
+});
+
+/* ══ MASTER CHECKOUT SWITCH ══ */
+function toggleCheckoutMaster(enabled) {
+  var badge = document.getElementById('checkout-status-badge');
+  if (enabled) {
+    if (badge) {
+      badge.textContent = '✅ مفعّل — الشراء الحقيقي يعمل عبر Stripe';
+      badge.className = 'b-green';
+      badge.style.cssText = 'font-family:var(--fm);font-size:.62rem;margin-top:5px;padding:4px 8px;border-radius:4px;display:inline-block;background:rgba(34,197,94,.1);color:var(--gn);border:1px solid rgba(34,197,94,.2)';
+    }
+    notif('✅ الشراء مفعّل — تأكد من إعداد Stripe أولاً!', 'success');
+  } else {
+    if (badge) {
+      badge.textContent = '⚠️ معطّل — الزوار يرون "قريباً"';
+      badge.className = 'b-red';
+      badge.style.cssText = 'font-family:var(--fm);font-size:.62rem;margin-top:5px;padding:4px 8px;border-radius:4px;display:inline-block;background:rgba(239,68,68,.1);color:var(--rd);border:1px solid rgba(239,68,68,.2)';
+    }
+    notif('⚠️ الشراء معطّل — الزوار سيرون "قريباً"', 'warn');
+  }
+  // Save to localStorage for persistence
+  try { localStorage.setItem('az_checkout_enabled', enabled ? '1' : '0'); } catch(e) {}
+}
+
+/* Load saved checkout state */
+(function() {
+  try {
+    var saved = localStorage.getItem('az_checkout_enabled');
+    if (saved === '1') {
+      var tog = document.getElementById('tog-checkout');
+      if (tog) { tog.checked = true; toggleCheckoutMaster(true); }
+    }
+  } catch(e) {}
+})();
+
+
+/* ══════════════════════════════════════════════════
+   ADMIN v2 — PRICING MANAGEMENT FUNCTIONS
+══════════════════════════════════════════════════ */
+
+/* ── Toggle Master Checkout ── */
+function azToggleMasterCheckout(on) {
+  AZ_MASTER.payment.enabled = on;
+  var label = document.getElementById('checkout-status-label');
+  var slider = document.getElementById('tog-checkout-slider');
+  var thumb = document.getElementById('tog-checkout-thumb');
+  if (on) {
+    if (label) { label.textContent = '● مفعّل'; label.style.color = '#22c55e'; }
+    if (slider) slider.style.background = 'rgba(34,197,94,.2)';
+    if (thumb) { thumb.style.background = '#22c55e'; thumb.style.right = 'auto'; thumb.style.left = '2px'; }
+  } else {
+    if (label) { label.textContent = '● موقوف'; label.style.color = '#ef4444'; }
+    if (slider) slider.style.background = '#1e2a3a';
+    if (thumb) { thumb.style.background = '#3d4a6b'; thumb.style.left = 'auto'; thumb.style.right = '2px'; }
+  }
+  azSaveConfig();
+  notif('تم ' + (on ? 'تفعيل' : 'إيقاف') + ' الشراء على كامل الموقع', on ? 'success' : 'info');
+}
+
+/* ── Render Pricing Tabs ── */
+function azRenderPricingTabs() {
+  var tabsEl = document.getElementById('az-pricing-tabs');
+  var contentEl = document.getElementById('az-pricing-content');
+  if (!tabsEl || !contentEl) return;
+
+  var platforms = Object.keys(AZ_MASTER.platforms);
+  tabsEl.innerHTML = '';
+  platforms.forEach(function(key, i) {
+    var plt = AZ_MASTER.platforms[key];
+    var tab = document.createElement('button');
+    tab.className = 'az-price-tab';
+    tab.style.cssText = 'padding:6px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:var(--t2);font-size:.75rem;cursor:pointer;transition:all .22s';
+    tab.innerHTML = plt.icon + ' ' + plt.name_ar;
+    tab.onclick = function() {
+      document.querySelectorAll('.az-price-tab').forEach(function(t) {
+        t.style.background = 'transparent'; t.style.borderColor = 'rgba(255,255,255,.1)'; t.style.color = 'var(--t2)';
+      });
+      tab.style.background = 'rgba(201,168,76,.1)'; tab.style.borderColor = '#c9a84c'; tab.style.color = '#c9a84c';
+      azRenderPlatformPricing(key);
+    };
+    tabsEl.appendChild(tab);
+    if (i === 0) {
+      tab.style.background = 'rgba(201,168,76,.1)'; tab.style.borderColor = '#c9a84c'; tab.style.color = '#c9a84c';
+    }
+  });
+
+  if (platforms.length > 0) azRenderPlatformPricing(platforms[0]);
+  azRenderBundlePricing();
+}
+
+/* ── Render Platform Pricing ── */
+function azRenderPlatformPricing(platformKey) {
+  var c = document.getElementById('az-pricing-content');
+  if (!c) return;
+  var plt = AZ_MASTER.platforms[platformKey];
+  if (!plt) return;
+  c.innerHTML = '';
+  var plans = plt.plans || {};
+  var hdr = document.createElement('div');
+  hdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:12px';
+  var t = document.createElement('div');
+  t.style.cssText = 'font-size:.9rem;font-weight:700';
+  t.textContent = plt.icon + ' ' + plt.name_ar;
+  hdr.appendChild(t);
+  var lbl = document.createElement('label');
+  lbl.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:.76rem;cursor:pointer';
+  var chk = document.createElement('input');
+  chk.type = 'checkbox'; chk.checked = !!plt.active;
+  var pk = platformKey;
+  chk.onchange = function(){ azTogglePlatformActive(pk, this.checked); };
+  lbl.appendChild(chk);
+  lbl.appendChild(document.createTextNode(' ظاهرة في الرئيسية'));
+  hdr.appendChild(lbl);
+  c.appendChild(hdr);
+  var w = document.createElement('div'); w.style.overflowX = 'auto';
+  var tbl = document.createElement('table'); tbl.style.cssText = 'width:100%;border-collapse:collapse';
+  var thead = document.createElement('thead');
+  var hr = document.createElement('tr'); hr.style.background = 'rgba(255,255,255,.04)';
+  ['الخطة','Global','Arab','Monthly','Annual'].forEach(function(tx,i){
+    var th = document.createElement('th');
+    th.style.cssText = 'padding:8px 12px;font-size:.68rem;color:var(--t3);text-align:'+(i===0?'right':'center');
+    th.textContent = tx; hr.appendChild(th);
+  });
+  thead.appendChild(hr); tbl.appendChild(thead);
+  var tbody = document.createElement('tbody');
+  Object.keys(plans).forEach(function(pl){ if(pl==='free')return;
+    var plan=plans[pl]; var tr=document.createElement('tr');
+    tr.style.borderBottom='1px solid rgba(255,255,255,.04)';
+    var td0=document.createElement('td'); td0.style.cssText='padding:10px 12px;font-size:.82rem;font-weight:600';
+    td0.textContent=pl; tr.appendChild(td0);
+    ['price','arab'].forEach(function(f){
+      var td=document.createElement('td'); td.style.cssText='padding:10px 12px;text-align:center';
+      var inp=document.createElement('input'); inp.type='number'; inp.value=plan[f]||0;
+      inp.style.cssText='width:65px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--t1);padding:5px 7px;border-radius:6px;font-size:.8rem;text-align:center';
+      var p2=platformKey,p3=pl,f2=f; inp.onchange=function(){azUpdatePlanPrice(p2,p3,f2,this.value);};
+      td.appendChild(inp); tr.appendChild(td);
+    });
+    ['paddle_m','paddle_a'].forEach(function(f){
+      var td=document.createElement('td'); td.style.cssText='padding:10px 12px;text-align:center';
+      var inp=document.createElement('input'); inp.type='text'; inp.value=plan[f]||''; inp.placeholder='pri_xxxxx';
+      inp.style.cssText='width:120px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:#c9a84c;padding:5px 7px;border-radius:6px;font-size:.72rem;font-family:monospace';
+      var p2=platformKey,p3=pl,f2=f; inp.onchange=function(){azUpdatePlanPrice(p2,p3,f2,this.value);};
+      td.appendChild(inp); tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody); w.appendChild(tbl); c.appendChild(w);
+}
+
+/* ── Render Bundle Pricing ── */
+function azRenderBundlePricing() {
+  var el = document.getElementById('az-bundles-pricing');
+  if (!el) return;
+  el.innerHTML = '';
+  var bundles = AZ_MASTER.bundles;
+  var w = document.createElement('div'); w.style.overflowX = 'auto';
+  var tbl = document.createElement('table'); tbl.style.cssText = 'width:100%;border-collapse:collapse';
+  var thead = document.createElement('thead');
+  var hr = document.createElement('tr'); hr.style.background = 'rgba(255,255,255,.04)';
+  ['الباقة','Global','Arab','Monthly','Annual'].forEach(function(tx,i){
+    var th=document.createElement('th');
+    th.style.cssText='padding:8px 12px;font-size:.68rem;color:var(--t3);text-align:'+(i===0?'right':'center');
+    th.textContent=tx; hr.appendChild(th);
+  });
+  thead.appendChild(hr); tbl.appendChild(thead);
+  var tbody = document.createElement('tbody');
+  Object.keys(bundles).forEach(function(key){
+    var b=bundles[key]; var tr=document.createElement('tr');
+    tr.style.borderBottom='1px solid rgba(255,255,255,.04)';
+    var td0=document.createElement('td'); td0.style.cssText='padding:10px 12px;font-size:.82rem;font-weight:600';
+    td0.textContent=key; tr.appendChild(td0);
+    ['price','arab'].forEach(function(f){
+      var td=document.createElement('td'); td.style.cssText='padding:10px 12px;text-align:center';
+      var inp=document.createElement('input'); inp.type='number'; inp.value=b[f]||0;
+      inp.style.cssText='width:65px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--t1);padding:5px 7px;border-radius:6px;font-size:.8rem;text-align:center';
+      var k2=key,f2=f; inp.onchange=function(){azUpdateBundle(k2,f2,this.value);};
+      td.appendChild(inp); tr.appendChild(td);
+    });
+    ['paddle_m','paddle_a'].forEach(function(f){
+      var td=document.createElement('td'); td.style.cssText='padding:10px 12px;text-align:center';
+      var inp=document.createElement('input'); inp.type='text'; inp.value=b[f]||''; inp.placeholder='pri_xxxxx';
+      inp.style.cssText='width:120px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:#c9a84c;padding:5px 7px;border-radius:6px;font-size:.72rem;font-family:monospace';
+      var k2=key,f2=f; inp.onchange=function(){azUpdateBundle(k2,f2,this.value);};
+      td.appendChild(inp); tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody); w.appendChild(tbl); el.appendChild(w);
+}
+
+/* ── Update Functions ── */
+function azUpdatePlanPrice(platform, plan, field, value) {
+  if (!AZ_MASTER.platforms[platform]) return;
+  if (!AZ_MASTER.platforms[platform].plans[plan]) return;
+  AZ_MASTER.platforms[platform].plans[plan][field] = field.startsWith('paddle') ? value : parseFloat(value);
+}
+
+function azUpdateBundle(key, field, value) {
+  if (!AZ_MASTER.bundles[key]) return;
+  AZ_MASTER.bundles[key][field] = field.startsWith('paddle') ? value : parseFloat(value);
+}
+
+function azTogglePlatformActive(key, active) {
+  if (AZ_MASTER.platforms[key]) AZ_MASTER.platforms[key].active = active;
+}
+
+function azSavePricing() {
+  azSaveConfig();
+  notif('✅ تم حفظ كل الأسعار وسيُطبَّق على كامل الموقع', 'success');
+}
+
+/* ── Add New Platform ── */
+function azToggleAddPlatform() {
+  var form = document.getElementById('az-add-platform-form');
+  if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function azAddNewPlatform() {
+  var id       = (document.getElementById('new-plt-id')      && document.getElementById('new-plt-id').value.trim().toLowerCase().replace(/\s/g,'')) || '';
+  var nameAr   = (document.getElementById('new-plt-name-ar') && document.getElementById('new-plt-name-ar').value.trim()) || '';
+  var nameEn   = (document.getElementById('new-plt-name-en') && document.getElementById('new-plt-name-en').value.trim()) || '';
+  var icon     = (document.getElementById('new-plt-icon')    && document.getElementById('new-plt-icon').value.trim()) || '🔧';
+  var descAr   = (document.getElementById('new-plt-desc-ar') && document.getElementById('new-plt-desc-ar').value.trim()) || '';
+  var color    = (document.getElementById('new-plt-color')   && document.getElementById('new-plt-color').value) || '#c9a84c';
+
+  if (!id || !nameAr || !nameEn) { notif('أدخل المعرّف والاسم بالعربية والإنجليزية', 'error'); return; }
+  if (AZ_MASTER.platforms[id]) { notif('هذا المعرّف موجود بالفعل', 'error'); return; }
+
+  AZ_MASTER.platforms[id] = {
+    active:    false,
+    name_ar:   nameAr,
+    name_en:   nameEn,
+    desc_ar:   descAr,
+    desc_en:   nameEn,
+    icon:      icon,
+    color:     color,
+    path:      '/platform?id=' + id,
+    plans: {
+      free: { price:0,  arab:0,  paddle_m:null, paddle_a:null },
+      pro:  { price:29, arab:14, paddle_m:null, paddle_a:null },
+    }
+  };
+
+  azSaveConfig();
+  azRenderPricingTabs();
+  azToggleAddPlatform();
+  notif('✅ تمت إضافة منصة ' + nameAr + ' — فعّلها عند الجهوز', 'success');
+}
+
+/* ── Init Pricing on page load ── */
+var _azOrigGoTo = typeof goTo === 'function' ? goTo : null;
+function goTo(id) {
+  if (_azOrigGoTo) _azOrigGoTo(id);
+  if (id === 'pricing') {
+    setTimeout(function() {
+      azRenderPricingTabs();
+      /* Set master switch state */
+      var tog = document.getElementById('tog-master-checkout');
+      if (tog) {
+        tog.checked = AZ_MASTER.payment.enabled;
+        azToggleMasterCheckout(AZ_MASTER.payment.enabled);
+      }
+    }, 100);
+  }
+}
+
+</script>
+<script>
+
+/* ══════════════════════════════════════════════════════
+   PLATFORM MANAGER — Admin Panel
+   إدارة المنصات بدون كود
+══════════════════════════════════════════════════════ */
+
+var PM_EDITING_KEY = null;
+
+/* ── Default Platform Data ── */
+var PM_DEFAULT_PLATFORMS = {
+  kashf:   { icon:'👁️', color:'#c9a84c', name_ar:'كشف', name_en:'Kashf', desc:'كشف الحقيقة المالية لأي قرض — IRR الحقيقي ودرجة التجميل', path:'/kashf', active:true, order:1 },
+  prism:   { icon:'🔮', color:'#60a5fa', name_ar:'Prism Suite', name_en:'Prism Suite', desc:'مقارنة القروض والـ IRR الحقيقي — أدوات متكاملة', path:'/prism', active:true, order:2 },
+  uniuber: { icon:'👔', color:'#38bdf8', name_ar:'UniUber', name_en:'UniUber', desc:'توريد الزي الموحد عالمياً — 1000+ مصنع موثّق', path:'/uniuber', active:true, order:3 },
+  mizan:   { icon:'⚖️', color:'#a78bfa', name_ar:'ميزان برو', name_en:'Mizan Pro', desc:'حاسبة نقطة التعادل الأشمل عربياً', path:'/mizan', active:false, order:4 },
+};
+
+/* ── Load platforms from localStorage or defaults ── */
+function pmGetPlatforms() {
+  try {
+    var saved = localStorage.getItem('pm_platforms');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(PM_DEFAULT_PLATFORMS));
+}
+
+function pmSavePlatforms(data) {
+  localStorage.setItem('pm_platforms', JSON.stringify(data));
+  /* Sync to AZ_MASTER */
+  try {
+    var cfg = JSON.parse(localStorage.getItem('az_master_config') || '{}');
+    if (!cfg.platforms) cfg.platforms = {};
+    Object.keys(data).forEach(function(key) {
+      if (!cfg.platforms[key]) cfg.platforms[key] = {};
+      cfg.platforms[key].active    = data[key].active;
+      cfg.platforms[key].name_ar   = data[key].name_ar;
+      cfg.platforms[key].name_en   = data[key].name_en;
+      cfg.platforms[key].desc_ar   = data[key].desc;
+      cfg.platforms[key].icon      = data[key].icon;
+      cfg.platforms[key].color     = data[key].color;
+      cfg.platforms[key].path      = data[key].path;
+    });
+    localStorage.setItem('az_master_config', JSON.stringify(cfg));
+  } catch(e) {}
+}
+
+/* ── Render Platforms List ── */
+function pmRenderList() {
+  var list = document.getElementById('pm-sortable-list');
+  if (!list) return;
+  var platforms = pmGetPlatforms();
+  var sorted = Object.keys(platforms).sort(function(a,b){
+    return (platforms[a].order || 99) - (platforms[b].order || 99);
+  });
+  list.innerHTML = '';
+
+  sorted.forEach(function(key) {
+    var plt = platforms[key];
+    var row = document.createElement('div');
+    row.setAttribute('data-key', key);
+    row.style.cssText = 'background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:all .25s;cursor:grab';
+
+    /* Drag Handle */
+    var drag = document.createElement('div');
+    drag.style.cssText = 'color:#3d4a6b;font-size:1.1rem;cursor:grab;flex-shrink:0;user-select:none';
+    drag.textContent = '⋮⋮';
+    drag.title = 'اسحب لإعادة الترتيب';
+
+    /* Icon */
+    var iconEl = document.createElement('div');
+    iconEl.style.cssText = 'width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:' + plt.color + '14;border:1px solid ' + plt.color + '30';
+    iconEl.textContent = plt.icon;
+
+    /* Info */
+    var info = document.createElement('div');
+    info.style.cssText = 'flex:1;min-width:0';
+    info.innerHTML = '<div style="font-weight:700;font-size:.9rem;margin-bottom:2px">' + plt.name_ar + ' <span style="font-family:monospace;font-size:.65rem;color:#3d4a6b;margin-right:4px">/ ' + plt.name_en + '</span></div>' +
+      '<div style="font-size:.75rem;color:#8892b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + plt.desc + '</div>' +
+      '<div style="font-family:monospace;font-size:.62rem;color:#3d4a6b;margin-top:2px">' + plt.path + '</div>';
+
+    /* Status Badge */
+    var status = document.createElement('div');
+    status.style.cssText = 'font-family:monospace;font-size:.62rem;padding:3px 10px;border-radius:20px;flex-shrink:0;' + (plt.active ? 'background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e' : 'background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);color:#ef4444');
+    status.textContent = plt.active ? '● مرئية' : '● مخفية';
+
+    /* Actions */
+    var actions = document.createElement('div');
+    actions.style.cssText = 'display:flex;gap:6px;flex-shrink:0';
+
+    /* Toggle Visibility */
+    var toggleBtn = document.createElement('button');
+    toggleBtn.style.cssText = 'padding:6px 11px;border-radius:7px;border:1.5px solid ' + (plt.active ? 'rgba(239,68,68,.2)' : 'rgba(34,197,94,.2)') + ';background:transparent;color:' + (plt.active ? '#ef4444' : '#22c55e') + ';font-size:.7rem;cursor:pointer;white-space:nowrap;transition:all .22s';
+    toggleBtn.textContent = plt.active ? '🙈 إخفاء' : '👁️ إظهار';
+    var toggleKey = key;
+    toggleBtn.onclick = function() { pmToggleVisibility(toggleKey); };
+
+    /* Edit */
+    var editBtn = document.createElement('button');
+    editBtn.style.cssText = 'padding:6px 11px;border-radius:7px;border:1.5px solid rgba(201,168,76,.2);background:transparent;color:#c9a84c;font-size:.7rem;cursor:pointer;transition:all .22s';
+    editBtn.textContent = '✏️ تعديل';
+    var editKey = key;
+    editBtn.onclick = function() { pmEditPlatform(editKey); };
+
+    /* Delete */
+    var delBtn = document.createElement('button');
+    delBtn.style.cssText = 'padding:6px 11px;border-radius:7px;border:1.5px solid rgba(239,68,68,.15);background:transparent;color:#ef4444;font-size:.7rem;cursor:pointer;transition:all .22s';
+    delBtn.textContent = '🗑️';
+    delBtn.title = 'حذف المنصة';
+    var delKey = key;
+    delBtn.onclick = function() { pmDeletePlatform(delKey); };
+
+    actions.appendChild(toggleBtn);
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+
+    row.appendChild(drag);
+    row.appendChild(iconEl);
+    row.appendChild(info);
+    row.appendChild(status);
+    row.appendChild(actions);
+
+    /* Drag & Drop */
+    pmMakeDraggable(row, key);
+    list.appendChild(row);
+  });
+}
+
+/* ── Drag & Drop Reorder ── */
+var pmDragKey = null;
+var pmDragEl = null;
+
+function pmMakeDraggable(el, key) {
+  el.draggable = true;
+  el.addEventListener('dragstart', function() {
+    pmDragKey = key;
+    pmDragEl = el;
+    el.style.opacity = '.4';
+  });
+  el.addEventListener('dragend', function() {
+    el.style.opacity = '1';
+    pmDragKey = null; pmDragEl = null;
+  });
+  el.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    if (pmDragKey && pmDragKey !== key) {
+      el.style.borderColor = '#c9a84c';
+    }
+  });
+  el.addEventListener('dragleave', function() {
+    el.style.borderColor = 'rgba(255,255,255,.07)';
+  });
+  el.addEventListener('drop', function(e) {
+    e.preventDefault();
+    el.style.borderColor = 'rgba(255,255,255,.07)';
+    if (!pmDragKey || pmDragKey === key) return;
+    var platforms = pmGetPlatforms();
+    var fromOrder = platforms[pmDragKey].order || 99;
+    var toOrder   = platforms[key].order || 99;
+    platforms[pmDragKey].order = toOrder;
+    platforms[key].order = fromOrder;
+    pmSavePlatforms(platforms);
+    pmRenderList();
+    notif('✅ تم إعادة ترتيب المنصات', 'success');
+  });
+}
+
+/* ── Toggle Show/Hide ── */
+function pmToggleVisibility(key) {
+  var platforms = pmGetPlatforms();
+  if (!platforms[key]) return;
+  platforms[key].active = !platforms[key].active;
+  pmSavePlatforms(platforms);
+  pmRenderList();
+  notif(platforms[key].active ? '✅ ' + platforms[key].name_ar + ' مرئية الآن' : '🙈 ' + platforms[key].name_ar + ' مخفية', 'info');
+}
+
+/* ── Toggle Form ── */
+function pmToggleForm() {
+  PM_EDITING_KEY = null;
+  pmClearForm();
+  var wrap = document.getElementById('pm-form-wrap');
+  var title = document.getElementById('pm-form-title');
+  if (wrap) {
+    var isHidden = wrap.style.display === 'none';
+    wrap.style.display = isHidden ? 'block' : 'none';
+    if (title) title.textContent = '➕ إضافة منصة جديدة';
+  }
+}
+
+function pmCancelForm() {
+  PM_EDITING_KEY = null;
+  var wrap = document.getElementById('pm-form-wrap');
+  if (wrap) wrap.style.display = 'none';
+  pmClearForm();
+}
+
+function pmClearForm() {
+  ['pm-id','pm-icon','pm-name-ar','pm-name-en','pm-desc','pm-path'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  var colorEl = document.getElementById('pm-color');
+  if (colorEl) colorEl.value = '#c9a84c';
+  pmUpdatePreview();
+}
+
+/* ── Edit Platform ── */
+function pmEditPlatform(key) {
+  var platforms = pmGetPlatforms();
+  var plt = platforms[key];
+  if (!plt) return;
+  PM_EDITING_KEY = key;
+
+  var setVal = function(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.value = val || '';
+  };
+
+  setVal('pm-id', key);
+  setVal('pm-icon', plt.icon);
+  setVal('pm-name-ar', plt.name_ar);
+  setVal('pm-name-en', plt.name_en);
+  setVal('pm-desc', plt.desc);
+  setVal('pm-path', plt.path);
+  var colorEl = document.getElementById('pm-color');
+  if (colorEl) colorEl.value = plt.color || '#c9a84c';
+
+  var wrap = document.getElementById('pm-form-wrap');
+  var title = document.getElementById('pm-form-title');
+  if (wrap) wrap.style.display = 'block';
+  if (title) title.textContent = '✏️ تعديل منصة: ' + plt.name_ar;
+
+  pmUpdatePreview();
+  wrap && wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Delete Platform ── */
+function pmDeletePlatform(key) {
+  var platforms = pmGetPlatforms();
+  if (!platforms[key]) return;
+  var name = platforms[key].name_ar;
+  if (!confirm('هل تريد حذف منصة "' + name + '"؟ لا يمكن التراجع.')) return;
+  delete platforms[key];
+  pmSavePlatforms(platforms);
+  pmRenderList();
+  notif('🗑️ تم حذف منصة ' + name, 'info');
+}
+
+/* ── Save Platform ── */
+function pmSavePlatform() {
+  var getVal = function(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  };
+
+  var id      = getVal('pm-id').toLowerCase().replace(/[^a-z0-9_]/g, '');
+  var icon    = getVal('pm-icon') || '⚡';
+  var nameAr  = getVal('pm-name-ar');
+  var nameEn  = getVal('pm-name-en');
+  var desc    = getVal('pm-desc');
+  var path    = getVal('pm-path');
+  var colorEl = document.getElementById('pm-color');
+  var color   = colorEl ? colorEl.value : '#c9a84c';
+
+  if (!id)     { notif('أدخل المعرّف (ID) بالإنجليزية', 'error'); return; }
+  if (!nameAr) { notif('أدخل اسم المنصة بالعربية', 'error'); return; }
+  if (!nameEn) { notif('أدخل اسم المنصة بالإنجليزية', 'error'); return; }
+  if (!desc)   { notif('أدخل وصفاً مختصراً للمنصة', 'error'); return; }
+  if (!path)   { notif('أدخل رابط المنصة', 'error'); return; }
+
+  var platforms = pmGetPlatforms();
+  var isNew = !PM_EDITING_KEY;
+  var maxOrder = 0;
+  Object.keys(platforms).forEach(function(k) {
+    if ((platforms[k].order || 0) > maxOrder) maxOrder = platforms[k].order || 0;
+  });
+
+  var key = PM_EDITING_KEY || id;
+  platforms[key] = {
+    icon:    icon,
+    color:   color,
+    name_ar: nameAr,
+    name_en: nameEn,
+    desc:    desc,
+    path:    path,
+    active:  platforms[key] ? platforms[key].active : false,
+    order:   platforms[key] ? platforms[key].order : maxOrder + 1,
+  };
+
+  pmSavePlatforms(platforms);
+  pmRenderList();
+  pmCancelForm();
+  notif(isNew ? '✅ تمت إضافة منصة ' + nameAr + ' — فعّلها لتظهر في الموقع' : '✅ تم تحديث منصة ' + nameAr, 'success');
+}
+
+/* ── Live Preview ── */
+function pmUpdatePreview() {
+  var getVal = function(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  };
+  var icon    = getVal('pm-icon') || '⚡';
+  var nameAr  = getVal('pm-name-ar') || 'اسم المنصة';
+  var nameEn  = getVal('pm-name-en') || 'Platform Name';
+  var desc    = getVal('pm-desc') || 'وصف المنصة يظهر هنا...';
+  var colorEl = document.getElementById('pm-color');
+  var color   = colorEl ? colorEl.value : '#c9a84c';
+
+  var set = function(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+  var setStyle = function(id, prop, val) {
+    var el = document.getElementById(id);
+    if (el) el.style[prop] = val;
+  };
+
+  set('pm-preview-icon',    icon);
+  set('pm-preview-name-ar', nameAr);
+  set('pm-preview-name-en', nameEn);
+  set('pm-preview-desc',    desc);
+  setStyle('pm-preview-bar',  'background', color);
+  setStyle('pm-preview-icon', 'background', color + '14');
+  setStyle('pm-preview-icon', 'borderColor', color + '30');
+  setStyle('pm-preview-btn',  'background', color);
+}
+
+/* ── Set Color Shortcut ── */
+function pmSetColor(color) {
+  var el = document.getElementById('pm-color');
+  if (el) { el.value = color; pmUpdatePreview(); }
+}
+
+/* ── Init Platform Manager ── */
+function initPlatformManager() {
+  pmRenderList();
+  pmUpdatePreview();
+}
+
+/* ── Auto-init when platforms tab opens ── */
+var _pmOrigGoTo = window.goTo;
+window.goTo = function(id) {
+  if (_pmOrigGoTo) _pmOrigGoTo(id);
+  if (id === 'platforms') {
+    setTimeout(initPlatformManager, 100);
+  }
+};
+
+</script>
+</body>
+</html>

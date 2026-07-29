@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>404 — Page Not Found · Axiom Zones</title>
+<meta name="robots" content="noindex"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,700;1,300&family=Syne:wght@400;700&family=DM+Mono&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,168,76,.06),transparent);pointer-events:none}
+.grid{position:fixed;inset:0;opacity:.025;background-image:linear-gradient(rgba(201,168,76,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.8) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.box{position:relative;z-index:1;max-width:500px}
+.n404{font-family:'Cormorant',serif;font-size:clamp(6rem,15vw,10rem);font-weight:700;line-height:.9;letter-spacing:-4px;background:linear-gradient(135deg,rgba(201,168,76,.3),rgba(201,168,76,.08));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+.title{font-family:'Cormorant',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin-bottom:8px}
+.sub{font-size:.88rem;color:#8892b0;line-height:1.8;margin-bottom:32px;max-width:380px;margin-inline:auto}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn1{padding:12px 28px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.88rem;border:none;cursor:pointer;text-decoration:none;font-family:'Syne',sans-serif;transition:all .3s}
+.btn1:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.btn2{padding:12px 28px;border-radius:9px;background:transparent;border:1.5px solid rgba(201,168,76,.25);color:#c9a84c;font-weight:600;font-size:.88rem;cursor:pointer;text-decoration:none;font-family:'Syne',sans-serif;transition:all .3s}
+.btn2:hover{background:rgba(201,168,76,.08)}
+.tag{display:inline-block;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#3d4a6b;border:1px solid rgba(255,255,255,.06);padding:5px 14px;border-radius:20px;margin-bottom:20px}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="grid"></div>
+<div class="box">
+  <div class="tag">Error 404</div>
+  <div class="n404">404</div>
+  <div class="title">Page Not Found</div>
+  <p class="sub">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+  <div class="btns">
+    <a href="/" class="btn1">← Back to Axiom Zones</a>
+    <a href="/dashboard" class="btn2">My Dashboard</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title id="blog-title">المدونة المالية — Axiom Zones</title>
+<meta name="description" id="blog-meta" content="مقالات مالية عربية — حقائق القروض والبنوك والتمويل الإسلامي"/>
+<link rel="canonical" href="https://axiomzones.com/blog"/>
+<link rel="alternate" hreflang="ar" href="https://axiomzones.com/blog"/>
+<link rel="alternate" hreflang="en" href="https://axiomzones.com/en/blog"/>
+<link rel="alternate" hreflang="fr" href="https://axiomzones.com/fr/blog"/>
+<link rel="alternate" hreflang="x-default" href="https://axiomzones.com/blog"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Blog","name":"Axiom Zones Financial Blog","url":"https://axiomzones.com/blog","inLanguage":["ar","en","fr","tr"]}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;700&family=Syne:wght@400;600;700&family=DM+Mono:wght@400&family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;line-height:1.8}
+a{color:#c9a84c;text-decoration:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#c9a84c;border-radius:3px}
+
+.hdr{background:#0a0d1a;border-bottom:1px solid rgba(201,168,76,.15);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.logo{font-family:'Cormorant',serif;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr-r{display:flex;gap:10px;align-items:center}
+.nav-links{display:flex;gap:14px}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#8892b0;transition:color .22s}
+.nav-links a:hover{color:#c9a84c}
+
+/* Language Switcher */
+.lang-switcher{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:3px}
+.lang-btn{padding:4px 10px;border-radius:6px;border:none;background:transparent;color:#8892b0;font-family:'DM Mono',monospace;font-size:.62rem;cursor:pointer;transition:all .22s;letter-spacing:1px}
+.lang-btn.active{background:rgba(201,168,76,.15);color:#c9a84c;border:1px solid rgba(201,168,76,.2)}
+
+.hero{padding:56px 24px 40px;text-align:center;max-width:860px;margin:0 auto}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:#c9a84c;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hero-tag::before,.hero-tag::after{content:'';width:28px;height:1px;background:#c9a84c}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;letter-spacing:-1.5px;margin-bottom:10px}
+.hero h1 em{color:#8892b0;font-weight:300;font-style:italic}
+.hero p{font-size:.9rem;color:#8892b0;max-width:520px;margin:0 auto}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;justify-content:center}
+.cat-btn{padding:6px 16px;border-radius:20px;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:#8892b0;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;cursor:pointer;transition:all .22s;text-transform:uppercase}
+.cat-btn:hover,.cat-btn.active{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.08)}
+
+/* Featured */
+.featured{background:#0a0d1a;border:1px solid rgba(201,168,76,.2);border-radius:18px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;margin-bottom:36px;cursor:pointer;transition:all .3s;position:relative}
+.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a)}
+.featured:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+@media(max-width:700px){.featured{grid-template-columns:1fr}}
+.feat-content{padding:28px}
+.feat-badge{display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);color:#c9a84c;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:2px;padding:3px 10px;border-radius:4px;text-transform:uppercase;margin-bottom:10px}
+.feat-title{font-family:'Cormorant',serif;font-size:1.7rem;font-weight:700;margin-bottom:8px;line-height:1.15}
+.feat-excerpt{font-size:.84rem;color:#8892b0;line-height:1.85;margin-bottom:14px}
+.feat-meta{font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b;display:flex;gap:14px;flex-wrap:wrap}
+.feat-visual{background:linear-gradient(135deg,rgba(201,168,76,.08),transparent);display:flex;align-items:center;justify-content:center;min-height:200px;font-size:5rem}
+
+/* Blog Grid */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+.blog-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s;display:flex;flex-direction:column}
+.blog-card:hover{border-color:rgba(201,168,76,.2);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.card-top{padding:18px 18px 0}
+.card-cat{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.card-title{font-family:'Cormorant',serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;line-height:1.25}
+.card-excerpt{font-size:.8rem;color:#8892b0;line-height:1.75;margin-bottom:12px;flex:1}
+.card-platforms{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.card-platform-pill{font-family:'DM Mono',monospace;font-size:.56rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(201,168,76,.2);color:#c9a84c;background:rgba(201,168,76,.06);text-decoration:none;transition:all .22s}
+.card-platform-pill:hover{background:rgba(201,168,76,.14)}
+.card-footer{padding:10px 18px 14px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center}
+.card-time{font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b}
+.read-more{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;color:#c9a84c}
+
+/* Article Modal */
+.article-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.93);backdrop-filter:blur(18px);overflow-y:auto;display:none}
+.article-overlay.open{display:block}
+.article-wrap{max-width:760px;margin:0 auto;padding:28px 24px 80px}
+.article-close{position:fixed;top:20px;left:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#f0f2ff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;z-index:2001}
+.article-close:hover{background:rgba(201,168,76,.15);border-color:#c9a84c;color:#c9a84c}
+.article-cat{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px}
+.article-title{font-family:'Cormorant',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:-1px;margin-bottom:12px;line-height:1.05}
+.article-meta{font-family:'DM Mono',monospace;font-size:.66rem;color:#3d4a6b;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.article-body{font-size:.9rem;color:#8892b0;line-height:2}
+.article-body h2{font-family:'Cormorant',serif;font-size:1.5rem;font-weight:700;color:#f0f2ff;margin:24px 0 10px}
+.article-body h3{font-size:1rem;font-weight:700;color:#c9a84c;margin:18px 0 7px}
+.article-body p{margin-bottom:12px}
+.article-body strong{color:#f0f2ff}
+.article-body ul{padding-inline-start:20px;margin-bottom:12px}
+.article-body li{margin-bottom:5px}
+
+/* Platform Links in Article */
+.article-platform-links{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:10px}
+.article-platform-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.8rem;cursor:pointer;transition:all .3s;border:none}
+.article-platform-link:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(201,168,76,.3)}
+.article-platform-link.secondary{background:transparent;border:1.5px solid rgba(201,168,76,.3);color:#c9a84c}
+
+/* Newsletter */
+.newsletter{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;padding:28px;text-align:center;margin-top:48px}
+.newsletter h2{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px}
+.newsletter p{font-size:.88rem;color:#8892b0;margin-bottom:18px}
+.nl-form{display:flex;gap:10px;justify-content:center;max-width:460px;margin:0 auto;flex-wrap:wrap}
+.nl-inp{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);color:#f0f2ff;padding:10px 14px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.84rem;outline:none;transition:border-color .25s}
+.nl-inp:focus{border-color:#c9a84c}
+.btn-gold{padding:10px 22px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.84rem;border:none;cursor:pointer;transition:all .3s}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,168,76,.3)}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:10px 20px;border-radius:9px;font-family:'DM Mono',monospace;font-size:.72rem;z-index:9999;transition:transform .4s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="toast" id="blog-toast"></div>
+
+<header class="hdr">
+  <a href="/" class="logo">Axiom Zones</a>
+  <div class="hdr-r">
+    <nav class="nav-links">
+      <a href="/kashf" id="nav-kashf">كشف</a>
+      <a href="/prism">Prism</a>
+      <a href="/glossary" id="nav-glossary">القاموس</a>
+    </nav>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setBlogLang('ar',this)">ع</button>
+      <button class="lang-btn" onclick="setBlogLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setBlogLang('fr',this)">FR</button>
+      <button class="lang-btn" onclick="setBlogLang('tr',this)">TR</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero" id="blog-hero">
+  <div class="hero-tag" id="hero-tag">Financial Knowledge</div>
+  <h1 id="hero-title">اعرف أكثر.<br/><em>ادفع أقل.</em></h1>
+  <p id="hero-desc">مقالات مالية حقيقية — بدون مجاملة للبنوك. كل ما تحتاجه لتفهم قرضك قبل التوقيع.</p>
+</div>
+
+<div class="wrap">
+  <div class="cats" id="cats-bar"></div>
+  <div class="featured" id="featured-card" onclick="openArticle(0)">
+    <div class="feat-content">
+      <div class="feat-badge" id="feat-badge">📌 مقال مميز</div>
+      <div class="feat-title" id="feat-title">البنك يقول 6%... الحقيقة 11.2%</div>
+      <div class="feat-excerpt" id="feat-excerpt">كيف تستخدم البنوك تجميل القروض لتبدو أرخص — وكيف تكتشف الحقيقة في 30 ثانية باستخدام كشف.</div>
+      <div class="feat-meta">
+        <span id="feat-cat">📊 قروض</span>
+        <span>7 دقائق</span>
+        <span>3,102 قراءة</span>
+      </div>
+    </div>
+    <div class="feat-visual">🔍</div>
+  </div>
+  <div class="blog-grid" id="blog-grid"></div>
+  <div class="newsletter">
+    <h2 id="nl-title">تقرير الوضوح المالي — أسبوعياً</h2>
+    <p id="nl-desc">مقال واحد كل أسبوع · حقيقة مالية مفيدة · بدون إعلانات</p>
+    <div class="nl-form">
+      <input class="nl-inp" type="email" id="nl-email" placeholder="بريدك الإلكتروني"/>
+      <button class="btn-gold" onclick="nlSubscribe()" id="nl-btn">اشترك مجاناً</button>
+    </div>
+  </div>
+</div>
+
+<div class="article-overlay" id="article-overlay">
+  <button class="article-close" onclick="closeArticle()">✕</button>
+  <div class="article-wrap" id="article-content"></div>
+</div>
+
+<script>
+/* ══ CURRENT LANGUAGE ══ */
+var BLOG_LANG = localStorage.getItem('blog_lang') || 'ar';
+
+/* ══ UI TRANSLATIONS ══ */
+var UI_T = {
+  ar: {
+    tag:'مجلة مالية',title:'اعرف أكثر. ادفع أقل.',
+    desc:'مقالات مالية حقيقية — بدون مجاملة للبنوك.',
+    featured:'📌 مقال مميز',readMore:'اقرأ ←',
+    nlTitle:'تقرير الوضوح المالي — أسبوعياً',
+    nlDesc:'مقال واحد كل أسبوع · بدون إعلانات',
+    nlBtn:'اشترك مجاناً',nlPlaceholder:'بريدك الإلكتروني',
+    all:'الكل',cats:{loans:'💰 قروض',islamic:'☪️ إسلامي',business:'💼 أعمال',smart:'💡 ذكاء مالي',guide:'📖 أدلة'},
+    openTool:'افتح الأداة',tryFree:'جرّب مجاناً',
+    navKashf:'كشف',navGlossary:'القاموس',
+  },
+  en: {
+    tag:'Financial Magazine',title:'Know More. Pay Less.',
+    desc:'Real financial articles — no bias toward banks.',
+    featured:'📌 Featured',readMore:'Read →',
+    nlTitle:'Financial Clarity Report — Weekly',
+    nlDesc:'One article per week · No ads',
+    nlBtn:'Subscribe Free',nlPlaceholder:'Your email',
+    all:'All',cats:{loans:'💰 Loans',islamic:'☪️ Islamic',business:'💼 Business',smart:'💡 Smart Money',guide:'📖 Guides'},
+    openTool:'Open Tool',tryFree:'Try Free',
+    navKashf:'Kashf',navGlossary:'Glossary',
+  },
+  fr: {
+    tag:'Magazine Financier',title:'Savoir Plus. Payer Moins.',
+    desc:'Articles financiers réels — sans favoritisme bancaire.',
+    featured:'📌 À la une',readMore:'Lire →',
+    nlTitle:'Rapport de Clarté Financière — Hebdo',
+    nlDesc:'Un article par semaine · Sans publicités',
+    nlBtn:'S abonner',nlPlaceholder:'Votre email',
+    all:'Tout',cats:{loans:'💰 Prêts',islamic:'☪️ Islamique',business:'💼 Business',smart:'💡 Finance Maligne',guide:'📖 Guides'},
+    openTool:'Ouvrir',tryFree:'Essai Gratuit',
+    navKashf:'Kashf',navGlossary:'Glossaire',
+  },
+  tr: {
+    tag:'Finans Dergisi',title:'Daha Fazla Bil. Daha Az Öde.',
+    desc:'Gerçek finansal makaleler — bankalara tarafsız.',
+    featured:'📌 Öne Çıkan',readMore:'Oku →',
+    nlTitle:'Finansal Netlik Raporu — Haftalık',
+    nlDesc:'Haftada bir makale · Reklamsız',
+    nlBtn:'Ücretsiz Abone Ol',nlPlaceholder:'E-posta adresiniz',
+    all:'Tümü',cats:{loans:'💰 Krediler',islamic:'☪️ İslami',business:'💼 İş',smart:'💡 Akıllı Para',guide:'📖 Rehberler'},
+    openTool:'Aracı Aç',tryFree:'Ücretsiz Dene',
+    navKashf:'Kashf',navGlossary:'Sözlük',
+  },
+};
+
+/* ══ ARTICLES — 10 مقالات × 4 لغات ══ */
+var ARTICLES = [
+  {cat:"loans",icon:"🔍",title:{ar:"البنك يقول 6%... الحقيقة 11.2%",en:"Bank Says 6%... Reality Is 11.2%",fr:"La Banque Dit 6%, Realite 11.2%",tr:"Banka 6 Diyor Gercek 11.2"},excerpt:{ar:"كيف تستخدم البنوك تجميل القروض.",en:"How banks beautify loans to appear cheaper.",fr:"Comment les banques embellissent leurs prets.",tr:"Bankalar kredilerini nasil guzel gosteriyor."},time:{ar:"7 دقائق",en:"7 min",fr:"7 min",tr:"7 dak"},views:"3,102",platforms:[{name:"كشف",path:"/kashf",icon:"👁️"}],contentId:"art-content-0"},
+  {cat:"islamic",icon:"🕌",title:{ar:"المرابحة vs القرض التقليدي",en:"Murabaha vs Conventional Loan",fr:"Mourabaha vs Pret Conventionnel",tr:"Murabaha vs Geleneksel Kredi"},excerpt:{ar:"الحقيقة تحتاج حساباً.",en:"The truth needs calculation.",fr:"La verite necessite un calcul.",tr:"Gercek hesaplama gerektirir."},time:{ar:"6 دقائق",en:"6 min",fr:"6 min",tr:"6 dak"},views:"1,923",platforms:[{name:"كشف",path:"/kashf",icon:"👁️"}],contentId:"art-content-1"},
+  {cat:"smart",icon:"⚖️",title:{ar:"متى يكون القرض مبرراً؟ 4 اختبارات",en:"When Is a Loan Justified? 4 Tests",fr:"Quand un Pret Est-il Justifie?",tr:"Kredi Ne Zaman Haklidir?"},excerpt:{ar:"هذه الاختبارات تحدد متى الاقتراض ذكياً.",en:"These 4 tests define when borrowing is smart.",fr:"Ces tests definissent quand emprunter est intelligent.",tr:"Bu testler ne zaman akillica oldugunu tanimlar."},time:{ar:"5 دقائق",en:"5 min",fr:"5 min",tr:"5 dak"},views:"2,847",platforms:[{name:"كشف",path:"/kashf",icon:"👁️"},{name:"Prism",path:"/prism",icon:"🔮"}],contentId:"art-content-2"},
+  {cat:"guide",icon:"📋",title:{ar:"10 أشياء تتحقق منها قبل أي قرض",en:"10 Things to Check Before Signing",fr:"10 Choses a Verifier Avant Signer",tr:"Imzalamadan Once 10 Kontrol"},excerpt:{ar:"قائمة تحقق عملية تحمي أموالك.",en:"A practical checklist protecting your money.",fr:"Une liste de controle pratique.",tr:"Pratik bir kontrol listesi."},time:{ar:"4 دقائق",en:"4 min",fr:"4 min",tr:"4 dak"},views:"1,456",platforms:[{name:"كشف",path:"/kashf",icon:"👁️"},{name:"Prism",path:"/prism/compare",icon:"🔮"}],contentId:"art-content-3"},
+  {cat:"business",icon:"📊",title:{ar:"نقطة التعادل — 67% لا يعرفونها",en:"Break-Even Point — 67% Cannot Answer",fr:"Point Mort — 67% Ne Repondent Pas",tr:"Basa Bas — 67 Yuzde Bilmiyor"},excerpt:{ar:"هل تعرف كم وحدة تبيعها لتغطية تكاليفك؟",en:"Do you know how many units cover your costs?",fr:"Savez-vous combien vendre pour couvrir les couts?",tr:"Maliyetleri karsilamak icin ne kadar satmak gerekiyor?"},time:{ar:"6 دقائق",en:"6 min",fr:"6 min",tr:"6 dak"},views:"987",platforms:[{name:"ميزان برو",path:"/platform?id=mizan",icon:"⚖️"}],contentId:"art-content-4"},
+  {cat:"smart",icon:"💡",title:{ar:"مؤشر القروض العربي",en:"Arab Loan Rate Index",fr:"Indice des Taux Arabes",tr:"Arap Kredi Endeksi"},excerpt:{ar:"متوسط فوائد القروض في 8 دول عربية.",en:"Average loan rates in 8 Arab countries.",fr:"Taux moyens dans 8 pays arabes.",tr:"8 Arap ulkesinde kredi oranlari."},time:{ar:"3 دقائق",en:"3 min",fr:"3 min",tr:"3 dak"},views:"2,341",platforms:[{name:"كشف",path:"/kashf",icon:"👁️"}],contentId:"art-content-5"},
+  {cat:"guide",icon:"🏠",title:{ar:"تمويل المنزل — المرابحة أم قرض الرهن؟",en:"Home Finance — Murabaha or Mortgage?",fr:"Financement Immobilier ou Hypotheque?",tr:"Murabaha mi Ipotek mi?"},excerpt:{ar:"أطول قرار مالي يستحق المقارنة الدقيقة.",en:"Your longest financial decision deserves precise comparison.",fr:"Votre plus longue decision financiere.",tr:"En uzun finansal karari."},time:{ar:"8 دقائق",en:"8 min",fr:"8 min",tr:"8 dak"},views:"1,234",platforms:[{name:"كشف",path:"/kashf/home-loan",icon:"👁️"},{name:"Prism",path:"/prism/compare",icon:"🔮"}],contentId:"art-content-6"},
+  {cat:"business",icon:"🌍",title:{ar:"UniUber — كيف تخفّض تكلفة الزي 40%؟",en:"UniUber — Cut Uniform Costs by 40%",fr:"UniUber — Reduire les Couts de 40%",tr:"UniUber — Yuzde 40 Tasarruf"},excerpt:{ar:"الشركات تدفع 40-60% أكثر للوسطاء. UniUber توصلك بالمصنع مباشرةً.",en:"Companies pay 40-60% more to middlemen. UniUber connects directly.",fr:"Les entreprises paient 40-60% de plus. UniUber connecte directement.",tr:"Sirketler yuzde 40-60 fazla oduyor."},time:{ar:"5 دقائق",en:"5 min",fr:"5 min",tr:"5 dak"},views:"756",platforms:[{name:"UniUber",path:"/uniuber",icon:"👔"}],contentId:"art-content-7"},
+  {cat:"islamic",icon:"🌙",title:{ar:"زكاة الأعمال — كيف تحسبها بدقة؟",en:"Business Zakat — How to Calculate?",fr:"Zakat Entreprises — Comment Calculer?",tr:"Isletme Zekati Nasil Hesaplanir?"},excerpt:{ar:"زكاة الأعمال واجبة وحسابها أدق مما تظن.",en:"Business zakat is obligatory. A practical guide.",fr:"La zakat est obligatoire. Un guide pratique.",tr:"Isletme zekati zorunludur."},time:{ar:"7 دقائق",en:"7 min",fr:"7 min",tr:"7 dak"},views:"1,123",platforms:[{name:"ميزان برو",path:"/platform?id=mizan",icon:"⚖️"}],contentId:"art-content-8"},
+  {cat:"smart",icon:"💊",title:{ar:"درجة صحتك المالية — احسبها مجاناً",en:"Financial Health Score — Calculate Free",fr:"Score Sante Financiere — Gratuit",tr:"Finansal Saglik Puani — Ucretsiz"},excerpt:{ar:"6 أرقام تخبرك بوضعك المالي من 0 إلى 100.",en:"6 numbers tell your financial state from 0 to 100.",fr:"6 chiffres disent votre etat de 0 a 100.",tr:"6 rakam finansal durumunuzu 0 ile 100 arasinda soyler."},time:{ar:"3 دقائق",en:"3 min",fr:"3 min",tr:"3 dak"},views:"3,456",platforms:[{name:"كشف v3",path:"/kashf",icon:"👁️"}],contentId:"art-content-9"},
+];
+
+/* ══ CURRENT CATEGORY ══ */
+var currentCat = 'all';
+
+/* ══ SET LANGUAGE ══ */
+function setBlogLang(lang, btn) {
+  BLOG_LANG = lang;
+  localStorage.setItem('blog_lang', lang);
+
+  /* RTL/LTR */
+  var rtl = ['ar'];
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = rtl.includes(lang) ? 'rtl' : 'ltr';
+  document.body.style.fontFamily = rtl.includes(lang)
+    ? "'Cairo','Syne',sans-serif" : "'Syne',sans-serif";
+
+  /* Update active button */
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  /* Update UI text */
+  updateBlogUI();
+  renderBlog();
+  renderFeatured();
+}
+
+function updateBlogUI() {
+  var t = UI_T[BLOG_LANG] || UI_T.ar;
+  var set = function(id, val) { var el = document.getElementById(id); if(el && val) el.textContent = val; };
+  var setPlaceholder = function(id, val) { var el = document.getElementById(id); if(el && val) el.placeholder = val; };
+
+  document.title = BLOG_LANG === 'ar' ? 'المدونة المالية — Axiom Zones' : 'Financial Blog — Axiom Zones';
+  set('hero-tag',  t.tag);
+  set('nl-title',  t.nlTitle);
+  set('nl-desc',   t.nlDesc);
+  set('nl-btn',    t.nlBtn);
+  set('nav-kashf', t.navKashf);
+  set('nav-glossary', t.navGlossary);
+  setPlaceholder('nl-email', t.nlPlaceholder);
+
+  /* Hero */
+  var heroTitle = document.getElementById('hero-title');
+  if (heroTitle) heroTitle.innerHTML = t.title.split(' ').join('<br/><em style="color:#8892b0;font-weight:300;font-style:italic">') + '</em>';
+  set('hero-desc', t.desc);
+
+  /* Category buttons */
+  renderCats();
+}
+
+function renderCats() {
+  var t = UI_T[BLOG_LANG] || UI_T.ar;
+  var bar = document.getElementById('cats-bar');
+  if (!bar) return;
+  bar.innerHTML = '';
+  var cats = [['all', t.all], ['loans', t.cats.loans], ['islamic', t.cats.islamic], ['business', t.cats.business], ['smart', t.cats.smart], ['guide', t.cats.guide]];
+  cats.forEach(function(c) {
+    var btn = document.createElement('button');
+    btn.className = 'cat-btn' + (currentCat === c[0] ? ' active' : '');
+    btn.textContent = c[1];
+    btn.onclick = (function(cat){ return function(){ currentCat=cat; renderCats(); renderBlog(); }; })(c[0]);
+    bar.appendChild(btn);
+  });
+}
+
+function renderFeatured() {
+  var art = ARTICLES[0];
+  var t = UI_T[BLOG_LANG] || UI_T.ar;
+  var set = function(id, val) { var el = document.getElementById(id); if(el) el.textContent = val; };
+  set('feat-badge',   t.featured);
+  set('feat-title',   art.title[BLOG_LANG] || art.title.ar);
+  set('feat-excerpt', art.excerpt[BLOG_LANG] || art.excerpt.ar);
+  set('feat-cat',     (UI_T[BLOG_LANG]||UI_T.ar).cats.loans);
+}
+
+function renderBlog() {
+  var t = UI_T[BLOG_LANG] || UI_T.ar;
+  var grid = document.getElementById('blog-grid');
+  if (!grid) return;
+
+  var filtered = ARTICLES.slice(1).filter(function(a) {
+    return currentCat === 'all' || a.cat === currentCat;
+  });
+
+  grid.innerHTML = '';
+  var catColors = {loans:'#c9a84c',islamic:'#22c55e',business:'#60a5fa',smart:'#a78bfa',guide:'#f97316'};
+
+  filtered.forEach(function(art) {
+    var idx = ARTICLES.indexOf(art);
+    var lang = BLOG_LANG;
+    var col  = catColors[art.cat] || '#c9a84c';
+    var title   = art.title[lang]   || art.title.ar;
+    var excerpt = art.excerpt[lang] || art.excerpt.ar;
+    var time    = art.time[lang]    || art.time.ar;
+
+    var card = document.createElement('div');
+    card.className = 'blog-card';
+
+    /* Category label */
+    var catLabel = (UI_T[lang]||UI_T.ar).cats[art.cat] || art.cat;
+
+    /* Platform pills */
+    var pillsHTML = (art.platforms || []).map(function(p) {
+      return '<a href="' + p.path + '" class="card-platform-pill" onclick="event.stopPropagation()">' + p.icon + ' ' + p.name + '</a>';
+    }).join('');
+
+    card.innerHTML =
+      '<div class="card-top">' +
+        '<div class="card-cat" style="color:' + col + '">' + catLabel + '</div>' +
+        '<div class="card-title">' + title + '</div>' +
+        '<div class="card-excerpt">' + excerpt + '</div>' +
+        '<div class="card-platforms">' + pillsHTML + '</div>' +
+      '</div>' +
+      '<div class="card-footer">' +
+        '<div class="card-time">' + time + ' · ' + art.views + '</div>' +
+        '<div class="read-more">' + t.readMore + '</div>' +
+      '</div>';
+
+    card.onclick = function() { openArticle(idx); };
+    grid.appendChild(card);
+  });
+}
+
+/* ══ Open Article Modal ══ */
+function openArticle(idx) {
+  var art = ARTICLES[idx];
+  if (!art) return;
+  var lang = BLOG_LANG;
+  var t = UI_T[lang] || UI_T.ar;
+  var overlay = document.getElementById('article-overlay');
+  var container = document.getElementById('article-content');
+
+  var title   = art.title[lang]   || art.title.ar;
+  var content = art.content[lang] || art.content.ar;
+  var time    = art.time[lang]    || art.time.ar;
+  var catLabel = (UI_T[lang]||UI_T.ar).cats[art.cat] || art.cat;
+
+  /* Platform links */
+  (art.platforms || []).forEach(function(p, i) {
+    var cls = i === 0 ? 'article-platform-link' : 'article-platform-link secondary';
+  });
+  platformLinksHTML += '</div>';
+
+  container.innerHTML =
+    '<div class="article-cat">' + catLabel + '</div>' +
+    '<div class="article-title">' + title + '</div>' +
+    '<div class="article-meta">' + time + ' · ' + art.views + ' · ' + art.icon + '</div>' +
+    '<div class="article-body">' + content + '</div>' +
+    platformLinksHTML;
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.scrollTop = 0;
+}
+
+function closeArticle() {
+  document.getElementById('article-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeArticle();
+});
+
+/* ══ Newsletter ══ */
+function nlSubscribe() {
+  var email = document.getElementById('nl-email').value;
+  if (!email || email.indexOf('@') < 0) {
+    showBlogToast(BLOG_LANG === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email');
+    return;
+  }
+  showBlogToast(BLOG_LANG === 'ar' ? '✅ مشترك! سيصلك أول تقرير قريباً' : '✅ Subscribed! First report coming soon');
+  document.getElementById('nl-email').value = '';
+}
+
+function showBlogToast(msg) {
+  var t = document.getElementById('blog-toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+/* ══ Init ══ */
+window.addEventListener('load', function() {
+  /* Restore language */
+  var savedLang = localStorage.getItem('blog_lang') || 'ar';
+  var btns = document.querySelectorAll('.lang-btn');
+  var langMap = {ar:0,en:1,fr:2,tr:3};
+  BLOG_LANG = savedLang;
+  if (btns[langMap[savedLang]]) setBlogLang(savedLang, btns[langMap[savedLang]]);
+  else setBlogLang('ar', btns[0]);
+});
+</script>
+</body>
+</html>

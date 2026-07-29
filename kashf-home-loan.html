@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Home Loan & Mortgage Calculator | Axiom Zones Kashf</title>
+<meta name="description" content="Reveal the true IRR of your mortgage. See the real 30-year cost and compare with Islamic Murabaha financing."/>
+<link rel="canonical" href="https://axiomzones.com/kashf/home-loan"/>
+<link rel="alternate" hreflang="ar" href="https://axiomzones.com/kashf"/>
+<link rel="alternate" hreflang="en" href="https://axiomzones.com/kashf/home-loan"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Home Loan & Mortgage Calculator","description":"Reveal the true IRR of your mortgage. See the real 30-year cost and compare with Islamic Murabaha financing.","url":"https://axiomzones.com/kashf/home-loan","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;700&family=Syne:wght@400;600;700&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;line-height:1.8;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#60a5fa;border-radius:3px}
+a{color:#60a5fa;text-decoration:none}
+.hdr{background:#0a0d1a;border-bottom:1px solid rgba(255,255,255,.07);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.logo{font-family:'Cormorant',serif;font-size:1.25rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.btn-gold{padding:9px 20px;border-radius:8px;background:linear-gradient(135deg,#60a5fa,#e8c86a);color:#060912;font-weight:700;font-size:.82rem;border:none;cursor:pointer;transition:all .25s}
+.btn-gold:hover{transform:translateY(-1px)}
+.hero{padding:70px 24px 50px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,#60a5fa14,transparent);pointer-events:none}
+.hero-inner{max-width:840px;margin:0 auto;position:relative;z-index:2}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:#60a5fa;margin-bottom:10px}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;letter-spacing:-1.5px;line-height:.95;margin-bottom:12px}
+.hero h1 span{color:#60a5fa}
+.hero p{font-size:.92rem;color:#8892b0;max-width:540px;margin:0 auto 24px;line-height:1.9}
+.calc-box{background:#0a0d1a;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;max-width:700px;margin:0 auto 60px;position:relative;overflow:hidden}
+.calc-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#60a5fa,#e8c86a)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:600px){.calc-grid{grid-template-columns:1fr}}
+label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:#3d4a6b;display:block;margin-bottom:5px}
+input,select{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);color:#f0f2ff;padding:10px 12px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .25s}
+input:focus,select:focus{border-color:#60a5fa}
+.calc-btn{width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.92rem;border:none;cursor:pointer;transition:all .3s;margin-top:4px}
+.calc-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.results{display:none;margin-top:20px}
+.results.show{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:600px){.results.show{grid-template-columns:1fr 1fr}}
+.result-box{background:rgba(255,255,255,.04);border-radius:10px;padding:14px;text-align:center}
+.result-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;color:#3d4a6b;text-transform:uppercase;margin-bottom:6px}
+.result-val{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:700}
+.verdict{margin-top:14px;padding:12px 16px;border-radius:9px;font-family:'DM Mono',monospace;font-size:.76rem;text-align:center;display:none}
+.share-btns{margin-top:12px;display:none;gap:8px;justify-content:center;flex-wrap:wrap}
+.btn-wa{padding:9px 18px;border-radius:8px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;border:none;cursor:pointer}
+.info-sec{padding:60px 24px;background:rgba(255,255,255,.01)}
+.info-inner{max-width:900px;margin:0 auto}
+.sec-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:#60a5fa;margin-bottom:8px}
+.sec-title{font-family:'Cormorant',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-1px;margin-bottom:14px}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:20px}
+.info-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px}
+.info-card h3{font-size:.92rem;font-weight:700;margin-bottom:6px}
+.info-card p{font-size:.8rem;color:#8892b0;line-height:1.75}
+.faq-list{max-width:700px;margin:24px auto 0}
+.faq-item{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:10px;margin-bottom:8px;overflow:hidden;cursor:pointer}
+.faq-item:hover{border-color:rgba(201,168,76,.15)}
+.faq-hd{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.faq-q{font-size:.88rem;font-weight:600}
+.faq-arr{color:#3d4a6b;font-size:.75rem;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arr{transform:rotate(180deg)}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-item.open .faq-body{max-height:200px}
+.faq-a{padding:0 16px 14px;font-size:.82rem;color:#8892b0;line-height:1.85;border-top:1px solid rgba(255,255,255,.05)}
+.cta-sec{padding:60px 24px;text-align:center}
+.cta-inner{max-width:600px;margin:0 auto;background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(139,92,246,.04));border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:32px}
+.cta-inner h2{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px}
+.cta-inner p{font-size:.88rem;color:#8892b0;margin-bottom:18px}
+.footer{background:#0a0d1a;border-top:1px solid rgba(255,255,255,.05);padding:24px;text-align:center;font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(201,168,76,.3);color:#c9a84c;padding:10px 20px;border-radius:9px;font-family:'DM Mono',monospace;font-size:.72rem;z-index:9999;transition:transform .4s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="toast" id="ks-toast"></div>
+<header class="hdr">
+  <a href="/" class="logo">Axiom Zones</a>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a href="/kashf" style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;transition:color .22s" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#3d4a6b'">← Full Kashf</a>
+    <button class="btn-gold" onclick="document.getElementById('calc-form').scrollIntoView({behavior:'smooth'})">Calculate Free</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Free Home Loan Calculator · Kashf by Axiom Zones</div>
+    <h1>Home Loan & Mortgage Calculator<br/><span style="color:#60a5fa">True Cost Revealed</span></h1>
+    <p>Reveal the true IRR of your mortgage. See the real 30-year cost and compare with Islamic Murabaha financing.</p>
+    <button class="btn-gold" onclick="document.getElementById('calc-form').scrollIntoView({behavior:'smooth'})">Calculate Your True Cost Free →</button>
+  </div>
+</section>
+
+<div style="max-width:700px;margin:0 auto;padding:0 24px">
+<div class="calc-box" id="calc-form">
+  <h2 style="font-family:'Cormorant',serif;font-size:1.3rem;font-weight:700;margin-bottom:4px">احسب التكلفة الحقيقية لقرض منزلك</h2>
+  <p style="font-size:.78rem;color:#8892b0;margin-bottom:18px">اكتشف التكلفة الحقيقية لتمويل منزلك مقارنةً بالمرابحة الإسلامية</p>
+  <div class="calc-grid">
+    <div>
+      <label>Loan Amount</label>
+      <input type="number" id="ks-principal" value="100000" placeholder="100000"/>
+    </div>
+    <div>
+      <label>Advertised APR %</label>
+      <input type="number" id="ks-apr" value="6" step="0.1" min="0.1" max="50"/>
+    </div>
+    <div>
+      <label>Term (Months)</label>
+      <input type="number" id="ks-months" value="48" min="6" max="360"/>
+    </div>
+    <div>
+      <label>Hidden Fees</label>
+      <input type="number" id="ks-fees" value="0" placeholder="0"/>
+    </div>
+  </div>
+  <button class="calc-btn" onclick="ksCalc()">👁️ Reveal True Cost</button>
+  <div class="results" id="ks-results">
+    <div class="result-box">
+      <div class="result-label">Advertised APR</div>
+      <div class="result-val" id="ks-r-apr" style="color:#38bdf8">6%</div>
+    </div>
+    <div class="result-box" style="border:1px solid rgba(239,68,68,.15)">
+      <div class="result-label">True IRR</div>
+      <div class="result-val" id="ks-r-irr" style="color:#ef4444">—</div>
+    </div>
+    <div class="result-box" style="border:1px solid rgba(201,168,76,.15)">
+      <div class="result-label">Beauty Score</div>
+      <div class="result-val" id="ks-r-beauty" style="color:#c9a84c">—</div>
+    </div>
+    <div class="result-box">
+      <div class="result-label">Monthly Payment</div>
+      <div class="result-val" id="ks-r-emi" style="color:#f0f2ff">—</div>
+    </div>
+    <div class="result-box">
+      <div class="result-label">Total You Pay</div>
+      <div class="result-val" id="ks-r-total" style="color:#f0f2ff">—</div>
+    </div>
+    <div class="result-box">
+      <div class="result-label">Total Interest</div>
+      <div class="result-val" id="ks-r-interest" style="color:#ef4444">—</div>
+    </div>
+  </div>
+  <div class="verdict" id="ks-verdict"></div>
+  <div class="share-btns" id="ks-share">
+    <button class="btn-wa" onclick="ksShareWA()">📲 Share on WhatsApp</button>
+    <button class="btn-gold" onclick="ksDownload()">📄 Download Report</button>
+  </div>
+</div>
+</div>
+
+<section class="info-sec">
+  <div class="info-inner">
+    <div class="sec-tag">How It Works</div>
+    <h2 class="sec-title">Why Your Home Loan Costs More Than You Think</h2>
+    <div class="info-grid">
+      <div class="info-card"><h3>📊 APR vs IRR</h3><p>Banks advertise APR calculated on the original balance. IRR calculates the true cost accounting for balance reduction. The gap is always significant.</p></div>
+      <div class="info-card"><h3>🎭 Beautification Score</h3><p>Our proprietary metric (0-100) measures how much the bank hides. Score 70+ means significant hidden costs you were not told about.</p></div>
+      <div class="info-card"><h3>💰 Hidden Fees</h3><p>Administrative fees, insurance, and service charges are often added to the loan and accrue interest — increasing the true cost silently.</p></div>
+      <div class="info-card"><h3>☪️ Islamic Alternative</h3><p>Murabaha financing from Islamic banks is often competitively priced or cheaper. Always compare before signing any contract.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="info-sec" style="padding-top:0">
+  <div class="info-inner">
+    <div class="sec-tag">FAQ</div>
+    <h2 class="sec-title">Common Questions</h2>
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+</section>
+
+<section class="cta-sec">
+  <div class="cta-inner">
+    <h2>Full Analysis on Kashf</h2>
+    <p>Compare multiple banks, Islamic alternatives, refinancing options and more</p>
+    <button class="btn-gold" onclick="window.location.href='/kashf'">Open Full Kashf Tool →</button>
+  </div>
+</section>
+
+<footer class="footer">
+  <div style="margin-bottom:8px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="/">Home</a><a href="/kashf">Kashf</a><a href="/prism">Prism</a>
+    <a href="/glossary">Glossary</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a>
+  </div>
+  © 2024 Axiom Zones · We Reveal · We Calculate · You Decide
+</footer>
+
+<script>
+var FAQS = [
+  {q:'What is the difference between APR and IRR?',a:'APR is calculated on the original loan amount and stays fixed. IRR (true rate) accounts for the fact that your balance decreases with each payment. IRR is always higher — sometimes double the advertised APR.'},
+  {q:'How is the Beautification Score calculated?',a:'It is based on the gap between advertised APR and true IRR, plus any hidden fees. A score above 70 means the bank is significantly obscuring the true cost of the loan.'},
+  {q:'Is this tool free?',a:'Yes, completely free. No account required, no credit card, no data stored. Your calculation stays in your browser only.'},
+  {q:'What is a good IRR for a home loan?',a:'There is no universal answer — it depends on your market. Use Kashf to compare multiple bank offers side by side and choose the lowest true IRR.'},
+  {q:'Should I choose Islamic Murabaha financing?',a:'Often yes — Murabaha financing is transparent with a fixed markup and no hidden compound interest. Run the comparison on Kashf to see the numbers for your specific case.'},
+];
+
+function ksCalc() {
+  var P = parseFloat(document.getElementById('ks-principal').value) || 0;
+  var apr = parseFloat(document.getElementById('ks-apr').value) || 0;
+  var n = parseInt(document.getElementById('ks-months').value) || 0;
+  var fees = parseFloat(document.getElementById('ks-fees').value) || 0;
+  if (!P || !apr || !n) { showKsToast('Please fill all required fields'); return; }
+  var r = (apr/100)/12;
+  var emi = r === 0 ? P/n : P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+  var total = emi * n + fees;
+  var interest = total - P;
+  var aprDisplay = apr;
+  /* Newton-Raphson IRR */
+  var adjP = P + fees;
+  var irr = apr / 100 / 12;
+  for (var i = 0; i < 100; i++) {
+    var pv = 0, dpv = 0;
+    for (var j = 1; j <= n; j++) {
+      pv  += emi / Math.pow(1+irr, j);
+      dpv -= j * emi / Math.pow(1+irr, j+1);
+    }
+    var f = pv - adjP;
+    if (Math.abs(f) < 0.0001) break;
+    irr = irr - f/dpv;
+    if (irr < 0) { irr = 0.001; break; }
+  }
+  var irrAnnual = irr * 12 * 100;
+  var beauty = Math.min(99, Math.max(0, Math.round((irrAnnual - aprDisplay) / aprDisplay * 100 + (fees/P*50))));
+  var fmt = function(n) { return Math.round(n).toLocaleString(); };
+  document.getElementById('ks-r-apr').textContent = aprDisplay.toFixed(1) + '%';
+  document.getElementById('ks-r-irr').textContent = irrAnnual.toFixed(1) + '%';
+  document.getElementById('ks-r-beauty').textContent = beauty + '/100';
+  document.getElementById('ks-r-emi').textContent = fmt(emi);
+  document.getElementById('ks-r-total').textContent = fmt(total);
+  document.getElementById('ks-r-interest').textContent = fmt(interest);
+  var results = document.getElementById('ks-results');
+  var verdict = document.getElementById('ks-verdict');
+  var share = document.getElementById('ks-share');
+  results.classList.add('show');
+  share.style.display = 'flex';
+  var vColor, vMsg;
+  if (beauty < 30) { vColor = '#22c55e'; vMsg = 'Good offer — relatively transparent. IRR close to APR.'; }
+  else if (beauty < 60) { vColor = '#c9a84c'; vMsg = 'Moderate hidden cost. True rate is ' + (irrAnnual - aprDisplay).toFixed(1) + '% higher than advertised.'; }
+  else { vColor = '#ef4444'; vMsg = 'High beautification! True cost is significantly higher than advertised. Consider alternatives.'; }
+  verdict.style.display = 'block';
+  verdict.style.background = vColor + '10';
+  verdict.style.border = '1px solid ' + vColor + '30';
+  verdict.style.color = vColor;
+  verdict.textContent = vMsg;
+}
+
+function ksShareWA() {
+  var irr = document.getElementById('ks-r-irr').textContent;
+  var apr = document.getElementById('ks-r-apr').textContent;
+  var beauty = document.getElementById('ks-r-beauty').textContent;
+  if (irr === '—') { showKsToast('Calculate first'); return; }
+  var msg = encodeURIComponent('My Home Loan loan analysis:\nAdvertised APR: ' + apr + '\nTrue IRR: ' + irr + '\nBeauty Score: ' + beauty + '\n\nAnalyze yours free: ' + window.location.origin + '/kashf/home-loan');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+function ksDownload() {
+  var irr = document.getElementById('ks-r-irr').textContent;
+  if (irr === '—') { showKsToast('Calculate first'); return; }
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>body{font-family:Arial,sans-serif;padding:40px;max-width:600px;margin:0 auto}h1{color:#c9a84c;border-bottom:3px solid #c9a84c;padding-bottom:10px}.m{background:#f8f8f8;border-right:4px solid #c9a84c;padding:12px 16px;margin:8px 0;border-radius:4px}.footer{margin-top:32px;font-size:.75rem;color:#999;border-top:1px solid #eee;padding-top:10px}</style></head><body><h1>Home Loan & Mortgage Calculator Report</h1><p>' + new Date().toLocaleDateString() + '</p><div class="m"><b>Advertised APR:</b> ' + document.getElementById('ks-r-apr').textContent + '</div><div class="m"><b>True IRR:</b> ' + irr + '</div><div class="m"><b>Monthly Payment:</b> ' + document.getElementById('ks-r-emi').textContent + '</div><div class="m"><b>Total You Pay:</b> ' + document.getElementById('ks-r-total').textContent + '</div><div class="m"><b>Total Interest:</b> ' + document.getElementById('ks-r-interest').textContent + '</div><div class="footer">Generated by Kashf — Axiom Zones · axiomzones.com/kashf · We Reveal · We Calculate · You Decide</div></body></html>';
+  var blob = new Blob([html], {type:'text/html'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'kashf-home-loan-report.html'; a.click();
+}
+
+function showKsToast(msg) {
+  var t = document.getElementById('ks-toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+var FAQS_DATA = [
+  {q:'What is the difference between APR and IRR?',a:'APR is calculated on the original loan amount and stays fixed. IRR (true rate) accounts for the fact that your balance decreases with each payment. IRR is always higher.'},
+  {q:'How is the Beautification Score calculated?',a:'Based on the gap between advertised APR and true IRR plus any hidden fees. Score above 70 means the bank is significantly obscuring the true cost.'},
+  {q:'Is this tool free?',a:'Yes, completely free. No account, no credit card, no data stored anywhere.'},
+  {q:'Should I choose Islamic Murabaha financing?',a:'Often competitive or cheaper. Run both calculations on Kashf to compare with your specific numbers.'},
+];
+
+window.addEventListener('load', function() {
+  var list = document.getElementById('faq-list');
+  FAQS_DATA.forEach(function(faq) {
+    var item = document.createElement('div'); item.className = 'faq-item';
+    item.innerHTML = '<div class="faq-hd"><div class="faq-q">' + faq.q + '</div><div class="faq-arr">▾</div></div><div class="faq-body"><div class="faq-a">' + faq.a + '</div></div>';
+    item.querySelector('.faq-hd').onclick = function() {
+      var open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(f){ f.classList.remove('open'); });
+      if (!open) item.classList.add('open');
+    };
+    list.appendChild(item);
+  });
+});
+</script>
+</body>
+</html>

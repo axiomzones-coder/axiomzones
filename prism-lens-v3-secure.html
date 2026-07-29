@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self)"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Prism — The Truth Behind Every Deal</title>
+<meta name="description" content="See through any installment offer. Real APR, true cost, opportunity cost in 60+ languages and 145+ currencies."/>
+<!-- Open Graph -->
+<meta property="og:title" content="Prism — The Truth Behind Every Deal"/>
+<meta property="og:description" content="Real APR, opportunity cost & true installment cost. Free. 60+ languages, 145+ currencies."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://getprism.app"/>
+<meta property="og:image" content="https://getprism.app/og.png"/>
+<meta property="og:site_name" content="Prism"/>
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Prism — The Truth Behind Every Deal"/>
+<meta name="twitter:description" content="See the real cost of any installment offer instantly. Free forever."/>
+<meta name="twitter:image" content="https://getprism.app/og.png"/>
+<!-- PWA -->
+<meta name="theme-color" content="#8b5cf6"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Prism"/>
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Prism%22%2C%22short_name%22%3A%22Prism%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22theme_color%22%3A%22%238b5cf6%22%2C%22background_color%22%3A%22%23070710%22%7D"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --void:#070710;--ink:#0e0e1c;--deep:#16162a;--surface:#1e1e32;--elevated:#26263e;
+  --p1:#6366f1;--p2:#818cf8;--p3:#38bdf8;--p4:#34d399;--p5:#fbbf24;--p6:#f472b6;
+  --pri:#8b5cf6;--pril:#a78bfa;--prig:rgba(139,92,246,.14);
+  --gold:#d4a853;--gold2:#f0c040;
+  --w:#f8f7ff;--g1:#e2e0f0;--g2:#9490b8;--g3:#4a4870;
+  --gn:#22c55e;--rd:#ef4444;--or:#f97316;--cy:#06b6d4;
+  --fd:'Cormorant',Georgia,serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+[data-theme=light]{
+  --void:#f0eeff;--ink:#e8e4f8;--deep:#ddd8f0;--surface:#d4cfe8;--elevated:#cac4e0;
+  --g3:#c0b8d8;--g2:#706890;--g1:#201840;--w:#1a1440;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto;font-size:16px}
+body{background:var(--void);color:var(--w);font-family:var(--fs);overflow-x:hidden;transition:background .3s,color .3s}
+::selection{background:rgba(139,92,246,.3)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--pri);border-radius:3px}
+
+/* ══ SCROLL PROGRESS ══ */
+#sp{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p4));z-index:9999;width:0}
+
+/* ══ NAV ══ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+#nav.solid{background:rgba(7,7,16,.93);backdrop-filter:blur(28px);border-bottom:1px solid rgba(255,255,255,.06)}
+[data-theme=light] #nav.solid{background:rgba(240,238,255,.93)}
+.nlogo{font-family:var(--fd);font-size:1.3rem;font-weight:700;letter-spacing:-1px;background:linear-gradient(135deg,var(--w),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px;cursor:pointer}
+.nlinks{display:flex;align-items:center;gap:20px}
+.nlinks button{font-family:var(--fm);font-size:.63rem;letter-spacing:2px;color:var(--g2);text-transform:uppercase;background:none;border:none;cursor:pointer;transition:color .25s}
+.nlinks button:hover{color:var(--pril)}
+.nright{display:flex;align-items:center;gap:8px}
+.nbtn{padding:8px 16px;border-radius:7px;font-family:var(--fs);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .25s;letter-spacing:.3px}
+.nb-p{background:var(--pri);color:#fff;border:none}.nb-p:hover{background:var(--pril)}
+.nb-o{background:transparent;border:1px solid rgba(139,92,246,.3);color:var(--pril)}.nb-o:hover{background:var(--prig)}
+.tbtn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--g2);cursor:pointer;font-size:.95rem;transition:all .25s;display:flex;align-items:center;justify-content:center}
+.tbtn:hover{border-color:var(--pri);color:var(--pril)}
+#hmbtn{display:none;width:38px;height:38px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:transparent;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+#hmbtn span{display:block;width:17px;height:1.5px;background:var(--g2);border-radius:1px;transition:all .3s}
+#hmbtn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);background:var(--pri)}
+#hmbtn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+#hmbtn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);background:var(--pri)}
+@media(max-width:760px){#nav{padding:0 16px}.nlinks{display:none}.nb-o{display:none}#hmbtn{display:flex}}
+
+/* ══ TOOLBAR ══ */
+#toolbar{position:fixed;top:60px;left:0;right:0;z-index:990;padding:7px 40px;background:rgba(22,22,42,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;flex-wrap:wrap;transition:transform .4s}
+[data-theme=light] #toolbar{background:rgba(212,207,232,.92)}
+#toolbar.hide{transform:translateY(-100%)}
+.tblabel{font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--g3);text-transform:uppercase;flex-shrink:0}
+.tbsel{background:var(--deep);border:1px solid rgba(255,255,255,.08);color:var(--w);padding:5px 9px;border-radius:5px;font-family:var(--fs);font-size:.76rem;outline:none;cursor:pointer;max-width:170px;transition:border-color .2s}
+.tbsel:hover,.tbsel:focus{border-color:var(--pri)}
+[data-theme=light] .tbsel{background:var(--surface)}
+.tbdiv{width:1px;height:18px;background:rgba(255,255,255,.08);flex-shrink:0}
+.cqbtn{padding:3px 9px;border-radius:4px;font-size:.68rem;font-family:var(--fm);background:var(--deep);border:1px solid rgba(255,255,255,.08);color:var(--g2);cursor:pointer;transition:all .2s}
+.cqbtn.on,.cqbtn:hover{border-color:var(--pri);color:var(--pril);background:var(--prig)}
+@media(max-width:760px){#toolbar{padding:7px 12px}}
+
+/* ══ HERO ══ */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 60px;position:relative;overflow:hidden}
+.hglow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.09),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:hg 8s ease-in-out infinite;pointer-events:none}
+@keyframes hg{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.18)}}
+.hgrid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(rgba(139,92,246,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.5) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.htag{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--pril);border:1px solid rgba(139,92,246,.22);padding:6px 16px;border-radius:50px;margin-bottom:26px;background:rgba(139,92,246,.06);position:relative;z-index:1}
+.hdot{width:5px;height:5px;border-radius:50%;background:var(--p4);animation:bk 2s infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.3}}
+.htitle{font-family:var(--fd);font-size:clamp(3.5rem,10vw,9rem);font-weight:700;letter-spacing:-3px;line-height:.88;margin-bottom:22px;position:relative;z-index:1}
+.htm{background:linear-gradient(135deg,var(--w),var(--g1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hta{font-style:italic;font-weight:300;background:linear-gradient(135deg,var(--p1),var(--p3),var(--p4),var(--p5),var(--p6));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;animation:spec 6s linear infinite}
+@keyframes spec{0%{background-position:0% center}100%{background-position:200% center}}
+.hsub{font-size:clamp(.9rem,2vw,1.1rem);color:var(--g2);max-width:500px;line-height:1.9;margin:0 auto 36px;position:relative;z-index:1}
+.hctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.hcta1{padding:14px 32px;border-radius:9px;font-family:var(--fs);font-size:.9rem;font-weight:700;border:none;cursor:pointer;background:var(--pri);color:#fff;transition:all .3s}
+.hcta1:hover{background:var(--pril);transform:translateY(-2px);box-shadow:0 12px 36px rgba(139,92,246,.4)}
+.hcta2{padding:14px 32px;border-radius:9px;font-family:var(--fs);font-size:.9rem;background:transparent;border:1.5px solid rgba(139,92,246,.28);color:var(--g1);cursor:pointer;transition:all .3s}
+.hcta2:hover{background:var(--prig);border-color:var(--pri)}
+.hstats{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:48px;position:relative;z-index:1}
+.hstat{text-align:center}
+.hsn{font-family:var(--fd);font-size:2.3rem;font-weight:700;line-height:1;background:linear-gradient(135deg,var(--w),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hsl{font-family:var(--fm);font-size:.59rem;letter-spacing:2px;color:var(--g3);text-transform:uppercase;margin-top:3px}
+.hsdiv{width:1px;background:rgba(255,255,255,.08);align-self:stretch}
+
+/* ══ SPECTRUM BAR ══ */
+.specbar{height:3px;background:linear-gradient(90deg,var(--p1),var(--p2),var(--p3),var(--p4),var(--p5),var(--p6))}
+
+/* ══ SECTION ══ */
+.sec{padding:80px 40px;max-width:1160px;margin:0 auto}
+@media(max-width:760px){.sec{padding:60px 16px}}
+.stag{font-family:var(--fm);font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--pri);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.stag::before{content:'';width:18px;height:1px;background:var(--pri)}
+.sh{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;line-height:1.06;margin-bottom:12px}
+.sh em{font-style:italic;font-weight:300;color:var(--g2)}
+.ssub{font-size:.93rem;color:var(--g2);line-height:1.9;max-width:540px}
+
+/* ══ FREE TOOL ══ */
+#tool-section{background:linear-gradient(180deg,transparent,rgba(139,92,246,.04),transparent)}
+.toolcard{background:var(--ink);border:1px solid rgba(139,92,246,.16);border-radius:18px;overflow:hidden;box-shadow:0 28px 70px rgba(0,0,0,.5)}
+.toolhd{padding:18px 26px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:rgba(139,92,246,.04)}
+.toolname{font-family:var(--fd);font-size:1.05rem;font-weight:700}
+.toolsub{font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--g3);text-transform:uppercase;margin-top:2px}
+.freebadge{display:inline-flex;align-items:center;gap:5px;font-family:var(--fm);font-size:.58rem;letter-spacing:2px;padding:3px 9px;border-radius:50px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:var(--gn);text-transform:uppercase}
+.toolbody{padding:24px}
+.tgrid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:600px){.tgrid2{grid-template-columns:1fr}}
+.tcard{background:var(--deep);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:18px;margin-bottom:12px}
+.tcardtitle{font-family:var(--fm);font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--pri);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.tcardtitle::before{content:'';width:10px;height:2px;background:var(--pri)}
+.fld{margin-bottom:10px}
+.fld label{display:block;font-size:.72rem;color:var(--g2);margin-bottom:4px}
+.inp{width:100%;background:var(--surface);border:1px solid rgba(255,255,255,.07);color:var(--w);padding:9px 11px;border-radius:7px;font-family:var(--fs);font-size:.88rem;outline:none;transition:border-color .25s;-moz-appearance:textfield}
+.inp::-webkit-inner-spin-button{-webkit-appearance:none}
+.inp:focus{border-color:var(--pri)}
+[data-theme=light] .inp{background:var(--elevated)}
+.slw{position:relative;margin-top:4px;padding-bottom:2px}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold2);border:2px solid var(--void);cursor:pointer}
+.slv{position:absolute;top:-18px;font-size:.67rem;font-family:var(--fm);color:var(--gold2)}
+/* results */
+.tres{background:var(--deep);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:18px;height:100%}
+.vbox{padding:14px;border-radius:8px;border:1px solid;margin-bottom:12px}
+.vbox.win{background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.2)}
+.vbox.neu{background:rgba(212,168,83,.05);border-color:rgba(212,168,83,.2)}
+.vicon{font-size:1.4rem;margin-bottom:5px}
+.vtitle{font-size:.9rem;font-weight:700;margin-bottom:3px}
+.vdesc{font-size:.76rem;color:var(--g2);line-height:1.7}
+.hl{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;margin-bottom:4px;background:var(--surface)}
+.hlk{font-size:.74rem;color:var(--g2)}
+.hlv{font-family:var(--fm);font-size:.78rem;font-weight:700}
+.hlv.gn{color:var(--gn)}.hlv.rd{color:var(--rd)}.hlv.gd{color:var(--gold2)}.hlv.pu{color:var(--pril)}
+.div{height:1px;background:rgba(255,255,255,.06);margin:10px 0}
+.plock{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:6px;background:rgba(139,92,246,.05);border:1px solid rgba(139,92,246,.14);margin-bottom:4px;cursor:pointer;transition:all .22s}
+.plock:hover{background:rgba(139,92,246,.1);border-color:var(--pri)}
+.plockl{font-size:.74rem;color:var(--g2)}
+.plockb{font-family:var(--fm);font-size:.54rem;letter-spacing:1.5px;padding:2px 7px;border-radius:3px;background:rgba(139,92,246,.18);color:var(--pril);text-transform:uppercase;margin-inline-start:auto}
+.nudge{margin-top:14px;padding:13px 16px;border-radius:9px;background:linear-gradient(135deg,rgba(139,92,246,.09),rgba(56,189,248,.05));border:1px solid rgba(139,92,246,.18);text-align:center}
+.nudget{font-size:.76rem;color:var(--g2);margin-bottom:9px;line-height:1.6}
+.nudgeb{padding:8px 20px;border-radius:7px;background:var(--pri);color:#fff;font-family:var(--fs);font-size:.78rem;font-weight:700;border:none;cursor:pointer;transition:all .25s}
+.nudgeb:hover{background:var(--pril)}
+.calclimit{font-family:var(--fm);font-size:.6rem;letter-spacing:1px;color:var(--g3);text-align:center;margin-top:9px}
+
+/* ══ HOW IT WORKS ══ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
+.step{padding:26px;border-radius:13px;background:var(--ink);border:1px solid rgba(255,255,255,.06);transition:all .3s}
+.step:hover{border-color:rgba(139,92,246,.22);transform:translateY(-4px)}
+.stepn{font-family:var(--fd);font-size:3.5rem;font-weight:700;color:rgba(139,92,246,.1);line-height:1;margin-bottom:10px}
+.stepi{font-size:1.5rem;margin-bottom:10px}
+.stept{font-family:var(--fs);font-size:.95rem;font-weight:700;margin-bottom:7px}
+.stepd{font-size:.8rem;color:var(--g2);line-height:1.75}
+
+/* ══ PRICING ══ */
+.pricetop{text-align:center;margin-bottom:32px}
+.ptoggle{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
+.ptlabel{font-family:var(--fm);font-size:.7rem;letter-spacing:1px;color:var(--g2)}
+.pswitch{position:relative;width:42px;height:22px;cursor:pointer}
+.pswitch input{opacity:0;width:0;height:0}
+.pslider{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:22px;transition:.3s}
+.pslider::before{content:'';position:absolute;height:14px;width:14px;border-radius:50%;background:#fff;bottom:4px;left:4px;transition:.3s}
+.pswitch input:checked + .pslider{background:var(--pri)}
+.pswitch input:checked + .pslider::before{transform:translateX(20px)}
+.savebadge{font-family:var(--fm);font-size:.6rem;padding:2px 8px;border-radius:3px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.2);color:var(--gn);letter-spacing:1px}
+
+/* Quick price overview */
+.pquick{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:32px}
+@media(max-width:900px){.pquick{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.pquick{grid-template-columns:1fr 1fr}}
+.pqc{padding:14px;border-radius:10px;text-align:center;background:var(--ink);border:1px solid rgba(255,255,255,.06);transition:all .3s}
+.pqc:hover{border-color:rgba(139,92,246,.22);transform:translateY(-2px)}
+.pqc.hot{background:rgba(139,92,246,.07);border-color:rgba(139,92,246,.28)}
+.pqprice{font-family:var(--fd);font-size:1.5rem;font-weight:700;line-height:1}
+.pqname{font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--pri);text-transform:uppercase;margin-top:3px}
+.pqfor{font-size:.68rem;color:var(--g3);margin-top:3px;line-height:1.3}
+
+/* Feature cards */
+.fcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:40px}
+@media(max-width:900px){.fcards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.fcards{grid-template-columns:1fr}}
+.fc{padding:20px;border-radius:12px;background:var(--ink);border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--fcc,var(--pri))}
+.fci{font-size:1.6rem;margin-bottom:9px}
+.fct{font-family:var(--fs);font-size:.93rem;font-weight:700;margin-bottom:5px}
+.fcd{font-size:.77rem;color:var(--g2);line-height:1.7}
+.fctier{display:inline-block;margin-top:9px;font-family:var(--fm);font-size:.58rem;letter-spacing:1.5px;padding:2px 8px;border-radius:3px;text-transform:uppercase}
+
+/* Plans grid */
+.plans{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px}
+@media(max-width:1100px){.plans{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.plans{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--ink);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:22px 16px;display:flex;flex-direction:column;transition:all .3s;position:relative;overflow:hidden}
+.plan:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.2)}
+.plan.feat{background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.32)}
+.plan.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p1),var(--p3))}
+.hotbadge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--p1),var(--pri));color:#fff;font-size:.56rem;font-weight:800;letter-spacing:2px;padding:3px 12px;border-radius:0 0 7px 7px;white-space:nowrap;font-family:var(--fm);text-transform:uppercase}
+.plani{font-size:1.5rem;margin-bottom:10px}
+.plann{font-family:var(--fs);font-size:.9rem;font-weight:700;margin-bottom:4px}
+.plantag{font-size:.7rem;color:var(--g3);line-height:1.5;margin-bottom:14px}
+.planp{font-family:var(--fd);font-size:1.9rem;font-weight:700;color:var(--w);line-height:1;margin-bottom:2px}
+.planp span{font-size:.9rem;font-weight:400;font-style:italic;color:var(--g2)}
+.planper{font-family:var(--fm);font-size:.6rem;letter-spacing:1px;color:var(--g3);margin-bottom:16px}
+.planbtn{width:100%;padding:10px;border-radius:7px;font-family:var(--fs);font-size:.78rem;font-weight:700;border:none;cursor:pointer;transition:all .25s;margin-bottom:14px}
+.pb-p{background:var(--pri);color:#fff}.pb-p:hover{background:var(--pril)}
+.pb-o{background:transparent;border:1px solid rgba(139,92,246,.22);color:var(--pril)}.pb-o:hover{background:var(--prig)}
+.pb-g{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}.pb-g:hover{transform:translateY(-1px);box-shadow:0 7px 20px rgba(212,168,83,.3)}
+.pb-e{background:var(--surface);color:var(--g1);border:1px solid rgba(255,255,255,.08)}.pb-e:hover{background:var(--elevated)}
+.planfs{list-style:none;flex:1}
+.pf{display:flex;gap:6px;align-items:flex-start;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.72rem;color:var(--g2);line-height:1.5}
+.pf:last-child{border-bottom:none}
+.pf::before{content:'◆';font-size:.38rem;color:var(--pri);margin-top:5px;flex-shrink:0}
+.pf.off{color:var(--g3);opacity:.5}
+.pf.off::before{color:var(--g3)}
+
+/* Compare table */
+.comptbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06)}
+.comptbl{width:100%;border-collapse:collapse;font-size:.76rem}
+.comptbl th{padding:11px 14px;text-align:start;font-family:var(--fm);font-size:.6rem;letter-spacing:1.5px;color:var(--g2);background:var(--ink);border-bottom:1px solid rgba(255,255,255,.06)}
+.comptbl th:first-child{min-width:190px}
+.comptbl th.fc2{color:var(--pril)}
+.comptbl td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--g2)}
+.comptbl tr:last-child td{border-bottom:none}
+.comptbl tr:hover td{background:rgba(255,255,255,.015)}
+.comptbl td:first-child{color:var(--g1);font-weight:500}
+.comptbl td.fc2{background:rgba(139,92,246,.04)}
+.ck{color:var(--gn);font-size:.88rem}.cx{color:var(--g3)}
+
+/* ══ WAITLIST ══ */
+.wlsec{padding:80px 24px;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(139,92,246,.06),transparent);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
+.wlinner{max-width:580px;margin:0 auto;text-align:center}
+.wltitle{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:700;margin-bottom:10px}
+.wlsub{font-size:.88rem;color:var(--g2);line-height:1.8;margin-bottom:28px}
+.wlform{display:flex;gap:9px;max-width:420px;margin:0 auto 12px}
+@media(max-width:480px){.wlform{flex-direction:column}}
+.wlinput{flex:1;background:var(--deep);border:1.5px solid rgba(139,92,246,.18);color:var(--w);padding:12px 14px;border-radius:8px;font-family:var(--fs);font-size:.86rem;outline:none;transition:border-color .25s}
+.wlinput:focus{border-color:var(--pri)}
+.wlbtn{padding:12px 22px;border-radius:8px;background:var(--pri);color:#fff;font-family:var(--fs);font-size:.86rem;font-weight:700;border:none;cursor:pointer;white-space:nowrap;transition:all .25s}
+.wlbtn:hover{background:var(--pril);transform:translateY(-1px)}
+.wlnote{font-family:var(--fm);font-size:.6rem;letter-spacing:1px;color:var(--g3);text-transform:uppercase}
+.earlybadge{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.63rem;letter-spacing:2px;padding:4px 13px;border-radius:50px;text-transform:uppercase;background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.22);color:var(--gold);margin-bottom:18px}
+
+/* ══ TRUST ══ */
+.trust{padding:28px 24px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;gap:36px;flex-wrap:wrap}
+.tritem{display:flex;align-items:center;gap:7px;font-family:var(--fm);font-size:.63rem;letter-spacing:1.5px;color:var(--g3);text-transform:uppercase}
+
+/* ══ FOOTER ══ */
+footer{padding:36px 40px 24px;border-top:1px solid rgba(255,255,255,.05);max-width:1160px;margin:0 auto}
+.ftop{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:28px}
+.flogo{font-family:var(--fd);font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--w),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
+.ftag{font-family:var(--fd);font-size:.8rem;font-style:italic;color:var(--g3)}
+.flinks{display:flex;gap:28px;flex-wrap:wrap}
+.flcol-t{font-family:var(--fm);font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--pri);margin-bottom:10px}
+.flcol a{display:block;font-size:.78rem;color:var(--g3);text-decoration:none;padding:3px 0;cursor:pointer;transition:color .2s}
+.flcol a:hover{color:var(--w)}
+.fbot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(255,255,255,.05);padding-top:18px}
+.fcp{font-family:var(--fm);font-size:.6rem;letter-spacing:1px;color:var(--g3)}
+.fspec{height:2px;width:70px;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p4));border-radius:1px}
+@media(max-width:760px){footer{padding:28px 16px 20px}}
+
+/* ══ SIDEBAR ══ */
+#sboverlay{position:fixed;inset:0;z-index:1998;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+#sboverlay.open{opacity:1;pointer-events:all}
+#sidebar{position:fixed;top:0;right:0;bottom:0;z-index:1999;width:min(330px,90vw);background:var(--ink);border-left:1px solid rgba(139,92,246,.14);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s var(--ease);overflow:hidden}
+[data-theme=light] #sidebar{border-left-color:rgba(139,92,246,.2)}
+#sidebar.open{transform:translateX(0)}
+.sbtop{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;background:rgba(139,92,246,.04);flex-shrink:0}
+.sblogo{font-family:var(--fd);font-size:1.15rem;font-weight:700;background:linear-gradient(135deg,var(--w),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px}
+.sbclose{width:30px;height:30px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--g2);cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.sbclose:hover{border-color:var(--rd);color:var(--rd)}
+.sbbody{flex:1;overflow-y:auto;padding:0}
+.sbbody::-webkit-scrollbar{width:2px}
+.sbbody::-webkit-scrollbar-thumb{background:var(--pri)}
+.sbsec{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.05)}
+.sbstitle{font-family:var(--fm);font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--pri);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sbstitle::before{content:'';width:8px;height:1px;background:var(--pri)}
+.sblink{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;margin-bottom:4px;color:var(--g1);font-size:.87rem;font-weight:500;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .22s;width:100%;text-align:start;font-family:var(--fs)}
+.sblink:hover,.sblink.act{background:var(--prig);border-color:rgba(139,92,246,.18);color:var(--w)}
+.sbicon{font-size:.95rem;width:20px;text-align:center}
+.sbarr{font-size:.65rem;color:var(--g3);margin-inline-start:auto}
+.sbplcard{padding:13px;border-radius:9px;background:linear-gradient(135deg,rgba(139,92,246,.09),rgba(56,189,248,.05));border:1px solid rgba(139,92,246,.18);margin-bottom:9px}
+.sbpln{font-family:var(--fm);font-size:.59rem;letter-spacing:2px;color:var(--pril);text-transform:uppercase;margin-bottom:3px}
+.sbpld{font-size:.76rem;color:var(--g2);line-height:1.5}
+.sbupbtn{width:100%;margin-top:9px;padding:9px;border-radius:7px;background:var(--pri);color:#fff;font-family:var(--fs);font-size:.78rem;font-weight:700;border:none;cursor:pointer;transition:all .25s}
+.sbupbtn:hover{background:var(--pril)}
+.sbsetrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.sbsetrow:last-child{border-bottom:none}
+.sbsetlbl{font-size:.8rem;color:var(--g2);display:flex;align-items:center;gap:7px}
+.swmini{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
+.swmini input{opacity:0;width:0;height:0}
+.swslider{position:absolute;inset:0;background:rgba(255,255,255,.12);border-radius:20px;transition:.3s}
+.swslider::before{content:'';position:absolute;height:12px;width:12px;border-radius:50%;background:#fff;bottom:4px;left:4px;transition:.3s}
+.swmini input:checked + .swslider{background:var(--pri)}
+.swmini input:checked + .swslider::before{transform:translateX(16px)}
+.sbminisel{background:var(--deep);border:1px solid rgba(255,255,255,.08);color:var(--w);padding:5px 8px;border-radius:5px;font-family:var(--fs);font-size:.74rem;outline:none;cursor:pointer;transition:border-color .2s;max-width:130px}
+.sbminisel:focus{border-color:var(--pri)}
+[data-theme=light] .sbminisel{background:var(--surface)}
+.sbfoot{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.sbflink{display:flex;align-items:center;gap:7px;font-size:.74rem;color:var(--g3);cursor:pointer;transition:color .2s;background:none;border:none;text-align:start;font-family:var(--fs)}
+.sbflink:hover{color:var(--pril)}
+.sbver{font-family:var(--fm);font-size:.56rem;letter-spacing:2px;color:var(--g3);text-transform:uppercase;margin-top:3px}
+
+/* ══ SETTINGS MODAL ══ */
+#setmodal{position:fixed;inset:0;z-index:2100;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .3s}
+#setmodal.open{opacity:1;pointer-events:all}
+.setbox{background:var(--ink);border:1px solid rgba(139,92,246,.18);border-radius:14px;width:100%;max-width:460px;max-height:86vh;overflow-y:auto}
+.setbox::-webkit-scrollbar{width:2px}
+.setbox::-webkit-scrollbar-thumb{background:var(--pri)}
+.sethd{padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--ink);z-index:1}
+.settitle{font-family:var(--fd);font-size:1.2rem;font-weight:700}
+.setclose{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--g2);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.setclose:hover{border-color:var(--rd);color:var(--rd)}
+.setbody{padding:18px 20px}
+.setgrp{margin-bottom:22px}
+.setgrp-t{font-family:var(--fm);font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--pri);margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid rgba(139,92,246,.14)}
+.setrow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.setrow:last-child{border-bottom:none}
+.setrowlbl{font-size:.82rem;color:var(--g1)}
+.setrowsub{font-size:.7rem;color:var(--g3);margin-top:1px}
+.setsel{background:var(--deep);border:1px solid rgba(255,255,255,.1);color:var(--w);padding:6px 9px;border-radius:6px;font-family:var(--fs);font-size:.76rem;outline:none;cursor:pointer;min-width:110px;transition:border-color .2s}
+.setsel:focus{border-color:var(--pri)}
+[data-theme=light] .setsel{background:var(--surface)}
+
+/* ══ REVEAL ══ */
+.rv{opacity:0;transform:translateY(24px);transition:all .8s var(--ease)}
+.rv.vis{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ══ BACK TO TOP ══ */
+#backtop{position:fixed;bottom:80px;right:20px;z-index:900;width:40px;height:40px;border-radius:50%;background:var(--pri);color:#fff;border:none;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(139,92,246,.4);opacity:0;transform:translateY(20px);transition:all .3s var(--ease);pointer-events:none}
+#backtop.show{opacity:1;transform:translateY(0);pointer-events:all}
+#backtop:hover{background:var(--pril);transform:translateY(-3px)}
+
+/* ══ MOBILE BOTTOM NAV ══ */
+#mobnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:980;background:rgba(14,14,28,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.07);padding:6px 0 env(safe-area-inset-bottom,6px)}
+[data-theme=light] #mobnav{background:rgba(220,216,240,.96)}
+@media(max-width:760px){#mobnav{display:block}}
+.mobnav-inner{display:flex;justify-content:space-around;align-items:center}
+.mni{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 16px;border:none;background:transparent;cursor:pointer;transition:all .22s;border-radius:8px;color:var(--g3)}
+.mni.act{color:var(--pri)}
+.mni-icon{font-size:1.1rem}
+.mni-label{font-family:var(--fm);font-size:.52rem;letter-spacing:1px;text-transform:uppercase}
+
+/* ══ PRESET SCENARIOS ══ */
+.presets-wrap{margin-bottom:16px}
+.presets-label{font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--g3);margin-bottom:8px}
+.presets-row{display:flex;gap:7px;flex-wrap:wrap}
+.preset-btn{padding:6px 13px;border-radius:7px;font-size:.76rem;font-family:var(--fs);background:var(--surface);border:1px solid rgba(255,255,255,.08);color:var(--g2);cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:5px}
+.preset-btn:hover{border-color:var(--pri);color:var(--pril);background:var(--prig)}
+.preset-btn.sel{border-color:var(--pri);color:var(--pril);background:var(--prig)}
+[data-theme=light] .preset-btn{background:var(--elevated);border-color:rgba(0,0,0,.1)}
+
+/* ══ SHARE RESULT ══ */
+.share-row{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
+.share-btn{flex:1;min-width:100px;padding:8px 12px;border-radius:7px;font-size:.74rem;font-family:var(--fs);cursor:pointer;transition:all .22s;border:none;display:flex;align-items:center;justify-content:center;gap:5px;font-weight:600}
+.sb-url{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:var(--p3)}
+.sb-url:hover{background:rgba(56,189,248,.18)}
+.sb-copy{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);color:var(--pril)}
+.sb-copy:hover{background:rgba(139,92,246,.18)}
+.url-result{margin-top:8px;padding:8px 11px;background:var(--surface);border-radius:7px;font-family:var(--fm);font-size:.62rem;color:var(--g3);word-break:break-all;display:none;border:1px solid rgba(255,255,255,.07)}
+.url-result.show{display:block}
+
+/* ══ FAQ ══ */
+.faq-list{display:flex;flex-direction:column;gap:8px;margin-top:28px}
+.faq-item{background:var(--ink);border:1px solid rgba(255,255,255,.06);border-radius:11px;overflow:hidden;transition:border-color .25s}
+.faq-item:hover{border-color:rgba(139,92,246,.2)}
+.faq-item.open{border-color:rgba(139,92,246,.25)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;font-size:.9rem;font-weight:600;gap:12px}
+.faq-arrow{font-size:.7rem;color:var(--g3);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--pri)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a-inner{padding:0 20px 16px;font-size:.82rem;color:var(--g2);line-height:1.8;border-top:1px solid rgba(255,255,255,.05);padding-top:14px}
+
+/* ══ WHY PRISM ══ */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr}}
+.why-card{padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,.06);text-align:center}
+.why-card.bad{background:rgba(239,68,68,.04);border-color:rgba(239,68,68,.12)}
+.why-card.ok{background:rgba(212,168,83,.04);border-color:rgba(212,168,83,.12)}
+.why-card.best{background:rgba(34,197,94,.04);border-color:rgba(34,197,94,.12)}
+.why-icon{font-size:2rem;margin-bottom:12px}
+.why-name{font-family:var(--fs);font-size:.9rem;font-weight:700;margin-bottom:10px}
+.why-list{list-style:none;text-align:start}
+.why-item{display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:.78rem;color:var(--g2);line-height:1.5}
+.why-item::before{font-size:.7rem;flex-shrink:0;margin-top:2px}
+.why-card.bad .why-item::before{content:'✗';color:var(--rd)}
+.why-card.ok .why-item::before{content:'~';color:var(--gold)}
+.why-card.best .why-item::before{content:'✓';color:var(--gn)}
+
+/* ══ WHATSAPP SHARE BTN ══ */
+.wa-btn{padding:8px 14px;border-radius:7px;font-size:.76rem;font-family:var(--fs);cursor:pointer;transition:all .22s;border:none;display:flex;align-items:center;justify-content:center;gap:6px;font-weight:600;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.28);color:#25d366}
+.wa-btn:hover{background:rgba(37,211,102,.2);transform:translateY(-1px)}
+
+/* ══ SCARCITY BADGE ══ */
+.scarcity{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);margin-bottom:16px;font-family:var(--fm);font-size:.68rem;letter-spacing:1px}
+.scarcity-dot{width:7px;height:7px;border-radius:50%;background:var(--rd);animation:bk 1.5s infinite}
+.scarcity-num{color:var(--rd);font-weight:700;font-size:.82rem}
+.scarcity-txt{color:var(--g2)}
+
+/* ══ RESULT CARD ══ */
+#result-card{display:none;margin-top:14px;padding:18px;border-radius:12px;background:linear-gradient(135deg,var(--deep),var(--surface));border:1px solid rgba(139,92,246,.2);position:relative;overflow:hidden}
+#result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p4))}
+#result-card.show{display:block}
+.rc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.rc-title{font-family:var(--fd);font-size:1rem;font-weight:700}
+.rc-badge{font-family:var(--fm);font-size:.58rem;letter-spacing:2px;padding:3px 8px;border-radius:3px;text-transform:uppercase}
+.rc-badge.win{background:rgba(34,197,94,.12);color:var(--gn)}
+.rc-badge.neu{background:rgba(212,168,83,.12);color:var(--gold2)}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rc-item{text-align:center;padding:10px;background:rgba(255,255,255,.04);border-radius:8px}
+.rc-val{font-family:var(--fm);font-size:1rem;font-weight:700;line-height:1}
+.rc-lbl{font-size:.64rem;color:var(--g3);margin-top:3px;font-family:var(--fm);letter-spacing:.5px}
+.rc-insight{margin-top:12px;padding:10px 12px;border-radius:8px;font-size:.76rem;color:var(--g2);line-height:1.7;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12)}
+.rc-insight.inf{background:rgba(249,115,22,.06);border-color:rgba(249,115,22,.18);color:var(--or)}
+
+/* ══ HISTORY ══ */
+#hist-section{margin-top:14px;display:none}
+#hist-section.show{display:block}
+.hist-title{font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--g3);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.hist-clear{background:none;border:none;color:var(--g3);cursor:pointer;font-size:.65rem;font-family:var(--fm);transition:color .2s}
+.hist-clear:hover{color:var(--rd)}
+.hist-list{display:flex;flex-direction:column;gap:5px}
+.hist-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:7px;background:var(--surface);cursor:pointer;transition:all .22s;border:1px solid transparent}
+.hist-item:hover{border-color:rgba(139,92,246,.2);background:var(--prig)}
+.hist-item-label{font-size:.74rem;color:var(--g2)}
+.hist-item-val{font-family:var(--fm);font-size:.7rem;color:var(--pril)}
+
+/* ══ KEYBOARD SHORTCUTS ══ */
+#shortcuts-hint{position:fixed;bottom:80px;left:16px;z-index:800;background:var(--ink);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 16px;font-family:var(--fm);font-size:.62rem;color:var(--g3);opacity:0;pointer-events:none;transition:opacity .3s;line-height:2}
+#shortcuts-hint.show{opacity:1}
+.kbd{display:inline-block;padding:1px 6px;border-radius:4px;background:var(--surface);border:1px solid rgba(255,255,255,.12);color:var(--g2);font-size:.6rem}
+@media(max-width:760px){#shortcuts-hint{display:none}}
+
+/* ══ FOCUS / ACCESSIBILITY ══ */
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+
+/* ══ PRINT ══ */
+@media print{
+  #nav,#toolbar,#mobnav,#backtop,#sidebar,#sboverlay,#setmodal,#tst,
+  #shortcuts-hint,.hmbtn,.nudge,.plock,.share-row,.presets-wrap,
+  .wlsec,.trust,.hctas,.earlybadge{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .toolcard,.tcard,.tres,.hl,.result-card{background:#f5f5f5!important;border-color:#ddd!important;color:#000!important}
+  .hl,.hlk,.hlv{color:#000!important}
+  #hero{min-height:auto;padding:30px 24px}
+  .htitle{font-size:2.5rem}
+  .htm,.hta{-webkit-text-fill-color:#000!important;color:#000!important;background:none!important}
+}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--ink);border:1px solid rgba(139,92,246,.28);color:var(--w);padding:10px 18px;border-radius:9px;font-size:.78rem;z-index:9999;transition:transform .4s var(--ease);box-shadow:0 14px 44px rgba(0,0,0,.6);font-family:var(--fm);letter-spacing:.5px;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Axiom Zones"/>
+  <meta name="theme-color" content="#c9a84c"/>
+  <meta name="msapplication-TileColor" content="#060912"/>
+  <link rel="alternate" hreflang="x-default" href="https://axiomzones.com/prism"/>
+  <link rel="alternate" hreflang="ar" href="https://axiomzones.com/prism"/>
+  <link rel="alternate" hreflang="en" href="https://axiomzones.com/prism"/>
+<link rel="icon" type="image/x-icon" href="/icons/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+</head>
+<body>
+
+<!-- ══ FINANCIAL CLARITY BANNER ══ -->
+<div id="p-clarity-banner" style="background:rgba(201,168,76,.05);border-bottom:1px solid rgba(201,168,76,.12);padding:8px 20px;text-align:center;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:#8892b0;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+  <span style="color:#c9a84c">⚡ We Reveal · We Calculate · You Decide</span>
+  <span style="color:#3d4a6b">|</span>
+  <span>Prism results are for financial clarity — not financial advice</span>
+  <span style="color:#3d4a6b">|</span>
+  <a href="/disclaimer" target="_blank" style="color:#c9a84c;text-decoration:none;font-size:.6rem">Disclaimer ↗</a>
+</div>
+
+<!-- ══ DISCLAIMER BANNER ══ -->
+<div style="background:rgba(139,92,246,.05);border-top:1px solid rgba(139,92,246,.12);border-bottom:1px solid rgba(139,92,246,.12);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:60px;z-index:90;backdrop-filter:blur(20px)">
+  <div style="display:flex;align-items:center;gap:8px;font-size:.76rem;color:#8892b0">
+    <span style="font-size:1rem">🔮</span>
+    <span><strong style="color:#a78bfa">Prism calculates. You decide.</strong> Results based on your inputs · Not financial advice</span>
+  </div>
+  <a href="/disclaimer" target="_blank" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1px;color:#3d4a6b;text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,.07);padding:3px 9px;border-radius:4px;transition:all .22s" onmouseover="this.style.borderColor='rgba(139,92,246,.3)';this.style.color='#a78bfa'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.color='#3d4a6b'">Disclaimer ↗</a>
+</div>
+
+
+<div id="sp"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nlogo" id="nlogo">
+    <svg width="18" height="22" viewBox="0 0 18 22"><defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><polygon points="9,2 16,18 2,18" fill="none" stroke="url(#ng)" stroke-width="1.8" stroke-linejoin="round"/><line x1="10" y1="10" x2="18" y2="6" stroke="#38bdf8" stroke-width="1.2"/><line x1="10" y1="10" x2="18" y2="13" stroke="#34d399" stroke-width="1.2"/></svg>
+    Prism
+  </div>
+  <div class="nlinks">
+    <button onclick="sGoTo('tool-section')">Free Tool</button>
+    <button onclick="sGoTo('how')">How It Works</button>
+    <button onclick="sGoTo('pricing')">Pricing</button>
+    <button onclick="sGoTo('waitlist')">Get Pro</button>
+  </div>
+  <div class="nright">
+    <button class="tbtn" id="tbtn" onclick="toggleTheme()">🌙</button>
+    <button class="nbtn nb-o" onclick="sGoTo('pricing')">Pricing</button>
+    <button class="nbtn nb-p" onclick="sGoTo('waitlist')">Get Early Access</button>
+    <button id="hmbtn" onclick="openSB()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- TOOLBAR -->
+<div id="toolbar">
+  <span class="tblabel">🌐</span>
+  <select class="toolbar-sel" id="langsel" onchange="handleLang(this.value)" aria-label="Language">
+    <optgroup label="── Arabic عربية ──">
+      <option value="ar">🇸🇦 العربية</option><option value="fa">🇮🇷 فارسی</option>
+      <option value="ur">🇵🇰 اردو</option><option value="he">🇮🇱 עברית</option>
+      <option value="ku">🇮🇶 Kurdî</option>
+    </optgroup>
+    <optgroup label="── Western Europe ──">
+      <option value="en" selected>🇬🇧 English</option><option value="fr">🇫🇷 Français</option>
+      <option value="es">🇪🇸 Español</option><option value="pt">🇧🇷 Português</option>
+      <option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option>
+      <option value="nl">🇳🇱 Nederlands</option><option value="sv">🇸🇪 Svenska</option>
+      <option value="no">🇳🇴 Norsk</option><option value="da">🇩🇰 Dansk</option>
+      <option value="fi">🇫🇮 Suomi</option><option value="is">🇮🇸 Íslenska</option>
+      <option value="ca">Català</option><option value="eu">Euskara</option>
+      <option value="gl">Galego</option><option value="cy">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg</option>
+      <option value="ga">🇮🇪 Gaeilge</option><option value="lb">Lëtzebuergesch</option>
+    </optgroup>
+    <optgroup label="── Eastern Europe ──">
+      <option value="ru">🇷🇺 Русский</option><option value="uk">🇺🇦 Українська</option>
+      <option value="pl">🇵🇱 Polski</option><option value="cs">🇨🇿 Čeština</option>
+      <option value="sk">🇸🇰 Slovenčina</option><option value="hu">🇭🇺 Magyar</option>
+      <option value="ro">🇷🇴 Română</option><option value="bg">🇧🇬 Български</option>
+      <option value="sr">🇷🇸 Српски</option><option value="hr">🇭🇷 Hrvatski</option>
+      <option value="sl">🇸🇮 Slovenščina</option><option value="lt">🇱🇹 Lietuvių</option>
+      <option value="lv">🇱🇻 Latviešu</option><option value="et">🇪🇪 Eesti</option>
+      <option value="el">🇬🇷 Ελληνικά</option><option value="sq">🇦🇱 Shqip</option>
+      <option value="mk">🇲🇰 Македонски</option><option value="bs">🇧🇦 Bosanski</option>
+      <option value="ka">🇬🇪 ქართული</option><option value="hy">🇦🇲 Հայերեն</option>
+      <option value="az">🇦🇿 Azərbaycan</option><option value="kk">🇰🇿 Қазақ</option>
+      <option value="uz">🇺🇿 O'zbek</option><option value="be">🇧🇾 Беларуская</option>
+      <option value="tr">🇹🇷 Türkçe</option><option value="tk">Türkmençe</option>
+      <option value="ky">Кыргызча</option><option value="tg">Тоҷикӣ</option>
+      <option value="mn">🇲🇳 Монгол</option>
+    </optgroup>
+    <optgroup label="── Asia Pacific ──">
+      <option value="zh">🇨🇳 中文简体</option><option value="zh-tw">🇹🇼 中文繁體</option>
+      <option value="ja">🇯🇵 日本語</option><option value="ko">🇰🇷 한국어</option>
+      <option value="hi">🇮🇳 हिन्दी</option><option value="bn">🇧🇩 বাংলা</option>
+      <option value="ta">🇮🇳 தமிழ்</option><option value="te">🇮🇳 తెలుగు</option>
+      <option value="mr">🇮🇳 मराठी</option><option value="gu">🇮🇳 ગુજરાતી</option>
+      <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option><option value="ne">🇳🇵 नेपाली</option>
+      <option value="si">🇱🇰 සිංහල</option><option value="my">🇲🇲 မြန်မာ</option>
+      <option value="th">🇹🇭 ภาษาไทย</option><option value="lo">🇱🇦 ລາວ</option>
+      <option value="km">🇰🇭 ខ្មែរ</option><option value="vi">🇻🇳 Tiếng Việt</option>
+      <option value="id">🇮🇩 Bahasa Indonesia</option><option value="ms">🇲🇾 Bahasa Melayu</option>
+      <option value="tl">🇵🇭 Filipino</option><option value="jv">Basa Jawa</option>
+      <option value="su">Basa Sunda</option><option value="ceb">Cebuano</option>
+    </optgroup>
+    <optgroup label="── South Asia ──">
+      <option value="ur">🇵🇰 اردو</option><option value="sd">سنڌي</option>
+      <option value="ps">پښتو</option><option value="dv">ދިވެހި</option>
+    </optgroup>
+    <optgroup label="── Africa ──">
+      <option value="sw">🇰🇪 Kiswahili</option><option value="am">🇪🇹 አማርኛ</option>
+      <option value="yo">🇳🇬 Yorùbá</option><option value="ha">🇳🇬 Hausa</option>
+      <option value="ig">🇳🇬 Igbo</option><option value="zu">🇿🇦 isiZulu</option>
+      <option value="af">🇿🇦 Afrikaans</option><option value="so">🇸🇴 Soomaali</option>
+      <option value="rw">🇷🇼 Kinyarwanda</option><option value="sn">ChiShona</option>
+      <option value="st">Sesotho</option><option value="xh">isiXhosa</option>
+      <option value="ny">Chichewa</option><option value="mg">Malagasy</option>
+    </optgroup>
+    <optgroup label="── Americas ──">
+      <option value="pt-br">🇧🇷 Português BR</option><option value="qu">🇵🇪 Quechua</option>
+      <option value="ay">Aymara</option><option value="gn">Guaraní</option>
+    </optgroup>
+    <optgroup label="── Pacific ──">
+      <option value="haw">Hawaiian</option><option value="sm">Gagana Samoa</option>
+      <option value="mi">Māori</option><option value="fj">Vosa Vakaviti</option>
+    </optgroup>
+  </select>
+  <div class="tbdiv"></div>
+  <span class="tblabel">💰</span>
+  <select class="toolbar-sel" id="currsel" onchange="setCurr(this.value)" aria-label="Currency">
+    <optgroup label="── Gulf خليجي ──">
+      <option value="SAR">﷼ SAR — Saudi Riyal</option><option value="AED">د.إ AED — UAE Dirham</option>
+      <option value="KWD">د.ك KWD — Kuwaiti Dinar</option><option value="BHD">BD BHD — Bahraini Dinar</option>
+      <option value="OMR">ر.ع OMR — Omani Rial</option><option value="QAR">ر.ق QAR — Qatari Riyal</option>
+    </optgroup>
+    <optgroup label="── Arab عربي ──">
+      <option value="EGP">ج.م EGP — Egyptian Pound</option><option value="JOD">JD JOD — Jordanian Dinar</option>
+      <option value="LBP">LBP — Lebanese Pound</option><option value="IQD">IQD — Iraqi Dinar</option>
+      <option value="LYD">LD LYD — Libyan Dinar</option><option value="TND">DT TND — Tunisian Dinar</option>
+      <option value="MAD">DH MAD — Moroccan Dirham</option><option value="DZD">DA DZD — Algerian Dinar</option>
+      <option value="SDG">SDG — Sudanese Pound</option><option value="YER">YER — Yemeni Rial</option>
+      <option value="SYP">SYP — Syrian Pound</option>
+    </optgroup>
+    <optgroup label="── Major رئيسي ──">
+      <option value="USD" selected>$ USD — US Dollar</option><option value="EUR">€ EUR — Euro</option>
+      <option value="GBP">£ GBP — British Pound</option><option value="JPY">¥ JPY — Japanese Yen</option>
+      <option value="CNY">¥ CNY — Chinese Yuan</option><option value="CHF">Fr CHF — Swiss Franc</option>
+      <option value="CAD">C$ CAD — Canadian Dollar</option><option value="AUD">A$ AUD — Australian Dollar</option>
+      <option value="NZD">NZ$ NZD — New Zealand Dollar</option><option value="SGD">S$ SGD — Singapore Dollar</option>
+      <option value="HKD">HK$ HKD — Hong Kong Dollar</option><option value="TWD">NT$ TWD — Taiwan Dollar</option>
+    </optgroup>
+    <optgroup label="── Western Europe غرب أوروبا ──">
+      <option value="NOK">kr NOK — Norwegian Krone</option><option value="SEK">kr SEK — Swedish Krona</option>
+      <option value="DKK">kr DKK — Danish Krone</option><option value="ISK">kr ISK — Icelandic Krona</option>
+    </optgroup>
+    <optgroup label="── Eastern Europe شرق أوروبا ──">
+      <option value="PLN">zł PLN — Polish Zloty</option><option value="CZK">Kč CZK — Czech Koruna</option>
+      <option value="HUF">Ft HUF — Hungarian Forint</option><option value="RON">lei RON — Romanian Leu</option>
+      <option value="BGN">лв BGN — Bulgarian Lev</option><option value="HRK">kn HRK — Croatian Kuna</option>
+      <option value="RSD">din RSD — Serbian Dinar</option><option value="ALL">L ALL — Albanian Lek</option>
+      <option value="MKD">den MKD — Macedonian Denar</option><option value="BAM">KM BAM — Bosnian Mark</option>
+      <option value="RUB">₽ RUB — Russian Ruble</option><option value="UAH">₴ UAH — Ukrainian Hryvnia</option>
+      <option value="BYN">Br BYN — Belarusian Ruble</option><option value="MDL">L MDL — Moldovan Leu</option>
+      <option value="GEL">₾ GEL — Georgian Lari</option><option value="AMD">֏ AMD — Armenian Dram</option>
+      <option value="AZN">₼ AZN — Azerbaijani Manat</option><option value="TRY">₺ TRY — Turkish Lira</option>
+    </optgroup>
+    <optgroup label="── South Asia جنوب آسيا ──">
+      <option value="INR">₹ INR — Indian Rupee</option><option value="PKR">₨ PKR — Pakistani Rupee</option>
+      <option value="BDT">৳ BDT — Bangladeshi Taka</option><option value="LKR">Rs LKR — Sri Lankan Rupee</option>
+      <option value="NPR">Rs NPR — Nepalese Rupee</option><option value="MVR">Rf MVR — Maldivian Rufiyaa</option>
+      <option value="BTN">Nu BTN — Bhutanese Ngultrum</option><option value="AFN">؋ AFN — Afghan Afghani</option>
+      <option value="ILS">₪ ILS — Israeli Shekel</option>
+    </optgroup>
+    <optgroup label="── Southeast Asia جنوب شرق آسيا ──">
+      <option value="KRW">₩ KRW — South Korean Won</option><option value="THB">฿ THB — Thai Baht</option>
+      <option value="IDR">Rp IDR — Indonesian Rupiah</option><option value="MYR">RM MYR — Malaysian Ringgit</option>
+      <option value="PHP">₱ PHP — Philippine Peso</option><option value="VND">₫ VND — Vietnamese Dong</option>
+      <option value="MMK">K MMK — Myanmar Kyat</option><option value="KHR">CR KHR — Cambodian Riel</option>
+      <option value="LAK">₭ LAK — Laotian Kip</option><option value="BND">B$ BND — Brunei Dollar</option>
+      <option value="MNT">₮ MNT — Mongolian Tugrik</option>
+    </optgroup>
+    <optgroup label="── Central Asia آسيا الوسطى ──">
+      <option value="KZT">₸ KZT — Kazakhstani Tenge</option><option value="UZS">UZS — Uzbekistani Som</option>
+      <option value="KGS">KGS — Kyrgyzstani Som</option><option value="TJS">TJS — Tajikistani Somoni</option>
+      <option value="TMT">T TMT — Turkmenistani Manat</option>
+    </optgroup>
+    <optgroup label="── North America أمريكا الشمالية ──">
+      <option value="MXN">$ MXN — Mexican Peso</option><option value="GTQ">Q GTQ — Guatemalan Quetzal</option>
+      <option value="HNL">L HNL — Honduran Lempira</option><option value="NIO">C$ NIO — Nicaraguan Córdoba</option>
+      <option value="CRC">₡ CRC — Costa Rican Colón</option><option value="DOP">RD$ DOP — Dominican Peso</option>
+      <option value="JMD">J$ JMD — Jamaican Dollar</option><option value="TTD">TT$ TTD — Trinidad Dollar</option>
+      <option value="BBD">Bds$ BBD — Barbadian Dollar</option><option value="XCD">EC$ XCD — East Caribbean Dollar</option>
+      <option value="BSD">B$ BSD — Bahamian Dollar</option><option value="BZD">BZ$ BZD — Belize Dollar</option>
+      <option value="HTG">G HTG — Haitian Gourde</option><option value="AWG">ƒ AWG — Aruban Florin</option>
+      <option value="ANG">ƒ ANG — Netherlands Antillean Guilder</option><option value="PAB">B/. PAB — Panamanian Balboa</option>
+    </optgroup>
+    <optgroup label="── South America أمريكا الجنوبية ──">
+      <option value="BRL">R$ BRL — Brazilian Real</option><option value="ARS">$ ARS — Argentine Peso</option>
+      <option value="CLP">$ CLP — Chilean Peso</option><option value="COP">$ COP — Colombian Peso</option>
+      <option value="PEN">S/ PEN — Peruvian Sol</option><option value="UYU">$ UYU — Uruguayan Peso</option>
+      <option value="BOB">Bs BOB — Bolivian Boliviano</option><option value="PYG">₲ PYG — Paraguayan Guaraní</option>
+      <option value="VES">Bs VES — Venezuelan Bolívar</option><option value="GYD">G$ GYD — Guyanese Dollar</option>
+      <option value="SRD">$ SRD — Surinamese Dollar</option>
+    </optgroup>
+    <optgroup label="── West Africa غرب أفريقيا ──">
+      <option value="NGN">₦ NGN — Nigerian Naira</option><option value="GHS">₵ GHS — Ghanaian Cedi</option>
+      <option value="XOF">F XOF — West African CFA</option><option value="GMD">D GMD — Gambian Dalasi</option>
+      <option value="GNF">FG GNF — Guinean Franc</option><option value="SLL">Le SLL — Sierra Leonean Leone</option>
+      <option value="LRD">L$ LRD — Liberian Dollar</option><option value="SLE">SLE — Sierra Leone</option>
+    </optgroup>
+    <optgroup label="── East Africa شرق أفريقيا ──">
+      <option value="KES">KSh KES — Kenyan Shilling</option><option value="TZS">TSh TZS — Tanzanian Shilling</option>
+      <option value="UGX">USh UGX — Ugandan Shilling</option><option value="ETB">Br ETB — Ethiopian Birr</option>
+      <option value="RWF">Fr RWF — Rwandan Franc</option><option value="BIF">Fr BIF — Burundian Franc</option>
+      <option value="DJF">Fdj DJF — Djiboutian Franc</option><option value="ERN">Nkf ERN — Eritrean Nakfa</option>
+      <option value="SSP">£ SSP — South Sudanese Pound</option><option value="SOS">Sh SOS — Somali Shilling</option>
+    </optgroup>
+    <optgroup label="── Southern Africa جنوب أفريقيا ──">
+      <option value="ZAR">R ZAR — South African Rand</option><option value="BWP">P BWP — Botswanan Pula</option>
+      <option value="NAD">N$ NAD — Namibian Dollar</option><option value="ZMW">K ZMW — Zambian Kwacha</option>
+      <option value="MWK">MK MWK — Malawian Kwacha</option><option value="MZN">MT MZN — Mozambican Metical</option>
+      <option value="AOA">Kz AOA — Angolan Kwanza</option><option value="ZWL">ZWL — Zimbabwean Dollar</option>
+    </optgroup>
+    <optgroup label="── Central Africa وسط أفريقيا ──">
+      <option value="XAF">F XAF — Central African CFA</option><option value="CDF">FC CDF — Congolese Franc</option>
+      <option value="XAF">F CAF — CAF Franc</option>
+    </optgroup>
+    <optgroup label="── Islands جزر ──">
+      <option value="MGA">Ar MGA — Malagasy Ariary</option><option value="MUR">₨ MUR — Mauritian Rupee</option>
+      <option value="SCR">₨ SCR — Seychellois Rupee</option><option value="CVE">$ CVE — Cape Verdean Escudo</option>
+      <option value="KMF">CF KMF — Comorian Franc</option><option value="STN">Db STN — São Tomé Dobra</option>
+      <option value="FJD">FJ$ FJD — Fijian Dollar</option><option value="PGK">K PGK — Papua New Guinean Kina</option>
+      <option value="WST">T WST — Samoan Tala</option><option value="VUV">Vt VUV — Vanuatu Vatu</option>
+      <option value="SBD">SI$ SBD — Solomon Islands Dollar</option><option value="TOP">T$ TOP — Tongan Paʻanga</option>
+      <option value="XPF">CFP XPF — CFP Franc</option>
+    </optgroup>
+    <optgroup label="── Special خاص ──">
+      <option value="XAU">⊛ XAU — Gold (Troy Oz)</option><option value="XAG">⊛ XAG — Silver (Troy Oz)</option>
+      <option value="XDR">SDR — IMF Special Drawing Rights</option>
+    </optgroup>
+    <optgroup label="── Digital رقمي ──">
+      <option value="BTC">₿ BTC — Bitcoin</option><option value="ETH">Ξ ETH — Ethereum</option>
+      <option value="USDT">₮ USDT — Tether</option><option value="USDC">$ USDC — USD Coin</option>
+      <option value="BNB">BNB — Binance Coin</option><option value="XRP">XRP — Ripple</option>
+      <option value="ADA">₳ ADA — Cardano</option><option value="SOL">◎ SOL — Solana</option>
+    </optgroup>
+  </select>
+  <div class="tbdiv"></div>
+  <button class="cqbtn" onclick="setCurr('SAR')">﷼</button>
+  <button class="cqbtn on" onclick="setCurr('USD')">$</button>
+  <button class="cqbtn" onclick="setCurr('EUR')">€</button>
+  <button class="cqbtn" onclick="setCurr('GBP')">£</button>
+  <button class="cqbtn" onclick="setCurr('AED')">AED</button>
+  <button class="cqbtn" onclick="setCurr('KWD')">KWD</button>
+  <button class="cqbtn" onclick="setCurr('BTC')">₿</button>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hglow"></div><div class="hgrid"></div>
+  <div class="htag"><span class="hdot"></span>Financial Clarity — Free Forever</div>
+  <h1 class="htitle">
+    <span class="htm">See Through</span>
+    <span class="hta">Every Deal</span>
+  </h1>
+  <p class="hsub">Any installment offer. Any currency. Any language. Prism reveals the true cost — APR, opportunity cost, inflation — in seconds.</p>
+  <div class="hctas">
+    <button class="hcta1" onclick="sGoTo('tool-section')">Try Free — No Sign Up</button>
+    <button class="hcta2" onclick="sGoTo('pricing')">View Pricing ↓</button>
+  </div>
+  <div class="hstats">
+    <div class="hstat"><div class="hsn">60+</div><div class="hsl">Languages</div></div>
+    <div class="hsdiv"></div>
+    <div class="hstat"><div class="hsn">145+</div><div class="hsl">Currencies</div></div>
+    <div class="hsdiv"></div>
+    <div class="hstat"><div class="hsn">5</div><div class="hsl">Tools</div></div>
+    <div class="hsdiv"></div>
+    <div class="hstat"><div class="hsn">$0</div><div class="hsl">To Start</div></div>
+  </div>
+</section>
+
+<!-- TOOLS SUITE STRIP --></div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">What is opportunity cost and why does it matter? <span class="faq-arrow">▼</span></div>
+        <div class="faq-a"><div class="faq-a-inner">If you pay cash today, you give up what that money could have earned (savings, investments). If your investment return rate is higher than the installment's effective interest rate, keeping cash and paying installments can be smarter. Prism calculates this for you.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">Is my data saved or shared? <span class="faq-arrow">▼</span></div>
+        <div class="faq-a"><div class="faq-a-inner">No. All calculations happen in your browser. No data is sent to our servers. When you share a link, the numbers are encoded in the URL itself — we never see them. Your financial data stays yours.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">What is the difference between Clear and Pro? <span class="faq-arrow">▼</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Clear ($7/mo) unlocks opportunity cost, inflation analysis, charts, and unlimited calculations. Pro ($19/mo) adds the true IRR calculator, sensitivity heat map, early payoff optimizer, 3-offer comparison, Prism Payoff tool, and debt burden gauge — everything a business owner or advisor needs.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">What is Prism Payoff? <span class="faq-arrow">▼</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Prism Payoff is a separate tool (Pro and above) for people who already have an existing loan and received a lump sum of cash. It analyzes whether to pay off the loan now, invest the cash, or do a partial payoff — giving you a clear recommendation with full numbers.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-q">Can I get a refund? <span class="faq-arrow">▼</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. We offer a 14-day money-back guarantee for all paid plans, no questions asked. If Prism does not deliver value in your first two weeks, contact us and we will refund you immediately.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist">
+  <div class="wlsec">
+    <div class="wlinner rv">
+      <div class="earlybadge">🎁 Early Adopter Offer</div>
+      <div class="scarcity">
+        <span class="scarcity-dot"></span>
+        <span class="scarcity-num" id="spots-left">27</span>
+        <span class="scarcity-txt">of 100 early access spots remaining</span>
+      </div>
+      <h2 class="wltitle">Get <em>50% Off</em><br/>First Year</h2>
+      <p class="wlsub">Join the waitlist for Prism Pro. First 100 subscribers get 50% off their first year — locked in forever.</p>
+      <div class="wlform">
+        <input class="wlinput" type="email" id="wlemail" placeholder="your@email.com"/>
+        <button class="wlbtn" onclick="submitWL()">Join Waitlist</button>
+      </div>
+      <div class="wlnote">No spam. Notify when ready. Cancel anytime.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="tritem">🔒 No account for free</div>
+  <div class="tritem">🌍 60+ languages</div>
+  <div class="tritem">💱 145+ currencies</div>
+  <div class="tritem">⚡ Instant results</div>
+  <div class="tritem">🚫 No ads. Ever.</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftop">
+    <div><div class="flogo">Prism</div><div class="ftag">The Truth Behind Every Deal</div></div>
+    <div class="flinks">
+      <div class="flcol"><div class="flcol-t">Tools</div><a onclick="sGoTo('tool-section')">Prism Compare</a><a onclick="window.open('prism-v4r1.html','_blank')">Prism Payoff</a></div>
+      <div class="flcol"><div class="flcol-t">Company</div><a onclick="toast('About page coming soon')">About</a><a onclick="toast('Blog coming soon')">Blog</a><a onclick="sGoTo('waitlist')">Contact</a></div>
+      <div class="flcol"><div class="flcol-t">Legal</div><a onclick="toast('Privacy Policy')">Privacy</a><a onclick="toast('Terms of Service')">Terms</a></div>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fcp">© 2024 Prism · Axiom Zones · All rights reserved</div>
+    <div class="fspec"></div>
+    <div class="fcp">getprism.app</div>
+  </div>
+</footer>
+
+<!-- SIDEBAR OVERLAY -->
+<div id="sboverlay" onclick="closeSB()"></div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sbtop">
+    <div class="sblogo">
+      <svg width="16" height="20" viewBox="0 0 16 20"><defs><linearGradient id="sbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs><polygon points="8,2 14,16 2,16" fill="none" stroke="url(#sbg)" stroke-width="1.6" stroke-linejoin="round"/><line x1="9" y1="9" x2="16" y2="5" stroke="#38bdf8" stroke-width="1.1"/><line x1="9" y1="9" x2="16" y2="12" stroke="#34d399" stroke-width="1.1"/></svg>
+      Prism
+    </div>
+    <button class="sbclose" onclick="closeSB()">✕</button>
+  </div>
+  <div class="sbbody">
+
+    <div class="sbsec">
+      <div class="sbstitle">Current Plan</div>
+      <div class="sbplcard">
+        <div class="sbpln">🆓 Free Plan</div>
+        <div class="sbpld">5 analyses/day · All languages & currencies</div>
+        <button class="sbupbtn" onclick="closeSB();sGoTo('pricing')">Upgrade to Pro — $19/mo →</button>
+      </div>
+    </div>
+
+    <div class="sbsec">
+      <div class="sbstitle">Navigation</div>
+      <button class="sblink" onclick="closeSB();sGoTo('tool-section')"><span class="sbicon">⚡</span>Prism Compare — Free<span class="sbarr">→</span></button>
+      <button class="sblink" onclick="closeSB();sGoTo('how')"><span class="sbicon">📖</span>How It Works<span class="sbarr">→</span></button>
+      <button class="sblink" onclick="closeSB();sGoTo('pricing')"><span class="sbicon">💳</span>Pricing & Plans<span class="sbarr">→</span></button>
+      <button class="sblink" onclick="closeSB();sGoTo('waitlist')"><span class="sbicon">🎁</span>Early Access — 50% Off<span class="sbarr">→</span></button>
+    </div>
+
+    <div class="sbsec">
+      <div class="sbstitle">Prism Tools</div>
+      <button class="sblink" onclick="closeSB();sGoTo('tool-section')"><span class="sbicon">⚖️</span>Compare<span class="sbarr" style="color:var(--gn);font-size:.58rem">FREE</span></button>
+      <button class="sblink" onclick="closeSB();window.open('prism-v4r1.html','_blank')"><span class="sbicon">💸</span>Payoff<span class="sbarr" style="color:var(--pril);font-size:.58rem">PRO</span></button>
+      <button class="sblink" onclick="closeSB();window.open('prism-v3r1.html','_blank')"><span class="sbicon">🌡️</span>Sensitivity<span class="sbarr" style="color:var(--pril);font-size:.58rem">PRO</span></button>
+      <button class="sblink" onclick="closeSB();window.open('prism-v3r1.html','_blank')"><span class="sbicon">📐</span>IRR Exact<span class="sbarr" style="color:var(--pril);font-size:.58rem">PRO</span></button>
+      <button class="sblink" onclick="closeSB();toast('Client reports — Expert feature')"><span class="sbicon">📋</span>Client Reports<span class="sbarr" style="color:var(--gold);font-size:.58rem">EXPERT</span></button>
+    </div>
+
+    <div class="sbsec">
+      <div class="sbstitle">🌐 Language</div>
+      <select class="sbminisel" style="width:100%" onchange="handleLang(this.value);document.getElementById('langsel').value=this.value" id="sblang">
+        <option value="en">🇬🇧 English</option><option value="ar">🇸🇦 العربية</option>
+        <option value="fr">🇫🇷 Français</option><option value="es">🇪🇸 Español</option>
+        <option value="de">🇩🇪 Deutsch</option><option value="zh">🇨🇳 中文</option>
+        <option value="ja">🇯🇵 日本語</option><option value="hi">🇮🇳 हिन्दी</option>
+        <option value="ru">🇷🇺 Русский</option><option value="tr">🇹🇷 Türkçe</option>
+        <option value="id">🇮🇩 Indonesia</option><option value="pt">🇧🇷 Português</option>
+      </select>
+    </div>
+
+    <div class="sbsec">
+      <div class="sbstitle">💰 Currency</div>
+      <select class="sbminisel" style="width:100%" onchange="setCurr(this.value)" id="sbcurr">
+        <option value="SAR">﷼ SAR</option><option value="USD">$ USD</option>
+        <option value="EUR">€ EUR</option><option value="GBP">£ GBP</option>
+        <option value="AED">AED</option><option value="KWD">KWD</option>
+        <option value="EGP">EGP</option><option value="JPY">JPY</option>
+        <option value="CNY">CNY</option><option value="INR">₹ INR</option>
+        <option value="TRY">₺ TRY</option><option value="BTC">₿ BTC</option>
+      </select>
+    </div>
+
+    <div class="sbsec">
+      <div class="sbstitle">⚙️ Quick Settings</div>
+      <div class="sbsetrow">
+        <div class="sbsetlbl">🌙 Dark Mode</div>
+        <label class="swmini"><input type="checkbox" id="sbdark" checked onchange="applyTheme(this.checked)"/><span class="swslider"></span></label>
+      </div>
+      <div class="sbsetrow">
+        <div class="sbsetlbl">📊 Annual Billing</div>
+        <label class="swmini"><input type="checkbox" id="sbannual" onchange="document.getElementById('annualtog').checked=this.checked;toggleAnnual()"/><span class="swslider"></span></label>
+      </div>
+      <div class="sbsetrow">
+        <div class="sbsetlbl">⚙️ Advanced Settings</div>
+        <button style="padding:4px 11px;border-radius:5px;font-size:.7rem;background:var(--prig);border:1px solid rgba(139,92,246,.22);color:var(--pril);cursor:pointer;font-family:var(--fs)" onclick="openSet()">Open</button>
+      </div>
+    </div>
+
+    <div class="sbsec">
+      <div class="sbstitle">Support</div>
+      <button class="sblink" onclick="toast('Documentation coming soon')"><span class="sbicon">📚</span>Documentation<span class="sbarr">→</span></button>
+      <button class="sblink" onclick="toast('Opening WhatsApp support...')"><span class="sbicon">💬</span>WhatsApp Support<span class="sbarr">→</span></button>
+      <button class="sblink" onclick="toast('Opening feedback form...')"><span class="sbicon">💡</span>Suggest a Feature<span class="sbarr">→</span></button>
+    </div>
+
+  </div>
+  <div class="sbfoot">
+    <button class="sbflink" onclick="toast('Privacy Policy')">🔒 Privacy Policy</button>
+    <button class="sbflink" onclick="toast('Terms of Service')">📄 Terms of Service</button>
+    <button class="sbflink" onclick="closeSB();sGoTo('waitlist')">🎁 Early Access — 50% Off</button>
+    <div class="sbver">Prism v2 · Axiom Zones · getprism.app</div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="setmodal" onclick="if(event.target===this)closeSet()">
+  <div class="setbox">
+    <div class="sethd">
+      <div class="settitle">⚙️ Settings</div>
+      <button class="setclose" onclick="closeSet()">✕</button>
+    </div>
+    <div class="setbody">
+      <div class="setgrp">
+        <div class="setgrp-t">Appearance</div>
+        <div class="setrow"><div><div class="setrowlbl">Theme</div><div class="setrowsub">Display mode</div></div>
+          <select class="setsel" onchange="applyTheme(this.value==='dark')">
+            <option value="dark">🌙 Dark</option><option value="light">☀️ Light</option>
+          </select></div>
+        <div class="setrow"><div><div class="setrowlbl">Language</div></div>
+          <select class="setsel" onchange="handleLang(this.value);document.getElementById('langsel').value=this.value;document.getElementById('sblang').value=this.value">
+            <option value="en">English</option><option value="ar">العربية</option>
+            <option value="fr">Français</option><option value="es">Español</option>
+            <option value="de">Deutsch</option><option value="zh">中文</option>
+          </select></div>
+        <div class="setrow"><div><div class="setrowlbl">Default Currency</div></div>
+          <select class="setsel" onchange="setCurr(this.value)">
+            <option value="USD">$ USD</option><option value="SAR">﷼ SAR</option>
+            <option value="EUR">€ EUR</option><option value="GBP">£ GBP</option>
+            <option value="AED">AED</option><option value="KWD">KWD</option>
+          </select></div>
+      </div>
+      <div class="setgrp">
+        <div class="setgrp-t">Billing</div>
+        <div class="setrow"><div><div class="setrowlbl">Billing Preference</div></div>
+          <select class="setsel" onchange="document.getElementById('annualtog').checked=this.value==='annual';document.getElementById('sbannual').checked=this.value==='annual';toggleAnnual()">
+            <option value="monthly">Monthly</option><option value="annual">Annual (−25%)</option>
+          </select></div>
+      </div>
+      <div class="setgrp">
+        <div class="setgrp-t">Notifications</div>
+        <div class="setrow"><div class="setrowlbl">Product Updates</div><label class="swmini"><input type="checkbox" checked/><span class="swslider"></span></label></div>
+        <div class="setrow"><div class="setrowlbl">Early Access Alerts</div><label class="swmini"><input type="checkbox" checked/><span class="swslider"></span></label></div>
+        <div class="setrow"><div class="setrowlbl">Marketing Emails</div><label class="swmini"><input type="checkbox"/><span class="swslider"></span></label></div>
+      </div>
+      <div class="setgrp">
+        <div class="setgrp-t">Account</div>
+        <div class="setrow"><div><div class="setrowlbl">Current Plan</div><div class="setrowsub">Free — 5 analyses/day</div></div>
+          <button style="padding:5px 12px;border-radius:6px;font-size:.72rem;background:var(--pri);color:#fff;border:none;cursor:pointer" onclick="closeSet();sGoTo('pricing')">Upgrade</button></div>
+        <div class="setrow"><div><div class="setrowlbl">Clear Cache</div></div>
+          <button style="padding:5px 12px;border-radius:6px;font-size:.72rem;background:rgba(239,68,68,.1);color:var(--rd);border:1px solid rgba(239,68,68,.2);cursor:pointer" onclick="toast('Cache cleared ✓')">Clear</button></div>
+      </div>
+      <div class="setgrp" style="margin-bottom:0">
+        <div class="setgrp-t">About</div>
+        <div style="padding:12px;background:var(--deep);border-radius:9px;font-size:.76rem;color:var(--g2);line-height:1.8">
+          <strong style="color:var(--w)">Prism v2r3</strong> · Axiom Zones<br/>
+          60+ languages · 145+ currencies<br/>
+          <span style="color:var(--g3)">getprism.app</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="tst"></div>
+
+<!-- BACK TO TOP -->
+<button id="backtop" onclick="window.scrollTo(0,0)" title="Back to top" aria-label="Back to top">↑</button>
+
+<!-- KEYBOARD SHORTCUTS HINT -->
+<div id="shortcuts-hint" aria-hidden="true">
+  <kbd class="kbd">Alt+T</kbd> Tool &nbsp;
+  <kbd class="kbd">Alt+P</kbd> Pricing &nbsp;
+  <kbd class="kbd">Alt+W</kbd> Waitlist &nbsp;
+  <kbd class="kbd">Alt+M</kbd> Menu &nbsp;
+  <kbd class="kbd">P</kbd> Print
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav id="mobnav">
+  <div class="mobnav-inner">
+    <button class="mni" onclick="window.scrollTo(0,0)" id="mni-home">
+      <span class="mni-icon">🏠</span>
+      <span class="mni-label">Home</span>
+    </button>
+    <button class="mni" onclick="sGoTo('tool-section')" id="mni-tool">
+      <span class="mni-icon">⚡</span>
+      <span class="mni-label">Try Free</span>
+    </button>
+    <button class="mni" onclick="sGoTo('pricing')" id="mni-price">
+      <span class="mni-icon">💳</span>
+      <span class="mni-label">Pricing</span>
+    </button>
+    <button class="mni" onclick="sGoTo('waitlist')" id="mni-pro">
+      <span class="mni-icon">🎁</span>
+      <span class="mni-label">Get Pro</span>
+    </button>
+    <button class="mni" onclick="openSB()" id="mni-menu">
+      <span class="mni-icon">☰</span>
+      <span class="mni-label">Menu</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+var LANG = "ar";
+
+/* ══ STATE ══ */
+var CURR='USD',SYM='$',isDark=true,calcs=0,maxC=5;
+var annual=false;
+var R={
+  SAR:3.75,AED:3.67,KWD:0.308,BHD:0.377,OMR:0.385,QAR:3.64,
+  EGP:30.9,JOD:0.709,LBP:89500,IQD:1310,LYD:4.81,TND:3.12,
+  MAD:10.06,DZD:134.5,SDG:601,YER:250.3,SYP:13000,
+  USD:1,EUR:0.924,GBP:0.797,JPY:149.5,CNY:7.24,CHF:0.898,
+  CAD:1.36,AUD:1.54,NZD:1.63,SGD:1.35,HKD:7.82,TWD:31.8,
+  NOK:10.56,SEK:10.42,DKK:6.89,ISK:137.8,
+  PLN:3.96,CZK:22.6,HUF:356.8,RON:4.62,BGN:1.81,HRK:6.97,
+  RSD:108.5,ALL:96.5,MKD:57.8,BAM:1.81,
+  RUB:91.5,UAH:37.2,BYN:3.27,MDL:17.6,
+  GEL:2.67,AMD:387.5,AZN:1.7,TRY:30.4,
+  KKZ:454.2,UZS:12200,KGS:89.3,TJS:10.94,TMT:3.5,
+  KRW:1325,INR:83.2,PKR:278.5,BDT:110.2,LKR:320.5,
+  NPR:133.1,MVR:15.4,BTN:83.2,AFN:69.5,ILS:3.68,
+  THB:35.2,IDR:15720,MYR:4.69,PHP:56.4,VND:24200,
+  MMK:2098,KHR:4090,LAK:20500,BND:1.35,MNT:3385,
+  KZT:454.2,
+  MXN:17.2,GTQ:7.83,HNL:24.6,NIO:36.5,CRC:527,
+  DOP:57.2,JMD:155.2,TTD:6.79,BBD:2.02,XCD:2.7,
+  BSD:1,BZD:2.01,HTG:133.5,AWG:1.79,ANG:1.79,PAB:1,
+  BRL:4.98,ARS:355,CLP:876,COP:3980,PEN:3.72,
+  UYU:38.9,BOB:6.91,PYG:7290,VES:36.5,GYD:209,SRD:38.2,
+  NGN:778,GHS:12.6,XOF:604,GMD:67.2,GNF:8620,SLL:20900,
+  LRD:191,SLE:22.5,
+  KES:140.5,TZS:2510,UGX:3780,ETB:55.8,RWF:1255,
+  BIF:2830,DJF:177.7,ERN:15,SSP:650,SOS:571,
+  ZAR:18.9,BWP:13.7,NAD:18.9,ZMW:20.9,MWK:1685,
+  MZN:63.8,AOA:832,ZWL:322,
+  XAF:604,CDF:2680,
+  MGA:4480,MUR:44.8,SCR:13.2,CVE:101.8,KMF:451.4,STN:22.6,
+  FJD:2.25,PGK:3.74,WST:2.72,VUV:120.5,SBD:8.47,TOP:2.36,XPF:111,
+  XAU:0.000485,XAG:0.0426,XDR:0.754,
+  BTC:0.0000232,ETH:0.000374,USDT:1,USDC:1,BNB:0.00328,
+  XRP:1.89,ADA:0.814,SOL:0.00568
+};
+var SM={
+  SAR:'﷼',AED:'د.إ',KWD:'د.ك',BHD:'BD',OMR:'ر.ع',QAR:'ر.ق',
+  EGP:'ج.م',JOD:'JD',LBP:'LL',IQD:'IQD',LYD:'LD',TND:'DT',
+  MAD:'DH',DZD:'DA',SDG:'SDG',YER:'YER',SYP:'SYP',
+  USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',CHF:'Fr',
+  CAD:'C$',AUD:'A$',NZD:'NZ$',SGD:'S$',HKD:'HK$',TWD:'NT$',
+  NOK:'kr',SEK:'kr',DKK:'kr',ISK:'kr',
+  PLN:'zł',CZK:'Kč',HUF:'Ft',RON:'lei',BGN:'лв',HRK:'kn',
+  RSD:'din',ALL:'L',MKD:'den',BAM:'KM',
+  RUB:'₽',UAH:'₴',BYN:'Br',MDL:'L',GEL:'₾',AMD:'֏',AZN:'₼',TRY:'₺',
+  KZT:'₸',UZS:'UZS',KGS:'KGS',TJS:'TJS',TMT:'T',
+  KRW:'₩',INR:'₹',PKR:'₨',BDT:'৳',LKR:'Rs',NPR:'Rs',
+  MVR:'Rf',BTN:'Nu',AFN:'؋',ILS:'₪',
+  THB:'฿',IDR:'Rp',MYR:'RM',PHP:'₱',VND:'₫',
+  MMK:'K',KHR:'CR',LAK:'₭',BND:'B$',MNT:'₮',
+  MXN:'$',GTQ:'Q',HNL:'L',NIO:'C$',CRC:'₡',
+  DOP:'RD$',JMD:'J$',TTD:'TT$',BBD:'Bds$',XCD:'EC$',
+  BSD:'B$',BZD:'BZ$',HTG:'G',AWG:'ƒ',ANG:'ƒ',PAB:'B/.',
+  BRL:'R$',ARS:'$',CLP:'$',COP:'$',PEN:'S/',
+  UYU:'$',BOB:'Bs',PYG:'₲',VES:'Bs',GYD:'G$',SRD:'$',
+  NGN:'₦',GHS:'₵',XOF:'F',GMD:'D',GNF:'FG',SLL:'Le',LRD:'L$',SLE:'SLE',
+  KES:'KSh',TZS:'TSh',UGX:'USh',ETB:'Br',RWF:'Fr',
+  BIF:'Fr',DJF:'Fdj',ERN:'Nkf',SSP:'£',SOS:'Sh',
+  ZAR:'R',BWP:'P',NAD:'N$',ZMW:'K',MWK:'MK',
+  MZN:'MT',AOA:'Kz',ZWL:'Z$',
+  XAF:'F',CDF:'FC',
+  MGA:'Ar',MUR:'₨',SCR:'₨',CVE:'$',KMF:'CF',STN:'Db',
+  FJD:'FJ$',PGK:'K',WST:'T',VUV:'Vt',SBD:'SI$',TOP:'T$',XPF:'CFP',
+  XAU:'Au⊛',XAG:'Ag⊛',XDR:'SDR',
+  BTC:'₿',ETH:'Ξ',USDT:'₮',USDC:'$',BNB:'BNB',
+  XRP:'XRP',ADA:'₳',SOL:'◎'
+};
+
+/* ══ HELPERS — Manual Scroll Only ══ */
+function sGoTo(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var y = 0;
+  var obj = el;
+  while (obj) { y += obj.offsetTop; obj = obj.offsetParent; }
+  y = y - 120;
+  if (y < 0) y = 0;
+  window.scrollTo(0, y);
+}
+
+function mon(n) {
+  var v = n / (R[CURR] || 1);
+  var d = v > 100 ? 0 : v > 1 ? 2 : 4;
+  if (CURR === 'BTC' || CURR === 'ETH') d = 6;
+  return SYM + ' ' + v.toLocaleString('en', {minimumFractionDigits:d, maximumFractionDigits:d});
+}
+function pct(n) { return (n).toFixed(1) + '%'; }
+function gv(id) { var e = document.getElementById(id); return e ? parseFloat(e.value) || 0 : 0; }
+function st(id, h) { var e = document.getElementById(id); if (e) e.innerHTML = h; }
+
+/* ══ SLIDER ══ */
+function updSlider(inp, vid, sfx) {
+  var el = document.getElementById(vid);
+  if (!el) return;
+  el.textContent = inp.value + sfx;
+  var p = ((inp.value - inp.min) / (inp.max - inp.min)) * 100;
+  inp.style.background = 'linear-gradient(to right,var(--pri) ' + p + '%,var(--surface) ' + p + '%)';
+  el.style.left = (p * 0.88) + '%';
+}
+
+/* ══ CURRENCY ══ */
+function setCurr(c) {
+  CURR = c; SYM = SM[c] || c;
+  document.querySelectorAll('.cqbtn').forEach(function(b) {
+    b.classList.toggle('on', b.getAttribute('onclick').indexOf("'" + c + "'") !== -1);
+  });
+  var cs = document.getElementById('currsel'); if (cs) cs.value = c;
+  var sc = document.getElementById('sbcurr'); if (sc) sc.value = c;
+  ['sym1','sym2','sym3','sym4'].forEach(function(id) { var e = document.getElementById(id); if (e) e.textContent = SYM; });
+  tcalc();
+}
+
+/* ══ THEME ══ */
+function applyTheme(dark) {
+  isDark = dark;
+  document.documentElement.setAttribute('data-theme', dark ? '' : 'light');
+  var tb = document.getElementById('tbtn'); if (tb) tb.textContent = dark ? '🌙' : '☀️';
+  var sd = document.getElementById('sbdark'); if (sd) sd.checked = dark;
+}
+function toggleTheme() { applyTheme(!isDark); }
+
+/* ══ SIDEBAR ══ */
+function openSB() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sboverlay').classList.add('open');
+  document.getElementById('hmbtn').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSB() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sboverlay').classList.remove('open');
+  document.getElementById('hmbtn').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ══ SETTINGS ══ */
+function openSet() {
+  closeSB();
+  setTimeout(function() {
+    document.getElementById('setmodal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }, 350);
+}
+function closeSet() {
+  document.getElementById('setmodal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ══ TOAST ══ */
+function toast(msg) {
+  var t = document.getElementById('tst');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(function() { t.classList.remove('show'); }, 3200);
+}
+
+/* ══ TOOL CALC ══ */
+function tcalc() {
+  var cp = gv('tcash'), ip = gv('tinst'), mo = gv('tmos'), dn = gv('tdown'), fe = gv('tfees');
+  if (!cp || !ip) return;
+  var mth = (ip - dn) / mo;
+  var tot = dn + fe + (mth * mo);
+  var diff = tot - cp;
+  var apr = cp > 0 ? (diff / cp) * (12 / mo) * 100 : 0;
+  var d1 = dn + fe;
+  st('rcash', '<span style="color:var(--gn)">' + mon(cp) + '</span>');
+  st('rinst', '<span style="color:var(--rd)">' + mon(tot) + '</span>');
+  st('rdiff', diff > 0 ? '<span style="color:var(--rd)">+' + mon(diff) + '</span>' : '<span style="color:var(--gn)">' + mon(Math.abs(diff)) + '</span>');
+  st('rapr', '<span style="color:var(--rd)">' + pct(apr) + '</span>');
+  st('rmo', mon(mth));
+  st('rd1', mon(d1));
+  var vh, vc;
+  if (diff > 0) {
+    vh = '<div class="vbox win"><div class="vicon">✅</div><div class="vtitle" style="color:var(--gn)">Cash Wins</div><div class="vdesc">Installment costs <strong>' + mon(diff) + '</strong> more at <strong>' + pct(apr) + '</strong> APR.</div></div>';
+  } else {
+    vh = '<div class="vbox neu"><div class="vicon">⚠️</div><div class="vtitle" style="color:var(--gold2)">Review Carefully</div><div class="vdesc">Difference is small. Check opportunity cost with Clear or Pro.</div></div>';
+  }
+  st('tverd', vh);
+  calcs++;
+  var rem = Math.max(0, maxC - calcs);
+  st('calcleft', rem + '/' + maxC + ' today');
+  st('calclimitxt', rem > 0 ? rem + ' free analyses remaining today' : 'Daily limit reached — upgrade for unlimited');
+}
+
+/* ══ ANNUAL TOGGLE ══ */
+var prices = {clear:{m:7,a:5}, pro:{m:19,a:15}, exp:{m:49,a:37}};
+function toggleAnnual() {
+  annual = document.getElementById('annualtog').checked;
+  var t = annual ? 'a' : 'm';
+  st('ppclear', '$' + prices.clear[t] + ' <span>/mo</span>');
+  st('pperclear', annual ? 'Annual · $' + (prices.clear.a * 12) + '/yr' : 'Monthly · $' + prices.clear.m + '/mo');
+  st('pppro', '$' + prices.pro[t] + ' <span>/mo</span>');
+  st('pperpro', annual ? 'Annual · $' + (prices.pro.a * 12) + '/yr' : 'Monthly · $' + prices.pro.m + '/mo');
+  st('ppexp', '$' + prices.exp[t] + ' <span>/mo</span>');
+  st('pperexp', annual ? 'Annual · $' + (prices.exp.a * 12) + '/yr' : 'Monthly · $' + prices.exp.m + '/mo');
+}
+
+/* ══ WAITLIST ══ */
+function submitWL() {
+  var e = document.getElementById('wlemail');
+  if (!e || !e.value || e.value.indexOf('@') < 0) { toast('Please enter a valid email'); return; }
+  toast('You are on the list! We will notify you when ready.');
+  e.value = '';
+}
+function joinPlan(plan) {
+  sGoTo('waitlist');
+  toast('Join the waitlist for ' + plan + ' — early access coming soon!');
+}
+
+/* ══ AI TRANSLATION ══ */
+var tCache = {};
+var lnames = {ar:'Arabic',fa:'Persian',ur:'Urdu',he:'Hebrew',fr:'French',es:'Spanish',de:'German',it:'Italian',pt:'Portuguese',nl:'Dutch',ru:'Russian',zh:'Simplified Chinese','zh-tw':'Traditional Chinese',ja:'Japanese',ko:'Korean',hi:'Hindi',tr:'Turkish',id:'Indonesian',ms:'Malay',th:'Thai',vi:'Vietnamese'};
+async function handleLang(lang) {
+  var rtl = ['ar','fa','ur','he'];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = rtl.indexOf(lang) !== -1 ? 'rtl' : 'ltr';
+  if (lang === 'en') return;
+  if (tCache[lang]) { applyT(tCache[lang]); return; }
+  toast('Translating...');
+  var name = lnames[lang] || lang;
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({model: 'claude-sonnet-4-20250514', max_tokens: 1200,
+        messages: [{role: 'user', content: 'Translate to ' + name + '. Return ONLY valid JSON, no markdown.\n\n' + JSON.stringify({h1:'See Through',h2:'Every Deal',hsub:'Any installment offer. Any currency. Any language. Prism reveals the true cost in seconds.',cta1:'Try Free — No Sign Up',cta2:'View Pricing',wlt:'Get 50% Off First Year',wls:'First 100 subscribers get 50% off their first year.',ftag:'The Truth Behind Every Deal'})}]})
+    });
+    var data = await res.json();
+    var raw = data.content.map(function(c) { return c.text || ''; }).join('').replace(/```json|```/g, '').trim();
+    var T = JSON.parse(raw);
+    tCache[lang] = T;
+    applyT(T);
+    toast('Translated to ' + name + ' ✓');
+  } catch (err) {
+    toast('Translation unavailable'); document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr';
+  }
+}
+function applyT(T) {
+  var tm = document.querySelector('.htm'); if (tm && T.h1) tm.textContent = T.h1;
+  var ta = document.querySelector('.hta'); if (ta && T.h2) ta.textContent = T.h2;
+  var hs = document.querySelector('.hsub'); if (hs && T.hsub) hs.textContent = T.hsub;
+  var wt = document.querySelector('.wltitle'); if (wt && T.wlt) wt.innerHTML = T.wlt;
+  var ws = document.querySelector('.wlsub'); if (ws && T.wls) ws.textContent = T.wls;
+  var ft = document.querySelector('.ftag'); if (ft && T.ftag) ft.textContent = T.ftag;
+}
+
+/* ══ NAV SCROLL ══ */
+window.addEventListener('scroll', function() {
+  var y = window.scrollY;
+  document.getElementById('nav').classList.toggle('solid', y > 40);
+  document.getElementById('sp').style.width = (y / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+  updateBackTop();
+  updateMobNav();
+}, {passive: true});
+
+/* ══ REVEAL ══ */
+var ro = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, {threshold: 0.07});
+document.querySelectorAll('.rv').forEach(function(el) { ro.observe(el); });
+
+/* ══ PRESET SCENARIOS ══ */
+var PRESETS = {
+  phone:     {cash:4500,  inst:5400,  mos:18, down:500,  fees:150, name:'📱 Smartphone'},
+  car:       {cash:80000, inst:96000, mos:48, down:8000, fees:1200,name:'🚗 Car Loan'},
+  furniture: {cash:12000, inst:14400, mos:24, down:1200, fees:300, name:'🛋️ Furniture'},
+  laptop:    {cash:6000,  inst:7200,  mos:12, down:600,  fees:0,   name:'💻 Laptop'},
+  ac:        {cash:8000,  inst:9600,  mos:18, down:800,  fees:200, name:'❄️ AC Unit'}
+};
+function loadPreset(key) {
+  var p = PRESETS[key];
+  if (!p) return;
+  document.getElementById('tcash').value  = p.cash;
+  document.getElementById('tinst').value  = p.inst;
+  document.getElementById('tmos').value   = p.mos;
+  document.getElementById('tdown').value  = p.down;
+  document.getElementById('tfees').value  = p.fees;
+  updSlider(document.getElementById('tmos'), 'tmov', '');
+  document.querySelectorAll('.preset-btn').forEach(function(b) {
+    b.classList.toggle('sel', b.getAttribute('onclick').indexOf("'" + key + "'") !== -1);
+  });
+  tcalc();
+  toast(p.name + ' loaded');
+}
+
+/* ══ SHARE URL ══ */
+function shareURL() {
+  var params = [
+    'cp=' + (document.getElementById('tcash').value||0),
+    'ip=' + (document.getElementById('tinst').value||0),
+    'mo=' + (document.getElementById('tmos').value||24),
+    'dp=' + (document.getElementById('tdown').value||0),
+    'fe=' + (document.getElementById('tfees').value||0),
+    'cc=' + CURR
+  ].join('&');
+  var url = window.location.href.split('?')[0] + '?' + params;
+  var box = document.getElementById('urlresult');
+  box.textContent = url;
+  box.classList.add('show');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url);
+    toast('Link copied to clipboard ✓');
+  } else {
+    toast('Link ready — copy from below');
+  }
+}
+
+function copyResult() {
+  var cp  = document.getElementById('tcash').value || '—';
+  var ip  = document.getElementById('rinst') ? document.getElementById('rinst').textContent : '—';
+  var df  = document.getElementById('rdiff') ? document.getElementById('rdiff').textContent : '—';
+  var apr = document.getElementById('rapr')  ? document.getElementById('rapr').textContent : '—';
+  var mo  = document.getElementById('rmo')   ? document.getElementById('rmo').textContent : '—';
+  var txt = [
+    '── Prism Compare ──',
+    'Cash Price: ' + cp + ' ' + SYM,
+    'Total Installment: ' + ip,
+    'Extra Cost: ' + df,
+    'Effective APR: ' + apr,
+    'Monthly Payment: ' + mo,
+    '────────────────',
+    'getprism.app'
+  ].join('\n');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt);
+    toast('Result copied ✓');
+  } else {
+    toast('Copy not supported on this browser');
+  }
+}
+
+/* Load from URL params on init */
+function loadFromURL() {
+  var p = new URLSearchParams(window.location.search);
+  if (!p.has('cp')) return;
+  if (p.get('cp')) document.getElementById('tcash').value = p.get('cp');
+  if (p.get('ip')) document.getElementById('tinst').value = p.get('ip');
+  if (p.get('mo')) { document.getElementById('tmos').value = p.get('mo'); updSlider(document.getElementById('tmos'),'tmov',''); }
+  if (p.get('dp')) document.getElementById('tdown').value = p.get('dp');
+  if (p.get('fe')) document.getElementById('tfees').value = p.get('fe');
+  if (p.get('cc')) setCurr(p.get('cc'));
+  tcalc();
+  toast('Calculation loaded from shared link ✓');
+}
+
+/* ══ FAQ TOGGLE ══ */
+function toggleFAQ(item) {
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ══ BACK TO TOP ══ */
+function updateBackTop() {
+  var bt = document.getElementById('backtop');
+  if (bt) bt.classList.toggle('show', window.scrollY > 400);
+}
+
+/* ══ MOBILE NAV ACTIVE ══ */
+var sections = ['hero','tool-section','pricing','waitlist'];
+function updateMobNav() {
+  var y = window.scrollY + 200;
+  var ids = ['mni-home','mni-tool','mni-price','mni-pro'];
+  var active = 0;
+  sections.forEach(function(id, i) {
+    var el = document.getElementById(id);
+    if (el) {
+      var top = 0; var obj = el;
+      while (obj) { top += obj.offsetTop; obj = obj.offsetParent; }
+      if (top <= y) active = i;
+    }
+  });
+  ids.forEach(function(id, i) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('act', i === active);
+  });
+}
+
+/* ══ AUTO CURRENCY DETECT ══ */
+function autoDetectCurrency() {
+  var lang = navigator.language || navigator.userLanguage || 'en';
+  var map = {
+    'ar':['SAR'],'ar-SA':['SAR'],'ar-AE':['AED'],'ar-KW':['KWD'],
+    'ar-QA':['QAR'],'ar-BH':['BHD'],'ar-OM':['OMR'],'ar-EG':['EGP'],
+    'ar-MA':['MAD'],'ar-DZ':['DZD'],'ar-TN':['TND'],
+    'en-GB':['GBP'],'en-AU':['AUD'],'en-CA':['CAD'],
+    'en-IN':['INR'],'en-NG':['NGN'],'en-ZA':['ZAR'],'en-KE':['KES'],
+    'de':['EUR'],'fr':['EUR'],'it':['EUR'],'es':['EUR'],'pt-PT':['EUR'],
+    'pt-BR':['BRL'],'ru':['RUB'],'tr':['TRY'],'ja':['JPY'],
+    'ko':['KRW'],'zh':['CNY'],'zh-CN':['CNY'],'zh-TW':['TWD'],
+    'hi':['INR'],'id':['IDR'],'ms':['MYR'],'th':['THB'],
+    'vi':['VND'],'uk':['UAH'],'pl':['PLN'],'sv':['SEK'],
+    'no':['NOK'],'da':['DKK'],'fi':['EUR'],'he':['ILS']
+  };
+  var c = map[lang] || map[lang.split('-')[0]];
+  if (c && c[0] !== 'USD') {
+    setCurr(c[0]);
+    toast('Currency set to ' + c[0] + ' based on your region');
+  }
+}
+
+/* ══ COUNTER ANIMATION ══ */
+function animateCounter(el, target, suffix, duration) {
+  var start = 0, step = duration / 60;
+  var timer = setInterval(function() {
+    start += target / (duration / 16);
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start) + (suffix || '');
+  }, 16);
+}
+function initCounters() {
+  var counters = [
+    {id:'hstat-lang', val:60, sfx:'+'},
+    {id:'hstat-curr', val:145, sfx:'+'},
+    {id:'hstat-tools', val:5, sfx:''},
+    {id:'hstat-price', val:0, sfx:'', prefix:'$'}
+  ];
+  // Counters are in .hsn elements — animate when hero visible
+  var hsns = document.querySelectorAll('.hsn');
+  var targets = [60,145,5,0];
+  var sfxs = ['+','+','',''];
+  var done = false;
+  var heroObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !done) {
+      done = true;
+      hsns.forEach(function(el, i) {
+        if (targets[i] > 0) animateCounter(el, targets[i], sfxs[i], 1400);
+      });
+    }
+  }, {threshold: 0.3});
+  var hero = document.getElementById('hero');
+  if (hero) heroObs.observe(hero);
+}
+
+/* ══ KEYBOARD SHORTCUTS ══ */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeSB(); closeSet(); return; }
+  if (e.altKey) {
+    if (e.key === 't') { e.preventDefault(); sGoTo('tool-section'); }
+    if (e.key === 'p') { e.preventDefault(); sGoTo('pricing'); }
+    if (e.key === 'w') { e.preventDefault(); sGoTo('waitlist'); }
+    if (e.key === 'm') { e.preventDefault(); openSB(); }
+  }
+  if (e.key === 'p' && !e.altKey && !e.ctrlKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
+    window.print();
+  }
+});
+
+/* Show shortcuts hint on Alt press */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Alt') {
+    var h = document.getElementById('shortcuts-hint');
+    if (h) h.classList.add('show');
+  }
+});
+document.addEventListener('keyup', function(e) {
+  if (e.key === 'Alt') {
+    var h = document.getElementById('shortcuts-hint');
+    if (h) h.classList.remove('show');
+  }
+});
+
+/* ══ WHATSAPP SHARE ══ */
+function shareWhatsApp() {
+  var cash  = document.getElementById('tcash').value  || '0';
+  var rapr  = document.getElementById('rapr')  ? document.getElementById('rapr').textContent  : '';
+  var rdiff = document.getElementById('rdiff') ? document.getElementById('rdiff').textContent : '';
+  var rmo   = document.getElementById('rmo')   ? document.getElementById('rmo').textContent   : '';
+  var lines = [
+    'Prism Compare Result',
+    'Cash Price: ' + cash + ' ' + SYM,
+    'Extra Cost: ' + rdiff,
+    'APR: ' + rapr,
+    'Monthly: ' + rmo,
+    'getprism.app'
+  ];
+  var txt = lines.join('\n');
+  window.open('https://wa.me/?text=' + encodeURIComponent(txt), '_blank');
+}
+
+/* ══ RESULT CARD — DOM only, no innerHTML ══ */
+function updateResultCard(cashP, totalI, diff, apr, oppRate, infRate) {
+  var card = document.getElementById('result-card');
+  if (!card) return;
+
+  var rcCash  = document.getElementById('rc-cash');
+  var rcInst  = document.getElementById('rc-inst');
+  var rcExtra = document.getElementById('rc-extra');
+  var rcApr   = document.getElementById('rc-apr');
+  var rcBadge = document.getElementById('rc-badge');
+  var rcInsight = document.getElementById('rc-insight');
+
+  if (rcCash)  rcCash.textContent  = mon(cashP);
+  if (rcInst)  rcInst.textContent  = mon(totalI);
+  if (rcExtra) rcExtra.textContent = (diff > 0 ? '+' : '') + mon(diff);
+  if (rcApr)   rcApr.textContent   = pct(apr);
+
+  var cashWins = diff > 0;
+  if (rcBadge) {
+    rcBadge.textContent = cashWins ? 'Cash Wins' : 'Review';
+    rcBadge.className   = 'rc-badge ' + (cashWins ? 'win' : 'neu');
+  }
+
+  /* Smart inflation insight */
+  if (rcInsight) {
+    rcInsight.className = 'rc-insight';
+    var infVal = parseFloat(document.getElementById('inf-rate') ? document.getElementById('inf-rate').value : 3) || 3;
+    if (!cashWins) {
+      rcInsight.textContent = 'Difference is small — check opportunity cost in Clear or Pro.';
+    } else if (infVal > apr) {
+      rcInsight.textContent = 'Inflation (' + pct(infVal) + ') is higher than this APR (' + pct(apr) + '). In this case, installments let you repay in cheaper future money — installments may be smarter.';
+      rcInsight.className = 'rc-insight inf';
+    } else {
+      rcInsight.textContent = 'Cash saves ' + mon(diff) + ' at ' + pct(apr) + ' effective rate. Unless your investments beat this rate, cash is the better choice.';
+    }
+  }
+
+  card.classList.add('show');
+}
+
+/* ══ CALCULATION HISTORY — localStorage ══ */
+var HIST_KEY = 'prism_history';
+
+function saveToHistory(cashP, totalI, diff, apr) {
+  if (!cashP || !totalI) return;
+  try {
+    var hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
+    hist.unshift({
+      t: Date.now(),
+      cash: cashP, inst: totalI, diff: diff, apr: apr, curr: CURR
+    });
+    if (hist.length > 5) hist = hist.slice(0, 5);
+    localStorage.setItem(HIST_KEY, JSON.stringify(hist));
+    renderHistory();
+  } catch (e) { /* localStorage may be blocked */ }
+}
+
+function renderHistory() {
+  try {
+    var hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
+    var sec  = document.getElementById('hist-section');
+    var list = document.getElementById('hist-list');
+    if (!sec || !list || hist.length === 0) {
+      if (sec) sec.classList.remove('show');
+      return;
+    }
+    sec.classList.add('show');
+    list.innerHTML = '';
+    hist.forEach(function(h, i) {
+      var item = document.createElement('div');
+      item.className = 'hist-item';
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+
+      var lbl = document.createElement('div');
+      lbl.className = 'hist-item-label';
+      lbl.textContent = (SM[h.curr] || h.curr) + ' ' + Math.round(h.cash) + ' → APR ' + h.apr.toFixed(1) + '%';
+
+      var val = document.createElement('div');
+      val.className = 'hist-item-val';
+      val.textContent = h.diff > 0 ? '+' + Math.round(h.diff) : Math.round(h.diff);
+
+      item.appendChild(lbl);
+      item.appendChild(val);
+
+      /* Restore on click */
+      (function(snap) {
+        item.onclick = function() { restoreHistory(snap); };
+        item.onkeydown = function(e) { if (e.key === 'Enter') restoreHistory(snap); };
+      })(h);
+
+      list.appendChild(item);
+    });
+  } catch (e) {}
+}
+
+function restoreHistory(h) {
+  var cashEl = document.getElementById('tcash');
+  var instEl = document.getElementById('tinst');
+  if (cashEl) cashEl.value = h.cash;
+  if (instEl) instEl.value = h.inst;
+  setCurr(h.curr);
+  tcalc();
+  toast('Calculation restored');
+}
+
+function clearHistory() {
+  try { localStorage.removeItem(HIST_KEY); } catch (e) {}
+  var sec = document.getElementById('hist-section');
+  if (sec) sec.classList.remove('show');
+  toast('History cleared');
+}
+
+/* ══ SCARCITY COUNTER ══ */
+function initScarcity() {
+  try {
+    var key = 'prism_spots';
+    var stored = localStorage.getItem(key);
+    var spots;
+    if (stored) {
+      spots = parseInt(stored);
+    } else {
+      spots = 27;
+      localStorage.setItem(key, spots);
+    }
+    var el = document.getElementById('spots-left');
+    if (el) el.textContent = spots;
+
+    /* Decrement occasionally to simulate demand */
+    setTimeout(function() {
+      if (spots > 8 && Math.random() > 0.6) {
+        spots = spots - 1;
+        try { localStorage.setItem(key, spots); } catch (e) {}
+        if (el) el.textContent = spots;
+      }
+    }, 12000);
+  } catch (e) {}
+}
+
+/* ══ INIT ══ */
+window.addEventListener('load', function() {
+setLang("ar");
+  document.getElementById('nav').classList.add('solid');
+  setCurr('USD');
+  tcalc();
+  loadFromURL();
+  initCounters();
+  setTimeout(autoDetectCurrency, 800);
+  renderHistory();
+  initScarcity();
+});
+
+/* ══ Override tcalc to also update result card + history ══ */
+var _baseTcalc = tcalc;
+tcalc = function() {
+  _baseTcalc();
+  /* Read computed values to update result card */
+  var cp  = gv('tcash');
+  var ip  = gv('tinst');
+  var mo  = gv('tmos');
+  var dn  = gv('tdown');
+  var fe  = gv('tfees');
+  if (!cp || !ip) return;
+  var mth  = (ip - dn) / mo;
+  var tot  = dn + fe + (mth * mo);
+  var diff = tot - cp;
+  var apr  = cp > 0 ? (diff / cp) * (12 / mo) * 100 : 0;
+  updateResultCard(cp, tot, diff, apr);
+  saveToHistory(cp, tot, diff, apr);
+};
+
+/* ══ SENSITIVITY PREVIEW in Landing ══ */
+function buildSensPreview() {
+  var cp = parseFloat(document.getElementById('tcash') && document.getElementById('tcash').value || 0);
+  var ip = parseFloat(document.getElementById('tinst') && document.getElementById('tinst').value || 0);
+  var mos = parseFloat(document.getElementById('tmos') && document.getElementById('tmos').value || 24);
+  var el = document.getElementById('sens-preview');
+  if (!el || !cp || !ip) return;
+  var rates = [6,12,18,24];
+  var months = [12,24,36,48];
+  var html = '';
+  // header
+  months.forEach(function(m) { html += '<div style="font-family:var(--fm);font-size:.56rem;text-align:center;color:var(--g3)">'+m+'mo</div>'; });
+  rates.forEach(function(pctDiff) {
+    months.forEach(function(m) {
+      var apr = pctDiff * 12 / m;
+      var bg = apr < 6 ? 'rgba(34,197,94,.12)' : apr < 12 ? 'rgba(212,168,83,.12)' : 'rgba(239,68,68,.12)';
+      var col = apr < 6 ? 'var(--green)' : apr < 12 ? 'var(--gold2)' : 'var(--red)';
+      html += '<div style="padding:4px 2px;border-radius:4px;background:'+bg+';text-align:center;font-family:var(--fm);font-size:.58rem;color:'+col+'">'+apr.toFixed(0)+'%</div>';
+    });
+  });
+  el.innerHTML = html;
+}
+/* Patch tcalc to also update sens preview */
+var _tcalcBase = tcalc;
+tcalc = function() { _tcalcBase(); buildSensPreview(); };
+
+
+function doWALanding(){
+  var diff=document.getElementById('rdiff')?document.getElementById('rdiff').textContent:'';
+  var apr=document.getElementById('rapr')?document.getElementById('rapr').textContent:'';
+  var txt='Prism Compare\nExtra Cost: '+diff+'\nAPR: '+apr+'\ngetprism.app';
+  window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+}
+
+/* ══════════════════════════════════════════════
+   GOLDEN RULE — Universal i18n System v1
+   كل نص له ID + ترجمة كاملة
+   المصطلحات المالية تبقى إنجليزية دائماً
+══════════════════════════════════════════════ */
+
+var I18N = {
+  ar:{
+    /* ── Navigation ── */
+    "t-nav-home":"الرئيسية","t-nav-blog":"المدونة","t-nav-glossary":"القاموس","t-nav-kashf":"كشف","t-nav-prism":"Prism","t-get-started":"ابدأ الآن","t-learn-more":"اعرف أكثر",
+    /* ── Inputs ── */
+    "t-price":"سعر العقار","t-down":"الدفعة الأولى","t-years":"مدة التمويل","t-apr":"APR المُعلن %","t-mur":"هامش المرابحة %","t-rent":"الإيجار الشهري","t-income":"الدخل الشهري","t-growth":"نمو سنوي %","t-expenses":"مصاريف سنوية %","t-yr":"سنة","t-mo":"شهر",
+    /* ── Labels ── */
+    "t-emi":"القسط الشهري","t-total":"الإجمالي","t-interest":"الفائدة الكلية","t-fixed":"ثابت طوال المدة","t-dti":"نسبة الدين للدخل","t-mur-monthly":"مرابحة/شهر","t-mur-total":"إجمالي المرابحة",
+    /* ── Sections ── */
+    "t-live":"النتائج المباشرة","t-prop":"بيانات العقار","t-market":"بيانات السوق","t-personal":"وضعك الشخصي","t-proj":"قيمة العقار المتوقعة","t-conv":"قرض تقليدي","t-mur-lbl":"مرابحة إسلامية",
+    /* ── Years ── */
+    "t-y5":"بعد 5 سنوات","t-y10":"بعد 10 سنوات","t-yend":"نهاية المدة",
+    /* ── Formula titles ── */
+    "t-ry-title":"العائد الإيجاري","t-grm-title":"مضاعف الإيجار الإجمالي","t-ptr-title":"نسبة السعر للإيجار","t-cap-title":"معدل الرسملة","t-ber-title":"إيجار التعادل","t-net-title":"صافي مكسب الشراء",
+    /* ── Formula purposes ── */
+    "t-ry-purpose":"يقيس العائد السنوي من الإيجار كنسبة من سعر العقار. أعلى = استثمار إيجاري أفضل. أقل من 4% ضعيف · 4-7% مقبول · 7%+ ممتاز",
+    "t-grm-purpose":"عدد السنوات ليُسدّد العقار سعره من الإيجار. أقل = أسرع عائداً. أقل من 10 ممتاز · 10-15 جيد · أكثر من 20 مرتفع",
+    "t-ptr-purpose":"يحدد هل الشراء أو الإيجار أوفر في هذا السوق. معيار عالمي للمقارنة. أقل من 15 الشراء أفضل · 15-20 منطقة رمادية · أكثر من 20 الإيجار أذكى",
+    "t-cap-purpose":"صافي الدخل بعد المصاريف كنسبة من السعر. أدق من العائد الإيجاري. 5%+ جيد للاستثمار · أقل من 3% ضعيف",
+    "t-ber-purpose":"الحد الأدنى للإيجار الذي يُغطي قسطك ومصاريفك. إيجار السوق أعلى = مربح ✅",
+    "t-net-purpose":"الفرق بين قيمة العقار في نهاية المدة وإجمالي ما دفعته. موجب = بنيت ثروة",
+    /* ── Comparison ── */
+    "t-comp-conv":"قرض تقليدي","t-comp-mur":"مرابحة إسلامية","t-comp-rent":"إيجار فقط","t-comp-invest":"إيجار + استثمار","t-comp-cash":"شراء نقداً",
+    "t-comp-conv-desc":"IRR حقيقي أعلى من APR المُعلن","t-comp-mur-desc":"هامش ثابت — حلال — لا فائدة مركبة","t-comp-rent-desc":"مرونة كاملة — لا تبني ملكية","t-comp-invest-desc":"استثمار الفرق بعائد 8% سنوياً","t-comp-cash-desc":"لا قسط لا فائدة — يحتاج سيولة",
+    "t-best":"الأفضل","t-total-lbl":"الإجمالي","t-net-lbl":"صافي الثروة",
+    /* ── 360 ── */
+    "t-fin":"مالياً","t-shr":"شرعياً","t-mkt":"سوقياً","t-psy":"نفسياً",
+    "t-ok":"✅ مناسب","t-review":"⚠️ راجع",
+    /* ── Recommendation ── */
+    "t-rec-buy":"الشراء منطقي في وضعك","t-rec-caution":"ممكن — لكن بحذر","t-rec-wait":"انتظر وحسّن وضعك","t-rec-no":"لا تشترِ الآن","t-rec-rent":"الإيجار أذكى الآن",
+    "t-best-fin":"التمويل الأنسب","t-net-wealth":"صافي الثروة",
+    /* ── Feasibility ── */
+    "t-feas-score":"نتيجة الجدوى","t-feas-suitable":"مناسب للشراء","t-feas-wait":"انتظر وحسّن","t-feas-rent":"الإيجار أفضل الآن",
+    "t-feas-btn":"احسب نتيجة الجدوى →",
+    /* ── Buttons ── */
+    "t-btn-report":"⬇️ تنزيل التقرير","t-btn-reset":"🔄 إعادة الحساب","t-btn-start":"ابدأ التحليل ↓","t-btn-formulas":"المعادلات العقارية","t-scroll":"مرر للأسفل",
+    /* ── Footer ── */
+    "t-footer-tag":"منظومة رقمية في صفّك","t-footer-copy":"ابحث · احسب · امتلك",
+    /* ── Axiom Zones specific ── */
+    "t-az-hero":"اعرف أكثر. ادفع أقل.","t-az-sub":"منظومة رقمية في صفّك","t-az-desc":"أدوات مالية وتجارية حقيقية بنيت لمساعدتك — لا لمساعدة من يريد أموالك",
+    "t-az-platforms":"المنصات","t-az-blog":"المقالات","t-az-tools":"الأدوات",
+    /* ── Kashf specific ── */
+    "t-k-amount":"مبلغ القرض","t-k-duration":"مدة القرض (شهر)","t-k-monthly":"القسط الشهري","t-k-true-irr":"IRR الحقيقي","t-k-beauty":"درجة التجميل (0-100)","t-k-banks":"مقارنة البنوك","t-k-slogan":"اعرف الحقيقة — قبل أن تدفع ثمنها","t-k-tagline":"نكشف · نحسب · أنت تقرر",
+    /* ── Common values ── */
+    "t-excellent":"ممتاز","t-good":"جيد","t-acceptable":"مقبول","t-weak":"ضعيف","t-danger":"خطر","t-safe":"آمن","t-high":"مرتفع","t-low":"منخفض","t-profitable":"مربح","t-not-profitable":"غير مربح",
+    "t-waiting":"أدخل أرقامك — ستظهر النتيجة فوراً","t-loading":"جاري الحساب..."
+  },
+  en:{
+    "t-nav-home":"Home","t-nav-blog":"Blog","t-nav-glossary":"Glossary","t-nav-kashf":"Kashf","t-nav-prism":"Prism","t-get-started":"Get Started","t-learn-more":"Learn More",
+    "t-price":"Property Price","t-down":"Down Payment","t-years":"Financing Period","t-apr":"Advertised APR %","t-mur":"Murabaha Margin %","t-rent":"Monthly Rent","t-income":"Monthly Income","t-growth":"Annual Growth %","t-expenses":"Annual Expenses %","t-yr":"Year","t-mo":"Month",
+    "t-emi":"Monthly Payment","t-total":"Total Paid","t-interest":"Total Interest","t-fixed":"Fixed for Entire Term","t-dti":"Debt-to-Income Ratio","t-mur-monthly":"Murabaha/Month","t-mur-total":"Total Murabaha",
+    "t-live":"Live Results","t-prop":"Property Data","t-market":"Market Data","t-personal":"Your Situation","t-proj":"Property Value Forecast","t-conv":"Conventional Loan","t-mur-lbl":"Islamic Murabaha",
+    "t-y5":"After 5 Years","t-y10":"After 10 Years","t-yend":"At End of Term",
+    "t-ry-title":"Rental Yield","t-grm-title":"Gross Rent Multiplier","t-ptr-title":"Price-to-Rent Ratio","t-cap-title":"Cap Rate","t-ber-title":"Break-Even Rent","t-net-title":"Net Worth Gain",
+    "t-ry-purpose":"Measures annual rental return as % of property price. Higher = better investment. Under 4% weak · 4-7% acceptable · 7%+ excellent",
+    "t-grm-purpose":"Years for property to pay its price from rent. Lower = faster return. Under 10 excellent · 10-15 good · Over 20 high",
+    "t-ptr-purpose":"Determines if buying or renting is cheaper in this market. Under 15 buy better · 15-20 gray zone · Over 20 rent smarter",
+    "t-cap-purpose":"Net income after expenses as % of price. More accurate than rental yield. 5%+ good · Under 3% weak",
+    "t-ber-purpose":"Minimum rent covering your installment and expenses. Market rent higher = profitable ✅",
+    "t-net-purpose":"Property end value minus total paid. Positive = built wealth",
+    "t-comp-conv":"Conventional Loan","t-comp-mur":"Islamic Murabaha","t-comp-rent":"Rent Only","t-comp-invest":"Rent + Invest","t-comp-cash":"Cash Purchase",
+    "t-comp-conv-desc":"True IRR higher than advertised APR","t-comp-mur-desc":"Fixed margin — halal — no compound interest","t-comp-rent-desc":"Full flexibility — no ownership","t-comp-invest-desc":"Invest the difference at 8% annual return","t-comp-cash-desc":"No installment — no interest — needs liquidity",
+    "t-best":"Best","t-total-lbl":"Total Paid","t-net-lbl":"Net Worth",
+    "t-fin":"Financially","t-shr":"Islamically","t-mkt":"Market-wise","t-psy":"Psychologically",
+    "t-ok":"✅ OK","t-review":"⚠️ Review",
+    "t-rec-buy":"Buying Makes Sense","t-rec-caution":"Possible — With Caution","t-rec-wait":"Wait and Improve","t-rec-no":"Do Not Buy Now","t-rec-rent":"Renting is Smarter",
+    "t-best-fin":"Best Financing","t-net-wealth":"Net Wealth",
+    "t-feas-score":"Feasibility Score","t-feas-suitable":"Suitable for Buying","t-feas-wait":"Wait and Improve","t-feas-rent":"Renting is Better Now",
+    "t-feas-btn":"Calculate Feasibility Score →",
+    "t-btn-report":"⬇️ Download Report","t-btn-reset":"🔄 Reset","t-btn-start":"Start Analysis ↓","t-btn-formulas":"Real Estate Formulas","t-scroll":"Scroll Down",
+    "t-footer-tag":"The Digital Ecosystem on Your Side","t-footer-copy":"Search · Calculate · Own",
+    "t-az-hero":"Know More. Pay Less.","t-az-sub":"The Digital Ecosystem on Your Side","t-az-desc":"Real financial and business tools built to help you — not to help those who want your money",
+    "t-az-platforms":"Platforms","t-az-blog":"Articles","t-az-tools":"Tools",
+    "t-k-amount":"Loan Amount","t-k-duration":"Loan Duration (months)","t-k-monthly":"Monthly Payment","t-k-true-irr":"True IRR","t-k-beauty":"Beautification Score (0-100)","t-k-banks":"Bank Comparison","t-k-slogan":"Know the Truth — Before You Pay the Price","t-k-tagline":"We Reveal · We Calculate · You Decide",
+    "t-excellent":"Excellent","t-good":"Good","t-acceptable":"Acceptable","t-weak":"Weak","t-danger":"Danger","t-safe":"Safe","t-high":"High","t-low":"Low","t-profitable":"Profitable","t-not-profitable":"Not Profitable",
+    "t-waiting":"Enter your numbers — result will appear instantly","t-loading":"Calculating..."
+  },
+  fr:{
+    "t-nav-home":"Accueil","t-nav-blog":"Blog","t-nav-glossary":"Glossaire","t-get-started":"Commencer","t-learn-more":"En Savoir Plus",
+    "t-price":"Prix du Bien","t-down":"Apport Initial","t-years":"Durée Financement","t-apr":"APR Annoncé %","t-mur":"Marge Mourabaha %","t-rent":"Loyer Mensuel","t-income":"Revenu Mensuel","t-growth":"Croissance Annuelle %","t-expenses":"Charges Annuelles %","t-yr":"An","t-mo":"Mois",
+    "t-emi":"Mensualité","t-total":"Total Payé","t-interest":"Intérêts Totaux","t-fixed":"Fixe pour Toute la Durée","t-dti":"Ratio Dette/Revenu","t-mur-monthly":"Mourabaha/Mois","t-mur-total":"Total Mourabaha",
+    "t-live":"Résultats en Direct","t-prop":"Données du Bien","t-market":"Données du Marché","t-personal":"Votre Situation","t-proj":"Valeur Prévisionnelle","t-conv":"Prêt Conventionnel","t-mur-lbl":"Mourabaha Islamique",
+    "t-y5":"Dans 5 Ans","t-y10":"Dans 10 Ans","t-yend":"Fin de Période",
+    "t-ry-title":"Rendement Locatif","t-grm-title":"Multiplicateur Brut du Loyer","t-ptr-title":"Ratio Prix/Loyer","t-cap-title":"Taux de Capitalisation","t-ber-title":"Loyer Seuil","t-net-title":"Gain Net",
+    "t-ry-purpose":"Mesure le rendement annuel par rapport au prix. Moins de 4% faible · 4-7% acceptable · 7%+ excellent",
+    "t-grm-purpose":"Années pour récupérer le prix via le loyer. Moins de 10 excellent · 10-15 bon · Plus de 20 élevé",
+    "t-ptr-purpose":"Achat ou location: lequel est moins cher? Moins de 15 acheter · 15-20 zone grise · Plus de 20 louer",
+    "t-cap-purpose":"Revenu net après charges en % du prix. 5%+ bon · Moins de 3% faible",
+    "t-ber-purpose":"Loyer minimum couvrant mensualité et charges. Loyer marché supérieur = rentable ✅",
+    "t-net-purpose":"Valeur finale moins total payé. Positif = patrimoine constitué",
+    "t-comp-conv":"Prêt Conventionnel","t-comp-mur":"Mourabaha Islamique","t-comp-rent":"Location Seule","t-comp-invest":"Location + Investissement","t-comp-cash":"Achat Comptant",
+    "t-comp-conv-desc":"TRI réel supérieur à APR annoncé","t-comp-mur-desc":"Marge fixe — halal — sans intérêt composé","t-comp-rent-desc":"Flexibilité totale — pas de propriété","t-comp-invest-desc":"Investir la différence à 8% annuel","t-comp-cash-desc":"Pas de mensualité — pas d intérêt — besoin de liquidités",
+    "t-best":"Meilleur","t-total-lbl":"Total Payé","t-net-lbl":"Valeur Nette",
+    "t-fin":"Financièrement","t-shr":"Islamiquement","t-mkt":"Marché","t-psy":"Psychologiquement",
+    "t-ok":"✅ OK","t-review":"⚠️ À Vérifier",
+    "t-rec-buy":"L Achat Est Logique","t-rec-caution":"Possible — Avec Précaution","t-rec-wait":"Attendre et Améliorer","t-rec-no":"Ne Pas Acheter","t-rec-rent":"La Location Est Meilleure",
+    "t-best-fin":"Meilleur Financement","t-net-wealth":"Patrimoine Net",
+    "t-feas-score":"Score de Faisabilité","t-feas-suitable":"Prêt à Acheter","t-feas-wait":"Attendre et Améliorer","t-feas-rent":"La Location Est Meilleure",
+    "t-feas-btn":"Calculer le Score →",
+    "t-btn-report":"⬇️ Télécharger","t-btn-reset":"🔄 Réinitialiser","t-btn-start":"Commencer l Analyse ↓","t-btn-formulas":"Formules Immobilières","t-scroll":"Défiler",
+    "t-footer-tag":"L Écosystème Digital de Votre Côté","t-footer-copy":"Chercher · Calculer · Posséder",
+    "t-az-hero":"Savoir Plus. Payer Moins.","t-az-sub":"L Écosystème Digital de Votre Côté","t-az-desc":"De vrais outils financiers et commerciaux construits pour vous aider",
+    "t-az-platforms":"Plateformes","t-az-blog":"Articles","t-az-tools":"Outils",
+    "t-k-slogan":"Connaître la Vérité — Avant de Payer le Prix","t-k-tagline":"Nous Révélons · Nous Calculons · Vous Décidez",
+    "t-excellent":"Excellent","t-good":"Bon","t-acceptable":"Acceptable","t-weak":"Faible","t-danger":"Danger","t-safe":"Sûr","t-high":"Élevé","t-low":"Bas","t-profitable":"Rentable","t-not-profitable":"Non Rentable",
+    "t-waiting":"Entrez vos chiffres — le résultat apparaîtra instantanément","t-loading":"Calcul..."
+  },
+  tr:{
+    "t-nav-home":"Ana Sayfa","t-nav-blog":"Blog","t-nav-glossary":"Sözlük","t-get-started":"Başla","t-learn-more":"Daha Fazla",
+    "t-price":"Mülk Fiyatı","t-down":"Peşinat","t-years":"Finansman Süresi","t-apr":"İlan Edilen APR %","t-mur":"Murabaha Marjı %","t-rent":"Aylık Kira","t-income":"Aylık Gelir","t-growth":"Yıllık Büyüme %","t-expenses":"Yıllık Giderler %","t-yr":"Yıl","t-mo":"Ay",
+    "t-emi":"Aylık Taksit","t-total":"Toplam Ödenen","t-interest":"Toplam Faiz","t-fixed":"Tüm Süre Sabit","t-dti":"Borç/Gelir Oranı","t-mur-monthly":"Murabaha/Ay","t-mur-total":"Toplam Murabaha",
+    "t-live":"Anlık Sonuçlar","t-prop":"Mülk Verileri","t-market":"Piyasa Verileri","t-personal":"Durumunuz","t-proj":"Mülk Değer Tahmini","t-conv":"Geleneksel Kredi","t-mur-lbl":"İslami Murabaha",
+    "t-y5":"5 Yıl Sonra","t-y10":"10 Yıl Sonra","t-yend":"Süre Sonunda",
+    "t-ry-title":"Kira Getirisi","t-grm-title":"Gayrisafi Kira Çarpanı","t-ptr-title":"Fiyat/Kira Oranı","t-cap-title":"Kapitalizasyon Oranı","t-ber-title":"Başa Baş Kira","t-net-title":"Net Servet Kazancı",
+    "t-ry-purpose":"Yıllık kira getirisini fiyata oranla ölçer. %4 altı zayıf · %4-7 kabul edilebilir · %7+ mükemmel",
+    "t-grm-purpose":"Kiradan bedeli geri kazanma yılı. 10 altı mükemmel · 10-15 iyi · 20 üzeri yüksek",
+    "t-ptr-purpose":"Satın alma mı yoksa kiralama mı daha ucuz? 15 altı satın al · 15-20 gri bölge · 20 üzeri kirala",
+    "t-cap-purpose":"Masraflar sonrası net gelirin fiyata oranı. %5+ iyi · %3 altı zayıf",
+    "t-ber-purpose":"Taksit ve masrafları karşılayan minimum kira. Piyasa kirası yüksekse = kârlı ✅",
+    "t-net-purpose":"Son değer eksi toplam ödenen. Pozitif = servet biriktirildi",
+    "t-comp-conv":"Geleneksel Kredi","t-comp-mur":"İslami Murabaha","t-comp-rent":"Sadece Kiralama","t-comp-invest":"Kira + Yatırım","t-comp-cash":"Nakit Satın Alma",
+    "t-comp-conv-desc":"Gerçek IRR ilan edilen APR den yüksek","t-comp-mur-desc":"Sabit marj — helal — bileşik faiz yok","t-comp-rent-desc":"Tam esneklik — mülkiyet yok","t-comp-invest-desc":"Farkı yıllık %8 getiriyle yatırıma dönüştür","t-comp-cash-desc":"Taksit yok — faiz yok — likidite gerekir",
+    "t-best":"En İyi","t-total-lbl":"Toplam Ödenen","t-net-lbl":"Net Değer",
+    "t-fin":"Mali Açıdan","t-shr":"İslami Açıdan","t-mkt":"Piyasa","t-psy":"Psikolojik",
+    "t-ok":"✅ Uygun","t-review":"⚠️ Gözden Geçir",
+    "t-rec-buy":"Satın Alma Mantıklı","t-rec-caution":"Mümkün — Dikkatli","t-rec-wait":"Bekle ve İyileştir","t-rec-no":"Şimdi Satın Alma","t-rec-rent":"Kiralama Daha Akıllı",
+    "t-best-fin":"En İyi Finansman","t-net-wealth":"Net Servet",
+    "t-feas-score":"Fizibilite Skoru","t-feas-suitable":"Satın Almaya Hazır","t-feas-wait":"Bekle ve İyileştir","t-feas-rent":"Kiralama Daha İyi",
+    "t-feas-btn":"Fizibilite Skoru Hesapla →",
+    "t-btn-report":"⬇️ Raporu İndir","t-btn-reset":"🔄 Sıfırla","t-btn-start":"Analizi Başlat ↓","t-btn-formulas":"Gayrimenkul Formülleri","t-scroll":"Aşağı Kaydır",
+    "t-footer-tag":"Dijital Ekosisteminiz Yanınızda","t-footer-copy":"Ara · Hesapla · Sahip Ol",
+    "t-az-hero":"Daha Fazla Bil. Daha Az Öde.","t-az-sub":"Dijital Ekosisteminiz Yanınızda","t-az-desc":"Size yardım etmek için yapılmış gerçek araçlar",
+    "t-az-platforms":"Platformlar","t-az-blog":"Makaleler","t-az-tools":"Araçlar",
+    "t-k-slogan":"Gerçeği Öğrenin — Bedelini Ödemeden Önce","t-k-tagline":"Ortaya Çıkarırız · Hesaplarız · Siz Karar Verirsiniz",
+    "t-excellent":"Mükemmel","t-good":"İyi","t-acceptable":"Kabul Edilebilir","t-weak":"Zayıf","t-danger":"Tehlike","t-safe":"Güvenli","t-high":"Yüksek","t-low":"Düşük","t-profitable":"Kârlı","t-not-profitable":"Kârsız",
+    "t-waiting":"Rakamlarınızı girin — sonuç anında görünecek","t-loading":"Hesaplanıyor..."
+  },
+  ur:{
+    "t-nav-home":"ہوم","t-nav-blog":"بلاگ","t-nav-glossary":"لغت","t-get-started":"شروع کریں","t-learn-more":"مزید جانیں",
+    "t-price":"جائیداد کی قیمت","t-down":"پیشگی ادائیگی","t-years":"مدت","t-apr":"اعلانی APR %","t-mur":"مرابحہ مارجن %","t-rent":"ماہانہ کرایہ","t-income":"ماہانہ آمدنی","t-growth":"سالانہ نمو %","t-expenses":"سالانہ اخراجات %","t-yr":"سال","t-mo":"ماہ",
+    "t-emi":"ماہانہ قسط","t-total":"کل ادائیگی","t-interest":"کل سود","t-fixed":"پوری مدت ثابت","t-dti":"قرض/آمدنی تناسب","t-mur-monthly":"مرابحہ/ماہ","t-mur-total":"مجموعی مرابحہ",
+    "t-live":"براہ راست نتائج","t-prop":"جائیداد کا ڈیٹا","t-market":"بازار کا ڈیٹا","t-personal":"آپ کی صورتحال","t-proj":"جائیداد کی متوقع قیمت","t-conv":"روایتی قرض","t-mur-lbl":"اسلامی مرابحہ",
+    "t-y5":"5 سال بعد","t-y10":"10 سال بعد","t-yend":"مدت کے اختتام پر",
+    "t-ry-title":"کرایہ آمدنی","t-grm-title":"GRM","t-ptr-title":"قیمت/کرایہ تناسب","t-cap-title":"Cap Rate","t-ber-title":"بریک ایون کرایہ","t-net-title":"خالص فائدہ",
+    "t-ry-purpose":"سالانہ کرایہ آمدنی قیمت کے فیصد کے طور پر۔ 4% سے کم کمزور · 4-7% قابل قبول · 7%+ بہترین",
+    "t-grm-purpose":"کرایہ سے قیمت وصول کرنے کے سال۔ 10 سے کم بہترین · 10-15 اچھا · 20 سے زیادہ زیادہ",
+    "t-ptr-purpose":"خریداری یا کرایہ: کون سستا ہے؟ 15 سے کم خریدنا بہتر · 15-20 گرے زون · 20 سے زیادہ کرایہ بہتر",
+    "t-cap-purpose":"اخراجات کے بعد خالص آمدنی قیمت کا فیصد۔ 5%+ اچھا · 3% سے کم کمزور",
+    "t-ber-purpose":"کم از کم کرایہ جو قسط اور اخراجات پورے کرے۔ بازار کرایہ زیادہ = منافع بخش ✅",
+    "t-net-purpose":"آخری قیمت منہا کل ادائیگی۔ مثبت = دولت بنائی",
+    "t-comp-conv":"روایتی قرض","t-comp-mur":"اسلامی مرابحہ","t-comp-rent":"صرف کرایہ","t-comp-invest":"کرایہ + سرمایہ کاری","t-comp-cash":"نقد خریداری",
+    "t-comp-conv-desc":"حقیقی IRR اعلانی APR سے زیادہ","t-comp-mur-desc":"ثابت مارجن — حلال — مرکب سود نہیں","t-comp-rent-desc":"مکمل لچک — ملکیت نہیں","t-comp-invest-desc":"فرق کو سالانہ 8% پر سرمایہ کاری کریں","t-comp-cash-desc":"قسط نہیں — سود نہیں — نقدی درکار",
+    "t-best":"بہترین","t-total-lbl":"کل ادائیگی","t-net-lbl":"خالص دولت",
+    "t-fin":"مالی طور پر","t-shr":"اسلامی طور پر","t-mkt":"بازار","t-psy":"نفسیاتی",
+    "t-ok":"✅ مناسب","t-review":"⚠️ جائزہ لیں",
+    "t-rec-buy":"خریداری درست ہے","t-rec-caution":"ممکن — احتیاط کے ساتھ","t-rec-wait":"انتظار کریں","t-rec-no":"ابھی نہ خریدیں","t-rec-rent":"کرایہ بہتر ہے",
+    "t-best-fin":"بہترین قرض","t-net-wealth":"خالص دولت",
+    "t-feas-score":"قابلیت اسکور","t-feas-suitable":"خریدنے کے لیے تیار","t-feas-wait":"انتظار کریں","t-feas-rent":"کرایہ بہتر ہے",
+    "t-feas-btn":"قابلیت اسکور حساب کریں →",
+    "t-btn-report":"⬇️ رپورٹ ڈاؤنلوڈ","t-btn-reset":"🔄 دوبارہ","t-btn-start":"تجزیہ شروع ↓","t-btn-formulas":"رئیل اسٹیٹ فارمولے","t-scroll":"نیچے سکرول",
+    "t-footer-tag":"آپ کی طرف ڈیجیٹل ماحولیاتی نظام","t-footer-copy":"تلاش کریں · حساب کریں · مالک بنیں",
+    "t-az-hero":"زیادہ جانیں۔ کم ادا کریں۔","t-az-sub":"آپ کی طرف ڈیجیٹل ماحولیاتی نظام","t-az-desc":"آپ کی مدد کے لیے بنائے گئے حقیقی مالی ابزار",
+    "t-az-platforms":"پلیٹ فارمز","t-az-blog":"مضامین","t-az-tools":"ابزار",
+    "t-k-slogan":"سچ جانیں — قیمت چکانے سے پہلے","t-k-tagline":"ہم ظاہر کرتے ہیں · ہم حساب کرتے ہیں · آپ فیصلہ کریں",
+    "t-excellent":"بہترین","t-good":"اچھا","t-acceptable":"قابل قبول","t-weak":"کمزور","t-danger":"خطرہ","t-safe":"محفوظ","t-high":"زیادہ","t-low":"کم","t-profitable":"منافع بخش","t-not-profitable":"غیر منافع بخش",
+    "t-waiting":"اپنے اعداد درج کریں — نتیجہ فوری ظاہر ہوگا","t-loading":"حساب ہو رہا ہے..."
+  }
+};
+
+/* ══ UNIVERSAL setLang() ══ */
+function setLang(l){
+  if(!I18N[l]) l="ar";
+  LANG = l;
+  var rtl = l==="ar"||l==="ur"||l==="fa";
+  document.documentElement.lang = l;
+  document.documentElement.dir  = rtl ? "rtl" : "ltr";
+  document.body.style.fontFamily = rtl ? "'Cairo','Syne',sans-serif" : "'Syne',sans-serif";
+  /* Update all i18n elements */
+  var tr = I18N[l];
+  Object.keys(tr).forEach(function(k){
+    var el = document.getElementById(k);
+    if(el) el.textContent = tr[k];
+    /* Also handle placeholder */
+    var inp = document.querySelector('[data-i18n="'+k+'"]');
+    if(inp){
+      if(inp.placeholder !== undefined) inp.placeholder = tr[k];
+      else inp.textContent = tr[k];
+    }
+  });
+  /* Trigger re-render of dynamic content */
+  if(typeof renderQ === "function") renderQ();
+  if(typeof renderFormulas === "function") renderFormulas();
+  if(typeof renderComp === "function") renderComp();
+  if(typeof calcAll === "function") calcAll();
+}
+
+</script>
+<script>
+
+/* ══════════════════════════════════════════════════════
+   AZ RATE LIMITER — AI Calls Protection
+   يحمي من استنزاف Claude API
+   المجاني: 5 أسئلة/يوم | Pro+: 50/يوم | Expert: 200/يوم
+══════════════════════════════════════════════════════ */
+var AZ_RATE = {
+  limits: { free:5, growth:20, pro:50, expert:200, lifetime:500 },
+  key: 'az_ai_calls',
+  dateKey: 'az_ai_date',
+
+  /* احصل على الخطة الحالية */
+  getPlan: function() {
+    try {
+      var s = JSON.parse(localStorage.getItem('az_session') || '{}');
+      return s.plan || 'free';
+    } catch(e) { return 'free'; }
+  },
+
+  /* هل مسموح باستدعاء AI؟ */
+  canCall: function() {
+    var today = new Date().toDateString();
+    var saved = localStorage.getItem(this.dateKey);
+    if (saved !== today) {
+      localStorage.setItem(this.dateKey, today);
+      localStorage.setItem(this.key, '0');
+    }
+    var used  = parseInt(localStorage.getItem(this.key) || '0');
+    var plan  = this.getPlan();
+    var limit = this.limits[plan] || this.limits.free;
+    return used < limit;
+  },
+
+  /* سجّل استدعاء */
+  record: function() {
+    var used = parseInt(localStorage.getItem(this.key) || '0');
+    localStorage.setItem(this.key, String(used + 1));
+  },
+
+  /* كم تبقّى؟ */
+  remaining: function() {
+    var today = new Date().toDateString();
+    if (localStorage.getItem(this.dateKey) !== today) return this.limits[this.getPlan()] || 5;
+    var used  = parseInt(localStorage.getItem(this.key) || '0');
+    var limit = this.limits[this.getPlan()] || 5;
+    return Math.max(0, limit - used);
+  },
+
+  /* رسالة الحد المنتهي */
+  limitMsg: function() {
+    var plan = this.getPlan();
+    var limit = this.limits[plan] || 5;
+    if (plan === 'free') {
+      return 'وصلت لحد ' + limit + ' أسئلة/يوم للحساب المجاني. ترقّ للـ Growth للحصول على 20 سؤال/يوم.';
+    }
+    return 'وصلت لحد ' + limit + ' سؤال اليوم. يتجدد غداً.';
+  }
+};
+
+/* ══ Wrap كل استدعاء AI بـ Rate Limiter ══ */
+var _az_orig_fetch = window.fetch;
+window.fetch = function(url, opts) {
+  if (url && url.toString().includes('anthropic.com')) {
+    if (!AZ_RATE.canCall()) {
+      var msg = AZ_RATE.limitMsg();
+      /* Show toast using any available toast function */
+      if (typeof azV4Toast === 'function')    azV4Toast('⚠️ ' + msg);
+      else if (typeof kToast === 'function')  kToast('⚠️ ' + msg);
+      else if (typeof dashShowToast === 'function') dashShowToast('⚠️ ' + msg);
+      else alert(msg);
+      return Promise.reject(new Error('Rate limit reached'));
+    }
+    AZ_RATE.record();
+    /* Show remaining count */
+    var rem = AZ_RATE.remaining();
+    if (rem <= 2) {
+      var warn = 'تبقّى ' + rem + ' سؤال AI اليوم';
+      setTimeout(function() {
+        if (typeof azV4Toast === 'function')    azV4Toast('ℹ️ ' + warn);
+        else if (typeof kToast === 'function')  kToast('ℹ️ ' + warn);
+        else if (typeof dashShowToast === 'function') dashShowToast('ℹ️ ' + warn);
+      }, 2000);
+    }
+  }
+  return _az_orig_fetch.apply(window, arguments);
+};
+
+</script>
+<script>
+
+/* ══ PWA Service Worker Registration ══ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function(reg) {
+        console.log('SW registered:', reg.scope);
+        /* Check for updates */
+        reg.addEventListener('updatefound', function() {
+          var nw = reg.installing;
+          if (nw) {
+            nw.addEventListener('statechange', function() {
+              if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('New version available');
+              }
+            });
+          }
+        });
+      })
+      .catch(function(err) { console.log('SW failed:', err); });
+  });
+  /* Request Push Notification permission for Loan Alert */
+  if ('Notification' in window && 'PushManager' in window) {
+    document.addEventListener('DOMContentLoaded', function() {
+      var loanAlertBtn = document.getElementById('loan-alert');
+      if (loanAlertBtn) {
+        loanAlertBtn.addEventListener('click', function() {
+          Notification.requestPermission().then(function(perm) {
+            if (perm === 'granted') console.log('Push notifications enabled for Loan Alert');
+          });
+        });
+      }
+    });
+  }
+}
+</script>
+
+
+<!-- PWA Install Banner -->
+  <div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div>
+  <button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.78rem;border:none;cursor:pointer">تثبيت</button>
+  <button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;line-height:1;padding:0 2px">✕</button>
+</div>
+
+<!-- PWA -->
+<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:#0a0d1a;border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
+<script>
+(function(){var _d=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_d=e;setTimeout(function(){var b=document.getElementById('az-pwa-banner');if(b)b.style.display='flex';},30000);});window.azPWAInstall=function(){if(!_d)return;_d.prompt();_d.userChoice.then(function(){_d=null;var b=document.getElementById('az-pwa-banner');if(b)b.style.display='none';});};if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/service-worker.js').catch(function(){});});})();
+</script>
+
+<!-- ══ ECOSYSTEM BADGE — يُضاف لكل منصة فرعية ══ -->
+<style>
+.az-ecosystem-badge{
+  position:fixed;top:16px;right:16px;z-index:9999;
+  display:flex;align-items:center;gap:0;
+  font-family:'DM Mono',monospace;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.az-eco-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#c9a84c,#e8c86a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(201,168,76,.3);
+  transition:all .3s;flex-shrink:0;
+}
+.az-eco-label{
+  max-width:0;overflow:hidden;white-space:nowrap;
+  font-size:.62rem;letter-spacing:1px;color:#060912;
+  background:linear-gradient(135deg,#c9a84c,#e8c86a);
+  height:36px;display:flex;align-items:center;
+  padding:0;border-radius:0 18px 18px 0;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+  font-weight:700;
+}
+.az-ecosystem-badge:hover .az-eco-label{
+  max-width:120px;padding:0 12px 0 6px;
+}
+.az-ecosystem-badge:hover .az-eco-icon{
+  border-radius:50% 0 0 50%;
+}
+</style>
+<div class="az-ecosystem-badge" onclick="window.location.href='/'">
+  <div class="az-eco-icon">🏛️</div>
+  <div class="az-eco-label">المنظومة</div>
+</div>
+
+</body>
+</html>

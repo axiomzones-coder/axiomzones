@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self)"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>عقار — Aqar | محرك قرار العقار</title>
+<meta name="description" content="محرك قرار العقار الأول عربياً — شراء أم إيجار؟ مرابحة أم قرض؟ احسب الجدوى الحقيقية بالأرقام."/>
+<link rel="canonical" href="https://axiomzones.com/aqar"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;700&family=Syne:wght@400;600;700&family=DM+Mono:wght@400;500&family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060912;--bg2:#0a0d1a;--bg3:#0e1322;
+  --gold:#c9a84c;--gold2:#e8c86a;
+  --t1:#f0f2ff;--t2:#8892b0;--t3:#3d4a6b;
+  --green:#22c55e;--red:#ef4444;--blue:#38bdf8;--purple:#a78bfa;
+}
+body{background:var(--bg);color:var(--t1);font-family:'Cairo','Syne',sans-serif;line-height:1.75}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+.hdr{background:rgba(6,9,18,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.12);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Cormorant',serif;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,var(--t1),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr-r{display:flex;gap:8px;align-items:center}
+.sel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--t1);padding:5px 10px;border-radius:7px;font-family:'DM Mono',monospace;font-size:.64rem;cursor:pointer;outline:none}
+
+.hero{padding:80px 24px 56px;text-align:center;max-width:800px;margin:0 auto;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(circle,rgba(201,168,76,.07),transparent 70%);pointer-events:none;z-index:0}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:12px;position:relative}
+.eyebrow::before,.eyebrow::after{content:'';width:24px;height:1px;background:var(--gold)}
+h1{font-family:'Cormorant',serif;font-size:clamp(3rem,8vw,5.5rem);font-weight:700;letter-spacing:-2.5px;line-height:.95;margin-bottom:14px;position:relative}
+h1 em{color:var(--t2);font-weight:300;font-style:italic}
+.hero-sub{font-size:.92rem;color:var(--t2);max-width:480px;margin:0 auto 10px;line-height:1.85}
+.tagline{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--t3);margin-bottom:32px}
+.cta{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#060912;font-weight:700;padding:12px 26px;border-radius:10px;font-size:.88rem;cursor:pointer;border:none;font-family:'Syne',sans-serif;transition:all .3s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+
+.tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:4px;margin:0 24px 32px;overflow-x:auto}
+.tab{flex:1;min-width:fit-content;padding:8px 14px;border-radius:8px;border:none;background:transparent;color:var(--t3);font-family:'DM Mono',monospace;font-size:.6rem;cursor:pointer;transition:all .22s;white-space:nowrap;letter-spacing:.5px;text-transform:uppercase}
+.tab.on{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.tab.done{color:var(--green)}
+
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.sec{padding:56px 0;border-top:1px solid rgba(255,255,255,.05)}
+.sec-ey{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.sec-ey::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.sec-h{font-family:'Cormorant',serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.8px;margin-bottom:8px}
+.sec-d{font-size:.86rem;color:var(--t2);max-width:500px;line-height:1.85;margin-bottom:28px}
+
+.card{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
+.card-bar{position:absolute;top:0;left:0;right:0;height:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+@media(max-width:700px){.grid2,.grid3,.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+
+.fg{margin-bottom:12px}
+.lbl{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:4px}
+.inp{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);color:var(--t1);padding:9px 12px;border-radius:8px;font-family:'Cairo','Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .22s}
+.inp:focus{border-color:var(--gold)}
+select.inp{cursor:pointer}
+
+.btn{padding:10px 20px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;border:none;transition:all .25s;display:inline-flex;align-items:center;gap:7px}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#060912}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,168,76,.3)}
+.btn-ol{background:transparent;border:1.5px solid rgba(255,255,255,.12);color:var(--t2)}
+.btn-ol:hover{border-color:var(--gold);color:var(--gold)}
+.btn-full{width:100%;justify-content:center}
+
+.bdg{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:1px;padding:3px 8px;border-radius:20px;text-transform:uppercase}
+.bdg-g{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:var(--green)}
+.bdg-y{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:var(--gold)}
+.bdg-r{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);color:var(--red)}
+.bdg-b{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.15);color:var(--blue)}
+
+.num-big{font-family:'Cormorant',serif;font-size:2.4rem;font-weight:700;line-height:1}
+.num-med{font-family:'Cormorant',serif;font-size:1.6rem;font-weight:700;line-height:1}
+.num-sm{font-family:'Cormorant',serif;font-size:1.2rem;font-weight:700;line-height:1}
+
+.prog{height:7px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-top:6px}
+.prog-fill{height:100%;border-radius:4px;transition:width .7s ease}
+
+.q-opt{padding:9px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.08);background:transparent;color:var(--t2);font-family:'Cairo','Syne',sans-serif;font-size:.82rem;cursor:pointer;transition:all .22s;text-align:center;width:100%}
+.q-opt:hover{border-color:rgba(201,168,76,.3);color:var(--t1)}
+.q-opt.sel{border-color:var(--gold);background:rgba(201,168,76,.1);color:var(--gold);font-weight:700}
+
+/* Formula cards */
+.formula-card{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:20px;transition:all .3s;border-right:4px solid transparent}
+.formula-card:hover{border-right-color:var(--gold);background:rgba(201,168,76,.03)}
+.formula-title{font-size:.92rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
+.formula-ar{font-size:.78rem;color:var(--t2);margin-bottom:10px}
+.formula-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:.78rem;color:var(--gold);margin-bottom:10px;direction:ltr;text-align:left}
+.formula-purpose{font-size:.78rem;color:var(--t2);line-height:1.75;margin-bottom:10px}
+.formula-result{font-family:'Cormorant',serif;font-size:2rem;font-weight:700;text-align:center;padding:10px;border-radius:8px}
+.formula-interp{font-size:.76rem;margin-top:6px;text-align:center;color:var(--t2);line-height:1.65}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--bg2);color:var(--gold);padding:10px 20px;border-radius:9px;font-family:'DM Mono',monospace;font-size:.72rem;z-index:9999;transition:transform .35s;pointer-events:none;border:1px solid rgba(201,168,76,.3);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+.footer{background:var(--bg2);border-top:1px solid rgba(255,255,255,.05);padding:28px 24px;text-align:center;margin-top:60px}
+.footer-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .22s}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--t3)}
+
+/* ── Theme ── */
+body.light{--bg:#f4f1ea;--bg2:#ffffff;--bg3:#e8e4da;--t1:#1a1a2e;--t2:#4a5568;--t3:#a0aec0}
+body.light .hdr{background:rgba(244,241,234,.95);border-bottom:1px solid rgba(201,168,76,.2)}
+body.light .inp{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.15);color:var(--t1)}
+body.light .q-opt{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.12);color:var(--t2)}
+body.light .q-opt.sel{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
+body.light .formula-card{background:var(--bg2);border-color:rgba(0,0,0,.08)}
+body.light .sel{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.15);color:var(--t1)}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.theme-btn:hover{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.3)}
+body.light .theme-btn{border-color:rgba(0,0,0,.15);background:rgba(0,0,0,.06)}
+
+</style>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="icon" type="image/x-icon" href="/icons/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:30px;height:30px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem">🏠</div>
+    <div>
+      <div class="logo" id="t-h-name">عقار — Aqar</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3)" id="t-h-sub">محرك قرار العقار</div>
+    </div>
+  </div>
+  <div class="hdr-r">
+    <select class="sel" id="lang-sel" onchange="setLang(this.value)">
+      <optgroup label="الأكثر استخداماً">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="tr">Türkçe</option>
+        <option value="ur">اردو</option>
+        <option value="id">Bahasa Indonesia</option>
+        <option value="ms">Bahasa Melayu</option>
+        <option value="fa">فارسی</option>
+        <option value="bn">বাংলা</option>
+        <option value="hi">हिंदी</option>
+      </optgroup>
+      <optgroup label="European">
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="pt">Português</option>
+        <option value="ru">Русский</option>
+        <option value="nl">Nederlands</option>
+        <option value="pl">Polski</option>
+        <option value="sv">Svenska</option>
+        <option value="no">Norsk</option>
+        <option value="da">Dansk</option>
+        <option value="fi">Suomi</option>
+        <option value="cs">Čeština</option>
+        <option value="ro">Română</option>
+        <option value="hu">Magyar</option>
+        <option value="el">Ελληνικά</option>
+        <option value="uk">Українська</option>
+        <option value="bg">Български</option>
+        <option value="hr">Hrvatski</option>
+        <option value="sk">Slovenčina</option>
+        <option value="lt">Lietuvių</option>
+        <option value="lv">Latviešu</option>
+        <option value="et">Eesti</option>
+        <option value="sl">Slovenščina</option>
+        <option value="sr">Српски</option>
+        <option value="ca">Català</option>
+      </optgroup>
+      <optgroup label="Asian">
+        <option value="zh">中文 (简体)</option>
+        <option value="zh-tw">中文 (繁體)</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="th">ภาษาไทย</option>
+        <option value="tl">Filipino</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
+        <option value="pa">ਪੰਜਾਬੀ</option>
+        <option value="sw">Kiswahili</option>
+        <option value="am">አማርኛ</option>
+        <option value="ha">Hausa</option>
+        <option value="yo">Yorùbá</option>
+        <option value="ig">Igbo</option>
+        <option value="km">ភាសាខ្មែរ</option>
+        <option value="my">မြန်မာဘာသာ</option>
+        <option value="si">සිංහල</option>
+        <option value="ne">नेपाली</option>
+        <option value="mn">Монгол</option>
+        <option value="az">Azərbaycan</option>
+        <option value="kk">Қазақ</option>
+        <option value="uz">Oʻzbek</option>
+        <option value="ky">Кыргыз</option>
+        <option value="tk">Türkmen</option>
+        <option value="tg">Тоҷикӣ</option>
+        <option value="hy">Հայերեն</option>
+        <option value="ka">ქართული</option>
+        <option value="he">עברית</option>
+        <option value="ps">پښتو</option>
+        <option value="sd">سنڌي</option>
+        <option value="ku">Kurdî</option>
+      </optgroup>
+    </select>
+    <select class="sel" id="curr-sel" onchange="setCurr(this.value)">
+      <optgroup label="الخليج العربي">
+        <option value="SAR">ر.س SAR</option>
+        <option value="AED">د.إ AED</option>
+        <option value="KWD">د.ك KWD</option>
+        <option value="QAR">ر.ق QAR</option>
+        <option value="BHD">د.ب BHD</option>
+        <option value="OMR">ر.ع OMR</option>
+      </optgroup>
+      <optgroup label="الشرق الأوسط وأفريقيا">
+        <option value="EGP">ج.م EGP</option>
+        <option value="JOD">د.أ JOD</option>
+        <option value="LBP">ل.ل LBP</option>
+        <option value="SYP">ل.س SYP</option>
+        <option value="IQD">د.ع IQD</option>
+        <option value="MAD">د.م MAD</option>
+        <option value="DZD">د.ج DZD</option>
+        <option value="TND">د.ت TND</option>
+        <option value="LYD">د.ل LYD</option>
+        <option value="SDG">ج.س SDG</option>
+        <option value="YER">ر.ي YER</option>
+        <option value="IRR">﷼ IRR</option>
+        <option value="ILS">₪ ILS</option>
+        <option value="ETB">Br ETB</option>
+        <option value="KES">KSh KES</option>
+        <option value="NGN">₦ NGN</option>
+        <option value="GHS">₵ GHS</option>
+        <option value="ZAR">R ZAR</option>
+        <option value="TZS">TSh TZS</option>
+        <option value="UGX">USh UGX</option>
+        <option value="XOF">Fr XOF</option>
+        <option value="XAF">Fr XAF</option>
+        <option value="MZN">MT MZN</option>
+        <option value="MUR">₨ MUR</option>
+        <option value="SOS">Sh SOS</option>
+        <option value="DJF">Fr DJF</option>
+        <option value="KMF">Fr KMF</option>
+      </optgroup>
+      <optgroup label="Global">
+        <option value="USD">$ USD</option>
+        <option value="EUR">€ EUR</option>
+        <option value="GBP">£ GBP</option>
+        <option value="CHF">Fr CHF</option>
+        <option value="CAD">CA$ CAD</option>
+        <option value="AUD">A$ AUD</option>
+        <option value="NZD">NZ$ NZD</option>
+        <option value="JPY">¥ JPY</option>
+        <option value="CNY">¥ CNY</option>
+        <option value="HKD">HK$ HKD</option>
+        <option value="SGD">S$ SGD</option>
+        <option value="KRW">₩ KRW</option>
+        <option value="SEK">kr SEK</option>
+        <option value="NOK">kr NOK</option>
+        <option value="DKK">kr DKK</option>
+        <option value="PLN">zł PLN</option>
+        <option value="CZK">Kč CZK</option>
+        <option value="HUF">Ft HUF</option>
+        <option value="RUB">₽ RUB</option>
+        <option value="INR">₹ INR</option>
+        <option value="PKR">₨ PKR</option>
+        <option value="BDT">৳ BDT</option>
+        <option value="IDR">Rp IDR</option>
+        <option value="MYR">RM MYR</option>
+        <option value="THB">฿ THB</option>
+        <option value="PHP">₱ PHP</option>
+        <option value="VND">₫ VND</option>
+        <option value="TWD">NT$ TWD</option>
+        <option value="TRY">₺ TRY</option>
+        <option value="BRL">R$ BRL</option>
+        <option value="MXN">$ MXN</option>
+        <option value="ARS">$ ARS</option>
+        <option value="CLP">$ CLP</option>
+        <option value="COP">$ COP</option>
+        <option value="PEN">S/ PEN</option>
+        <option value="UAH">₴ UAH</option>
+        <option value="RON">lei RON</option>
+        <option value="BGN">лв BGN</option>
+        <option value="HRK">kn HRK</option>
+        <option value="RSD">din RSD</option>
+        <option value="GEL">₾ GEL</option>
+        <option value="AMD">֏ AMD</option>
+        <option value="AZN">₼ AZN</option>
+        <option value="KZT">₸ KZT</option>
+        <option value="UZS">so'm UZS</option>
+        <option value="MNT">₮ MNT</option>
+        <option value="NPR">₨ NPR</option>
+        <option value="LKR">₨ LKR</option>
+        <option value="MMK">K MMK</option>
+        <option value="KHR">៛ KHR</option>
+        <option value="MOP">P MOP</option>
+      </optgroup>
+    </select>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="الوضع الليلي/النهاري">🌙</button>
+    <a href="/" style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;color:var(--t3);padding:5px 10px;border-radius:7px;border:1px solid rgba(255,255,255,.08);text-decoration:none">Axiom Zones</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow" id="t-h-eyebrow">محرك قرار العقار الأول عربياً</div>
+  <h1>اشترِ<br/><em>بعقل.</em></h1>
+  <p class="hero-sub" id="t-h-slogan">قبل أن تشتري بقلب — احسب الجدوى الحقيقية بالأرقام الدقيقة</p>
+  <div class="tagline" id="t-h-tagline">احسب · قارن · اقرر</div>
+  <button class="cta" onclick="scrollSec('feasibility')">ابدأ التحليل ↓</button>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="tabs">
+  <button class="tab on" data-sec="feasibility" onclick="goSec('feasibility',this)">① جدوى الشراء</button>
+  <button class="tab" data-sec="calculator" onclick="goSec('calculator',this)">② الحاسبة</button>
+  <button class="tab" data-sec="formulas" onclick="goSec('formulas',this)">③ المعادلات</button>
+  <button class="tab" data-sec="comparison" onclick="goSec('comparison',this)">④ المقارنة</button>
+  <button class="tab" data-sec="decision" onclick="goSec('decision',this)">⑤ القرار 360°</button>
+  <button class="tab" data-sec="recommendation" onclick="goSec('recommendation',this)">⑥ التوصية</button>
+</div>
+
+<!-- ① FEASIBILITY -->
+<section class="sec" id="feasibility">
+<div class="wrap">
+  <div class="sec-ey" style="color:var(--gold)" id="t-s1-ey">① جدوى الشراء</div>
+  <div class="sec-h" id="t-s1-h">هل أنت مستعد للشراء؟</div>
+  <p class="sec-d" id="t-s1-d">5 أسئلة تحدد جدوى الشراء في حالتك — أجب بصدق</p>
+  <div id="q-container"></div>
+  <button class="btn btn-gold btn-full" style="margin-top:14px" id="calc-feas-btn" onclick="calcFeas()">احسب نتيجة الجدوى</button>
+  <div id="feas-result" style="margin-top:18px"></div>
+</div>
+</section>
+
+<!-- ② CALCULATOR -->
+<section class="sec" id="calculator">
+<div class="wrap">
+  <div class="sec-ey" style="color:var(--blue)" id="t-s2-ey">② الحاسبة الكاملة</div>
+  <div class="sec-h" id="t-s2-h">أدخل أرقامك — احصل على الحقيقة</div>
+  <p class="sec-d" id="t-s2-d">جميع النتائج تتحدث فوراً بمجرد الإدخال</p>
+  <div class="grid2">
+    <!-- Inputs -->
+    <div>
+      <div class="card">
+        <div class="card-bar" style="background:linear-gradient(90deg,var(--gold),var(--gold2))"></div>
+        <div style="font-size:.84rem;font-weight:700;margin-bottom:14px">🏠 <span id="t-prop">بيانات العقار</span></div>
+        <div class="fg"><span class="lbl" id="l-price">سعر العقار</span><input class="inp" type="number" id="i-price" value="500000" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-down">الدفعة الأولى</span><input class="inp" type="number" id="i-down" value="100000" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-years">مدة التمويل (سنة)</span><input class="inp" type="number" id="i-years" value="20" min="1" max="30" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-apr">APR المُعلن %</span><input class="inp" type="number" id="i-apr" value="4.5" step="0.1" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-mur">هامش المرابحة %</span><input class="inp" type="number" id="i-mur" value="15" step="0.5" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-rent-m">الإيجار الشهري</span><input class="inp" type="number" id="i-rent" value="2000" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-income">دخلك الشهري</span><input class="inp" type="number" id="i-income" value="15000" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-growth">نمو قيمة العقار %</span><input class="inp" type="number" id="i-growth" value="4" step="0.5" oninput="calcAll()"/></div>
+        <div class="fg"><span class="lbl" id="l-expenses">مصاريف سنوية %</span><input class="inp" type="number" id="i-expenses" value="1.5" step="0.1" oninput="calcAll()"/><div style="font-size:.62rem;color:var(--t3);margin-top:3px" id="l-expenses-hint">صيانة + تأمين + ضرائب</div></div>
+      </div>
+    </div>
+    <!-- Results -->
+    <div id="results-col">
+      <!-- Conv Loan -->
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-bar" style="background:linear-gradient(90deg,var(--blue),#93c5fd)"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:10px" id="t-conv">قرض تقليدي</div>
+        <div class="grid2">
+          <div style="text-align:center;padding:10px;background:rgba(56,189,248,.05);border-radius:8px">
+            <div class="lbl">APR مُعلن</div>
+            <div class="num-med" style="color:var(--blue)" id="r-apr">4.5%</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(239,68,68,.05);border-radius:8px">
+            <div class="lbl">IRR حقيقي</div>
+            <div class="num-med" style="color:var(--red)" id="r-irr">8.1%</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border-radius:8px">
+            <div class="lbl" id="l-monthly">قسط/شهر</div>
+            <div class="num-sm" id="r-monthly">—</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border-radius:8px">
+            <div class="lbl" id="l-total-pay">الإجمالي</div>
+            <div class="num-sm" id="r-total">—</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;text-align:center;padding:8px;background:rgba(239,68,68,.05);border-radius:8px">
+          <div class="lbl" id="l-interest">الفائدة الكلية</div>
+          <div class="num-med" style="color:var(--red)" id="r-interest">—</div>
+        </div>
+      </div>
+      <!-- Murabaha -->
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-bar" style="background:linear-gradient(90deg,var(--green),#34d399)"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:10px" id="t-mur-lbl">مرابحة إسلامية</div>
+        <div class="grid2">
+          <div style="text-align:center;padding:10px;background:rgba(34,197,94,.05);border-radius:8px">
+            <div class="lbl" id="l-mur-margin">هامش الربح</div>
+            <div class="num-med" style="color:var(--green)" id="r-mur-pct">15%</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(34,197,94,.05);border-radius:8px">
+            <div class="lbl" id="l-fixed">ثابت طوال المدة</div>
+            <div style="font-size:1.1rem;font-weight:700;color:var(--green)" id="r-fixed">✅ نعم</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border-radius:8px">
+            <div class="lbl" id="l-mur-monthly">قسط/شهر</div>
+            <div class="num-sm" id="r-mur-monthly">—</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border-radius:8px">
+            <div class="lbl" id="l-mur-total">الإجمالي</div>
+            <div class="num-sm" id="r-mur-total">—</div>
+          </div>
+        </div>
+      </div>
+      <!-- DTI -->
+      <div class="card" style="margin-bottom:12px">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:8px">DTI نسبة الدين للدخل</div>
+        <div id="dti-box" style="text-align:center;padding:12px;border-radius:9px;background:rgba(34,197,94,.05)">
+          <div class="num-big" style="color:var(--green)" id="r-dti">30%</div>
+          <div style="font-size:.82rem;font-weight:700;margin-top:4px;color:var(--green)" id="r-dti-lbl">آمن</div>
+        </div>
+        <div class="prog" style="margin-top:8px"><div class="prog-fill" id="r-dti-bar" style="width:30%;background:var(--green)"></div></div>
+        <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:.56rem;color:var(--t3);margin-top:3px">
+          <span>0%</span><span style="color:var(--green)">36%</span><span>80%</span>
+        </div>
+      </div>
+      <!-- Property Projection -->
+      <div class="card">
+        <div class="card-bar" style="background:linear-gradient(90deg,var(--gold),var(--gold2))"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px" id="t-proj">قيمة العقار المتوقعة</div>
+        <div class="grid3">
+          <div style="text-align:center;padding:10px;background:rgba(201,168,76,.05);border-radius:8px">
+            <div class="lbl" id="l-y5">بعد 5 سنوات</div>
+            <div class="num-sm" style="color:var(--gold)" id="r-val5">—</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(201,168,76,.05);border-radius:8px">
+            <div class="lbl" id="l-y10">بعد 10 سنوات</div>
+            <div class="num-sm" style="color:var(--gold)" id="r-val10">—</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(201,168,76,.08);border-radius:8px">
+            <div class="lbl" id="l-yend">نهاية المدة</div>
+            <div class="num-sm" style="color:var(--gold)" id="r-valend">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ③ FORMULAS -->
+<section class="sec" id="formulas">
+<div class="wrap">
+  <div class="sec-ey" style="color:var(--purple)" id="t-s3-ey">③ المعادلات العقارية</div>
+  <div class="sec-h" id="t-s3-h">6 معادلات تحكم قرار العقار</div>
+  <p class="sec-d" id="t-s3-d">احسبها بأرقامك — وافهم ما تعنيه قبل أن تقرر</p>
+  <div class="grid2">
+
+    <!-- 1. Rental Yield -->
+    <div class="formula-card">
+      <div class="formula-title">
+        <span id="f1-title">العائد الإيجاري</span>
+        <span class="bdg bdg-g" id="f1-bdg">—</span>
+      </div>
+      <div class="formula-ar" id="f1-en">Rental Yield</div>
+      <div class="formula-box">Rental Yield = (Annual Rent / Property Price) × 100</div>
+      <div class="formula-purpose" id="f1-purpose">يقيس العائد السنوي من الإيجار كنسبة من سعر العقار. كلما ارتفع كان العقار مربحاً كاستثمار إيجاري.<br/><strong style="color:var(--gold)">أقل من 4%</strong> ضعيف · <strong style="color:var(--gold)">4-7%</strong> مقبول · <strong style="color:var(--green)">7%+</strong> ممتاز</div>
+      <div class="formula-result" id="f1-result" style="color:var(--t3)">أدخل الأرقام أعلاه</div>
+    </div>
+
+    <!-- 2. GRM -->
+    <div class="formula-card">
+      <div class="formula-title">
+        <span id="f2-title">مضاعف الإيجار الإجمالي</span>
+        <span class="bdg bdg-b" id="f2-bdg">—</span>
+      </div>
+      <div class="formula-ar" id="f2-en">Gross Rent Multiplier (GRM)</div>
+      <div class="formula-box">GRM = Property Price / Annual Rent</div>
+      <div class="formula-purpose" id="f2-purpose">كم سنة يحتاج العقار ليُسدّد سعره من الإيجار فقط. كلما انخفض كان أفضل.<br/><strong style="color:var(--green)">أقل من 10</strong> ممتاز · <strong style="color:var(--gold)">10-15</strong> جيد · <strong style="color:var(--red)">أكثر من 20</strong> مرتفع</div>
+      <div class="formula-result" id="f2-result" style="color:var(--t3)">أدخل الأرقام أعلاه</div>
+    </div>
+
+    <!-- 3. PTR -->
+    <div class="formula-card">
+      <div class="formula-title">
+        <span id="f3-title">نسبة السعر للإيجار</span>
+        <span class="bdg bdg-y" id="f3-bdg">—</span>
+      </div>
+      <div class="formula-ar" id="f3-en">Price-to-Rent Ratio (PTR)</div>
+      <div class="formula-box">PTR = Property Price / Annual Rent</div>
+      <div class="formula-purpose" id="f3-purpose">يحدد هل الشراء أو الإيجار أوفر في هذا السوق. معيار عالمي لمقارنة أسواق العقارات.<br/><strong style="color:var(--green)">أقل من 15</strong> الشراء أفضل · <strong style="color:var(--gold)">15-20</strong> منطقة رمادية · <strong style="color:var(--red)">أكثر من 20</strong> الإيجار أذكى</div>
+      <div class="formula-result" id="f3-result" style="color:var(--t3)">أدخل الأرقام أعلاه</div>
+    </div>
+
+    <!-- 4. Cap Rate -->
+    <div class="formula-card">
+      <div class="formula-title">
+        <span id="f4-title">معدل الرسملة</span>
+        <span class="bdg bdg-g" id="f4-bdg">—</span>
+      </div>
+      <div class="formula-ar" id="f4-en">Capitalization Rate (Cap Rate)</div>
+      <div class="formula-box">Cap Rate = (Net Operating Income / Price) × 100</div>
+      <div class="formula-purpose" id="f4-purpose">صافي الدخل الإيجاري بعد خصم كل المصاريف كنسبة من السعر. الأدق من العائد الإيجاري لأنه يأخذ التكاليف بالاعتبار.<br/><strong style="color:var(--green)">5%+</strong> جيد للاستثمار · <strong style="color:var(--red)">أقل من 3%</strong> ضعيف</div>
+      <div class="formula-result" id="f4-result" style="color:var(--t3)">أدخل الأرقام أعلاه</div>
+    </div>
+
+    <!-- 5. Break-Even Rent -->
+    <div class="formula-card">
+      <div class="formula-title">
+        <span id="f5-title">إيجار التعادل</span>
+        <span class="bdg bdg-y" id="f5-bdg">—</span>
+      </div>
+      <div class="formula-ar" id="f5-en">Break-Even Rent</div>
+      <div class="formula-box">Break-Even Rent = Monthly Payment + Monthly Expenses</div>
+      <div class="formula-purpose" id="f5-purpose">الحد الأدنى للإيجار الذي يُغطي قسطك ومصاريفك. أي إيجار فوقه = ربح. إيجار السوق مقارنةً به يحدد جدوى تأجير العقار.<br/>إيجار السوق &gt; إيجار التعادل → مربح ✅</div>
+      <div class="formula-result" id="f5-result" style="color:var(--t3)">أدخل الأرقام أعلاه</div>
+    </div>
+
+    <!-- 6. Net Worth Gain -->
+    <div class="formula-card">
+      <div class="formula-title">
+        <span id="f6-title">صافي مكسب الشراء</span>
+        <span class="bdg bdg-g" id="f6-bdg">—</span>
+      </div>
+      <div class="formula-ar" id="f6-en">Net Worth Gain (vs Renting)</div>
+      <div class="formula-box">Net Gain = Property Value at End - Total Paid</div>
+      <div class="formula-purpose" id="f6-purpose">الفرق بين قيمة العقار في نهاية مدة التمويل وإجمالي ما دفعته. إذا كان موجباً فالشراء بنى لك ثروة.<br/><strong style="color:var(--green)">موجب</strong> الشراء أضاف ثروة · <strong style="color:var(--red)">سالب</strong> دفعت أكثر من القيمة</div>
+      <div class="formula-result" id="f6-result" style="color:var(--t3)">أدخل الأرقام أعلاه</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ④ COMPARISON -->
+<section class="sec" id="comparison">
+<div class="wrap">
+  <div class="sec-ey" style="color:var(--purple)" id="t-s4-ey">④ المقارنة الكاملة</div>
+  <div class="sec-h" id="t-s4-h">5 بدائل — الأرقام تقرر</div>
+  <p class="sec-d" id="t-s4-d">نفس المبلغ — نفس المدة — أي بديل يكسبك أكثر؟</p>
+  <div id="comp-grid"></div>
+</div>
+</section>
+
+<!-- ⑤ DECISION 360 -->
+<section class="sec" id="decision">
+<div class="wrap">
+  <div class="sec-ey" style="color:var(--gold)" id="t-s5-ey">⑤ القرار 360°</div>
+  <div class="sec-h" id="t-s5-h">قرارك من كل الزوايا</div>
+  <p class="sec-d" id="t-s5-d">مالياً + شرعياً + سوقياً + نفسياً</p>
+  <div class="grid2" id="d360-grid">
+    <div style="padding:18px;border-radius:12px;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.12)">
+      <div style="font-size:1.2rem;margin-bottom:6px">📊</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:6px" id="l-fin">مالياً</div>
+      <div style="font-size:.82rem;color:var(--t2);line-height:1.8" id="r-fin">أدخل أرقامك أعلاه</div>
+    </div>
+    <div style="padding:18px;border-radius:12px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12)">
+      <div style="font-size:1.2rem;margin-bottom:6px">☪️</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px" id="l-shr">شرعياً</div>
+      <div style="font-size:.82rem;color:var(--t2);line-height:1.8" id="r-shr">أدخل أرقامك أعلاه</div>
+    </div>
+    <div style="padding:18px;border-radius:12px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12)">
+      <div style="font-size:1.2rem;margin-bottom:6px">📈</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px" id="l-mkt">سوقياً</div>
+      <div style="font-size:.82rem;color:var(--t2);line-height:1.8" id="r-mkt">أدخل أرقامك أعلاه</div>
+    </div>
+    <div style="padding:18px;border-radius:12px;background:rgba(139,92,246,.05);border:1px solid rgba(139,92,246,.12)">
+      <div style="font-size:1.2rem;margin-bottom:6px">🧠</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);margin-bottom:6px" id="l-psy">نفسياً</div>
+      <div style="font-size:.82rem;color:var(--t2);line-height:1.8" id="r-psy">أدخل أرقامك أعلاه</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ⑥ RECOMMENDATION -->
+<section class="sec" id="recommendation">
+<div class="wrap">
+  <div class="sec-ey" style="color:var(--gold)" id="t-s6-ey">⑥ التوصية النهائية</div>
+  <div class="sec-h" id="t-s6-h">قرارك بالأرقام</div>
+  <div style="max-width:680px;margin:0 auto" id="rec-box">
+    <div style="text-align:center;padding:40px;background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:16px">
+      <div style="font-size:2.5rem;margin-bottom:10px">⏳</div>
+      <div style="font-size:.88rem;color:var(--t2)" id="t-rec-wait">أدخل أرقامك في الحاسبة — التوصية ستظهر هنا تلقائياً</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap">
+    <button class="btn btn-gold" onclick="dlReport()">⬇️ تنزيل التقرير</button>
+    <button class="btn btn-ol" onclick="resetAll()">🔄 إعادة الحساب</button>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="/" style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:14px;text-decoration:none">
+    <div style="font-family:'Cormorant',serif;font-size:1rem;font-weight:700;background:linear-gradient(135deg,var(--t1),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Axiom Zones</div>
+    <div style="font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3)">منظومة رقمية في صفّك</div>
+  </a>
+  <div class="footer-links">
+    <a href="/">الرئيسية</a>
+    <a href="/kashf">كشف</a>
+    <a href="/prism">Prism</a>
+    <a href="/blog">المدونة</a>
+    <a href="/privacy">الخصوصية</a>
+  </div>
+  <div class="footer-copy">© 2024 Axiom Zones · اشترِ بعقل — قبل أن تشتري بقلب</div>
+</footer>
+
+<script>
+/* ══ CURRENCIES ══ */
+var CC = {
+  SAR:{s:"ر.س",r:1},AED:{s:"د.إ",r:1.02},KWD:{s:"د.ك",r:0.082},QAR:{s:"ر.ق",r:0.971},
+  BHD:{s:"د.ب",r:0.100},OMR:{s:"ر.ع",r:0.103},EGP:{s:"ج.م",r:13.07},JOD:{s:"د.أ",r:0.189},
+  LBP:{s:"ل.ل",r:4780},IQD:{s:"د.ع",r:878},MAD:{s:"د.م",r:2.67},DZD:{s:"د.ج",r:36.0},
+  TND:{s:"د.ت",r:0.83},LYD:{s:"د.ل",r:1.30},YER:{s:"ر.ي",r:66.8},IRR:{s:"﷼",r:11220},
+  ILS:{s:"₪",r:0.99},SDG:{s:"ج.س",r:620},ETB:{s:"Br",r:14.7},KES:{s:"KSh",r:34.5},
+  NGN:{s:"₦",r:399},GHS:{s:"₵",r:3.25},ZAR:{s:"R",r:4.98},TZS:{s:"TSh",r:654},
+  UGX:{s:"USh",r:994},XOF:{s:"Fr",r:164},XAF:{s:"Fr",r:164},MUR:{s:"₨",r:11.9},
+  SOS:{s:"Sh",r:152},DJF:{s:"Fr",r:47.5},
+  USD:{s:"$",r:0.267},EUR:{s:"€",r:0.244},GBP:{s:"£",r:0.210},CHF:{s:"Fr",r:0.238},
+  CAD:{s:"CA$",r:0.362},AUD:{s:"A$",r:0.399},NZD:{s:"NZ$",r:0.435},JPY:{s:"¥",r:39.8},
+  CNY:{s:"¥",r:1.92},HKD:{s:"HK$",r:2.08},SGD:{s:"S$",r:0.356},KRW:{s:"₩",r:351},
+  SEK:{s:"kr",r:2.76},NOK:{s:"kr",r:2.85},DKK:{s:"kr",r:1.81},PLN:{s:"zł",r:1.07},
+  CZK:{s:"Kč",r:6.17},HUF:{s:"Ft",r:95.2},RUB:{s:"₽",r:24.5},INR:{s:"₹",r:22.2},
+  PKR:{s:"₨",r:74.4},BDT:{s:"৳",r:29.3},IDR:{s:"Rp",r:4150},MYR:{s:"RM",r:1.25},
+  THB:{s:"฿",r:9.51},PHP:{s:"₱",r:15.0},VND:{s:"₫",r:6615},TWD:{s:"NT$",r:8.51},
+  TRY:{s:"₺",r:8.98},BRL:{s:"R$",r:1.35},MXN:{s:"$",r:4.58},ARS:{s:"$",r:230},
+  CLP:{s:"$",r:242},COP:{s:"$",r:1040},PEN:{s:"S/",r:1.00},UAH:{s:"₴",r:9.83},
+  RON:{s:"lei",r:1.22},BGN:{s:"лв",r:0.477},GEL:{s:"₾",r:0.724},AMD:{s:"֏",r:103},
+  AZN:{s:"₼",r:0.454},KZT:{s:"₸",r:121},UZS:{s:"so'm",r:3230},MNT:{s:"₮",r:907},
+  NPR:{s:"₨",r:35.5},LKR:{s:"₨",r:83.0},MMK:{s:"K",r:560},KHR:{s:"៛",r:1092}
+};
+var CURR = "SAR", LANG = "ar";
+function fmt(n){var c=CC[CURR]||CC.SAR;return c.s+" "+Math.round(n*c.r).toLocaleString();}
+function fmtK(n){var c=CC[CURR]||CC.SAR;return c.s+" "+Math.round(n*c.r/1000)+"K";}
+function setCurr(v){CURR=v;calcAll();}
+
+/* ══ LANGUAGE ══ */
+
+/* ══════════════════════════════════════════════
+   GOLDEN RULE — Universal i18n System v1
+   كل نص له ID + ترجمة كاملة
+   المصطلحات المالية تبقى إنجليزية دائماً
+══════════════════════════════════════════════ */
+
+var I18N = {
+  ar:{
+    /* ── Navigation ── */
+    "t-nav-home":"الرئيسية","t-nav-blog":"المدونة","t-nav-glossary":"القاموس","t-nav-kashf":"كشف","t-nav-prism":"Prism","t-get-started":"ابدأ الآن","t-learn-more":"اعرف أكثر",
+    /* ── Inputs ── */
+    "t-price":"سعر العقار","t-down":"الدفعة الأولى","t-years":"مدة التمويل","t-apr":"APR المُعلن %","t-mur":"هامش المرابحة %","t-rent":"الإيجار الشهري","t-income":"الدخل الشهري","t-growth":"نمو سنوي %","t-expenses":"مصاريف سنوية %","t-yr":"سنة","t-mo":"شهر",
+    /* ── Labels ── */
+    "t-emi":"القسط الشهري","t-total":"الإجمالي","t-interest":"الفائدة الكلية","t-fixed":"ثابت طوال المدة","t-dti":"نسبة الدين للدخل","t-mur-monthly":"مرابحة/شهر","t-mur-total":"إجمالي المرابحة",
+    /* ── Sections ── */
+    "t-live":"النتائج المباشرة","t-prop":"بيانات العقار","t-market":"بيانات السوق","t-personal":"وضعك الشخصي","t-proj":"قيمة العقار المتوقعة","t-conv":"قرض تقليدي","t-mur-lbl":"مرابحة إسلامية",
+    /* ── Years ── */
+    "t-y5":"بعد 5 سنوات","t-y10":"بعد 10 سنوات","t-yend":"نهاية المدة",
+    /* ── Formula titles ── */
+    "t-ry-title":"العائد الإيجاري","t-grm-title":"مضاعف الإيجار الإجمالي","t-ptr-title":"نسبة السعر للإيجار","t-cap-title":"معدل الرسملة","t-ber-title":"إيجار التعادل","t-net-title":"صافي مكسب الشراء",
+    /* ── Formula purposes ── */
+    "t-ry-purpose":"يقيس العائد السنوي من الإيجار كنسبة من سعر العقار. أعلى = استثمار إيجاري أفضل. أقل من 4% ضعيف · 4-7% مقبول · 7%+ ممتاز",
+    "t-grm-purpose":"عدد السنوات ليُسدّد العقار سعره من الإيجار. أقل = أسرع عائداً. أقل من 10 ممتاز · 10-15 جيد · أكثر من 20 مرتفع",
+    "t-ptr-purpose":"يحدد هل الشراء أو الإيجار أوفر في هذا السوق. معيار عالمي للمقارنة. أقل من 15 الشراء أفضل · 15-20 منطقة رمادية · أكثر من 20 الإيجار أذكى",
+    "t-cap-purpose":"صافي الدخل بعد المصاريف كنسبة من السعر. أدق من العائد الإيجاري. 5%+ جيد للاستثمار · أقل من 3% ضعيف",
+    "t-ber-purpose":"الحد الأدنى للإيجار الذي يُغطي قسطك ومصاريفك. إيجار السوق أعلى = مربح ✅",
+    "t-net-purpose":"الفرق بين قيمة العقار في نهاية المدة وإجمالي ما دفعته. موجب = بنيت ثروة",
+    /* ── Comparison ── */
+    "t-comp-conv":"قرض تقليدي","t-comp-mur":"مرابحة إسلامية","t-comp-rent":"إيجار فقط","t-comp-invest":"إيجار + استثمار","t-comp-cash":"شراء نقداً",
+    "t-comp-conv-desc":"IRR حقيقي أعلى من APR المُعلن","t-comp-mur-desc":"هامش ثابت — حلال — لا فائدة مركبة","t-comp-rent-desc":"مرونة كاملة — لا تبني ملكية","t-comp-invest-desc":"استثمار الفرق بعائد 8% سنوياً","t-comp-cash-desc":"لا قسط لا فائدة — يحتاج سيولة",
+    "t-best":"الأفضل","t-total-lbl":"الإجمالي","t-net-lbl":"صافي الثروة",
+    /* ── 360 ── */
+    "t-fin":"مالياً","t-shr":"شرعياً","t-mkt":"سوقياً","t-psy":"نفسياً",
+    "t-ok":"✅ مناسب","t-review":"⚠️ راجع",
+    /* ── Recommendation ── */
+    "t-rec-buy":"الشراء منطقي في وضعك","t-rec-caution":"ممكن — لكن بحذر","t-rec-wait":"انتظر وحسّن وضعك","t-rec-no":"لا تشترِ الآن","t-rec-rent":"الإيجار أذكى الآن",
+    "t-best-fin":"التمويل الأنسب","t-net-wealth":"صافي الثروة",
+    /* ── Feasibility ── */
+    "t-feas-score":"نتيجة الجدوى","t-feas-suitable":"مناسب للشراء","t-feas-wait":"انتظر وحسّن","t-feas-rent":"الإيجار أفضل الآن",
+    "t-feas-btn":"احسب نتيجة الجدوى →",
+    /* ── Buttons ── */
+    "t-btn-report":"⬇️ تنزيل التقرير","t-btn-reset":"🔄 إعادة الحساب","t-btn-start":"ابدأ التحليل ↓","t-btn-formulas":"المعادلات العقارية","t-scroll":"مرر للأسفل",
+    /* ── Footer ── */
+    "t-footer-tag":"منظومة رقمية في صفّك","t-footer-copy":"ابحث · احسب · امتلك",
+    /* ── Axiom Zones specific ── */
+    "t-az-hero":"اعرف أكثر. ادفع أقل.","t-az-sub":"منظومة رقمية في صفّك","t-az-desc":"أدوات مالية وتجارية حقيقية بنيت لمساعدتك — لا لمساعدة من يريد أموالك",
+    "t-az-platforms":"المنصات","t-az-blog":"المقالات","t-az-tools":"الأدوات",
+    /* ── Kashf specific ── */
+    "t-k-amount":"مبلغ القرض","t-k-duration":"مدة القرض (شهر)","t-k-monthly":"القسط الشهري","t-k-true-irr":"IRR الحقيقي","t-k-beauty":"درجة التجميل (0-100)","t-k-banks":"مقارنة البنوك","t-k-slogan":"اعرف الحقيقة — قبل أن تدفع ثمنها","t-k-tagline":"نكشف · نحسب · أنت تقرر",
+    /* ── Common values ── */
+    "t-excellent":"ممتاز","t-good":"جيد","t-acceptable":"مقبول","t-weak":"ضعيف","t-danger":"خطر","t-safe":"آمن","t-high":"مرتفع","t-low":"منخفض","t-profitable":"مربح","t-not-profitable":"غير مربح",
+    "t-waiting":"أدخل أرقامك — ستظهر النتيجة فوراً","t-loading":"جاري الحساب..."
+  },
+  en:{
+    "t-nav-home":"Home","t-nav-blog":"Blog","t-nav-glossary":"Glossary","t-nav-kashf":"Kashf","t-nav-prism":"Prism","t-get-started":"Get Started","t-learn-more":"Learn More",
+    "t-price":"Property Price","t-down":"Down Payment","t-years":"Financing Period","t-apr":"Advertised APR %","t-mur":"Murabaha Margin %","t-rent":"Monthly Rent","t-income":"Monthly Income","t-growth":"Annual Growth %","t-expenses":"Annual Expenses %","t-yr":"Year","t-mo":"Month",
+    "t-emi":"Monthly Payment","t-total":"Total Paid","t-interest":"Total Interest","t-fixed":"Fixed for Entire Term","t-dti":"Debt-to-Income Ratio","t-mur-monthly":"Murabaha/Month","t-mur-total":"Total Murabaha",
+    "t-live":"Live Results","t-prop":"Property Data","t-market":"Market Data","t-personal":"Your Situation","t-proj":"Property Value Forecast","t-conv":"Conventional Loan","t-mur-lbl":"Islamic Murabaha",
+    "t-y5":"After 5 Years","t-y10":"After 10 Years","t-yend":"At End of Term",
+    "t-ry-title":"Rental Yield","t-grm-title":"Gross Rent Multiplier","t-ptr-title":"Price-to-Rent Ratio","t-cap-title":"Cap Rate","t-ber-title":"Break-Even Rent","t-net-title":"Net Worth Gain",
+    "t-ry-purpose":"Measures annual rental return as % of property price. Higher = better investment. Under 4% weak · 4-7% acceptable · 7%+ excellent",
+    "t-grm-purpose":"Years for property to pay its price from rent. Lower = faster return. Under 10 excellent · 10-15 good · Over 20 high",
+    "t-ptr-purpose":"Determines if buying or renting is cheaper in this market. Under 15 buy better · 15-20 gray zone · Over 20 rent smarter",
+    "t-cap-purpose":"Net income after expenses as % of price. More accurate than rental yield. 5%+ good · Under 3% weak",
+    "t-ber-purpose":"Minimum rent covering your installment and expenses. Market rent higher = profitable ✅",
+    "t-net-purpose":"Property end value minus total paid. Positive = built wealth",
+    "t-comp-conv":"Conventional Loan","t-comp-mur":"Islamic Murabaha","t-comp-rent":"Rent Only","t-comp-invest":"Rent + Invest","t-comp-cash":"Cash Purchase",
+    "t-comp-conv-desc":"True IRR higher than advertised APR","t-comp-mur-desc":"Fixed margin — halal — no compound interest","t-comp-rent-desc":"Full flexibility — no ownership","t-comp-invest-desc":"Invest the difference at 8% annual return","t-comp-cash-desc":"No installment — no interest — needs liquidity",
+    "t-best":"Best","t-total-lbl":"Total Paid","t-net-lbl":"Net Worth",
+    "t-fin":"Financially","t-shr":"Islamically","t-mkt":"Market-wise","t-psy":"Psychologically",
+    "t-ok":"✅ OK","t-review":"⚠️ Review",
+    "t-rec-buy":"Buying Makes Sense","t-rec-caution":"Possible — With Caution","t-rec-wait":"Wait and Improve","t-rec-no":"Do Not Buy Now","t-rec-rent":"Renting is Smarter",
+    "t-best-fin":"Best Financing","t-net-wealth":"Net Wealth",
+    "t-feas-score":"Feasibility Score","t-feas-suitable":"Suitable for Buying","t-feas-wait":"Wait and Improve","t-feas-rent":"Renting is Better Now",
+    "t-feas-btn":"Calculate Feasibility Score →",
+    "t-btn-report":"⬇️ Download Report","t-btn-reset":"🔄 Reset","t-btn-start":"Start Analysis ↓","t-btn-formulas":"Real Estate Formulas","t-scroll":"Scroll Down",
+    "t-footer-tag":"The Digital Ecosystem on Your Side","t-footer-copy":"Search · Calculate · Own",
+    "t-az-hero":"Know More. Pay Less.","t-az-sub":"The Digital Ecosystem on Your Side","t-az-desc":"Real financial and business tools built to help you — not to help those who want your money",
+    "t-az-platforms":"Platforms","t-az-blog":"Articles","t-az-tools":"Tools",
+    "t-k-amount":"Loan Amount","t-k-duration":"Loan Duration (months)","t-k-monthly":"Monthly Payment","t-k-true-irr":"True IRR","t-k-beauty":"Beautification Score (0-100)","t-k-banks":"Bank Comparison","t-k-slogan":"Know the Truth — Before You Pay the Price","t-k-tagline":"We Reveal · We Calculate · You Decide",
+    "t-excellent":"Excellent","t-good":"Good","t-acceptable":"Acceptable","t-weak":"Weak","t-danger":"Danger","t-safe":"Safe","t-high":"High","t-low":"Low","t-profitable":"Profitable","t-not-profitable":"Not Profitable",
+    "t-waiting":"Enter your numbers — result will appear instantly","t-loading":"Calculating..."
+  },
+  fr:{
+    "t-nav-home":"Accueil","t-nav-blog":"Blog","t-nav-glossary":"Glossaire","t-get-started":"Commencer","t-learn-more":"En Savoir Plus",
+    "t-price":"Prix du Bien","t-down":"Apport Initial","t-years":"Durée Financement","t-apr":"APR Annoncé %","t-mur":"Marge Mourabaha %","t-rent":"Loyer Mensuel","t-income":"Revenu Mensuel","t-growth":"Croissance Annuelle %","t-expenses":"Charges Annuelles %","t-yr":"An","t-mo":"Mois",
+    "t-emi":"Mensualité","t-total":"Total Payé","t-interest":"Intérêts Totaux","t-fixed":"Fixe pour Toute la Durée","t-dti":"Ratio Dette/Revenu","t-mur-monthly":"Mourabaha/Mois","t-mur-total":"Total Mourabaha",
+    "t-live":"Résultats en Direct","t-prop":"Données du Bien","t-market":"Données du Marché","t-personal":"Votre Situation","t-proj":"Valeur Prévisionnelle","t-conv":"Prêt Conventionnel","t-mur-lbl":"Mourabaha Islamique",
+    "t-y5":"Dans 5 Ans","t-y10":"Dans 10 Ans","t-yend":"Fin de Période",
+    "t-ry-title":"Rendement Locatif","t-grm-title":"Multiplicateur Brut du Loyer","t-ptr-title":"Ratio Prix/Loyer","t-cap-title":"Taux de Capitalisation","t-ber-title":"Loyer Seuil","t-net-title":"Gain Net",
+    "t-ry-purpose":"Mesure le rendement annuel par rapport au prix. Moins de 4% faible · 4-7% acceptable · 7%+ excellent",
+    "t-grm-purpose":"Années pour récupérer le prix via le loyer. Moins de 10 excellent · 10-15 bon · Plus de 20 élevé",
+    "t-ptr-purpose":"Achat ou location: lequel est moins cher? Moins de 15 acheter · 15-20 zone grise · Plus de 20 louer",
+    "t-cap-purpose":"Revenu net après charges en % du prix. 5%+ bon · Moins de 3% faible",
+    "t-ber-purpose":"Loyer minimum couvrant mensualité et charges. Loyer marché supérieur = rentable ✅",
+    "t-net-purpose":"Valeur finale moins total payé. Positif = patrimoine constitué",
+    "t-comp-conv":"Prêt Conventionnel","t-comp-mur":"Mourabaha Islamique","t-comp-rent":"Location Seule","t-comp-invest":"Location + Investissement","t-comp-cash":"Achat Comptant",
+    "t-comp-conv-desc":"TRI réel supérieur à APR annoncé","t-comp-mur-desc":"Marge fixe — halal — sans intérêt composé","t-comp-rent-desc":"Flexibilité totale — pas de propriété","t-comp-invest-desc":"Investir la différence à 8% annuel","t-comp-cash-desc":"Pas de mensualité — pas d intérêt — besoin de liquidités",
+    "t-best":"Meilleur","t-total-lbl":"Total Payé","t-net-lbl":"Valeur Nette",
+    "t-fin":"Financièrement","t-shr":"Islamiquement","t-mkt":"Marché","t-psy":"Psychologiquement",
+    "t-ok":"✅ OK","t-review":"⚠️ À Vérifier",
+    "t-rec-buy":"L Achat Est Logique","t-rec-caution":"Possible — Avec Précaution","t-rec-wait":"Attendre et Améliorer","t-rec-no":"Ne Pas Acheter","t-rec-rent":"La Location Est Meilleure",
+    "t-best-fin":"Meilleur Financement","t-net-wealth":"Patrimoine Net",
+    "t-feas-score":"Score de Faisabilité","t-feas-suitable":"Prêt à Acheter","t-feas-wait":"Attendre et Améliorer","t-feas-rent":"La Location Est Meilleure",
+    "t-feas-btn":"Calculer le Score →",
+    "t-btn-report":"⬇️ Télécharger","t-btn-reset":"🔄 Réinitialiser","t-btn-start":"Commencer l Analyse ↓","t-btn-formulas":"Formules Immobilières","t-scroll":"Défiler",
+    "t-footer-tag":"L Écosystème Digital de Votre Côté","t-footer-copy":"Chercher · Calculer · Posséder",
+    "t-az-hero":"Savoir Plus. Payer Moins.","t-az-sub":"L Écosystème Digital de Votre Côté","t-az-desc":"De vrais outils financiers et commerciaux construits pour vous aider",
+    "t-az-platforms":"Plateformes","t-az-blog":"Articles","t-az-tools":"Outils",
+    "t-k-slogan":"Connaître la Vérité — Avant de Payer le Prix","t-k-tagline":"Nous Révélons · Nous Calculons · Vous Décidez",
+    "t-excellent":"Excellent","t-good":"Bon","t-acceptable":"Acceptable","t-weak":"Faible","t-danger":"Danger","t-safe":"Sûr","t-high":"Élevé","t-low":"Bas","t-profitable":"Rentable","t-not-profitable":"Non Rentable",
+    "t-waiting":"Entrez vos chiffres — le résultat apparaîtra instantanément","t-loading":"Calcul..."
+  },
+  tr:{
+    "t-nav-home":"Ana Sayfa","t-nav-blog":"Blog","t-nav-glossary":"Sözlük","t-get-started":"Başla","t-learn-more":"Daha Fazla",
+    "t-price":"Mülk Fiyatı","t-down":"Peşinat","t-years":"Finansman Süresi","t-apr":"İlan Edilen APR %","t-mur":"Murabaha Marjı %","t-rent":"Aylık Kira","t-income":"Aylık Gelir","t-growth":"Yıllık Büyüme %","t-expenses":"Yıllık Giderler %","t-yr":"Yıl","t-mo":"Ay",
+    "t-emi":"Aylık Taksit","t-total":"Toplam Ödenen","t-interest":"Toplam Faiz","t-fixed":"Tüm Süre Sabit","t-dti":"Borç/Gelir Oranı","t-mur-monthly":"Murabaha/Ay","t-mur-total":"Toplam Murabaha",
+    "t-live":"Anlık Sonuçlar","t-prop":"Mülk Verileri","t-market":"Piyasa Verileri","t-personal":"Durumunuz","t-proj":"Mülk Değer Tahmini","t-conv":"Geleneksel Kredi","t-mur-lbl":"İslami Murabaha",
+    "t-y5":"5 Yıl Sonra","t-y10":"10 Yıl Sonra","t-yend":"Süre Sonunda",
+    "t-ry-title":"Kira Getirisi","t-grm-title":"Gayrisafi Kira Çarpanı","t-ptr-title":"Fiyat/Kira Oranı","t-cap-title":"Kapitalizasyon Oranı","t-ber-title":"Başa Baş Kira","t-net-title":"Net Servet Kazancı",
+    "t-ry-purpose":"Yıllık kira getirisini fiyata oranla ölçer. %4 altı zayıf · %4-7 kabul edilebilir · %7+ mükemmel",
+    "t-grm-purpose":"Kiradan bedeli geri kazanma yılı. 10 altı mükemmel · 10-15 iyi · 20 üzeri yüksek",
+    "t-ptr-purpose":"Satın alma mı yoksa kiralama mı daha ucuz? 15 altı satın al · 15-20 gri bölge · 20 üzeri kirala",
+    "t-cap-purpose":"Masraflar sonrası net gelirin fiyata oranı. %5+ iyi · %3 altı zayıf",
+    "t-ber-purpose":"Taksit ve masrafları karşılayan minimum kira. Piyasa kirası yüksekse = kârlı ✅",
+    "t-net-purpose":"Son değer eksi toplam ödenen. Pozitif = servet biriktirildi",
+    "t-comp-conv":"Geleneksel Kredi","t-comp-mur":"İslami Murabaha","t-comp-rent":"Sadece Kiralama","t-comp-invest":"Kira + Yatırım","t-comp-cash":"Nakit Satın Alma",
+    "t-comp-conv-desc":"Gerçek IRR ilan edilen APR den yüksek","t-comp-mur-desc":"Sabit marj — helal — bileşik faiz yok","t-comp-rent-desc":"Tam esneklik — mülkiyet yok","t-comp-invest-desc":"Farkı yıllık %8 getiriyle yatırıma dönüştür","t-comp-cash-desc":"Taksit yok — faiz yok — likidite gerekir",
+    "t-best":"En İyi","t-total-lbl":"Toplam Ödenen","t-net-lbl":"Net Değer",
+    "t-fin":"Mali Açıdan","t-shr":"İslami Açıdan","t-mkt":"Piyasa","t-psy":"Psikolojik",
+    "t-ok":"✅ Uygun","t-review":"⚠️ Gözden Geçir",
+    "t-rec-buy":"Satın Alma Mantıklı","t-rec-caution":"Mümkün — Dikkatli","t-rec-wait":"Bekle ve İyileştir","t-rec-no":"Şimdi Satın Alma","t-rec-rent":"Kiralama Daha Akıllı",
+    "t-best-fin":"En İyi Finansman","t-net-wealth":"Net Servet",
+    "t-feas-score":"Fizibilite Skoru","t-feas-suitable":"Satın Almaya Hazır","t-feas-wait":"Bekle ve İyileştir","t-feas-rent":"Kiralama Daha İyi",
+    "t-feas-btn":"Fizibilite Skoru Hesapla →",
+    "t-btn-report":"⬇️ Raporu İndir","t-btn-reset":"🔄 Sıfırla","t-btn-start":"Analizi Başlat ↓","t-btn-formulas":"Gayrimenkul Formülleri","t-scroll":"Aşağı Kaydır",
+    "t-footer-tag":"Dijital Ekosisteminiz Yanınızda","t-footer-copy":"Ara · Hesapla · Sahip Ol",
+    "t-az-hero":"Daha Fazla Bil. Daha Az Öde.","t-az-sub":"Dijital Ekosisteminiz Yanınızda","t-az-desc":"Size yardım etmek için yapılmış gerçek araçlar",
+    "t-az-platforms":"Platformlar","t-az-blog":"Makaleler","t-az-tools":"Araçlar",
+    "t-k-slogan":"Gerçeği Öğrenin — Bedelini Ödemeden Önce","t-k-tagline":"Ortaya Çıkarırız · Hesaplarız · Siz Karar Verirsiniz",
+    "t-excellent":"Mükemmel","t-good":"İyi","t-acceptable":"Kabul Edilebilir","t-weak":"Zayıf","t-danger":"Tehlike","t-safe":"Güvenli","t-high":"Yüksek","t-low":"Düşük","t-profitable":"Kârlı","t-not-profitable":"Kârsız",
+    "t-waiting":"Rakamlarınızı girin — sonuç anında görünecek","t-loading":"Hesaplanıyor..."
+  },
+  ur:{
+    "t-nav-home":"ہوم","t-nav-blog":"بلاگ","t-nav-glossary":"لغت","t-get-started":"شروع کریں","t-learn-more":"مزید جانیں",
+    "t-price":"جائیداد کی قیمت","t-down":"پیشگی ادائیگی","t-years":"مدت","t-apr":"اعلانی APR %","t-mur":"مرابحہ مارجن %","t-rent":"ماہانہ کرایہ","t-income":"ماہانہ آمدنی","t-growth":"سالانہ نمو %","t-expenses":"سالانہ اخراجات %","t-yr":"سال","t-mo":"ماہ",
+    "t-emi":"ماہانہ قسط","t-total":"کل ادائیگی","t-interest":"کل سود","t-fixed":"پوری مدت ثابت","t-dti":"قرض/آمدنی تناسب","t-mur-monthly":"مرابحہ/ماہ","t-mur-total":"مجموعی مرابحہ",
+    "t-live":"براہ راست نتائج","t-prop":"جائیداد کا ڈیٹا","t-market":"بازار کا ڈیٹا","t-personal":"آپ کی صورتحال","t-proj":"جائیداد کی متوقع قیمت","t-conv":"روایتی قرض","t-mur-lbl":"اسلامی مرابحہ",
+    "t-y5":"5 سال بعد","t-y10":"10 سال بعد","t-yend":"مدت کے اختتام پر",
+    "t-ry-title":"کرایہ آمدنی","t-grm-title":"GRM","t-ptr-title":"قیمت/کرایہ تناسب","t-cap-title":"Cap Rate","t-ber-title":"بریک ایون کرایہ","t-net-title":"خالص فائدہ",
+    "t-ry-purpose":"سالانہ کرایہ آمدنی قیمت کے فیصد کے طور پر۔ 4% سے کم کمزور · 4-7% قابل قبول · 7%+ بہترین",
+    "t-grm-purpose":"کرایہ سے قیمت وصول کرنے کے سال۔ 10 سے کم بہترین · 10-15 اچھا · 20 سے زیادہ زیادہ",
+    "t-ptr-purpose":"خریداری یا کرایہ: کون سستا ہے؟ 15 سے کم خریدنا بہتر · 15-20 گرے زون · 20 سے زیادہ کرایہ بہتر",
+    "t-cap-purpose":"اخراجات کے بعد خالص آمدنی قیمت کا فیصد۔ 5%+ اچھا · 3% سے کم کمزور",
+    "t-ber-purpose":"کم از کم کرایہ جو قسط اور اخراجات پورے کرے۔ بازار کرایہ زیادہ = منافع بخش ✅",
+    "t-net-purpose":"آخری قیمت منہا کل ادائیگی۔ مثبت = دولت بنائی",
+    "t-comp-conv":"روایتی قرض","t-comp-mur":"اسلامی مرابحہ","t-comp-rent":"صرف کرایہ","t-comp-invest":"کرایہ + سرمایہ کاری","t-comp-cash":"نقد خریداری",
+    "t-comp-conv-desc":"حقیقی IRR اعلانی APR سے زیادہ","t-comp-mur-desc":"ثابت مارجن — حلال — مرکب سود نہیں","t-comp-rent-desc":"مکمل لچک — ملکیت نہیں","t-comp-invest-desc":"فرق کو سالانہ 8% پر سرمایہ کاری کریں","t-comp-cash-desc":"قسط نہیں — سود نہیں — نقدی درکار",
+    "t-best":"بہترین","t-total-lbl":"کل ادائیگی","t-net-lbl":"خالص دولت",
+    "t-fin":"مالی طور پر","t-shr":"اسلامی طور پر","t-mkt":"بازار","t-psy":"نفسیاتی",
+    "t-ok":"✅ مناسب","t-review":"⚠️ جائزہ لیں",
+    "t-rec-buy":"خریداری درست ہے","t-rec-caution":"ممکن — احتیاط کے ساتھ","t-rec-wait":"انتظار کریں","t-rec-no":"ابھی نہ خریدیں","t-rec-rent":"کرایہ بہتر ہے",
+    "t-best-fin":"بہترین قرض","t-net-wealth":"خالص دولت",
+    "t-feas-score":"قابلیت اسکور","t-feas-suitable":"خریدنے کے لیے تیار","t-feas-wait":"انتظار کریں","t-feas-rent":"کرایہ بہتر ہے",
+    "t-feas-btn":"قابلیت اسکور حساب کریں →",
+    "t-btn-report":"⬇️ رپورٹ ڈاؤنلوڈ","t-btn-reset":"🔄 دوبارہ","t-btn-start":"تجزیہ شروع ↓","t-btn-formulas":"رئیل اسٹیٹ فارمولے","t-scroll":"نیچے سکرول",
+    "t-footer-tag":"آپ کی طرف ڈیجیٹل ماحولیاتی نظام","t-footer-copy":"تلاش کریں · حساب کریں · مالک بنیں",
+    "t-az-hero":"زیادہ جانیں۔ کم ادا کریں۔","t-az-sub":"آپ کی طرف ڈیجیٹل ماحولیاتی نظام","t-az-desc":"آپ کی مدد کے لیے بنائے گئے حقیقی مالی ابزار",
+    "t-az-platforms":"پلیٹ فارمز","t-az-blog":"مضامین","t-az-tools":"ابزار",
+    "t-k-slogan":"سچ جانیں — قیمت چکانے سے پہلے","t-k-tagline":"ہم ظاہر کرتے ہیں · ہم حساب کرتے ہیں · آپ فیصلہ کریں",
+    "t-excellent":"بہترین","t-good":"اچھا","t-acceptable":"قابل قبول","t-weak":"کمزور","t-danger":"خطرہ","t-safe":"محفوظ","t-high":"زیادہ","t-low":"کم","t-profitable":"منافع بخش","t-not-profitable":"غیر منافع بخش",
+    "t-waiting":"اپنے اعداد درج کریں — نتیجہ فوری ظاہر ہوگا","t-loading":"حساب ہو رہا ہے..."
+  }
+};
+
+/* ══ UNIVERSAL setLang() ══ */
+function setLang(l){
+  if(!I18N[l]) l="ar";
+  LANG = l;
+  var rtl = l==="ar"||l==="ur"||l==="fa";
+  document.documentElement.lang = l;
+  document.documentElement.dir  = rtl ? "rtl" : "ltr";
+  document.body.style.fontFamily = rtl ? "'Cairo','Syne',sans-serif" : "'Syne',sans-serif";
+  /* Update all i18n elements */
+  var tr = I18N[l];
+  Object.keys(tr).forEach(function(k){
+    var el = document.getElementById(k);
+    if(el) el.textContent = tr[k];
+    /* Also handle placeholder */
+    var inp = document.querySelector('[data-i18n="'+k+'"]');
+    if(inp){
+      if(inp.placeholder !== undefined) inp.placeholder = tr[k];
+      else inp.textContent = tr[k];
+    }
+  });
+  /* Trigger re-render of dynamic content */
+  if(typeof renderQ === "function") renderQ();
+  if(typeof renderFormulas === "function") renderFormulas();
+  if(typeof renderComp === "function") renderComp();
+  if(typeof calcAll === "function") calcAll();
+}
+
+
+var TR = {
+  ar:{eyebrow:"محرك قرار العقار الأول عربياً",slogan:"قبل أن تشتري بقلب — احسب الجدوى الحقيقية بالأرقام الدقيقة",tagline:"احسب · قارن · اقرر",s1h:"هل أنت مستعد للشراء؟",s2h:"أدخل أرقامك — احصل على الحقيقة",s3h:"6 معادلات تحكم قرار العقار",s4h:"5 بدائل — الأرقام تقرر",s5h:"قرارك من كل الزوايا",s6h:"قرارك بالأرقام",waiting:"أدخل أرقامك في الحاسبة — التوصية ستظهر هنا تلقائياً",calcBtn:"احسب نتيجة الجدوى",best:"الأفضل لك",total:"الإجمالي",net:"صافي الثروة",fin:"مالياً",shr:"شرعياً",mkt:"سوقياً",psy:"نفسياً"},
+  en:{eyebrow:"Arab World No.1 Real Estate Decision Engine",slogan:"Buy with your mind — before buying with your heart",tagline:"Calculate · Compare · Decide",s1h:"Are You Ready to Buy?",s2h:"Enter Your Numbers — Get the Truth",s3h:"6 Formulas That Govern Real Estate Decisions",s4h:"5 Alternatives — Numbers Decide",s5h:"Your Decision from Every Angle",s6h:"Your Decision in Numbers",waiting:"Enter your numbers above — recommendation will appear here automatically",calcBtn:"Calculate Feasibility Score",best:"Best for You",total:"Total Paid",net:"Net Worth",fin:"Financially",shr:"Islamically",mkt:"Market-wise",psy:"Psychologically"},
+  fr:{eyebrow:"Moteur de Décision Immobilier Arabe N°1",slogan:"Achetez avec votre tête — avant d acheter avec votre coeur",tagline:"Calculer · Comparer · Décider",s1h:"Êtes-vous Prêt à Acheter?",s2h:"Entrez vos Chiffres — Obtenez la Vérité",s3h:"6 Formules qui Gouvernent les Décisions Immobilières",s4h:"5 Alternatives — Les Chiffres Décident",s5h:"Votre Décision sous Tous les Angles",s6h:"Votre Décision en Chiffres",waiting:"Entrez vos chiffres ci-dessus — la recommandation apparaîtra ici",calcBtn:"Calculer le Score de Faisabilité",best:"Meilleur pour Vous",total:"Total Payé",net:"Valeur Nette",fin:"Financièrement",shr:"Islamiquement",mkt:"En termes de Marché",psy:"Psychologiquement"},
+  tr:{eyebrow:"Arap Dünyasının 1 Numaralı Gayrimenkul Karar Motoru",slogan:"Kalbinizle değil aklınızla satın alın",tagline:"Hesapla · Karşılaştır · Karar Ver",s1h:"Satın Almaya Hazır mısınız?",s2h:"Rakamlarınızı Girin — Gerçeği Öğrenin",s3h:"Gayrimenkul Kararlarını Yöneten 6 Formül",s4h:"5 Alternatif — Rakamlar Karar Verir",s5h:"Her Açıdan Kararınız",s6h:"Rakamlarla Kararınız",waiting:"Yukarıdaki hesap makinesine rakamlarınızı girin",calcBtn:"Fizibilite Puanını Hesapla",best:"Sizin İçin En İyi",total:"Toplam Ödenen",net:"Net Değer",fin:"Mali Olarak",shr:"İslami Olarak",mkt:"Piyasa Açısından",psy:"Psikolojik Olarak"},
+  ur:{eyebrow:"عرب دنیا کا نمبر 1 رئیل اسٹیٹ فیصلہ انجن",slogan:"دل سے پہلے دماغ سے خریدیں",tagline:"حساب کریں · موازنہ کریں · فیصلہ کریں",s1h:"کیا آپ خریدنے کے لیے تیار ہیں؟",s2h:"اپنے اعداد درج کریں",s3h:"6 فارمولے جو رئیل اسٹیٹ فیصلوں کو کنٹرول کرتے ہیں",s4h:"5 متبادل — اعداد فیصلہ کریں",s5h:"ہر زاویے سے آپ کا فیصلہ",s6h:"اعداد میں آپ کا فیصلہ",waiting:"اوپر حاسبہ میں اپنے اعداد درج کریں",calcBtn:"فزیبلٹی اسکور حساب کریں",best:"آپ کے لیے بہترین",total:"کل ادائیگی",net:"خالص دولت",fin:"مالی طور پر",shr:"اسلامی طور پر",mkt:"بازار کے لحاظ سے",psy:"نفسیاتی طور پر"}
+};
+/* t() overridden below */
+function s(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+
+function setLang(l){
+  LANG=l;
+  var rtl=l==="ar"||l==="ur";
+  document.documentElement.lang=l;
+  document.documentElement.dir=rtl?"rtl":"ltr";
+  s("h-eyebrow",t("eyebrow"));
+  s("h-slogan",t("slogan"));
+  s("h-tagline",t("tagline"));
+  s("t-s1-h",t("s1h")); s("t-s2-h",t("s2h")); s("t-s3-h",t("s3h"));
+  s("t-s4-h",t("s4h")); s("t-s5-h",t("s5h")); s("t-s6-h",t("s6h"));
+  s("t-rec-wait",t("waiting")); s("calc-feas-btn",t("calcBtn"));
+  s("l-fin",t("fin")); s("l-shr",t("shr")); s("l-mkt",t("mkt")); s("l-psy",t("psy"));
+  renderQ();
+  calcAll();
+}
+
+/* ══ QUESTIONS ══ */
+var QA = {};
+var QS = [
+  {id:"q1",icon:"📍",
+   text:{ar:"هل ستبقى في نفس المدينة 5 سنوات أو أكثر؟",en:"Will you stay in the same city for 5+ years?",fr:"Resterez-vous 5+ ans dans la même ville?",tr:"5+ yıl aynı şehirde kalacak mısınız?",ur:"کیا آپ 5+ سال اسی شہر میں رہیں گے؟"},
+   opts:{ar:["نعم — مستقر تماماً","غالباً نعم","غير متأكد","لا — قد أنتقل"],en:["Yes — fully stable","Probably yes","Not sure","No — might move"],fr:["Oui — stable","Probablement","Pas sûr","Non"],tr:["Evet","Muhtemelen","Emin değil","Hayır"],ur:["ہاں","شاید","یقین نہیں","نہیں"]},
+   sc:[4,3,1,0]},
+  {id:"q2",icon:"💰",
+   text:{ar:"القسط المتوقع كنسبة من دخلك الشهري؟",en:"Expected installment as % of monthly income?",fr:"Versement attendu en % du revenu mensuel?",tr:"Beklenen taksit aylık gelirin yüzdesi?",ur:"متوقع قسط ماہانہ آمدنی کا فیصد؟"},
+   opts:{ar:["أقل من 25%","25-30%","30-36%","أكثر من 36%"],en:["Under 25%","25-30%","30-36%","Over 36%"],fr:["Moins de 25%","25-30%","30-36%","Plus de 36%"],tr:["%25 altı","%25-30","%30-36","%36 üzeri"],ur:["25 فیصد سے کم","25-30 فیصد","30-36 فیصد","36 فیصد سے زیادہ"]},
+   sc:[4,3,2,0]},
+  {id:"q3",icon:"🏦",
+   text:{ar:"هل لديك دفعة أولى 20%+ وصندوق طوارئ 6 أشهر؟",en:"Do you have 20%+ down payment and 6-month emergency fund?",fr:"Avez-vous 20%+ d'apport et 6 mois de fonds d'urgence?",tr:"%20+ peşinat ve 6 aylık acil fon var mı?",ur:"20 فیصد پیشگی ادائیگی اور 6 ماہ کا ہنگامی فنڈ؟"},
+   opts:{ar:["نعم — كليهما متوفران","الدفعة فقط","الطوارئ فقط","لا — لا شيء"],en:["Yes — both","Down payment only","Emergency only","Neither"],fr:["Oui — les deux","Apport seulement","Urgence seulement","Aucun"],tr:["Her ikisi","Sadece peşinat","Sadece acil","Hiçbiri"],ur:["دونوں","صرف پیشگی","صرف ہنگامی","کوئی نہیں"]},
+   sc:[4,2,2,0]},
+  {id:"q4",icon:"⚖️",
+   text:{ar:"الإيجار المكافئ مقارنةً بالقسط المتوقع؟",en:"Equivalent rent vs expected installment?",fr:"Loyer équivalent vs versement attendu?",tr:"Eşdeğer kira vs beklenen taksit?",ur:"کرایہ بمقابلہ متوقع قسط؟"},
+   opts:{ar:["الإيجار أعلى من القسط","متقاربان","القسط أعلى قليلاً","القسط أعلى كثيراً"],en:["Rent higher","Similar","Installment slightly higher","Installment much higher"],fr:["Loyer plus élevé","Similaires","Légèrement plus","Bien plus élevé"],tr:["Kira daha yüksek","Benzer","Biraz yüksek","Çok yüksek"],ur:["کرایہ زیادہ","تقریباً برابر","قسط تھوڑی زیادہ","قسط بہت زیادہ"]},
+   sc:[4,3,2,0]},
+  {id:"q5",icon:"🗺️",
+   text:{ar:"المنطقة التي تريد الشراء فيها؟",en:"The area you want to buy in?",fr:"La zone où vous souhaitez acheter?",tr:"Satın almak istediğiniz bölge?",ur:"آپ جس علاقے میں خریدنا چاہتے ہیں؟"},
+   opts:{ar:["نمو قوي + مشاريع حكومية","منطقة مستقرة تنمو","متشبعة قليل النمو","لا أعرف أو ضعيفة"],en:["Strong growth + gov projects","Stable slow growth","Saturated, little growth","Unknown or weak"],fr:["Forte croissance","Stable","Saturé","Inconnu"],tr:["Güçlü büyüme","İstikrarlı","Doymuş","Bilinmiyor"],ur:["مضبوط نمو","مستحکم","سیر شدہ","نامعلوم"]},
+   sc:[4,3,1,0]}
+];
+
+function renderQ(){
+  var c=document.getElementById("q-container");
+  if(!c) return;
+  c.innerHTML="";
+  QS.forEach(function(q){
+    var wrap=document.createElement("div");
+    wrap.style.cssText="background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:18px;margin-bottom:12px";
+    var title=document.createElement("div");
+    title.style.cssText="font-size:.9rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px";
+    title.textContent=q.icon+" "+(q.text[LANG]||q.text.ar);
+    wrap.appendChild(title);
+    var grid=document.createElement("div");
+    grid.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:8px";
+    var opts=q.opts[LANG]||q.opts.ar;
+    opts.forEach(function(o,i){
+      var btn=document.createElement("button");
+      btn.className="q-opt"+(QA[q.id]===i?" sel":"");
+      btn.textContent=o;
+      (function(qid,idx){btn.onclick=function(){QA[qid]=idx;renderQ();};})(q.id,i);
+      grid.appendChild(btn);
+    });
+    wrap.appendChild(grid);
+    c.appendChild(wrap);
+  });
+}
+
+function calcFeas(){
+  var total=0,answered=0;
+  QS.forEach(function(q){if(QA[q.id]!==undefined){total+=q.sc[QA[q.id]];answered++;}});
+  if(answered<3){toast(LANG==="ar"?"أجب على 3 أسئلة على الأقل":"Answer at least 3 questions");return;}
+  var pct=Math.round((total/(QS.length*4))*100);
+  var col=pct>=70?"var(--green)":pct>=50?"var(--gold)":"var(--red)";
+  var lbl=pct>=70?(LANG==="ar"?"مناسب للشراء":"Suitable for Buying"):pct>=50?(LANG==="ar"?"انتظر وحسّن":"Wait and Improve"):(LANG==="ar"?"الإيجار أفضل الآن":"Renting is Better Now");
+  var adv=pct>=70?(LANG==="ar"?"وضعك يدعم الشراء. اختر التمويل المناسب.":"Your situation supports buying. Choose right financing."):pct>=50?(LANG==="ar"?"حسّن صندوق الطوارئ وخفف الديون.":"Improve emergency fund and reduce debts."):(LANG==="ar"?"استمر في الإيجار وادخر 12-18 شهراً.":"Continue renting and save 12-18 months.");
+  var el=document.getElementById("feas-result");
+  el.innerHTML="";
+  var box=document.createElement("div");
+  box.style.cssText="background:var(--bg2);border:1.5px solid "+col+"30;border-radius:14px;padding:24px;text-align:center";
+  var n=document.createElement("div");
+  n.style.cssText="font-family:'Cormorant',serif;font-size:5rem;font-weight:700;line-height:1;color:"+col;
+  n.textContent=pct+"%";
+  var l=document.createElement("div");
+  l.style.cssText="font-size:1.1rem;font-weight:700;margin-top:8px;color:"+col;
+  l.textContent=lbl;
+  var a=document.createElement("div");
+  a.style.cssText="font-size:.84rem;color:var(--t2);margin-top:10px;max-width:440px;margin-inline:auto;line-height:1.85";
+  a.textContent=adv;
+  box.appendChild(n);box.appendChild(l);box.appendChild(a);
+  el.appendChild(box);
+  document.querySelector(".tab[data-sec='feasibility']").classList.add("done");
+  el.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ══ MAIN CALCULATOR ══ */
+function calcAll(){
+  var P=parseFloat(document.getElementById("i-price").value)||500000;
+  var D=parseFloat(document.getElementById("i-down").value)||100000;
+  var Y=parseFloat(document.getElementById("i-years").value)||20;
+  var APR=parseFloat(document.getElementById("i-apr").value)||4.5;
+  var MUR=parseFloat(document.getElementById("i-mur").value)||15;
+  var RENT=parseFloat(document.getElementById("i-rent").value)||2000;
+  var INC=parseFloat(document.getElementById("i-income").value)||15000;
+  var GRW=parseFloat(document.getElementById("i-growth").value)||4;
+  var EXP=parseFloat(document.getElementById("i-expenses").value)||1.5;
+  var LOAN=P-D, M=Y*12, r=APR/100/12;
+  var EMI=r===0?LOAN/M:LOAN*r*Math.pow(1+r,M)/(Math.pow(1+r,M)-1);
+  var TOTAL=D+EMI*M, INT=TOTAL-P, IRR=APR*1.85;
+  var MUR_TOTAL=P*(1+MUR/100), MUR_EMI=(MUR_TOTAL-D)/M;
+  var DTI=Math.round((EMI/INC)*100);
+  var V5=P*Math.pow(1+GRW/100,5), V10=P*Math.pow(1+GRW/100,10), VEND=P*Math.pow(1+GRW/100,Y);
+  var NOI=RENT*12-(P*EXP/100);
+  var RY=((RENT*12)/P)*100;
+  var GRM=P/(RENT*12);
+  var PTR=P/(RENT*12);
+  var CAP=(NOI/P)*100;
+  var BER=EMI+(P*EXP/100/12);
+  var NET=VEND-TOTAL;
+
+  /* Loan results */
+  s("r-apr",APR.toFixed(1)+"%"); s("r-irr",IRR.toFixed(1)+"%");
+  s("r-monthly",fmt(EMI)); s("r-total",fmt(TOTAL)); s("r-interest",fmt(INT));
+  s("r-mur-pct",MUR+"%"); s("r-mur-monthly",fmt(MUR_EMI)); s("r-mur-total",fmt(MUR_TOTAL));
+
+  /* DTI */
+  var dtiCol=DTI<=25?"var(--green)":DTI<=36?"var(--gold)":DTI<=50?"var(--red)":"var(--red)";
+  var dtiLbl=LANG==="ar"?(DTI<=25?"ممتاز":DTI<=36?"آمن":DTI<=50?"تحت الضغط":"خطر"):(DTI<=25?"Excellent":DTI<=36?"Safe":DTI<=50?"Stressed":"Dangerous");
+  s("r-dti",DTI+"%"); s("r-dti-lbl",dtiLbl);
+  var dtiBox=document.getElementById("dti-box");
+  if(dtiBox){dtiBox.style.background=dtiCol+"10";dtiBox.style.border="1px solid "+dtiCol+"25";}
+  var dtiNum=document.getElementById("r-dti"); if(dtiNum) dtiNum.style.color=dtiCol;
+  var dtiLblEl=document.getElementById("r-dti-lbl"); if(dtiLblEl) dtiLblEl.style.color=dtiCol;
+  var dtiBar=document.getElementById("r-dti-bar");
+  if(dtiBar){dtiBar.style.width=Math.min(100,DTI)+"%";dtiBar.style.background=dtiCol;}
+
+  /* Projections */
+  s("r-val5",fmtK(V5)); s("r-val10",fmtK(V10)); s("r-valend",fmtK(VEND));
+
+  /* Formulas */
+  updateFormula("f1",RY,
+    RY>=7?"var(--green)":RY>=4?"var(--gold)":"var(--red)",
+    RY.toFixed(2)+"% "+(LANG==="ar"?"عائد إيجاري سنوي":"Annual Rental Yield"),
+    RY>=7?(LANG==="ar"?"ممتاز — استثمار إيجاري قوي":"Excellent — strong rental investment"):RY>=4?(LANG==="ar"?"مقبول — عائد معقول":"Acceptable — reasonable yield"):(LANG==="ar"?"ضعيف — عائد منخفض جداً":"Weak — very low yield"),
+    RY>=7?"bdg-g":RY>=4?"bdg-y":"bdg-r",RY.toFixed(1)+"%");
+
+  updateFormula("f2",GRM,
+    GRM<=10?"var(--green)":GRM<=15?"var(--gold)":"var(--red)",
+    GRM.toFixed(1)+" "+(LANG==="ar"?"سنة":"years"),
+    GRM<=10?(LANG==="ar"?"ممتاز — العقار يُسدّد نفسه سريعاً":"Excellent — property pays itself quickly"):GRM<=15?(LANG==="ar"?"جيد — في النطاق المعقول":"Good — reasonable range"):(LANG==="ar"?"مرتفع — يحتاج وقتاً طويلاً للاسترداد":"High — long payback period"),
+    GRM<=10?"bdg-g":GRM<=15?"bdg-y":"bdg-r",GRM.toFixed(1)+"x");
+
+  updateFormula("f3",PTR,
+    PTR<15?"var(--green)":PTR<=20?"var(--gold)":"var(--red)",
+    PTR.toFixed(1),
+    PTR<15?(LANG==="ar"?"الشراء أفضل بوضوح من الإيجار في هذا السوق":"Buying is clearly better than renting in this market"):PTR<=20?(LANG==="ar"?"منطقة رمادية — قيّم الوضع بعناية":"Gray zone — evaluate carefully"):(LANG==="ar"?"الإيجار أذكى مالياً في هذا السوق":"Renting is financially smarter in this market"),
+    PTR<15?"bdg-g":PTR<=20?"bdg-y":"bdg-r",PTR.toFixed(1));
+
+  updateFormula("f4",CAP,
+    CAP>=5?"var(--green)":CAP>=3?"var(--gold)":"var(--red)",
+    CAP.toFixed(2)+"% Cap Rate",
+    CAP>=5?(LANG==="ar"?"جيد للاستثمار — عائد صافٍ مقبول":"Good for investment — acceptable net return"):CAP>=3?(LANG==="ar"?"متوسط — مقبول في أسواق غير سائلة":"Average — acceptable in illiquid markets"):(LANG==="ar"?"ضعيف — المصاريف تأكل معظم الإيجار":"Weak — expenses eat most of rent"),
+    CAP>=5?"bdg-g":CAP>=3?"bdg-y":"bdg-r",CAP.toFixed(1)+"%");
+
+  updateFormula("f5",BER,
+    RENT>=BER?"var(--green)":"var(--red)",
+    fmt(BER)+" / "+(LANG==="ar"?"شهر":"mo"),
+    RENT>=BER?(LANG==="ar"?"إيجار السوق أعلى — تأجيره مربح":"Market rent is higher — renting it out is profitable"):(LANG==="ar"?"إيجار السوق أقل — لن يُغطي تكاليفك":"Market rent is lower — won't cover your costs"),
+    RENT>=BER?"bdg-g":"bdg-r",RENT>=BER?(LANG==="ar"?"مربح":"Profitable"):(LANG==="ar"?"غير مربح":"Not profitable"));
+
+  updateFormula("f6",NET,
+    NET>=0?"var(--green)":"var(--red)",
+    fmtK(NET),
+    NET>=0?(LANG==="ar"?"الشراء بنى لك ثروة صافية بعد "+ Y +" سنة":"Buying built you net wealth after "+Y+" years"):(LANG==="ar"?"دفعت أكثر من قيمة العقار — خسارة نسبية":"You paid more than the property value — relative loss"),
+    NET>=0?"bdg-g":"bdg-r",NET>=0?"+"+fmtK(NET):fmtK(NET));
+
+  /* Comparison */
+  renderComp(P,D,M,EMI,TOTAL,MUR_EMI,MUR_TOTAL,RENT,Y,INC,V5,V10,VEND);
+
+  /* 360 */
+  calc360(DTI,PTR,IRR,MUR,GRW);
+
+  /* Recommendation */
+  renderRec(DTI,PTR,IRR,MUR,EMI,MUR_EMI,TOTAL,MUR_TOTAL,Y,VEND,NET,RY,CAP);
+}
+
+function updateFormula(id,val,col,main,sub,bdgClass,bdgVal){
+  var r=document.getElementById(id+"-result");
+  var b=document.getElementById(id+"-bdg");
+  if(r){r.style.color=col;r.style.background=col+"10";r.style.border="1px solid "+col+"25";r.innerHTML="";}
+  if(r){
+    var m=document.createElement("div");m.style.cssText="font-family:'Cormorant',serif;font-size:1.8rem;font-weight:700;line-height:1;color:"+col;m.textContent=main;r.appendChild(m);
+    var sm=document.createElement("div");sm.style.cssText="font-size:.76rem;color:var(--t2);margin-top:5px;line-height:1.65";sm.textContent=sub;r.appendChild(sm);
+  }
+  if(b){b.className="bdg "+bdgClass;b.textContent=bdgVal;}
+}
+
+/* ══ COMPARISON ══ */
+function renderComp(P,D,M,EMI,TOTAL,MUR_EMI,MUR_TOTAL,RENT,Y,INC,V5,V10,VEND){
+  var invRet=8;
+  var totalRent=RENT*12*Y;
+  var diff=Math.max(0,EMI-RENT);
+  var investVal=D*Math.pow(1+invRet/100,Y)+diff*12*(Math.pow(1+invRet/100,Y)-1)/(invRet/100);
+
+  var alts=[
+    {name:LANG==="ar"?"قرض تقليدي":"Conventional Loan",icon:"🔵",total:TOTAL,networth:VEND-TOTAL+P,col:"var(--blue)",desc:LANG==="ar"?"تدفع IRR حقيقي أعلى من APR المُعلن":"True IRR higher than advertised APR"},
+    {name:LANG==="ar"?"مرابحة إسلامية":"Islamic Murabaha",icon:"🟢",total:MUR_TOTAL,networth:VEND-MUR_TOTAL+P,col:"var(--green)",desc:LANG==="ar"?"هامش ثابت — حلال — لا فائدة مركبة":"Fixed margin — halal — no compound interest"},
+    {name:LANG==="ar"?"إيجار فقط":"Rent Only",icon:"🟡",total:totalRent,networth:-totalRent,col:"var(--gold)",desc:LANG==="ar"?"مرونة كاملة — لا تبني ملكية":"Full flexibility — no ownership built"},
+    {name:LANG==="ar"?"إيجار + استثمار":"Rent + Invest",icon:"💜",total:totalRent,networth:investVal-totalRent,col:"var(--purple)",desc:LANG==="ar"?"استثمار الفرق بعائد 8% سنوياً":"Invest the difference at 8% annual return"},
+    {name:LANG==="ar"?"شراء نقداً":"Cash Purchase",icon:"⬜",total:P,networth:VEND-P,col:"var(--t1)",desc:LANG==="ar"?"لا قسط — لا فائدة — يحتاج سيولة":"No installment — no interest — needs liquidity"}
+  ];
+
+  alts.sort(function(a,b){return b.networth-a.networth;});
+  var maxNet=Math.max.apply(null,alts.map(function(a){return Math.abs(a.networth);}));
+
+  var grid=document.getElementById("comp-grid");
+  if(!grid) return;
+  grid.innerHTML="";
+
+  alts.forEach(function(alt,idx){
+    var isBest=idx===0;
+    var netCol=alt.networth>=0?"var(--green)":"var(--red)";
+    var card=document.createElement("div");
+    card.style.cssText="background:var(--bg2);border:1.5px solid "+(isBest?alt.col:"rgba(255,255,255,.07)")+";border-radius:13px;padding:16px;margin-bottom:12px;position:relative;transition:all .3s";
+    if(isBest) card.style.background="rgba("+alt.col.replace("var(--","").replace(")","")+",.03)";
+
+    if(isBest){
+      var bestTag=document.createElement("div");
+      bestTag.style.cssText="position:absolute;top:12px;left:12px;font-family:'DM Mono',monospace;font-size:.54rem;padding:2px 7px;border-radius:20px;background:"+alt.col+"15;border:1px solid "+alt.col+"30;color:"+alt.col;
+      bestTag.textContent=t("best");
+      card.appendChild(bestTag);
+    }
+
+    var nm=document.createElement("div");
+    nm.style.cssText="font-size:.9rem;font-weight:700;margin-bottom:4px;margin-top:"+(isBest?"18px":"0");
+    nm.textContent=alt.icon+" "+alt.name;
+    card.appendChild(nm);
+
+    var ds=document.createElement("div");
+    ds.style.cssText="font-size:.76rem;color:var(--t2);margin-bottom:12px;line-height:1.6";
+    ds.textContent=alt.desc;
+    card.appendChild(ds);
+
+    var rg=document.createElement("div");
+    rg.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:8px";
+
+    var t1=document.createElement("div");
+    t1.style.cssText="text-align:center;padding:8px;background:rgba(255,255,255,.03);border-radius:7px";
+    var tl=document.createElement("div");tl.className="lbl";tl.textContent=t("total");
+    var tv=document.createElement("div");tv.style.cssText="font-family:'Cormorant',serif;font-size:1.1rem;font-weight:700";tv.textContent=fmtK(alt.total);
+    t1.appendChild(tl);t1.appendChild(tv);
+
+    var t2=document.createElement("div");
+    t2.style.cssText="text-align:center;padding:8px;border-radius:7px;background:"+netCol+"08";
+    var nl=document.createElement("div");nl.className="lbl";nl.textContent=t("net");
+    var nv=document.createElement("div");nv.style.cssText="font-family:'Cormorant',serif;font-size:1.1rem;font-weight:700;color:"+netCol;
+    nv.textContent=(alt.networth>=0?"+":"")+fmtK(alt.networth);
+    t2.appendChild(nl);t2.appendChild(nv);
+
+    rg.appendChild(t1);rg.appendChild(t2);
+    card.appendChild(rg);
+
+    var pb=document.createElement("div");pb.className="prog";pb.style.marginTop="10px";
+    var pf=document.createElement("div");pf.className="prog-fill";
+    pf.style.background=alt.col;pf.style.width=Math.max(5,Math.round(Math.abs(alt.networth)/maxNet*100))+"%";
+    pb.appendChild(pf);card.appendChild(pb);
+
+    grid.appendChild(card);
+  });
+}
+
+/* ══ 360° ══ */
+function calc360(dti,ptr,irr,mur,grw){
+  var finOk=dti<=36&&irr<15;
+  var murOk=mur<irr*0.8;
+  var mktOk=grw>=4;
+  var psyOk=true;
+
+  s("r-fin",(finOk?(LANG==="ar"?"DTI "+dti+"% — آمن. IRR "+irr.toFixed(1)+"% — مقبول. الشراء مناسب مالياً.":"DTI "+dti+"% — Safe. IRR "+irr.toFixed(1)+"% — acceptable. Buying is financially suitable."):(LANG==="ar"?"DTI "+dti+"% — مرتفع. أو IRR "+irr.toFixed(1)+"% — مكلف. راجع شروط التمويل.":"DTI "+dti+"% — High. Or IRR "+irr.toFixed(1)+"% — expensive. Review financing terms.")));
+  s("r-shr",(murOk?(LANG==="ar"?"المرابحة بهامش "+mur+"% أرخص من القرض التقليدي. اختر الحلال والأوفر.":"Murabaha at "+mur+"% is cheaper than conventional loan. Choose halal."):(LANG==="ar"?"المرابحة والقرض متقاربان. الأفضل شرعاً المرابحة مهما كانت التكلفة.":"Murabaha and loan are similar. Murabaha is islamically preferable.")));
+  s("r-mkt",(mktOk?(LANG==="ar"?"نمو "+grw+"% سنوياً يدعم قرار الشراء. العقار يرتفع قيمته بمرور الوقت.":"Growth of "+grw+"% annually supports buying. Property appreciates over time."):(LANG==="ar"?"نمو "+grw+"% — بطيء. تأكد أن المنطقة ستنمو قبل الشراء.":"Growth of "+grw+"% — slow. Verify the area will grow before buying.")));
+  s("r-psy",(LANG==="ar"?"الملكية تمنح الاستقرار النفسي وحرية التعديل. الإيجار يمنح المرونة. القرار يعتمد على أسلوب حياتك.":"Ownership gives psychological stability and freedom to modify. Rent gives flexibility. Decision depends on your lifestyle."));
+}
+
+/* ══ RECOMMENDATION ══ */
+function renderRec(dti,ptr,irr,mur,emi,murEmi,total,murTotal,years,valEnd,net,ry,cap){
+  var score=[dti<=36,ptr<20,irr<15,mur<irr,ry>=4].filter(Boolean).length;
+  var cols=["var(--red)","var(--red)","var(--gold)","var(--gold)","var(--green)"];
+  var col=cols[score]||"var(--gold)";
+  var labels=[
+    LANG==="ar"?"لا تشترِ الآن":"Do Not Buy Now",
+    LANG==="ar"?"لا تشترِ الآن":"Do Not Buy Now",
+    LANG==="ar"?"انتظر وحسّن وضعك":"Wait and Improve",
+    LANG==="ar"?"ممكن — لكن بحذر":"Possible — With Caution",
+    LANG==="ar"?"الشراء منطقي في وضعك":"Buying Makes Sense"
+  ];
+  var box=document.getElementById("rec-box");
+  if(!box) return;
+  box.innerHTML="";
+
+  var wrap=document.createElement("div");
+  wrap.style.cssText="background:"+col+"06;border:1.5px solid "+col+"25;border-radius:16px;padding:28px;text-align:center";
+
+  var em=document.createElement("div");
+  em.style.cssText="font-size:2.5rem;margin-bottom:10px";em.textContent=score>=3?"✅":"⚠️";
+
+  var lbl=document.createElement("div");
+  lbl.style.cssText="font-family:'Cormorant',serif;font-size:2rem;font-weight:700;color:"+col+";margin-bottom:16px";
+  lbl.textContent=labels[score];
+
+  /* Stats grid */
+  var stats=[
+    {label:"DTI",val:dti+"%",col:dti<=36?"var(--green)":"var(--red)"},
+    {label:"PTR",val:ptr.toFixed(1),col:ptr<15?"var(--green)":ptr<=20?"var(--gold)":"var(--red)"},
+    {label:LANG==="ar"?"العائد الإيجاري":"Rental Yield",val:ry.toFixed(1)+"%",col:ry>=4?"var(--green)":"var(--red)"},
+    {label:LANG==="ar"?"Cap Rate":"Cap Rate",val:cap.toFixed(1)+"%",col:cap>=4?"var(--green)":"var(--red)"},
+  ];
+
+  var sg=document.createElement("div");
+  sg.style.cssText="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px";
+  stats.forEach(function(st){
+    var sc=document.createElement("div");
+    sc.style.cssText="padding:10px;background:rgba(255,255,255,.04);border-radius:9px";
+    var sl=document.createElement("div");sl.className="lbl";sl.textContent=st.label;
+    var sv=document.createElement("div");sv.style.cssText="font-family:'Cormorant',serif;font-size:1.5rem;font-weight:700;color:"+st.col;sv.textContent=st.val;
+    sc.appendChild(sl);sc.appendChild(sv);sg.appendChild(sc);
+  });
+
+  /* Best finance option */
+  var bestFinance=mur<irr?(LANG==="ar"?"المرابحة الإسلامية":"Islamic Murabaha"):(LANG==="ar"?"القرض التقليدي":"Conventional Loan");
+  var advice=document.createElement("div");
+  advice.style.cssText="font-size:.84rem;color:var(--t2);line-height:1.85;max-width:480px;margin:0 auto";
+  advice.textContent=LANG==="ar"?("التمويل الأنسب: "+bestFinance+" · صافي الثروة بعد "+years+" سنة: "+(net>=0?"+":"")+fmtK(net)):("Best financing: "+bestFinance+" · Net wealth after "+years+" years: "+(net>=0?"+":"")+fmtK(net));
+
+  wrap.appendChild(em);wrap.appendChild(lbl);wrap.appendChild(sg);wrap.appendChild(advice);
+  box.appendChild(wrap);
+  document.querySelector(".tab[data-sec='recommendation']").classList.add("done");
+}
+
+/* ══ UTILS ══ */
+function scrollSec(id){var e=document.getElementById(id);if(e) e.scrollIntoView({behavior:"smooth",block:"start"});}
+function goSec(id,btn){
+  document.querySelectorAll(".tab").forEach(function(b){if(!b.classList.contains("done")) b.classList.remove("on");});
+  if(btn) btn.classList.add("on");
+  scrollSec(id);
+}
+function toast(msg){
+  var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},3000);
+}
+function dlReport(){
+  var lines=["Aqar Report — تقرير عقار","========================","axiomzones.com/aqar","","Date: "+new Date().toLocaleDateString(),"","See full analysis on: https://axiomzones.com/aqar"];
+  var b=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
+  var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="aqar-report.txt";a.click();URL.revokeObjectURL(a.href);
+  toast(LANG==="ar"?"✅ تم تنزيل التقرير":"✅ Report downloaded");
+}
+function resetAll(){QA={};renderQ();document.getElementById("feas-result").innerHTML="";window.scrollTo({top:0,behavior:"smooth"});}
+
+/* ══ INIT ══ */
+
+/* ══ THEME ══ */
+var THEME = localStorage.getItem('aqar_theme') || 'dark';
+function toggleTheme(){
+  THEME = THEME === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('aqar_theme', THEME);
+  applyTheme();
+}
+function applyTheme(){
+  if(THEME === 'light'){
+    document.body.classList.add('light');
+    var btn = document.getElementById('theme-btn');
+    if(btn) btn.textContent = '☀️';
+  } else {
+    document.body.classList.remove('light');
+    var btn = document.getElementById('theme-btn');
+    if(btn) btn.textContent = '🌙';
+  }
+}
+
+/* ══ AUTO DETECT LANG & CURR ══ */
+function autoDetect(){
+  var lang = navigator.language || navigator.userLanguage || 'ar';
+  var code = lang.split('-')[0].toLowerCase();
+  var country = (lang.split('-')[1] || '').toUpperCase();
+  var supported = ['ar','en','fr','tr','ur','id','ms','fa','bn','hi','es','de','it','pt','ru','nl','zh','ja','ko','vi','th','tl','ta','sw','he'];
+  if(supported.indexOf(code) >= 0){
+    LANG = code;
+    var sel = document.getElementById('lang-sel');
+    if(sel) sel.value = code;
+    setLang(code);
+  }
+  var currMap = {SA:'SAR',AE:'AED',KW:'KWD',QA:'QAR',BH:'BHD',OM:'OMR',EG:'EGP',JO:'JOD',MA:'MAD',DZ:'DZD',TN:'TND',LY:'LYD',IQ:'IQD',IR:'IRR',TR:'TRY',PK:'PKR',BD:'BDT',ID:'IDR',MY:'MYR',TH:'THB',PH:'PHP',IN:'INR',GB:'GBP',DE:'EUR',FR:'EUR',IT:'EUR',ES:'EUR',NL:'EUR',RU:'RUB',CN:'CNY',JP:'JPY',KR:'KRW',AU:'AUD',CA:'CAD',CH:'CHF',NG:'NGN',ZA:'ZAR',KE:'KES',ET:'ETB',GH:'GHS',BR:'BRL',MX:'MXN',AR:'ARS',US:'USD'};
+  if(currMap[country]){
+    CURR = currMap[country];
+    var sel2 = document.getElementById('curr-sel');
+    if(sel2) sel2.value = CURR;
+  }
+}
+
+
+/* ══ EXTRA LANGUAGE TRANSLATIONS ══ */
+var TR_EXTRA = {
+  id:{eyebrow:"Mesin Keputusan Real Estate Arab No.1",slogan:"Beli dengan pikiran — sebelum membeli dengan hati",tagline:"Hitung · Bandingkan · Putuskan",s1h:"Apakah Anda Siap Membeli?",s2h:"Masukkan Angka Anda",s3h:"6 Formula Keputusan Real Estate",s4h:"5 Alternatif — Angka Memutuskan",s5h:"Keputusan dari Semua Sudut",s6h:"Keputusan Anda dalam Angka",waiting:"Masukkan angka Anda di atas",calcBtn:"Hitung Skor Kelayakan",best:"Terbaik untuk Anda",total:"Total Dibayar",net:"Kekayaan Bersih",fin:"Keuangan",shr:"Islami",mkt:"Pasar",psy:"Psikologis"},
+  ms:{eyebrow:"Enjin Keputusan Hartanah Arab No.1",slogan:"Beli dengan fikiran — sebelum membeli dengan hati",tagline:"Kira · Bandingkan · Putuskan",s1h:"Adakah Anda Bersedia Membeli?",s2h:"Masukkan Nombor Anda",s3h:"6 Formula Keputusan Hartanah",s4h:"5 Alternatif — Nombor Memutuskan",s5h:"Keputusan dari Semua Sudut",s6h:"Keputusan Anda dalam Nombor",waiting:"Masukkan nombor anda di atas",calcBtn:"Kira Skor Kebolehlaksanaan",best:"Terbaik untuk Anda",total:"Jumlah Dibayar",net:"Nilai Bersih",fin:"Kewangan",shr:"Islamik",mkt:"Pasaran",psy:"Psikologi"},
+  es:{eyebrow:"Motor de Decisión Inmobiliaria Árabe No.1",slogan:"Compra con la mente — antes de comprar con el corazón",tagline:"Calcular · Comparar · Decidir",s1h:"¿Estás Listo para Comprar?",s2h:"Ingresa tus Números",s3h:"6 Fórmulas de Decisión Inmobiliaria",s4h:"5 Alternativas — Los Números Deciden",s5h:"Tu Decisión desde Todos los Ángulos",s6h:"Tu Decisión en Números",waiting:"Ingresa tus números arriba",calcBtn:"Calcular Puntuación de Viabilidad",best:"Mejor para Ti",total:"Total Pagado",net:"Patrimonio Neto",fin:"Financieramente",shr:"Islámicamente",mkt:"Mercado",psy:"Psicológicamente"},
+  ru:{eyebrow:"Арабский Механизм Принятия Решений о Недвижимости",slogan:"Покупайте умом — прежде чем покупать сердцем",tagline:"Рассчитать · Сравнить · Решить",s1h:"Готовы ли Вы к Покупке?",s2h:"Введите Ваши Цифры",s3h:"6 Формул Принятия Решений о Недвижимости",s4h:"5 Альтернатив — Цифры Решают",s5h:"Ваше Решение со Всех Сторон",s6h:"Ваше Решение в Цифрах",waiting:"Введите ваши цифры выше",calcBtn:"Рассчитать Оценку Осуществимости",best:"Лучший для Вас",total:"Всего Оплачено",net:"Чистая Стоимость",fin:"Финансово",shr:"Исламски",mkt:"По Рынку",psy:"Психологически"},
+  de:{eyebrow:"Arabische Immobilien-Entscheidungsmaschine Nr.1",slogan:"Kaufen Sie mit dem Kopf — bevor Sie mit dem Herzen kaufen",tagline:"Berechnen · Vergleichen · Entscheiden",s1h:"Sind Sie bereit zu kaufen?",s2h:"Geben Sie Ihre Zahlen ein",s3h:"6 Formeln für Immobilienentscheidungen",s4h:"5 Alternativen — Zahlen entscheiden",s5h:"Ihre Entscheidung aus allen Blickwinkeln",s6h:"Ihre Entscheidung in Zahlen",waiting:"Geben Sie oben Ihre Zahlen ein",calcBtn:"Machbarkeits-Score berechnen",best:"Beste für Sie",total:"Gesamt Bezahlt",net:"Nettovermögen",fin:"Finanziell",shr:"Islamisch",mkt:"Markt",psy:"Psychologisch"},
+  zh:{eyebrow:"阿拉伯世界第一房地产决策引擎",slogan:"用头脑购买——在用心购买之前",tagline:"计算 · 比较 · 决定",s1h:"您准备好购买了吗？",s2h:"输入您的数字",s3h:"6个房地产决策公式",s4h:"5个替代方案——数字决定",s5h:"从各个角度做出您的决定",s6h:"用数字做出您的决定",waiting:"请在上方输入您的数字",calcBtn:"计算可行性分数",best:"最适合您",total:"总支付",net:"净资产",fin:"财务上",shr:"伊斯兰方面",mkt:"市场方面",psy:"心理上"}
+};
+function t(k){
+  var tr = TR[LANG] || TR_EXTRA[LANG];
+  return (tr && tr[k]) || TR.ar[k] || k;
+}
+
+window.addEventListener("load",function(){setLang(LANG||"ar");applyTheme();renderQ();calcAll();autoDetect();});
+</script>
+
+<!-- ══ ECOSYSTEM BADGE — يُضاف لكل منصة فرعية ══ -->
+<style>
+.az-ecosystem-badge{
+  position:fixed;top:16px;right:16px;z-index:9999;
+  display:flex;align-items:center;gap:0;
+  font-family:'DM Mono',monospace;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.az-eco-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#c9a84c,#e8c86a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(201,168,76,.3);
+  transition:all .3s;flex-shrink:0;
+}
+.az-eco-label{
+  max-width:0;overflow:hidden;white-space:nowrap;
+  font-size:.62rem;letter-spacing:1px;color:#060912;
+  background:linear-gradient(135deg,#c9a84c,#e8c86a);
+  height:36px;display:flex;align-items:center;
+  padding:0;border-radius:0 18px 18px 0;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+  font-weight:700;
+}
+.az-ecosystem-badge:hover .az-eco-label{
+  max-width:120px;padding:0 12px 0 6px;
+}
+.az-ecosystem-badge:hover .az-eco-icon{
+  border-radius:50% 0 0 50%;
+}
+</style>
+<div class="az-ecosystem-badge" onclick="window.location.href='/'">
+  <div class="az-eco-icon">🏛️</div>
+  <div class="az-eco-label">المنظومة</div>
+</div>
+
+</body>
+</html>

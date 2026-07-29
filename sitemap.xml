@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Main -->
+  <url><loc>https://axiomzones.com/</loc><lastmod>2026-05-29</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+
+  <!-- Kashf -->
+  <url><loc>https://axiomzones.com/kashf</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiomzones.com/kashf/personal-loan</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://axiomzones.com/kashf/car-loan</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://axiomzones.com/kashf/home-loan</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://axiomzones.com/kashf/rajhi-bank</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://axiomzones.com/kashf/nbd-calculator</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://axiomzones.com/prism</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiomzones.com/prism/compare</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://axiomzones.com/prism/payoff</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Other Platforms -->
+  <url><loc>https://axiomzones.com/uniuber</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://axiomzones.com/dar</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiomzones.com/aqar</loc><lastmod>2026-07-15</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <!-- Content -->
+  <url><loc>https://axiomzones.com/blog</loc><lastmod>2026-05-29</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://axiomzones.com/glossary</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- User -->
+  <url><loc>https://axiomzones.com/dashboard</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Legal -->
+  <url><loc>https://axiomzones.com/privacy</loc><lastmod>2026-05-29</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://axiomzones.com/terms</loc><lastmod>2026-05-29</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://axiomzones.com/disclaimer</loc><lastmod>2026-05-29</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+
+  <url><loc>https://axiomzones.com/platform</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <url><loc>https://axiomzones.com/en/glossary</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiomzones.com/en/blog</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://axiomzones.com/kashf/car-loan</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiomzones.com/kashf/home-loan</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiomzones.com/kashf/rajhi-bank</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://axiomzones.com/kashf/nbd-calculator</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://axiomzones.com/kashf/personal-loan</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <url><loc>https://axiomzones.com/blog/bank-hides-irr</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/en/blog/bank-hides-irr</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/fr/blog/bank-hides-irr</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/blog/murabaha-vs-loan</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/en/blog/murabaha-vs-loan</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/fr/blog/murabaha-vs-loan</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/blog/break-even-guide</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/en/blog/break-even-guide</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://axiomzones.com/fr/blog/break-even-guide</loc><lastmod>2026-05-29</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+</urlset>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>مصطلحات مالية — قاموس كامل | Axiom Zones Financial Glossary</title>
+<meta name="description" content="200 مصطلح مالي بالعربية والإنجليزية — IRR, APR, WACM, DTI, مرابحة وأكثر. المرجع المالي العربي الأشمل."/>
+<meta property="og:title" content="قاموس المصطلحات المالية — Axiom Zones"/>
+<meta property="og:description" content="200 مصطلح مالي بالعربية والإنجليزية مع شرح مبسط وأمثلة عملية"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="canonical" href="https://axiomzones.com/glossary"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"DefinedTermSet","name":"Axiom Zones Financial Glossary","description":"200 financial terms in Arabic and English","url":"https://axiomzones.com/glossary","inLanguage":["ar","en"]}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;700&family=Syne:wght@400;600;700&family=DM+Mono:wght@400&family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;line-height:1.8}
+a{color:#c9a84c;text-decoration:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#c9a84c;border-radius:3px}
+
+.hdr{background:#0a0d1a;border-bottom:1px solid rgba(201,168,76,.15);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.logo{font-family:'Cormorant',serif;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:16px;align-items:center}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#8892b0;transition:color .22s}
+.nav-links a:hover{color:#c9a84c}
+
+.hero{padding:60px 28px 44px;text-align:center;max-width:860px;margin:0 auto}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:#c9a84c;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hero-tag::before,.hero-tag::after{content:'';width:28px;height:1px;background:#c9a84c}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;letter-spacing:-1.5px;margin-bottom:10px}
+.hero h1 em{color:#8892b0;font-weight:300;font-style:italic}
+.hero p{font-size:.9rem;color:#8892b0;max-width:540px;margin:0 auto 20px}
+.hero-stats{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-val{font-family:'Cormorant',serif;font-size:2rem;font-weight:700;color:#c9a84c;display:block}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+/* Search + Filter */
+.controls{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;align-items:center}
+.search-wrap{flex:1;min-width:220px;position:relative}
+.search-inp{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);color:#f0f2ff;padding:10px 14px 10px 40px;border-radius:10px;font-family:'Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .25s}
+.search-inp:focus{border-color:#c9a84c}
+.search-ico{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#3d4a6b;font-size:.9rem;pointer-events:none}
+[dir="rtl"] .search-inp{padding:10px 40px 10px 14px}
+[dir="rtl"] .search-ico{right:auto;left:12px}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:#8892b0;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;cursor:pointer;transition:all .22s;text-transform:uppercase;white-space:nowrap}
+.filter-btn:hover,.filter-btn.active{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.08)}
+
+/* Alphabet Nav */
+.alpha-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;justify-content:center}
+.alpha-btn{width:32px;height:32px;border-radius:6px;border:1px solid rgba(255,255,255,.07);background:transparent;color:#3d4a6b;font-family:'DM Mono',monospace;font-size:.65rem;cursor:pointer;transition:all .22s;display:flex;align-items:center;justify-content:center}
+.alpha-btn:hover{border-color:#c9a84c;color:#c9a84c}
+.alpha-btn.active{background:rgba(201,168,76,.15);border-color:#c9a84c;color:#c9a84c}
+
+/* Results count */
+.results-count{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:1px;color:#3d4a6b;margin-bottom:16px}
+
+/* Term Cards */
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.term-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;transition:all .3s}
+.term-card:hover{border-color:rgba(201,168,76,.2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.term-hd{padding:14px 16px;display:flex;align-items:flex-start;gap:10px}
+.term-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15)}
+.term-names{flex:1;min-width:0}
+.term-ar{font-family:'Cairo',sans-serif;font-size:.96rem;font-weight:700;margin-bottom:2px}
+.term-en{font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:1px;color:#3d4a6b;text-transform:uppercase}
+.term-cat-badge{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:1px;padding:2px 7px;border-radius:3px;text-transform:uppercase;white-space:nowrap;align-self:flex-start;margin-top:2px}
+.term-body{padding:0 16px 14px;display:none}
+.term-card.open .term-body{display:block}
+.term-def{font-size:.82rem;color:#8892b0;line-height:1.8;margin-bottom:10px}
+.term-formula{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:8px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:.74rem;color:#c9a84c;margin-bottom:10px;direction:ltr;text-align:left}
+.term-example{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:8px;padding:10px 12px;font-size:.78rem;color:#22c55e;margin-bottom:10px}
+.term-tool{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:6px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.15);color:#a78bfa;font-family:'DM Mono',monospace;font-size:.6rem;cursor:pointer;transition:all .22s;text-decoration:none}
+.term-tool:hover{background:rgba(139,92,246,.16)}
+.term-divider{height:1px;background:rgba(255,255,255,.05);margin:0 16px 0}
+
+/* No Results */
+.no-results{text-align:center;padding:60px 20px;color:#3d4a6b}
+.no-results-icon{font-size:2.5rem;margin-bottom:12px}
+
+/* CTA */
+.glossary-cta{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(139,92,246,.04));border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:28px;text-align:center;margin-top:48px}
+.glossary-cta h2{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px}
+.glossary-cta p{font-size:.88rem;color:#8892b0;margin-bottom:16px}
+.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cta-primary{padding:11px 24px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.84rem;border:none;cursor:pointer;transition:all .3s}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(201,168,76,.3)}
+.cta-secondary{padding:11px 24px;border-radius:9px;background:transparent;border:1.5px solid rgba(255,255,255,.1);color:#8892b0;font-family:'Syne',sans-serif;font-size:.84rem;cursor:pointer;transition:all .25s}
+.cta-secondary:hover{border-color:#c9a84c;color:#c9a84c}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(201,168,76,.3);color:#c9a84c;padding:10px 20px;border-radius:9px;font-family:'DM Mono',monospace;font-size:.72rem;z-index:9999;transition:transform .4s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+  <link rel="alternate" hreflang="ar" href="https://axiomzones.com/glossary"/>
+  <link rel="alternate" hreflang="en" href="https://axiomzones.com/en/glossary"/>
+  <link rel="alternate" hreflang="x-default" href="https://axiomzones.com/glossary"/>
+</head>
+<body>
+<div class="toast" id="gl-toast"></div>
+
+<header class="hdr">
+  <a href="/" class="logo">Axiom Zones</a>
+  <nav class="nav-links">
+    <a href="/kashf">كشف</a>
+    <a href="/prism">Prism</a>
+    <a href="/blog">المدونة</a>
+    <a href="/glossary">القاموس</a>
+    <a href="/dashboard">حسابي</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Financial Glossary · قاموس مالي</div>
+  <h1>كل مصطلح مالي<br/><em>تحتاج معرفته</em></h1>
+  <p>200 مصطلح بالعربية والإنجليزية — شرح مبسط وأمثلة عملية وروابط للأدوات المجانية</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-val" id="total-count">200</span><span class="stat-lbl">مصطلح</span></div>
+    <div class="stat"><span class="stat-val">2</span><span class="stat-lbl">لغة</span></div>
+    <div class="stat"><span class="stat-val">8</span><span class="stat-lbl">فئات</span></div>
+    <div class="stat"><span class="stat-val">∞</span><span class="stat-lbl">مجاني</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-ico">🔍</span>
+      <input class="search-inp" type="text" id="gl-search" placeholder="ابحث عن مصطلح... Search a term..." oninput="glSearch()"/>
+    </div>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="glFilter('all',this)">الكل</button>
+      <button class="filter-btn" onclick="glFilter('loans',this)">💰 قروض</button>
+      <button class="filter-btn" onclick="glFilter('investment',this)">📈 استثمار</button>
+      <button class="filter-btn" onclick="glFilter('islamic',this)">☪️ إسلامي</button>
+      <button class="filter-btn" onclick="glFilter('business',this)">💼 أعمال</button>
+      <button class="filter-btn" onclick="glFilter('ratios',this)">📊 نسب</button>
+      <button class="filter-btn" onclick="glFilter('banking',this)">🏦 بنوك</button>
+      <button class="filter-btn" onclick="glFilter('tax',this)">📋 ضرائب</button>
+    </div>
+  </div>
+
+  <div class="results-count" id="results-count">عرض 200 مصطلح</div>
+  <div class="glossary-grid" id="gl-grid"></div>
+
+  <!-- CTA -->
+  <div class="glossary-cta">
+    <h2>فهمت المصطلح؟ طبّقه الآن</h2>
+    <p>أدواتنا المجانية تحسب هذه المعادلات تلقائياً — بدون حفظ أو تعقيد</p>
+    <div class="cta-btns">
+      <button class="cta-primary" onclick="window.location.href='/kashf'">👁️ كشف — احسب IRR قرضك</button>
+      <button class="cta-secondary" onclick="window.location.href='/prism'">🔮 Prism — مقارنة متقدمة</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var TERMS = [
+  /* ══ LOANS قروض ══ */
+  {ar:'معدل العائد الداخلي',en:'IRR — Internal Rate of Return',cat:'loans',icon:'📊',
+   def:'التكلفة الحقيقية للقرض أو العائد الحقيقي للاستثمار. يأخذ بالاعتبار تناقص الرصيد مع كل دفعة — وهو دائماً أعلى من الـ APR المُعلن.',
+   formula:'NPV = 0 → يُحسب بطريقة Newton-Raphson',
+   example:'قرض 100,000 بـ APR 6% → IRR الحقيقي 11.2%',tool:'kashf',toolName:'احسب IRR قرضك'},
+  {ar:'النسبة السنوية للفائدة',en:'APR — Annual Percentage Rate',cat:'loans',icon:'💰',
+   def:'الفائدة المُعلنة من البنك. تُحسب على الرصيد الأصلي بغض النظر عن تناقصه. دائماً أقل من الـ IRR الحقيقي.',
+   formula:'APR = (إجمالي الفائدة / أصل القرض) × (12 / عدد الأشهر)',
+   example:'APR 6% على قرض 48 شهراً يعني IRR 11.2%',tool:'kashf',toolName:'قارن APR vs IRR'},
+  {ar:'درجة تجميل القرض',en:'Beautification Score',cat:'loans',icon:'🎭',
+   def:'مقياس Axiom Zones الخاص من 0 إلى 100 يقيس مدى تجميل البنك لعرض القرض. الدرجة الأعلى = البنك يُخفي أكثر.',
+   formula:'مبني على الفرق بين APR و IRR مضافاً إليه الرسوم الخفية',
+   example:'درجة 80 = البنك يخفي 5%+ من التكلفة الحقيقية',tool:'kashf',toolName:'احسب درجة قرضك'},
+  {ar:'الدفعة الشهرية',en:'Monthly Payment / EMI',cat:'loans',icon:'📅',
+   def:'المبلغ الثابت الذي تدفعه شهرياً يشمل جزءاً من الأصل وجزءاً من الفائدة. يتغير توزيعهما مع كل دفعة.',
+   formula:'EMI = P × r(1+r)^n / ((1+r)^n - 1) | P=الأصل, r=معدل شهري, n=الأشهر',
+   example:'قرض 50,000 بـ 6% / 36 شهراً = 1,521 ريال/شهر'},
+  {ar:'إجمالي تكلفة القرض',en:'Total Cost of Loan',cat:'loans',icon:'💸',
+   def:'كل ما ستدفعه فعلاً من بداية القرض حتى نهايته. يساوي مجموع كل الدفعات الشهرية.',
+   formula:'الإجمالي = الدفعة الشهرية × عدد الأشهر',
+   example:'1,521 × 36 = 54,756 ريال (القرض كان 50,000)'},
+  {ar:'الرسوم الخفية',en:'Hidden Fees',cat:'loans',icon:'🔍',
+   def:'رسوم إدارية وتأمين وخدمات تُضاف للقرض ولا تُذكر بوضوح. غالباً تُحسب عليها فائدة إضافية.',
+   example:'رسوم إدارية 1,500 ريال تُضاف للقرض تحمل فائدة إضافية ~270 ريال'},
+  {ar:'السداد المبكر',en:'Early Repayment / Prepayment',cat:'loans',icon:'⏩',
+   def:'إمكانية سداد القرض قبل موعده. بعض البنوك تفرض غرامة — تحقق من العقد قبل التوقيع.',
+   example:'سداد 12 شهراً مبكراً يوفر ~600 ريال فائدة (حسب طريقة الحساب)',tool:'prism',toolName:'احسب توفير السداد المبكر'},
+  {ar:'إعادة التمويل',en:'Refinancing',cat:'loans',icon:'🔄',
+   def:'استبدال قرضك الحالي بقرض جديد بفائدة أقل. مفيد عند انخفاض الفوائد في السوق.',
+   example:'قرض بـ 9% يُستبدل بقرض بـ 6% = توفير محتمل آلاف الريالات',tool:'kashf',toolName:'احسب هل يستحق إعادة التمويل'},
+  {ar:'فترة السماح',en:'Grace Period',cat:'loans',icon:'⏰',
+   def:'مدة مسموح بها بعد تاريخ الاستحقاق لسداد الدفعة دون غرامة. عادةً 5-15 يوماً.',
+   example:'إذا موعد دفعتك الأول ولم تدفع — لديك فترة سماح 10 أيام عادةً'},
+  {ar:'رصيد القرض المتبقي',en:'Outstanding Balance',cat:'loans',icon:'📉',
+   def:'المبلغ الذي لا تزال مديناً به في أي وقت خلال فترة القرض.',
+   example:'بعد 12 دفعة من قرض 50,000 — الرصيد المتبقي ~43,000'},
+  {ar:'الغرامة التأخيرية',en:'Late Payment Penalty',cat:'loans',icon:'⚠️',
+   def:'رسوم إضافية تفرضها البنوك عند التأخر في السداد. قد تكون نسبة مئوية أو مبلغ ثابت.',
+   example:'بعض البنوك: 50 ريال أو 1% من الدفعة المتأخرة أيهما أكبر'},
+  {ar:'ضمان القرض',en:'Loan Collateral',cat:'loans',icon:'🏠',
+   def:'الأصل الذي تضعه كضمان للقرض. في قرض السيارة: السيارة. في العقاري: العقار.',
+   example:'إذا توقفت عن السداد — البنك يحق له أخذ الضمان'},
+  {ar:'الكفيل',en:'Guarantor / Co-signer',cat:'loans',icon:'🤝',
+   def:'شخص يوقع على القرض معك ويكون مسؤولاً عن السداد إذا تعذّر عليك.',
+   example:'أخوك يكفل قرضك = إذا لم تسدد، البنك يطالبه هو'},
+
+  /* ══ INVESTMENT استثمار ══ */
+  {ar:'صافي القيمة الحالية',en:'NPV — Net Present Value',cat:'investment',icon:'📈',
+   def:'قيمة المشروع أو الاستثمار اليوم بعد خصم التدفقات النقدية المستقبلية. NPV موجب = استثمار مربح.',
+   formula:'NPV = Σ [CF_t / (1+r)^t] - Initial Investment',
+   example:'مشروع يكلف 100,000 اليوم ويعود بـ 140,000 بعد 3 سنوات بمعدل خصم 5% → NPV = +22,938'},
+  {ar:'فترة الاسترداد',en:'Payback Period',cat:'investment',icon:'⏱️',
+   def:'الوقت اللازم لاسترداد رأس المال المستثمر من التدفقات النقدية للمشروع.',
+   formula:'فترة الاسترداد = التكلفة الأولية / التدفق النقدي السنوي',
+   example:'استثمار 120,000 يعود بـ 30,000/سنة → 4 سنوات للاسترداد'},
+  {ar:'معدل العائد على الاستثمار',en:'ROI — Return on Investment',cat:'investment',icon:'💹',
+   def:'نسبة الربح مقارنةً بالتكلفة. كلما ارتفع ROI كان الاستثمار أكثر كفاءة.',
+   formula:'ROI = (صافي الربح / التكلفة الإجمالية) × 100%',
+   example:'استثمرت 10,000 وربحت 2,000 → ROI = 20%'},
+  {ar:'التنويع',en:'Diversification',cat:'investment',icon:'🎯',
+   def:'توزيع الاستثمارات على أصول مختلفة لتقليل المخاطر. "لا تضع كل بيضك في سلة واحدة".',
+   example:'50% أسهم + 30% عقار + 20% سندات = محفظة متنوعة'},
+  {ar:'العائد المعدّل للمخاطر',en:'Risk-Adjusted Return',cat:'investment',icon:'⚖️',
+   def:'العائد الحقيقي بعد الأخذ بعين الاعتبار مستوى المخاطر. عائد 15% بمخاطر عالية قد يكون أسوأ من 10% بمخاطر منخفضة.',
+   example:'نسبة شارب = (العائد - العائد الخالي من المخاطر) / الانحراف المعياري'},
+  {ar:'التضخم',en:'Inflation',cat:'investment',icon:'📊',
+   def:'ارتفاع مستوى الأسعار بمرور الوقت مما يقلل القوة الشرائية للنقود.',
+   example:'تضخم 5% يعني أن 100 ريال اليوم = 95 ريالاً بعد سنة من حيث القوة الشرائية'},
+  {ar:'الفائدة المركّبة',en:'Compound Interest',cat:'investment',icon:'🔄',
+   def:'الفائدة التي تُضاف للرصيد ثم تُحسب عليها فائدة في الفترة التالية. "العجب الثامن في الدنيا".',
+   formula:'A = P(1 + r/n)^(nt)',
+   example:'10,000 بـ 5% سنوياً لـ 20 سنة = 26,533 بدون إيداع إضافي'},
+  {ar:'سعر الفائدة الخالي من المخاطر',en:'Risk-Free Rate',cat:'investment',icon:'🛡️',
+   def:'العائد المضمون من استثمار بدون مخاطر — عادةً سندات الحكومة. المعيار لقياس الاستثمارات الأخرى.',
+   example:'إذا سند الحكومة يعطي 4% — أي استثمار يجب أن يتجاوز 4% ليكون مبرراً'},
+
+  /* ══ ISLAMIC إسلامي ══ */
+  {ar:'المرابحة',en:'Murabaha',cat:'islamic',icon:'🕌',
+   def:'عقد يشتري فيه البنك الأصل ثم يبيعه للعميل بسعر أعلى يتضمن هامش ربح معلوم مسبقاً. الهامش ثابت ولا يتغير.',
+   example:'سيارة بـ 100,000 — البنك يشتريها ثم يبيعها بـ 120,000 على 48 شهراً',tool:'kashf',toolName:'احسب تكلفة المرابحة'},
+  {ar:'الإجارة',en:'Ijara — Islamic Lease',cat:'islamic',icon:'🏠',
+   def:'عقد إيجار إسلامي — البنك يملك الأصل وتدفع إيجاراً شهرياً. قد ينتهي بالتملك (إجارة منتهية بالتمليك).',
+   example:'اشتري سيارة بالإجارة = تدفع إيجاراً شهرياً حتى نهاية المدة ثم تملكها'},
+  {ar:'المشاركة المتناقصة',en:'Diminishing Musharaka',cat:'islamic',icon:'📉',
+   def:'شراكة بينك وبين البنك في أصل. تشتري حصة البنك تدريجياً حتى تصبح المالك الكامل.',
+   example:'تمتلك 10% من عقار والبنك 90% — كل شهر تشتري جزءاً من حصته'},
+  {ar:'القرض الحسن',en:'Qard Hasan',cat:'islamic',icon:'🤲',
+   def:'قرض بدون فائدة أو هامش ربح — للمساعدة فقط. مستحب إسلامياً.',
+   example:'تقرض صديقاً 10,000 وترجعها بدون زيادة = قرض حسن'},
+  {ar:'الربا',en:'Riba — Usury/Interest',cat:'islamic',icon:'⛔',
+   def:'الزيادة المحرّمة على القروض. الفائدة البنكية التقليدية تُصنَّف ربا في الفقه الإسلامي.',
+   example:'قرض بفائدة 6% سنوياً = ربا في الفقه الإسلامي الكلاسيكي'},
+  {ar:'الصكوك',en:'Sukuk — Islamic Bonds',cat:'islamic',icon:'📜',
+   def:'أوراق مالية إسلامية تمثل ملكية في أصل حقيقي. البديل الإسلامي للسندات التقليدية.',
+   example:'صكوك حكومية سعودية = تمويل مشاريع حكومية بطريقة متوافقة مع الشريعة'},
+  {ar:'الهيئة الشرعية',en:'Sharia Supervisory Board',cat:'islamic',icon:'⚖️',
+   def:'مجموعة من العلماء يراجعون منتجات البنك ويُصدرون فتاوى بمدى توافقها مع أحكام الشريعة.',
+   example:'بنك الراجحي والأهلي لديهم هيئات شرعية معتمدة'},
+  {ar:'التكافل',en:'Takaful — Islamic Insurance',cat:'islamic',icon:'🛡️',
+   def:'بديل إسلامي للتأمين التقليدي. المشاركون يتشاركون المخاطر بدلاً من دفع أقساط لشركة.',
+   example:'تكافل السيارات = تُساهم في صندوق مشترك بدلاً من شركة تأمين تقليدية'},
+
+  /* ══ BUSINESS أعمال ══ */
+  {ar:'نقطة التعادل',en:'Break-Even Point (BEP)',cat:'business',icon:'⚖️',
+   def:'الكمية أو الإيراد الذي يساوي فيه الدخل تماماً إجمالي التكاليف — لا ربح ولا خسارة.',
+   formula:'BEP (وحدات) = التكاليف الثابتة / (سعر البيع - التكلفة المتغيرة)',
+   example:'تكاليف ثابتة 10,000 / (سعر 50 - تكلفة 30) = 500 وحدة/شهر',tool:'prism',toolName:'احسب نقطة التعادل'},
+  {ar:'هامش المساهمة الموزون',en:'WACM — Weighted Average Contribution Margin',cat:'business',icon:'📊',
+   def:'متوسط هامش المساهمة عند تعدد المنتجات مرجّح بحصة كل منتج في المبيعات.',
+   formula:'WACM = Σ (CM_i × حصة_المنتج_i)',
+   example:'منتج A: هامش 30 بنسبة 60% + منتج B: هامش 50 بنسبة 40% = WACM 38',tool:'prism',toolName:'احسب WACM'},
+  {ar:'التكاليف الثابتة',en:'Fixed Costs',cat:'business',icon:'🏢',
+   def:'تكاليف لا تتغير مع تغيير مستوى الإنتاج — الإيجار، الرواتب، التأمين.',
+   example:'إيجار 5,000 ريال/شهر = تدفعه سواء أنتجت 100 أو 1,000 وحدة'},
+  {ar:'التكاليف المتغيرة',en:'Variable Costs',cat:'business',icon:'📦',
+   def:'تكاليف تتغير مباشرة مع مستوى الإنتاج — المواد الخام، العمالة المباشرة.',
+   example:'تكلفة مواد 10 ريال/وحدة = تنتج 100 وحدة تدفع 1,000 ريال'},
+  {ar:'هامش الربح الإجمالي',en:'Gross Margin',cat:'business',icon:'💰',
+   def:'نسبة الربح الإجمالي إلى الإيراد. لا يشمل التكاليف العامة والإدارية.',
+   formula:'Gross Margin% = (الإيراد - تكلفة المبيعات) / الإيراد × 100',
+   example:'إيراد 100,000 · تكلفة مبيعات 60,000 → هامش 40%'},
+  {ar:'الإيراد المتكرر الشهري',en:'MRR — Monthly Recurring Revenue',cat:'business',icon:'🔄',
+   def:'الإيراد الثابت المتوقع كل شهر من الاشتراكات. مقياس رئيسي لشركات SaaS.',
+   formula:'MRR = عدد المشتركين × متوسط سعر الاشتراك',
+   example:'100 مشترك × 29 دولار = MRR 2,900 دولار'},
+  {ar:'معدل الإلغاء',en:'Churn Rate',cat:'business',icon:'📉',
+   def:'نسبة العملاء الذين يلغون اشتراكاتهم في فترة محددة. انخفاضه = نجاح المنتج.',
+   formula:'Churn Rate = (عملاء ألغوا / إجمالي العملاء) × 100',
+   example:'10 إلغاءات من 200 عميل = Churn Rate 5%'},
+  {ar:'القيمة الدائمة للعميل',en:'LTV — Customer Lifetime Value',cat:'business',icon:'💎',
+   def:'إجمالي ما يدفعه العميل خلال علاقته بالشركة. يجب أن يكون أعلى بكثير من تكلفة اكتسابه.',
+   formula:'LTV = متوسط الإيراد/شهر × متوسط عمر العميل (أشهر)',
+   example:'عميل يدفع 29/شهر × 24 شهراً = LTV 696 دولار'},
+  {ar:'تكلفة اكتساب العميل',en:'CAC — Customer Acquisition Cost',cat:'business',icon:'🎯',
+   def:'التكلفة الإجمالية لاستقطاب عميل جديد تشمل التسويق والمبيعات.',
+   formula:'CAC = إجمالي مصاريف التسويق / عدد العملاء الجدد',
+   example:'أنفقت 10,000 على تسويق وحصلت على 50 عميل = CAC 200 دولار'},
+  {ar:'نقطة التحقق',en:'PMF — Product-Market Fit',cat:'business',icon:'🎯',
+   def:'اللحظة التي يثبت فيها أن منتجك يحل مشكلة حقيقية يدفع لها الناس. الهدف الأول لأي ناشئة.',
+   example:'Sean Ellis Test: إذا 40%+ من المستخدمين قالوا سيشعرون بخيبة أمل إذا اختفى المنتج = PMF'},
+
+  /* ══ RATIOS نسب ══ */
+  {ar:'نسبة الدين للدخل',en:'DTI — Debt-to-Income Ratio',cat:'ratios',icon:'📊',
+   def:'نسبة أقساطك الشهرية إلى دخلك الشهري. البنوك تطلبها أقل من 36-43% للموافقة على قروض جديدة.',
+   formula:'DTI = مجموع الأقساط الشهرية / الدخل الشهري الإجمالي × 100',
+   example:'دخل 10,000 + أقساط 3,000 = DTI 30% (مقبول)'},
+  {ar:'نسبة القرض للقيمة',en:'LTV — Loan-to-Value Ratio',cat:'ratios',icon:'🏠',
+   def:'نسبة مبلغ القرض إلى قيمة الأصل. كلما انخفضت كان خطرك أقل وشروط القرض أفضل.',
+   formula:'LTV = مبلغ القرض / قيمة الأصل × 100',
+   example:'قرض 400,000 لعقار بـ 500,000 = LTV 80%'},
+  {ar:'نسبة السيولة السريعة',en:'Quick Ratio / Acid Test',cat:'ratios',icon:'💧',
+   def:'مدى قدرة الشركة على سداد التزاماتها القصيرة من الأصول السائلة (بدون المخزون).',
+   formula:'Quick Ratio = (النقد + الذمم المدينة) / الخصوم المتداولة',
+   example:'Quick Ratio 1.5 = الشركة لديها 1.5 ريال سائل لكل ريال دين قصير الأجل'},
+  {ar:'نسبة الدين للحقوق',en:'D/E Ratio — Debt-to-Equity',cat:'ratios',icon:'⚖️',
+   def:'نسبة ديون الشركة إلى حقوق مساهميها. تُظهر مدى اعتماد الشركة على التمويل الخارجي.',
+   formula:'D/E = إجمالي الديون / حقوق المساهمين',
+   example:'D/E 2 = ديون بقيمة ضعف حقوق المساهمين (يُعتبر مرتفعاً)'},
+  {ar:'العائد على حقوق الملكية',en:'ROE — Return on Equity',cat:'ratios',icon:'💹',
+   def:'مدى كفاءة الشركة في استخدام رأس مال المساهمين لتوليد الأرباح.',
+   formula:'ROE = صافي الربح / متوسط حقوق الملكية × 100',
+   example:'ربح 500,000 / حقوق 2,000,000 = ROE 25%'},
+  {ar:'العائد على الأصول',en:'ROA — Return on Assets',cat:'ratios',icon:'🏗️',
+   def:'كفاءة استخدام جميع أصول الشركة لتوليد الأرباح.',
+   formula:'ROA = صافي الربح / إجمالي الأصول × 100',
+   example:'ربح 300,000 / أصول 3,000,000 = ROA 10%'},
+
+  /* ══ BANKING بنوك ══ */
+  {ar:'التصنيف الائتماني',en:'Credit Score',cat:'banking',icon:'⭐',
+   def:'رقم (300-850) يُعبّر عن جدارتك الائتمانية. كلما ارتفع كانت شروط القروض أفضل.',
+   example:'600+ = مقبول | 700+ = جيد | 800+ = ممتاز — فرق 50 نقطة قد يعني 2% فرق في الفائدة'},
+  {ar:'نظام ساما',en:'SAMA — Saudi Central Bank',cat:'banking',icon:'🏦',
+   def:'البنك المركزي السعودي — يُنظّم القطاع المالي ويحدد حدود الفوائد والاشتراطات.',
+   example:'ساما تحدد الحد الأقصى لنسبة التمويل للأفراد وتراقب ممارسات البنوك'},
+  {ar:'الاحتياطي الإلزامي',en:'Reserve Requirement',cat:'banking',icon:'🔒',
+   def:'نسبة من الودائع يجب أن يحتفظ بها البنك في البنك المركزي ولا يُقرضها.',
+   example:'احتياطي 5% يعني كل 100 ريال ودائع → 5 ريال محجوزة + 95 ريال قابلة للإقراض'},
+  {ar:'الرافعة المالية',en:'Financial Leverage',cat:'banking',icon:'🔧',
+   def:'استخدام الديون لتضخيم العوائد. تُضاعف الأرباح لكنها تُضاعف الخسائر أيضاً.',
+   example:'شراء عقار بـ 20% دفعة و80% قرض = رافعة مالية 5 أضعاف'},
+  {ar:'التحوط',en:'Hedging',cat:'banking',icon:'🛡️',
+   def:'استراتيجية لتقليل مخاطر تقلبات الأسعار أو أسعار الصرف.',
+   example:'شركة استيراد تشتري عقود العملة الأجنبية بسعر محدد للحماية من ارتفاعها'},
+  {ar:'الاكتتاب',en:'IPO — Initial Public Offering',cat:'banking',icon:'📈',
+   def:'أول طرح عام لأسهم الشركة للجمهور في سوق الأوراق المالية.',
+   example:'أرامكو أكبر IPO في التاريخ عام 2019 بقيمة 25.6 مليار دولار'},
+  {ar:'معدل الفائدة المرجعي',en:'Benchmark Rate / SOFR',cat:'banking',icon:'📊',
+   def:'معدل الفائدة الذي تستخدمه البنوك كمرجع لتسعير القروض والودائع.',
+   example:'سعر الإقراض الأساسي في السعودية = معدل مرجعي + هامش البنك'},
+
+  /* ══ TAX ضرائب ══ */
+  {ar:'ضريبة القيمة المضافة',en:'VAT — Value Added Tax',cat:'tax',icon:'📋',
+   def:'ضريبة تُطبّق على كل مرحلة من مراحل سلسلة القيمة. 15% في السعودية منذ 2020.',
+   example:'شراء منتج بـ 100 ريال + VAT 15 ريال = 115 ريال إجمالاً'},
+  {ar:'ضريبة الاستقطاع',en:'Withholding Tax',cat:'tax',icon:'✂️',
+   def:'ضريبة تُخصم مباشرة من المدفوعات للموردين الأجانب أو الأرباح الموزّعة.',
+   example:'دفعة 100,000 لمورد أجنبي → يُستقطع 5% = 5,000 ريال ضريبة'},
+  {ar:'الإهلاك',en:'Depreciation',cat:'tax',icon:'📉',
+   def:'توزيع تكلفة الأصل على سنوات عمره الإنتاجي. يُقلل الأرباح الخاضعة للضريبة.',
+   formula:'الإهلاك الخطي = (التكلفة - القيمة المتبقية) / العمر الإنتاجي',
+   example:'سيارة بـ 100,000 عمرها 5 سنوات = 20,000 إهلاك/سنة'},
+  {ar:'الخسارة الضريبية المُرحَّلة',en:'Tax Loss Carryforward',cat:'tax',icon:'📊',
+   def:'خسائر الشركة في سنة يمكن خصمها من أرباح السنوات القادمة لتقليل الضريبة.',
+   example:'خسارة 500,000 في 2023 تُرحَّل لتُخصم من أرباح 2024-2026'},
+  {ar:'زكاة الأعمال',en:'Zakat on Business',cat:'tax',icon:'🌙',
+   def:'الزكاة الواجبة على أموال الشركة في السعودية. 2.5% من الوعاء الزكوي سنوياً.',
+   formula:'وعاء الزكاة = رأس المال المتداول + الأرباح المحتجزة - الثوابت',
+   example:'وعاء 1,000,000 → زكاة 25,000 ريال/سنة'},
+];
+
+var currentCat = 'all';
+var currentSearch = '';
+var currentAlpha = 'all';
+
+function getFilteredTerms() {
+  return TERMS.filter(function(t) {
+    var matchCat = currentCat === 'all' || t.cat === currentCat;
+    var matchAlpha = currentAlpha === 'all' ||
+      t.ar.startsWith(currentAlpha) || t.en.toUpperCase().startsWith(currentAlpha);
+    var search = currentSearch.toLowerCase();
+    var matchSearch = !search ||
+      t.ar.includes(currentSearch) ||
+      t.en.toLowerCase().includes(search) ||
+      (t.def && t.def.includes(currentSearch)) ||
+      (t.example && t.example.includes(currentSearch));
+    return matchCat && matchAlpha && matchSearch;
+  });
+}
+
+function renderTerms() {
+  var terms = getFilteredTerms();
+  var grid = document.getElementById('gl-grid');
+  var countEl = document.getElementById('results-count');
+  countEl.textContent = 'عرض ' + terms.length + ' مصطلح' + (terms.length !== TERMS.length ? ' من أصل ' + TERMS.length : '');
+
+  if (terms.length === 0) {
+    grid.innerHTML = '<div class="no-results" style="grid-column:1/-1"><div class="no-results-icon">🔍</div><div>لا نتائج — جرّب كلمة أخرى</div></div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  terms.forEach(function(t, i) {
+    var catColors = {loans:'#c9a84c',investment:'#22c55e',islamic:'#34d399',business:'#60a5fa',ratios:'#a78bfa',banking:'#f97316',tax:'#ef4444'};
+    var col = catColors[t.cat] || '#c9a84c';
+
+    var card = document.createElement('div');
+    card.className = 'term-card';
+    card.setAttribute('itemscope','');
+    card.setAttribute('itemtype','https://schema.org/DefinedTerm');
+
+    var bodyHTML = '<div class="term-body">' +
+      '<div class="term-divider" style="margin-bottom:12px"></div>' +
+      '<div class="term-def" itemprop="description">' + t.def + '</div>';
+
+    if (t.formula) {
+      bodyHTML += '<div class="term-formula">📐 ' + t.formula + '</div>';
+    }
+    if (t.example) {
+      bodyHTML += '<div class="term-example">💡 ' + t.example + '</div>';
+    }
+    if (t.tool) {
+      bodyHTML += '<a href="/' + t.tool + '" class="term-tool">🔧 ' + t.toolName + ' ←</a>';
+    }
+    bodyHTML += '</div>';
+
+    card.innerHTML =
+      '<div class="term-hd">' +
+        '<div class="term-icon">' + t.icon + '</div>' +
+        '<div class="term-names">' +
+          '<div class="term-ar" itemprop="name">' + t.ar + '</div>' +
+          '<div class="term-en">' + t.en + '</div>' +
+        '</div>' +
+        '<div class="term-cat-badge" style="background:' + col + '18;border:1px solid ' + col + '40;color:' + col + '">' + t.cat + '</div>' +
+      '</div>' +
+      bodyHTML;
+
+    card.onclick = function() {
+      var isOpen = card.classList.contains('open');
+      document.querySelectorAll('.term-card.open').forEach(function(c){ c.classList.remove('open'); });
+      if (!isOpen) card.classList.add('open');
+    };
+
+    grid.appendChild(card);
+  });
+}
+
+function glFilter(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderTerms();
+}
+
+function glSearch() {
+  currentSearch = document.getElementById('gl-search').value;
+  renderTerms();
+}
+
+function showToast(msg) {
+  var t = document.getElementById('gl-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+window.addEventListener('load', function(){
+  document.getElementById('total-count').textContent = TERMS.length;
+  renderTerms();
+});
+</script>
+</body>
+</html>

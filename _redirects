@@ -1,0 +1,72 @@
+# Axiom Zones — Cloudflare Pages Redirects
+# ==========================================
+
+# ═══ MAIN ROUTES ═══
+/                         /axiomzones-v22-secure.html           200
+/home                     /axiomzones-v22-secure.html           200
+
+# ═══ ADMIN (noindex) ═══
+/admin                    /axiomzones-admin.html     200
+/admin/*                  /axiomzones-admin.html     200
+
+# ═══ DASHBOARD ═══
+/dashboard                /axiomzones-dashboard.html 200
+/login                    /axiomzones-dashboard.html 200
+/signup                   /axiomzones-dashboard.html 200
+
+# ═══ PRISM SUITE ═══
+/prism                    /prism-lens-v3-secure.html        200
+/prism/compare            /prism-compare-v3-secure.html     200
+/prism/payoff             /prism-payoff-v3-secure.html      200
+/prism/brand              /prism-identity.html       200
+
+# ═══ KASHF ═══
+/kashf                    /kashf-v6-secure.html             200
+/kashf/v1                 /kashf-v1.html             200
+
+# ═══ LEGAL ═══
+/privacy                  /privacy-policy.html       200
+/terms                    /terms-of-service.html     200
+/disclaimer               /disclaimer.html           200
+/refund                   /terms-of-service.html     200
+
+# ═══ TOOLS (internal) ═══
+/tools/generator          /platform-generator.html   200
+/guide                    /launch-guide.html         200
+
+/blog                    /axiomzones-blog.html      200
+/blog/*                  /axiomzones-blog.html      200
+
+# ═══ REDIRECTS ═══
+/start                    /dashboard                 302
+/get-started              /dashboard                 302
+/prism-suite              /prism                     302
+/loan-analyzer            /kashf                     302
+/bank-truth               /kashf                     302
+/ar                       /                          302
+/en                       /                          302
+
+/glossary                /axiomzones-glossary.html  200
+/uniuber                 /uniuber-v3-secure.html              200
+/kashf/v3                /kashf-v3.html             200
+/en/glossary             /glossary-en.html          200
+/en/blog                 /blog-en.html              200
+/kashf/car-loan          /kashf-car-loan.html       200
+/kashf/home-loan         /kashf-home-loan.html      200
+/kashf/rajhi-bank        /kashf-rajhi-bank.html     200
+/kashf/nbd-calculator    /kashf-nbd-calculator.html 200
+/kashf/personal-loan     /kashf-personal-loan.html  200
+/blog/bank-hides-irr                       /blog-ar-bank-hides-irr.html 200
+/en/blog/bank-hides-irr                    /blog-en-bank-hides-irr.html 200
+/fr/blog/bank-hides-irr                    /blog-fr-bank-hides-irr.html 200
+/blog/murabaha-vs-loan                     /blog-ar-murabaha-vs-loan.html 200
+/en/blog/murabaha-vs-loan                  /blog-en-murabaha-vs-loan.html 200
+/fr/blog/murabaha-vs-loan                  /blog-fr-murabaha-vs-loan.html 200
+/blog/break-even-guide                     /blog-ar-break-even-guide.html 200
+/en/blog/break-even-guide                  /blog-en-break-even-guide.html 200
+/fr/blog/break-even-guide                  /blog-fr-break-even-guide.html 200
+/v6                      /axiomzones-v6.html        200
+/kashf/v4                /kashf-v4.html             200
+/prism/identity              /prism-identity.html                200
+/aqar                     /aqar-v3-secure.html              200
+/dar                      /dar-v3-secure.html               200

@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self)"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Prism Payoff — Should You Pay Off Your Loan Now?</title>
+<meta name="description" content="You have cash and an existing loan. Prism Payoff tells you exactly what to do — full payoff, partial, or invest the cash instead."/>
+<meta property="og:title" content="Prism Payoff — Early Loan Repayment Analyzer"/>
+<meta property="og:description" content="Real analysis: pay off now vs invest vs partial payoff. 100+ languages, 155+ currencies."/>
+<meta name="theme-color" content="#8b5cf6"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Prism Payoff"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#070710;--bg2:#0e0e1c;--bg3:#16162a;--bg4:#1e1e32;--bg5:#26263e;
+  --border:rgba(255,255,255,.07);--bh:rgba(255,255,255,.14);
+  --p1:#6366f1;--p2:#818cf8;--p3:#38bdf8;--p4:#34d399;--p5:#fbbf24;--p6:#f472b6;
+  --pri:#8b5cf6;--pril:#a78bfa;--prig:rgba(139,92,246,.14);
+  --gold:#d4a853;--gold2:#f0c040;
+  --gn:#22c55e;--rd:#ef4444;--or:#f97316;--cy:#06b6d4;--bl:#3b82f6;
+  --t1:#f8f7ff;--t2:#9490b8;--t3:#4a4870;
+  --fd:'Cormorant',Georgia,serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);--ease2:cubic-bezier(.34,1.56,.64,1);
+}
+[data-theme=light]{
+  --bg:#f0eeff;--bg2:#e8e4f8;--bg3:#ddd8f0;--bg4:#d4cfe8;--bg5:#cac4e0;
+  --border:rgba(0,0,0,.09);--bh:rgba(0,0,0,.18);
+  --t1:#1a1440;--t2:#706890;--t3:#c0b8d8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{background:var(--bg);color:var(--t1);font-family:var(--fs);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+::selection{background:rgba(139,92,246,.28)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--pri);border-radius:3px}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px;border-radius:3px}
+
+/* ══ SCROLL PROGRESS ══ */
+#sp{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p4),var(--p5));z-index:9999;width:0;pointer-events:none}
+
+/* ══ HEADER ══ */
+.hdr{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:rgba(7,7,16,.6);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
+[data-theme=light] .hdr{background:rgba(240,238,255,.7)}
+.hdr-brand{display:flex;align-items:center;gap:12px}
+.hdr-logo{font-family:var(--fd);font-size:1.45rem;font-weight:700;letter-spacing:-1px;background:linear-gradient(135deg,var(--t1),var(--t2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.hdr-suite{font-family:var(--fm);font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--t3);margin-top:2px}
+.hdr-back{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:.66rem;letter-spacing:1px;color:var(--t2);text-decoration:none;padding:6px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;cursor:pointer;transition:all .25s}
+.hdr-back:hover{border-color:var(--pri);color:var(--pril)}
+.tbtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--t2);cursor:pointer;font-size:.95rem;transition:all .25s;display:flex;align-items:center;justify-content:center}
+.tbtn:hover{border-color:var(--pri);color:var(--pril)}
+.badge{font-family:var(--fm);font-size:.6rem;letter-spacing:2px;padding:4px 10px;border-radius:3px;text-transform:uppercase}
+.bg-pu{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.28);color:var(--pril)}
+.bg-gd{background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.25);color:var(--gold)}
+
+/* Spectrum strip */
+.specbar{height:2px;background:linear-gradient(90deg,var(--p1),var(--p2),var(--p3),var(--p4),var(--p5),var(--p6))}
+
+/* ══ TOOLBAR ══ */
+.toolbar{padding:7px 24px;background:rgba(14,14,28,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+[data-theme=light] .toolbar{background:rgba(210,207,232,.9)}
+.tblbl{font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--t3);text-transform:uppercase;flex-shrink:0}
+.tbsel{background:var(--bg3);border:1px solid var(--border);color:var(--t1);padding:5px 9px;border-radius:5px;font-family:var(--fs);font-size:.76rem;outline:none;cursor:pointer;max-width:168px;transition:border-color .2s}
+.tbsel:hover,.tbsel:focus{border-color:var(--pri)}
+[data-theme=light] .tbsel{background:var(--bg4)}
+.tbdiv{width:1px;height:18px;background:rgba(255,255,255,.07);flex-shrink:0}
+.cqb{padding:3px 9px;border-radius:4px;font-size:.68rem;font-family:var(--fm);background:var(--bg3);border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .2s}
+.cqb.on,.cqb:hover{border-color:var(--pri);color:var(--pril);background:var(--prig)}
+
+/* ══ HERO ══ */
+.hero{padding:48px 24px 32px;text-align:center;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.08),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:hg 7s ease-in-out infinite}
+@keyframes hg{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:.63rem;letter-spacing:3px;text-transform:uppercase;color:var(--pril);border:1px solid rgba(139,92,246,.22);padding:5px 14px;border-radius:50px;margin-bottom:18px;background:rgba(139,92,246,.06);position:relative;z-index:1}
+.htd{width:5px;height:5px;border-radius:50%;background:var(--p4);animation:bk 2s infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:var(--fd);font-size:clamp(2.5rem,7vw,6rem);font-weight:700;letter-spacing:-2px;line-height:.9;margin-bottom:14px;position:relative;z-index:1}
+.h1-main{background:linear-gradient(135deg,var(--t1),var(--t2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.h1-acc{font-style:italic;font-weight:300;background:linear-gradient(135deg,var(--p1),var(--p3),var(--p4),var(--p5));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;animation:spec 6s linear infinite}
+@keyframes spec{0%{background-position:0% center}100%{background-position:200% center}}
+.hero-sub{font-size:clamp(.88rem,1.8vw,1.05rem);color:var(--t2);max-width:480px;margin:0 auto 28px;line-height:1.9;position:relative;z-index:1}
+
+/* ══ LAYOUT ══ */
+.app{max-width:1120px;margin:0 auto;padding:0 20px 80px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.g2{grid-template-columns:1fr}}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){.g3{grid-template-columns:1fr}}
+
+/* ══ CARDS ══ */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.ctitle{font-family:var(--fm);font-size:.64rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.ctitle::before{content:'';width:10px;height:2px;background:currentColor;flex-shrink:0}
+.c-pri{color:var(--pri)}.c-gn{color:var(--gn)}.c-rd{color:var(--rd)}
+.c-gd{color:var(--gold)}.c-cy{color:var(--cy)}.c-or{color:var(--or)}
+.c-bl{color:var(--bl)}.c-pu{color:var(--pril)}
+
+/* ══ FORM ══ */
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:.72rem;color:var(--t2);margin-bottom:5px}
+.fld label .sym{color:var(--gold);font-size:.63rem;margin-inline-start:3px}
+.inp{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--t1);padding:9px 12px;border-radius:7px;font-family:var(--fs);font-size:.9rem;outline:none;transition:border-color .25s;-moz-appearance:textfield}
+.inp::-webkit-inner-spin-button{-webkit-appearance:none}
+.inp:focus{border-color:var(--pri)}
+[data-theme=light] .inp{background:var(--bg4)}
+.sw{position:relative;margin-top:4px;padding-bottom:2px}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold2);border:2px solid var(--bg);cursor:pointer}
+.sv{position:absolute;top:-19px;font-size:.67rem;font-family:var(--fm);color:var(--gold2)}
+
+/* TOGGLE */
+.tg{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden;margin-bottom:10px}
+.tp{flex:1;padding:7px;text-align:center;font-size:.78rem;background:transparent;border:none;color:var(--t2);cursor:pointer;transition:all .2s;font-family:var(--fs)}
+.tp.on{background:var(--pri);color:#fff;font-weight:700}
+
+/* ══ RESULTS ══ */
+.hl{display:flex;justify-content:space-between;align-items:center;padding:8px 11px;border-radius:7px;margin-bottom:5px;background:var(--bg3)}
+.hlk{font-size:.76rem;color:var(--t2)}
+.hlv{font-family:var(--fm);font-size:.8rem;font-weight:700}
+.hlv.gn{color:var(--gn)}.hlv.rd{color:var(--rd)}.hlv.gd{color:var(--gold2)}
+.hlv.pu{color:var(--pril)}.hlv.cy{color:var(--cy)}.hlv.or{color:var(--or)}.hlv.bl{color:var(--bl)}
+.div{height:1px;background:var(--border);margin:12px 0}
+
+/* ══ VERDICT PANEL ══ */
+.verdict{padding:20px;border-radius:12px;border:1px solid;margin-bottom:14px;position:relative;overflow:hidden}
+.verdict::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--vcolor,var(--pri))}
+.verdict.payoff{--vcolor:var(--gn);background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.22)}
+.verdict.invest{--vcolor:var(--cy);background:rgba(6,182,212,.05);border-color:rgba(6,182,212,.22)}
+.verdict.partial{--vcolor:var(--gold);background:rgba(212,168,83,.05);border-color:rgba(212,168,83,.22)}
+.verdict.neutral{--vcolor:var(--pri);background:rgba(139,92,246,.05);border-color:rgba(139,92,246,.22)}
+.vi{font-size:2rem;margin-bottom:8px}
+.vt{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+.vd{font-size:.8rem;color:var(--t2);line-height:1.8}
+.vtag{display:inline-block;font-family:var(--fm);font-size:.62rem;letter-spacing:2px;padding:3px 10px;border-radius:3px;text-transform:uppercase;margin-top:10px}
+
+/* ══ 3 SCENARIOS COMPARE ══ */
+.scen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+@media(max-width:720px){.scen-grid{grid-template-columns:1fr}}
+.scen-card{padding:16px;border-radius:10px;border:2px solid transparent;background:var(--bg3);transition:all .3s;position:relative;overflow:hidden}
+.scen-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc,var(--border))}
+.scen-card.best{border-color:rgba(34,197,94,.3)}
+.scen-name{font-family:var(--fs);font-size:.82rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.best-lbl{font-size:.58rem;padding:2px 6px;border-radius:3px;background:rgba(34,197,94,.12);color:var(--gn);font-family:var(--fm)}
+.scen-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:.74rem}
+.scen-row:last-child{border-bottom:none}
+.scen-key{color:var(--t2)}
+.scen-val{font-family:var(--fm);font-size:.7rem}
+
+/* ══ CHART ══ */
+.chart-box{background:var(--bg3);border-radius:9px;padding:14px;margin-bottom:12px}
+.chart-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.leg{display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--t2)}
+.leg-dot{width:20px;height:3px;border-radius:2px}
+svg.chart{width:100%;overflow:visible}
+
+/* ══ AMORTIZATION TABLE ══ */
+.tbl-wrap{max-height:240px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
+.tbl-wrap::-webkit-scrollbar{width:2px}
+.tbl-wrap::-webkit-scrollbar-thumb{background:var(--pri)}
+table{width:100%;border-collapse:collapse;font-size:.72rem}
+thead th{padding:8px 10px;text-align:start;font-family:var(--fm);font-size:.58rem;letter-spacing:1px;color:var(--t2);background:var(--bg2);position:sticky;top:0;z-index:1;border-bottom:1px solid var(--border)}
+tbody td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03);font-family:var(--fm)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+tbody tr.payoff-row td{background:rgba(34,197,94,.06);color:var(--gn);font-weight:700}
+.bs{display:inline-block;padding:2px 5px;border-radius:3px;font-size:.58rem}
+.bg{background:rgba(34,197,94,.1);color:var(--gn)}
+.br{background:rgba(239,68,68,.1);color:var(--rd)}
+.bo{background:rgba(212,168,83,.1);color:var(--gold)}
+
+/* ══ EARLY PAYOFF SLIDER ══ */
+.ep-row{display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--bg3);border-radius:7px;margin-bottom:5px;border:1px solid transparent;transition:all .22s;cursor:pointer}
+.ep-row:hover,.ep-row.sel{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04)}
+.ep-mo{font-family:var(--fm);font-size:.7rem;color:var(--t2);min-width:55px}
+.ep-bar{flex:1;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden}
+.ep-fill{height:100%;background:linear-gradient(90deg,var(--gn),var(--cy));border-radius:2px;transition:width .5s var(--ease)}
+.ep-sav{font-family:var(--fm);font-size:.7rem;color:var(--gn);min-width:80px;text-align:end}
+
+/* ══ INFLATION SECTION ══ */
+.inf-box{padding:14px;border-radius:9px;background:rgba(249,115,22,.04);border:1px solid rgba(249,115,22,.16);margin-bottom:12px}
+.inf-title{font-family:var(--fm);font-size:.62rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--or);margin-bottom:10px}
+
+/* ══ TABS ══ */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:16px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:8px 14px;border:none;background:transparent;color:var(--t2);cursor:pointer;font-family:var(--fs);font-size:.78rem;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .22s;white-space:nowrap}
+.tab.on{color:var(--pri);border-bottom-color:var(--pri)}
+.tpane{display:none}
+.tpane.on{display:block}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--bg2);border:1px solid rgba(139,92,246,.28);color:var(--t1);padding:10px 18px;border-radius:9px;font-size:.76rem;z-index:9999;transition:transform .4s var(--ease);box-shadow:0 12px 40px rgba(0,0,0,.6);font-family:var(--fm);letter-spacing:.5px;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ══ BACK TO TOP ══ */
+#backtop{position:fixed;bottom:24px;right:20px;z-index:900;width:38px;height:38px;border-radius:50%;background:var(--pri);color:#fff;border:none;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 18px rgba(139,92,246,.4);opacity:0;transform:translateY(16px);transition:all .3s var(--ease);pointer-events:none}
+#backtop.show{opacity:1;transform:translateY(0);pointer-events:all}
+#backtop:hover{background:var(--pril);transform:translateY(-2px)}
+
+/* ══ MOBILE BOTTOM NAV ══ */
+#mobnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:980;background:rgba(14,14,28,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.07);padding:6px 0 env(safe-area-inset-bottom,6px)}
+[data-theme=light] #mobnav{background:rgba(220,216,240,.96)}
+@media(max-width:760px){#mobnav{display:block}}
+.mobnav-inner{display:flex;justify-content:space-around;align-items:center}
+.mni{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 14px;border:none;background:transparent;cursor:pointer;transition:all .22s;border-radius:8px;color:var(--t3);font-family:var(--fm)}
+.mni.act{color:var(--pri)}
+.mni-i{font-size:1.1rem}
+.mni-l{font-size:.5rem;letter-spacing:1px;text-transform:uppercase}
+
+/* ══ ACTION STRIP ══ */
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.abtn{padding:8px 16px;border-radius:7px;font-family:var(--fs);font-size:.76rem;font-weight:600;cursor:pointer;transition:all .22s;border:none;display:flex;align-items:center;gap:5px}
+.ab-p{background:var(--pri);color:#fff}.ab-p:hover{background:var(--pril)}
+.ab-o{background:transparent;border:1px solid var(--border);color:var(--t2)}.ab-o:hover{border-color:var(--pri);color:var(--pri)}
+.ab-g{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}.ab-g:hover{transform:translateY(-1px)}
+.ab-wa{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.28);color:#25d366}.ab-wa:hover{background:rgba(37,211,102,.2)}
+.ab-cy{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.28);color:var(--cy)}.ab-cy:hover{background:rgba(6,182,212,.22)}
+
+/* ══ HISTORY ══ */
+#hist-sec{margin-top:12px;display:none}
+#hist-sec.show{display:block}
+.hist-t{font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.hist-clr{background:none;border:none;color:var(--t3);cursor:pointer;font-size:.64rem;font-family:var(--fm);transition:color .2s}.hist-clr:hover{color:var(--rd)}
+.hist-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:7px;background:var(--bg3);margin-bottom:4px;cursor:pointer;border:1px solid transparent;transition:all .22s}
+.hist-item:hover{border-color:rgba(139,92,246,.2);background:var(--prig)}
+.hist-lbl{font-size:.72rem;color:var(--t2)}
+.hist-val{font-family:var(--fm);font-size:.68rem;color:var(--pril)}
+
+/* ══ URL RESULT ══ */
+.url-box{margin-top:8px;padding:8px 11px;background:var(--bg3);border-radius:7px;font-family:var(--fm);font-size:.62rem;color:var(--t3);word-break:break-all;display:none;border:1px solid var(--border)}
+.url-box.show{display:block}
+
+/* Print */
+@media print{
+  #sp,#mobnav,#backtop,.toolbar,.hdr-back,.actions,.tabs,
+  button.tab{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .card{background:#f5f5f5!important;border-color:#ddd!important}
+}
+
+/* ══ SIDEBAR v4r2 ══ */
+#sb-ov4{position:fixed;inset:0;z-index:1998;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .35s}
+#sb-ov4.open{opacity:1;pointer-events:all}
+#sidebar4{position:fixed;top:0;right:0;bottom:0;z-index:1999;width:min(310px,90vw);background:var(--bg2);border-left:1px solid rgba(139,92,246,.14);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);overflow:hidden}
+#sidebar4.open{transform:translateX(0)}
+.s4-top{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;background:rgba(139,92,246,.04);flex-shrink:0}
+.s4-logo{font-family:var(--fd);font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,var(--t1),var(--t2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s4-close{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--t2);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.s4-close:hover{border-color:var(--rd);color:var(--rd)}
+.s4-body{flex:1;overflow-y:auto;padding:0}
+.s4-sec{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.s4-stitle{font-family:var(--fm);font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--pri);margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.s4-stitle::before{content:'';width:6px;height:1px;background:var(--pri)}
+.s4-link{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:8px;margin-bottom:4px;color:var(--t1);font-size:.85rem;font-weight:500;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .22s;width:100%;text-align:start;font-family:var(--fs)}
+.s4-link:hover,.s4-link.act{background:var(--prig);border-color:rgba(139,92,246,.18)}
+.s4-foot{padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
+
+/* Counter animation */
+.count-up{display:inline-block}
+</style>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="icon" type="image/x-icon" href="/icons/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+</head>
+<body>
+<div style="background:rgba(201,168,76,.05);border-bottom:1px solid rgba(201,168,76,.12);padding:8px 20px;text-align:center;font-family:monospace;font-size:.62rem;color:#8892b0;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap" id="p-clarity-banner"><span style="color:#c9a84c">&#x26A1; We Reveal &#xB7; We Calculate &#xB7; You Decide</span><span style="color:#3d4a6b">|</span><span>Results for financial clarity &#x2014; not financial advice</span><span style="color:#3d4a6b">|</span><a href="/disclaimer" target="_blank" style="color:#c9a84c;text-decoration:none">Disclaimer &#x2197;</a></div>
+
+
+<!-- ══ FINANCIAL CLARITY BANNER ══ -->
+
+
+<div id="sp"></div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-brand">
+    <svg width="28" height="34" viewBox="0 0 28 34">
+      <defs><linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="45%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs>
+      <polygon points="14,2 25,30 3,30" fill="none" stroke="url(#pg)" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="4" y1="17" x2="12" y2="17" stroke="#6366f1" stroke-width="1.3" stroke-dasharray="2,1.5" opacity=".7"/>
+      <line x1="16" y1="17" x2="27" y2="9" stroke="#38bdf8" stroke-width="1.3" opacity=".95"/>
+      <line x1="16" y1="17" x2="27" y2="16" stroke="#34d399" stroke-width="1.3" opacity=".9"/>
+      <line x1="16" y1="17" x2="27" y2="24" stroke="#fbbf24" stroke-width="1.3" opacity=".8"/>
+      <line x1="16" y1="17" x2="27" y2="30" stroke="#f472b6" stroke-width="1.2" opacity=".65"/>
+      <circle cx="16" cy="17" r="2" fill="url(#pg)"/>
+    </svg>
+    <div>
+      <div class="hdr-logo">Prism <em style="font-weight:300;font-style:italic">Payoff</em></div>
+      <div class="hdr-suite">The Truth Behind Every Deal · Axiom Zones</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span class="badge bg-pu">Payoff Analyzer</span>
+    <span class="badge bg-gd">Axiom Zones</span>
+    <button class="tbtn" id="tbtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+  </div>
+</div>
+<div class="specbar"></div>
+<!-- Tools Suite Strip -->
+<div style="background:rgba(14,14,28,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:8px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+  <a href="prism-v2r7.html" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);text-decoration:none;display:flex;align-items:center;gap:5px;flex-shrink:0" title="Back to Prism Home">← Prism Home</a>
+  <div style="width:1px;height:16px;background:rgba(255,255,255,.07)"></div>
+  <a href="prism-v3r1.html" style="font-family:'Syne',sans-serif;font-size:.74rem;font-weight:600;color:var(--pril);text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid rgba(139,92,246,.22);background:rgba(139,92,246,.08);transition:all .2s" onmouseover="this.style.background='rgba(139,92,246,.18)'" onmouseout="this.style.background='rgba(139,92,246,.08)'">⚖️ Compare</a>
+  <a href="prism-v4r1.html" style="font-family:'Syne',sans-serif;font-size:.74rem;font-weight:600;color:var(--cy);text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid rgba(6,182,212,.2);background:rgba(6,182,212,.06);transition:all .2s" onmouseover="this.style.background='rgba(6,182,212,.14)'" onmouseout="this.style.background='rgba(6,182,212,.06)'">💸 Payoff</a>
+  <div style="margin-inline-start:auto;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:1.5px;color:var(--t3)">Prism Suite · getprism.app</div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <span class="tblbl">🌐</span>
+  <select class="tbsel" id="lang-sel" onchange="handleLang(this.value)" aria-label="Language">
+    <optgroup label="Arabic عربية"><option value="ar">🇸🇦 العربية</option><option value="fa">🇮🇷 فارسی</option><option value="ur">🇵🇰 اردو</option><option value="he">🇮🇱 עברית</option><option value="ku">🇮🇶 Kurdî</option></optgroup>
+    <optgroup label="Western Europe"><option value="en" selected>🇬🇧 English</option><option value="fr">🇫🇷 Français</option><option value="es">🇪🇸 Español</option><option value="pt">🇧🇷 Português</option><option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option><option value="nl">🇳🇱 Nederlands</option><option value="sv">🇸🇪 Svenska</option><option value="no">🇳🇴 Norsk</option><option value="da">🇩🇰 Dansk</option><option value="fi">🇫🇮 Suomi</option><option value="is">🇮🇸 Íslenska</option><option value="ca">Català</option><option value="eu">Euskara</option><option value="gl">Galego</option><option value="cy">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg</option><option value="ga">🇮🇪 Gaeilge</option><option value="lb">Lëtzebuergesch</option></optgroup>
+    <optgroup label="Eastern Europe"><option value="ru">🇷🇺 Русский</option><option value="uk">🇺🇦 Українська</option><option value="pl">🇵🇱 Polski</option><option value="cs">🇨🇿 Čeština</option><option value="sk">🇸🇰 Slovenčina</option><option value="hu">🇭🇺 Magyar</option><option value="ro">🇷🇴 Română</option><option value="bg">🇧🇬 Български</option><option value="sr">🇷🇸 Српски</option><option value="hr">🇭🇷 Hrvatski</option><option value="sl">🇸🇮 Slovenščina</option><option value="lt">🇱🇹 Lietuvių</option><option value="lv">🇱🇻 Latviešu</option><option value="et">🇪🇪 Eesti</option><option value="el">🇬🇷 Ελληνικά</option><option value="sq">🇦🇱 Shqip</option><option value="mk">🇲🇰 Македонски</option><option value="bs">🇧🇦 Bosanski</option><option value="ka">🇬🇪 ქართული</option><option value="hy">🇦🇲 Հայերեն</option><option value="az">🇦🇿 Azərbaycan</option><option value="kk">🇰🇿 Қазақ</option><option value="uz">🇺🇿 O'zbek</option><option value="be">🇧🇾 Беларуская</option><option value="tr">🇹🇷 Türkçe</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="tg">Тоҷикӣ</option><option value="mn">🇲🇳 Монгол</option></optgroup>
+    <optgroup label="Asia Pacific"><option value="zh">🇨🇳 中文简体</option><option value="zh-tw">🇹🇼 中文繁體</option><option value="ja">🇯🇵 日本語</option><option value="ko">🇰🇷 한국어</option><option value="hi">🇮🇳 हिन्दी</option><option value="bn">🇧🇩 বাংলা</option><option value="ta">🇮🇳 தமிழ்</option><option value="te">🇮🇳 తెలుగు</option><option value="mr">🇮🇳 मराठी</option><option value="gu">🇮🇳 ગુજરાતી</option><option value="pa">🇮🇳 ਪੰਜਾਬੀ</option><option value="ne">🇳🇵 नेपाली</option><option value="si">🇱🇰 සිංහල</option><option value="my">🇲🇲 မြန်မာ</option><option value="th">🇹🇭 ภาษาไทย</option><option value="lo">🇱🇦 ລາວ</option><option value="km">🇰🇭 ខ្មែរ</option><option value="vi">🇻🇳 Tiếng Việt</option><option value="id">🇮🇩 Bahasa Indonesia</option><option value="ms">🇲🇾 Bahasa Melayu</option><option value="tl">🇵🇭 Filipino</option><option value="jv">Basa Jawa</option><option value="su">Basa Sunda</option><option value="ceb">Cebuano</option></optgroup>
+    <optgroup label="S.Asia"><option value="sd">سنڌي</option><option value="ps">پښتو</option><option value="dv">ދިވެހި</option></optgroup>
+    <optgroup label="Africa"><option value="sw">🇰🇪 Kiswahili</option><option value="am">🇪🇹 አማርኛ</option><option value="yo">🇳🇬 Yorùbá</option><option value="ha">🇳🇬 Hausa</option><option value="ig">🇳🇬 Igbo</option><option value="zu">🇿🇦 isiZulu</option><option value="af">🇿🇦 Afrikaans</option><option value="so">🇸🇴 Soomaali</option><option value="rw">🇷🇼 Kinyarwanda</option><option value="sn">ChiShona</option><option value="st">Sesotho</option><option value="xh">isiXhosa</option><option value="ny">Chichewa</option><option value="mg">Malagasy</option></optgroup>
+    <optgroup label="Americas"><option value="pt-br">🇧🇷 Português BR</option><option value="qu">🇵🇪 Quechua</option><option value="ay">Aymara</option><option value="gn">Guaraní</option></optgroup>
+    <optgroup label="Pacific"><option value="haw">Hawaiian</option><option value="sm">Gagana Samoa</option><option value="mi">Māori</option><option value="fj">Vosa Vakaviti</option></optgroup>
+  </select>
+
+  <div class="tbdiv"></div>
+  <span class="tblbl">💰</span>
+  <select class="tbsel" id="curr-sel" onchange="setCurr(this.value)" aria-label="Currency" style="max-width:130px">
+    <optgroup label="Gulf خليجي"><option value="SAR">﷼ SAR</option><option value="AED">AED</option><option value="KWD">KWD</option><option value="BHD">BHD</option><option value="OMR">OMR</option><option value="QAR">QAR</option></optgroup>
+    <optgroup label="Arab عربي"><option value="EGP">EGP</option><option value="JOD">JOD</option><option value="MAD">MAD</option><option value="TND">TND</option><option value="DZD">DZD</option><option value="LYD">LYD</option><option value="IQD">IQD</option><option value="LBP">LBP</option><option value="SDG">SDG</option><option value="YER">YER</option><option value="SYP">SYP</option></optgroup>
+    <optgroup label="Major رئيسي"><option value="USD" selected>$ USD</option><option value="EUR">€ EUR</option><option value="GBP">£ GBP</option><option value="JPY">¥ JPY</option><option value="CNY">¥ CNY</option><option value="CHF">Fr CHF</option><option value="CAD">C$ CAD</option><option value="AUD">A$ AUD</option><option value="NZD">NZ$ NZD</option><option value="SGD">S$ SGD</option><option value="HKD">HK$ HKD</option><option value="TWD">NT$ TWD</option></optgroup>
+    <optgroup label="W.Europe"><option value="NOK">kr NOK</option><option value="SEK">kr SEK</option><option value="DKK">kr DKK</option><option value="ISK">kr ISK</option></optgroup>
+    <optgroup label="E.Europe"><option value="PLN">zł PLN</option><option value="CZK">Kč CZK</option><option value="HUF">Ft HUF</option><option value="RON">lei RON</option><option value="BGN">лв BGN</option><option value="HRK">kn HRK</option><option value="RSD">din RSD</option><option value="ALL">L ALL</option><option value="MKD">den MKD</option><option value="BAM">KM BAM</option><option value="RUB">₽ RUB</option><option value="UAH">₴ UAH</option><option value="BYN">Br BYN</option><option value="MDL">L MDL</option><option value="GEL">₾ GEL</option><option value="AMD">֏ AMD</option><option value="AZN">₼ AZN</option><option value="TRY">₺ TRY</option><option value="KZT">₸ KZT</option><option value="UZS">UZS</option><option value="KGS">KGS</option><option value="TJS">TJS</option><option value="TMT">T TMT</option></optgroup>
+    <optgroup label="S.Asia"><option value="INR">₹ INR</option><option value="PKR">₨ PKR</option><option value="BDT">৳ BDT</option><option value="LKR">Rs LKR</option><option value="NPR">Rs NPR</option><option value="MVR">Rf MVR</option><option value="BTN">Nu BTN</option><option value="AFN">؋ AFN</option><option value="ILS">₪ ILS</option></optgroup>
+    <optgroup label="SE.Asia"><option value="KRW">₩ KRW</option><option value="THB">฿ THB</option><option value="IDR">Rp IDR</option><option value="MYR">RM MYR</option><option value="PHP">₱ PHP</option><option value="VND">₫ VND</option><option value="MMK">K MMK</option><option value="KHR">CR KHR</option><option value="LAK">₭ LAK</option><option value="BND">B$ BND</option><option value="MNT">₮ MNT</option></optgroup>
+    <optgroup label="N.America"><option value="MXN">$ MXN</option><option value="GTQ">Q GTQ</option><option value="HNL">L HNL</option><option value="NIO">C$ NIO</option><option value="CRC">₡ CRC</option><option value="DOP">RD$ DOP</option><option value="JMD">J$ JMD</option><option value="TTD">TT$ TTD</option><option value="BBD">Bds$ BBD</option><option value="XCD">EC$ XCD</option><option value="BSD">B$ BSD</option><option value="BZD">BZ$ BZD</option><option value="HTG">G HTG</option><option value="AWG">ƒ AWG</option><option value="ANG">ƒ ANG</option><option value="PAB">B/. PAB</option></optgroup>
+    <optgroup label="S.America"><option value="BRL">R$ BRL</option><option value="ARS">$ ARS</option><option value="CLP">$ CLP</option><option value="COP">$ COP</option><option value="PEN">S/ PEN</option><option value="UYU">$ UYU</option><option value="BOB">Bs BOB</option><option value="PYG">₲ PYG</option><option value="VES">Bs VES</option><option value="GYD">G$ GYD</option><option value="SRD">$ SRD</option></optgroup>
+    <optgroup label="W.Africa"><option value="NGN">₦ NGN</option><option value="GHS">₵ GHS</option><option value="XOF">F XOF</option><option value="GMD">D GMD</option><option value="GNF">FG GNF</option><option value="SLL">Le SLL</option><option value="LRD">L$ LRD</option></optgroup>
+    <optgroup label="E.Africa"><option value="KES">KSh KES</option><option value="TZS">TSh TZS</option><option value="UGX">USh UGX</option><option value="ETB">Br ETB</option><option value="RWF">Fr RWF</option><option value="BIF">Fr BIF</option><option value="DJF">Fdj DJF</option><option value="ERN">Nkf ERN</option><option value="SSP">£ SSP</option><option value="SOS">Sh SOS</option></optgroup>
+    <optgroup label="S.Africa"><option value="ZAR">R ZAR</option><option value="BWP">P BWP</option><option value="NAD">N$ NAD</option><option value="ZMW">K ZMW</option><option value="MWK">MK MWK</option><option value="MZN">MT MZN</option><option value="AOA">Kz AOA</option><option value="ZWL">Z$ ZWL</option></optgroup>
+    <optgroup label="C.Africa"><option value="XAF">F XAF</option><option value="CDF">FC CDF</option></optgroup>
+    <optgroup label="Islands"><option value="MGA">Ar MGA</option><option value="MUR">₨ MUR</option><option value="SCR">₨ SCR</option><option value="CVE">$ CVE</option><option value="KMF">CF KMF</option><option value="STN">Db STN</option><option value="FJD">FJ$ FJD</option><option value="PGK">K PGK</option><option value="WST">T WST</option><option value="VUV">Vt VUV</option><option value="SBD">SI$ SBD</option><option value="TOP">T$ TOP</option><option value="XPF">CFP XPF</option></optgroup>
+    <optgroup label="Special"><option value="XAU">⊛ XAU Gold</option><option value="XAG">⊛ XAG Silver</option><option value="XDR">SDR</option></optgroup>
+    <optgroup label="Digital رقمي"><option value="BTC">₿ BTC</option><option value="ETH">Ξ ETH</option><option value="USDT">₮ USDT</option><option value="USDC">$ USDC</option><option value="BNB">BNB</option><option value="XRP">XRP</option><option value="ADA">₳ ADA</option><option value="SOL">◎ SOL</option></optgroup>
+  </select>
+
+  <div class="tbdiv"></div>
+  <button class="cqb" onclick="setCurr('SAR')">﷼</button>
+  <button class="cqb on" onclick="setCurr('USD')">$</button>
+  <button class="cqb" onclick="setCurr('EUR')">€</button>
+  <button class="cqb" onclick="setCurr('GBP')">£</button>
+  <button class="cqb" onclick="setCurr('AED')">AED</button>
+  <button class="cqb" onclick="setCurr('KWD')">KWD</button>
+  <button class="cqb" onclick="setCurr('BTC')">₿</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-tag"><span class="htd"></span>Prism Payoff Analyzer</div>
+  <h1>
+    <span class="h1-main">Pay Off Now?</span>
+    <span class="h1-acc">Or Invest Instead?</span>
+  </h1>
+  <p class="hero-sub">You have cash. You have an existing loan. Prism tells you exactly what to do — full payoff, partial, or keep investing.</p>
+</div>
+
+<div class="app">
+
+<!-- PRESET SCENARIOS -->
+<div style="margin-bottom:14px">
+  <div style="font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:8px">⚡ Quick examples</div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap">
+    <button style="padding:5px 12px;border-radius:7px;font-size:.74rem;font-family:var(--fs);background:var(--bg3);border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .22s" onmouseover="this.style.borderColor='var(--pri)'" onmouseout="this.style.borderColor=''" onclick="loadPreset('car')">🚗 Car Loan</button>
+    <button style="padding:5px 12px;border-radius:7px;font-size:.74rem;font-family:var(--fs);background:var(--bg3);border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .22s" onmouseover="this.style.borderColor='var(--pri)'" onmouseout="this.style.borderColor=''" onclick="loadPreset('home')">🏠 Home Loan</button>
+    <button style="padding:5px 12px;border-radius:7px;font-size:.74rem;font-family:var(--fs);background:var(--bg3);border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .22s" onmouseover="this.style.borderColor='var(--pri)'" onmouseout="this.style.borderColor=''" onclick="loadPreset('personal')">💳 Personal Loan</button>
+    <button style="padding:5px 12px;border-radius:7px;font-size:.74rem;font-family:var(--fs);background:var(--bg3);border:1px solid var(--border);color:var(--t2);cursor:pointer;transition:all .22s" onmouseover="this.style.borderColor='var(--pri)'" onmouseout="this.style.borderColor=''" onclick="loadPreset('business')">🏢 Business Loan</button>
+  </div>
+</div>
+
+<div class="g2">
+<!-- ══ LEFT: INPUTS ══ -->
+<div>
+
+  <!-- Current Loan -->
+  <div class="card">
+    <div class="ctitle c-rd">📋 Current Loan Details</div>
+    <div class="fld"><label>Outstanding Balance <span class="sym" id="sym1">$</span></label><input class="inp" type="number" id="balance" value="50000" oninput="calc()"/></div>
+    <div class="fld"><label>Monthly Installment <span class="sym" id="sym2">$</span></label><input class="inp" type="number" id="monthly" value="1200" oninput="calc()"/></div>
+    <div class="fld"><label>Months Remaining</label>
+      <div class="sw"><div class="sv" id="mosrem-v" style="right:0">36</div>
+        <input type="range" id="mosrem" min="1" max="84" value="36" step="1" oninput="updSlider(this,'mosrem-v',' mo');calc()" style="background:linear-gradient(to right,var(--pri) 43%,var(--bg3) 43%)"/></div>
+    </div>
+    <div class="fld"><label>Early Payoff Penalty % <span class="tip" title="Some lenders charge a fee for early repayment" style="cursor:help;color:var(--t3)">ℹ</span></label>
+      <div class="sw"><div class="sv" id="penalty-v" style="right:0">0%</div>
+        <input type="range" id="penalty" min="0" max="5" value="0" step="0.5" oninput="updSlider(this,'penalty-v','%');calc()" style="background:linear-gradient(to right,var(--pri) 0%,var(--bg3) 0%)"/></div>
+    </div>
+  </div>
+
+  <!-- Available Cash -->
+  <div class="card">
+    <div class="ctitle c-gn">💰 Available Cash</div>
+    <div class="fld"><label>Cash You Have Now <span class="sym" id="sym3">$</span></label><input class="inp" type="number" id="cash" value="60000" oninput="calc()"/></div>
+    <div class="fld"><label>Emergency Fund (keep) <span class="sym" id="sym4">$</span><span style="font-size:.6rem;color:var(--t3);margin-inline-start:4px">recommended 6 months</span></label><input class="inp" type="number" id="emergency" value="10000" oninput="calc()"/></div>
+    <div class="fld"><label>Cash Available for Payoff</label>
+      <div style="background:var(--bg3);padding:9px 12px;border-radius:7px;font-family:var(--fm);font-size:.88rem;color:var(--gn)" id="avail-cash">—</div>
+    </div>
+  </div>
+
+  <!-- Investment Alternative -->
+  <div class="card">
+    <div class="ctitle c-cy">📈 If You Invest Instead</div>
+    <div class="fld"><label>Expected Annual Return %</label>
+      <div class="sw"><div class="sv" id="inv-rate-v" style="right:0">7%</div>
+        <input type="range" id="inv-rate" min="1" max="25" value="7" step="0.5" oninput="updSlider(this,'inv-rate-v','%');calc()" style="background:linear-gradient(to right,var(--pri) 25%,var(--bg3) 25%)"/></div>
+    </div>
+    <div class="fld"><label>Investment Type</label>
+      <div class="tg">
+        <button class="tp" id="inv-s" onclick="setInvType('simple')">Simple</button>
+        <button class="tp on" id="inv-c" onclick="setInvType('compound')">Compound</button>
+      </div>
+    </div>
+    <div class="fld"><label>Invest the freed monthly payment too?</label>
+      <div class="tg">
+        <button class="tp on" id="im-y" onclick="setIM(true)">Yes</button>
+        <button class="tp" id="im-n" onclick="setIM(false)">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inflation -->
+  <div class="card">
+    <div class="ctitle c-or">📉 Inflation Impact</div>
+    <div class="fld"><label>Annual Inflation Rate %</label>
+      <div class="sw"><div class="sv" id="inf-v" style="right:0">3%</div>
+        <input type="range" id="inf-rate" min="0" max="20" value="3" step="0.5" oninput="updSlider(this,'inf-v','%');calc()"/></div>
+    </div>
+    <div style="padding:10px;background:rgba(249,115,22,.05);border:1px solid rgba(249,115,22,.14);border-radius:8px;font-size:.76rem;color:var(--t2);line-height:1.7;margin-top:6px" id="inf-insight">—</div>
+  </div>
+
+</div><!-- /LEFT -->
+
+<!-- ══ RIGHT: RESULTS ══ -->
+<div>
+
+  <!-- VERDICT -->
+  <div class="card" id="verdict-wrap">
+    <div class="ctitle c-pri">🏛️ Prism Verdict</div>
+    <div id="verdict-box"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="card">
+    <div class="tabs">
+      <button class="tab on" onclick="swTab('summary')">Summary</button>
+      <button class="tab" onclick="swTab('scenarios')">3 Scenarios</button>
+      <button class="tab" onclick="swTab('chart')">📊 Chart</button>
+      <button class="tab" onclick="swTab('amort')">Schedule</button>
+      <button class="tab" onclick="swTab('early')">⚡ Early</button>
+      <button class="tab" onclick="swTab('inflation')">📉 Inflation</button>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="tpane on" id="tp-summary">
+      <div class="hl"><div class="hlk">Outstanding Balance</div><div class="hlv rd" id="s-bal">—</div></div>
+      <div class="hl"><div class="hlk">Remaining Total Payments</div><div class="hlv rd" id="s-totpay">—</div></div>
+      <div class="hl"><div class="hlk">Interest You'll Pay (if keep)</div><div class="hlv rd" id="s-interest">—</div></div>
+      <div class="hl"><div class="hlk">Payoff Cost (balance + penalty)</div><div class="hlv gd" id="s-payoffcost">—</div></div>
+      <div class="div"></div>
+      <div class="hl"><div class="hlk">Cash Available for Payoff</div><div class="hlv gn" id="s-avail">—</div></div>
+      <div class="hl"><div class="hlk">Can You Afford Full Payoff?</div><div class="hlv" id="s-canpay">—</div></div>
+      <div class="div"></div>
+      <div class="hl"><div class="hlk">Interest Saved (full payoff now)</div><div class="hlv gn" id="s-saved">—</div></div>
+      <div class="hl"><div class="hlk">Investment Gain (if invest instead)</div><div class="hlv cy" id="s-invgain">—</div></div>
+      <div class="hl"><div class="hlk">Net Advantage of Payoff</div><div class="hlv" id="s-net">—</div></div>
+      <div class="div"></div>
+      <div class="hl" style="background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.14);border-radius:7px">
+        <div class="hlk" style="color:var(--t1);font-weight:600">Effective Loan APR</div>
+        <div class="hlv pu" id="s-apr">—</div>
+      </div>
+      <div class="hl" style="background:rgba(6,182,212,.05);border:1px solid rgba(6,182,212,.14);border-radius:7px;margin-top:5px">
+        <div class="hlk" style="color:var(--t1);font-weight:600">Your Investment Return</div>
+        <div class="hlv cy" id="s-invrate">—</div>
+      </div>
+    </div>
+
+    <!-- 3 SCENARIOS -->
+    <div class="tpane" id="tp-scenarios">
+      <div style="font-size:.74rem;color:var(--t2);margin-bottom:10px">Compare all 3 options side by side over the remaining loan term.</div>
+      <div class="scen-grid" id="scen-grid"></div>
+    </div>
+
+    <!-- CHART -->
+    <div class="tpane" id="tp-chart">
+      <div class="chart-box">
+        <div class="chart-legend">
+          <div class="leg"><div class="leg-dot" style="background:var(--gn)"></div>Pay Off Now</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cy)"></div>Invest Cash</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>Partial Payoff</div>
+        </div>
+        <svg class="chart" id="main-chart" height="190" viewBox="0 0 500 190"></svg>
+      </div>
+      <div style="padding:10px;background:var(--bg3);border-radius:8px;font-size:.76rem;color:var(--t2);line-height:1.8" id="chart-insight">—</div>
+    </div>
+
+    <!-- AMORTIZATION -->
+    <div class="tpane" id="tp-amort">
+      <div style="font-size:.72rem;color:var(--t2);margin-bottom:8px">Full payment schedule — click any row to see payoff savings.</div>
+      <div class="tbl-wrap" id="amort-tbl"></div>
+    </div>
+
+    <!-- EARLY PAYOFF OPTIMIZER -->
+    <div class="tpane" id="tp-early">
+      <div style="font-size:.72rem;color:var(--t2);margin-bottom:10px">Savings if you pay off at different future months.</div>
+      <div id="early-rows"></div>
+      <div style="margin-top:10px;padding:11px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:8px">
+        <div style="font-size:.66rem;color:var(--gn);font-family:var(--fm);letter-spacing:1px;margin-bottom:5px">Best Month to Payoff</div>
+        <div style="font-size:.88rem;color:var(--t1)" id="best-early">—</div>
+      </div>
+    </div>
+
+    <!-- INFLATION TAB -->
+    <div class="tpane" id="tp-inflation">
+      <div class="inf-box">
+        <div class="inf-title">Real Value of Remaining Payments</div>
+        <div class="hl" style="background:transparent;padding:0 0 8px"><div class="hlk">Nominal remaining payments</div><div class="hlv gd" id="inf-nom">—</div></div>
+        <div class="hl" style="background:transparent;padding:0 0 8px"><div class="hlk">Real value (inflation-adjusted)</div><div class="hlv gn" id="inf-real">—</div></div>
+        <div class="hl" style="background:transparent;padding:0"><div class="hlk">Inflation "discount" on your debt</div><div class="hlv cy" id="inf-disc">—</div></div>
+      </div>
+      <div style="padding:12px;background:rgba(249,115,22,.04);border:1px solid rgba(249,115,22,.14);border-radius:8px;font-size:.8rem;color:var(--t2);line-height:1.8" id="inf-analysis">—</div>
+    </div>
+
+  </div><!-- /tabs card -->
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="abtn ab-o" onclick="window.print()">🖨️ Print</button>
+    <button class="abtn ab-o" onclick="doCopy()">📋 Copy</button>
+    <button class="abtn ab-wa" onclick="doWhatsApp()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </button>
+    <button class="abtn ab-cy" onclick="doShare()">🔗 Share Link</button>
+    <button class="abtn ab-g" onclick="doURL()">📤 URL</button>
+  </div>
+  <div class="url-box" id="urlbox"></div>
+
+  <!-- HISTORY -->
+  <div id="hist-sec">
+    <div class="hist-t">
+      <span>Recent Analyses</span>
+      <button class="hist-clr" onclick="clearHist()">Clear</button>
+    </div>
+    <div id="hist-list"></div>
+  </div>
+
+</div><!-- /RIGHT -->
+</div><!-- /g2 -->
+
+<!-- Prism Footer -->
+<div style="padding:20px 0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:20px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg width="16" height="20" viewBox="0 0 16 20"><defs><linearGradient id="fg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient></defs><polygon points="8,2 14,16 2,16" fill="none" stroke="url(#fg2)" stroke-width="1.6" stroke-linejoin="round"/><line x1="9" y1="9" x2="16" y2="5" stroke="#38bdf8" stroke-width="1.1"/><line x1="9" y1="9" x2="16" y2="12" stroke="#34d399" stroke-width="1.1"/></svg>
+    <span style="font-family:var(--fd);font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,var(--t1),var(--t2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Prism Payoff</span>
+  </div>
+  <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--t3);text-transform:uppercase">Part of Prism Suite · Axiom Zones · getprism.app</div>
+  <div style="height:2px;width:60px;background:linear-gradient(90deg,var(--p1),var(--p3),var(--p4));border-radius:1px"></div>
+</div>
+
+</div><!-- /app -->
+
+<!-- BACK TO TOP -->
+<button id="backtop" onclick="window.scrollTo(0,0)" aria-label="Back to top">↑</button>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav id="mobnav" aria-label="Mobile navigation">
+  <div class="mobnav-inner">
+    <button class="mni" onclick="window.scrollTo(0,0)"><span class="mni-i">🏠</span><span class="mni-l">Top</span></button>
+    <button class="mni act" onclick="sGoTo('verdict-wrap')"><span class="mni-i">🏛️</span><span class="mni-l">Verdict</span></button>
+    <button class="mni" onclick="swTab('scenarios');sGoTo('tp-scenarios')"><span class="mni-i">⚖️</span><span class="mni-l">Compare</span></button>
+    <button class="mni" onclick="swTab('chart');sGoTo('tp-chart')"><span class="mni-i">📊</span><span class="mni-l">Chart</span></button>
+    <button class="mni" onclick="doCopy()"><span class="mni-i">📋</span><span class="mni-l">Copy</span></button>
+  </div>
+</nav>
+
+<div class="toast" id="tst"></div>
+
+<script>
+var LANG = "ar";
+
+/* ══ STATE ══ */
+var CURR='USD', SYM='$', isDark=true, invType='compound', investMonthly=true;
+
+var RATES={SAR:3.75,AED:3.67,KWD:0.308,BHD:0.377,OMR:0.385,QAR:3.64,EGP:30.9,JOD:0.709,LBP:89500,IQD:1310,LYD:4.81,TND:3.12,MAD:10.06,DZD:134.5,SDG:601,YER:250.3,SYP:13000,USD:1,EUR:0.924,GBP:0.797,JPY:149.5,CNY:7.24,CHF:0.898,CAD:1.36,AUD:1.54,NZD:1.63,SGD:1.35,HKD:7.82,TWD:31.8,NOK:10.56,SEK:10.42,DKK:6.89,ISK:137.8,PLN:3.96,CZK:22.6,HUF:356.8,RON:4.62,BGN:1.81,HRK:6.97,RSD:108.5,ALL:96.5,MKD:57.8,BAM:1.81,RUB:91.5,UAH:37.2,BYN:3.27,MDL:17.6,GEL:2.67,AMD:387.5,AZN:1.7,TRY:30.4,KZT:454.2,UZS:12200,KGS:89.3,TJS:10.94,TMT:3.5,KRW:1325,INR:83.2,PKR:278.5,BDT:110.2,LKR:320.5,NPR:133.1,MVR:15.4,AFN:69.5,ILS:3.68,THB:35.2,IDR:15720,MYR:4.69,PHP:56.4,VND:24200,MMK:2098,KHR:4090,LAK:20500,BND:1.35,MNT:3385,MXN:17.2,GTQ:7.83,HNL:24.6,NIO:36.5,CRC:527,DOP:57.2,JMD:155.2,TTD:6.79,BBD:2.02,XCD:2.7,AWG:1.79,PAB:1,BRL:4.98,ARS:355,CLP:876,COP:3980,PEN:3.72,UYU:38.9,BOB:6.91,PYG:7290,VES:36.5,GYD:209,SRD:38.2,NGN:778,GHS:12.6,XOF:604,GMD:67.2,SLL:20900,KES:140.5,TZS:2510,UGX:3780,ETB:55.8,RWF:1255,BIF:2830,DJF:177.7,ERN:15,SSP:650,SOS:571,ZAR:18.9,BWP:13.7,NAD:18.9,ZMW:20.9,MWK:1685,MZN:63.8,AOA:832,XAF:604,CDF:2680,MGA:4480,MUR:44.8,SCR:13.2,FJD:2.25,PGK:3.74,XPF:111,XAU:0.000485,XAG:0.0426,XDR:0.754,BTC:0.0000232,ETH:0.000374,USDT:1,USDC:1,BNB:0.00328,XRP:1.89,ADA:0.814,SOL:0.00568};
+var SYMS={SAR:'﷼',AED:'د.إ',KWD:'د.ك',BHD:'BD',OMR:'ر.ع',QAR:'ر.ق',EGP:'ج.م',JOD:'JD',LBP:'LL',IQD:'IQD',LYD:'LD',TND:'DT',MAD:'DH',DZD:'DA',SDG:'SDG',YER:'YER',SYP:'SYP',USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',CHF:'Fr',CAD:'C$',AUD:'A$',NZD:'NZ$',SGD:'S$',HKD:'HK$',TWD:'NT$',NOK:'kr',SEK:'kr',DKK:'kr',ISK:'kr',PLN:'zł',CZK:'Kč',HUF:'Ft',RON:'lei',BGN:'лв',HRK:'kn',RSD:'din',ALL:'L',MKD:'den',BAM:'KM',RUB:'₽',UAH:'₴',BYN:'Br',MDL:'L',GEL:'₾',AMD:'֏',AZN:'₼',TRY:'₺',KZT:'₸',UZS:'UZS',KGS:'KGS',TJS:'TJS',TMT:'T',KRW:'₩',INR:'₹',PKR:'₨',BDT:'৳',LKR:'Rs',NPR:'Rs',MVR:'Rf',AFN:'؋',ILS:'₪',THB:'฿',IDR:'Rp',MYR:'RM',PHP:'₱',VND:'₫',MMK:'K',KHR:'CR',LAK:'₭',BND:'B$',MNT:'₮',MXN:'$',GTQ:'Q',HNL:'L',NIO:'C$',CRC:'₡',DOP:'RD$',JMD:'J$',TTD:'TT$',BBD:'Bds$',XCD:'EC$',AWG:'ƒ',PAB:'B/.',BRL:'R$',ARS:'$',CLP:'$',COP:'$',PEN:'S/',UYU:'$',BOB:'Bs',PYG:'₲',VES:'Bs',GYD:'G$',SRD:'$',NGN:'₦',GHS:'₵',XOF:'F',GMD:'D',SLL:'Le',KES:'KSh',TZS:'TSh',UGX:'USh',ETB:'Br',RWF:'Fr',BIF:'Fr',DJF:'Fdj',ERN:'Nkf',SSP:'£',SOS:'Sh',ZAR:'R',BWP:'P',NAD:'N$',ZMW:'K',MWK:'MK',MZN:'MT',AOA:'Kz',XAF:'F',CDF:'FC',MGA:'Ar',MUR:'₨',SCR:'₨',FJD:'FJ$',PGK:'K',XPF:'CFP',XAU:'Au⊛',XAG:'Ag⊛',XDR:'SDR',BTC:'₿',ETH:'Ξ',USDT:'₮',USDC:'$',BNB:'BNB',XRP:'XRP',ADA:'₳',SOL:'◎'};
+
+/* ══ HELPERS ══ */
+function sGoTo(id){var el=document.getElementById(id);if(!el)return;var y=0,o=el;while(o){y+=o.offsetTop;o=o.offsetParent;}window.scrollTo(0,Math.max(0,y-120));}
+function mon(n){var v=n/(RATES[CURR]||1);var d=v>100?0:v>1?2:4;if(CURR==='BTC'||CURR==='ETH')d=6;return SYM+' '+v.toLocaleString('en',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function pct(n){return n.toFixed(2)+'%';}
+function gv(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
+function st(id,h){var e=document.getElementById(id);if(e)e.innerHTML=h;}
+function sv(id,t){var e=document.getElementById(id);if(e)e.textContent=t;}
+function toast(msg){var t=document.getElementById('tst');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},3200);}
+
+/* ══ SLIDER ══ */
+function updSlider(inp,vid,sfx){
+  var el=document.getElementById(vid);if(!el)return;
+  el.textContent=inp.value+sfx;
+  var p=((inp.value-inp.min)/(inp.max-inp.min))*100;
+  inp.style.background='linear-gradient(to right,var(--pri) '+p+'%,var(--bg3) '+p+'%)';
+  el.style.left=(p*0.88)+'%';
+}
+
+/* ══ CURRENCY ══ */
+function setCurr(c){
+  CURR=c;SYM=SYMS[c]||c;
+  document.querySelectorAll('.cqb').forEach(function(b){b.classList.toggle('on',b.getAttribute('onclick').indexOf("'"+c+"'")!==-1);});
+  var sel=document.getElementById('curr-sel');if(sel)sel.value=c;
+  ['sym1','sym2','sym3','sym4'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=SYM;});
+  calc();
+}
+
+/* ══ THEME ══ */
+function toggleTheme(){isDark=!isDark;document.documentElement.setAttribute('data-theme',isDark?'':'light');var tb=document.getElementById('tbtn');if(tb)tb.textContent=isDark?'🌙':'☀️';}
+
+/* ══ INVESTMENT TYPE ══ */
+function setInvType(t){invType=t;document.getElementById('inv-s').classList.toggle('on',t==='simple');document.getElementById('inv-c').classList.toggle('on',t==='compound');calc();}
+function setIM(b){investMonthly=b;document.getElementById('im-y').classList.toggle('on',b);document.getElementById('im-n').classList.toggle('on',!b);calc();}
+
+/* ══ TABS ══ */
+function swTab(id){
+  var ids=['summary','scenarios','chart','amort','early','inflation'];
+  ids.forEach(function(x){var p=document.getElementById('tp-'+x);if(p)p.classList.toggle('on',x===id);});
+  document.querySelectorAll('.tab').forEach(function(b,i){b.classList.toggle('on',ids[i]===id);});
+  if(id==='chart') drawChart();
+  if(id==='scenarios') buildScenarios();
+}
+
+/* ══ PRESETS ══ */
+var PRESETS={
+  car:     {bal:30000, mo:800,  mos:36, pen:0,   cash:40000, em:5000,  inv:7,  inf:3},
+  home:    {bal:200000,mo:3500, mos:60, pen:1,   cash:220000,em:20000, inv:6,  inf:3},
+  personal:{bal:15000, mo:500,  mos:24, pen:2,   cash:20000, em:3000,  inv:8,  inf:3},
+  business:{bal:80000, mo:2000, mos:48, pen:0.5, cash:90000, em:10000, inv:9,  inf:3}
+};
+function loadPreset(k){
+  var p=PRESETS[k];if(!p)return;
+  document.getElementById('balance').value=p.bal;
+  document.getElementById('monthly').value=p.mo;
+  document.getElementById('mosrem').value=p.mos;
+  document.getElementById('penalty').value=p.pen;
+  document.getElementById('cash').value=p.cash;
+  document.getElementById('emergency').value=p.em;
+  document.getElementById('inv-rate').value=p.inv;
+  document.getElementById('inf-rate').value=p.inf;
+  ['mosrem','penalty','inv-rate','inf-rate'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var map={'mosrem':['mosrem-v',' mo'],'penalty':['penalty-v','%'],'inv-rate':['inv-rate-v','%'],'inf-rate':['inf-v','%']};
+    var m=map[id];if(m)updSlider(el,m[0],m[1]);
+  });
+  calc();
+  toast('Preset loaded ✓');
+}
+
+/* ══ CORE CALCULATION ══ */
+function calc(){
+  var bal    = gv('balance');
+  var moInst = gv('monthly');
+  var mos    = gv('mosrem');
+  var penPct = gv('penalty');
+  var cashAv = gv('cash');
+  var emFund = gv('emergency');
+  var invRate= gv('inv-rate');
+  var infRate= gv('inf-rate');
+
+  var availCash = Math.max(0, cashAv - emFund);
+  var penAmt    = bal * (penPct / 100);
+  var payoffCost= bal + penAmt;
+  var canPayoff = availCash >= payoffCost;
+
+  // Total remaining if keep paying
+  var totalRemain = moInst * mos;
+  var totalInterest = Math.max(0, totalRemain - bal);
+
+  // Interest saved = total interest if we pay off now
+  var interestSaved = totalInterest;
+
+  // APR approximation of existing loan
+  var apr = bal > 0 ? (totalInterest / bal) * (12 / mos) * 100 : 0;
+
+  // Monthly rate of existing loan
+  var mr = apr / 100 / 12;
+
+  // Investment gain if invest availCash instead
+  var invGain = 0;
+  var invFinal = 0;
+  var invMr = invRate / 100 / 12;
+  if (invType === 'compound') {
+    invFinal = availCash * Math.pow(1 + invMr, mos);
+  } else {
+    invFinal = availCash * (1 + invRate / 100 * mos / 12);
+  }
+  invGain = invFinal - availCash;
+
+  // If investMonthly: also invest freed monthly payment after payoff
+  var freedMonthlyGain = 0;
+  if (investMonthly && canPayoff) {
+    if (invType === 'compound' && invMr > 0) {
+      freedMonthlyGain = moInst * ((Math.pow(1 + invMr, mos) - 1) / invMr);
+    } else {
+      for (var i = 0; i < mos; i++) {
+        freedMonthlyGain += moInst * (1 + invMr * (mos - i));
+      }
+    }
+    freedMonthlyGain -= moInst * mos;
+  }
+
+  // Net advantage of payoff vs invest
+  var netAdv = interestSaved - invGain + freedMonthlyGain - penAmt;
+
+  // Inflation on remaining debt
+  var realTotal = 0;
+  for (var j = 1; j <= mos; j++) {
+    realTotal += moInst / Math.pow(1 + infRate / 100, j / 12);
+  }
+  var infDisc = totalRemain - realTotal;
+
+  // ── UPDATE UI ──
+  var availEl = document.getElementById('avail-cash');
+  if (availEl) availEl.textContent = mon(availCash);
+  st('s-avail', '<span class="' + (canPayoff ? 'gn' : 'rd') + '">' + mon(availCash) + '</span>');
+  st('s-bal', '<span class="rd">' + mon(bal) + '</span>');
+  st('s-totpay', '<span class="rd">' + mon(totalRemain) + '</span>');
+  st('s-interest', '<span class="rd">' + mon(totalInterest) + '</span>');
+  st('s-payoffcost', mon(payoffCost));
+  st('s-canpay', canPayoff ? '<span class="gn">✅ Yes</span>' : '<span class="rd">❌ Not enough cash</span>');
+  st('s-saved', '<span class="gn">+' + mon(interestSaved) + '</span>');
+  st('s-invgain', '<span class="cy">+' + mon(invGain) + '</span>');
+  st('s-apr', '<span class="pu">' + pct(apr) + '</span>');
+  st('s-invrate', '<span class="cy">' + pct(invRate) + '</span>');
+
+  var netEl = document.getElementById('s-net');
+  if (netEl) {
+    if (netAdv > 0) netEl.innerHTML = '<span class="gn">Payoff wins by ' + mon(netAdv) + '</span>';
+    else netEl.innerHTML = '<span class="cy">Invest wins by ' + mon(Math.abs(netAdv)) + '</span>';
+  }
+
+  // Inflation
+  st('inf-nom', mon(totalRemain));
+  st('inf-real', mon(realTotal));
+  st('inf-disc', '<span class="cy">+' + mon(infDisc) + '</span>');
+  var infMsg = infRate + '% annual inflation means your remaining payments are worth ' + mon(infDisc) + ' less in real terms. ';
+  if (infRate > apr) {
+    infMsg += 'Inflation (' + pct(infRate) + ') is HIGHER than your loan APR (' + pct(apr) + ') — your debt is getting cheaper in real terms. Consider investing instead.';
+  } else {
+    infMsg += 'Your loan APR (' + pct(apr) + ') exceeds inflation (' + pct(infRate) + '). The debt is not eroding fast enough — paying off is likely better.';
+  }
+  sv('inf-analysis', infMsg);
+
+  // Verdict
+  buildVerdict(canPayoff, netAdv, interestSaved, invGain, apr, invRate, bal, payoffCost, availCash, infRate);
+
+  // Amortization
+  buildAmort(bal, moInst, mos, mr);
+
+  // Early payoff
+  buildEarlyPayoff(bal, moInst, mos, mr, payoffCost, availCash);
+
+  // Build scenarios
+  buildScenarios();
+
+  // Chart
+  if (document.getElementById('tp-chart').classList.contains('on')) drawChart();
+
+  // Save to history
+  saveHist(bal, moInst, mos, netAdv);
+
+  // Store for chart
+  window._pdata = {bal, moInst, mos, mr, invMr, availCash, payoffCost, totalRemain, interestSaved, invGain, apr, invRate, infRate};
+}
+
+/* ══ VERDICT ══ */
+function buildVerdict(canPay, netAdv, intSaved, invGain, apr, invRate, bal, payCost, avail, infRate) {
+  var box = document.getElementById('verdict-box');
+  if (!box) return;
+
+  var el = document.createElement('div');
+  var icon, title, desc, cls, tag;
+
+  if (!canPay) {
+    cls = 'neutral'; icon = '⚠️';
+    title = 'Partial Payoff or Wait';
+    desc = 'You don\'t have enough free cash to pay off fully (after emergency fund). Consider a partial payoff of ' + mon(avail) + ' to reduce the balance and save some interest.';
+    tag = 'Partial Recommended';
+  } else if (netAdv > 0) {
+    cls = 'payoff'; icon = '✅';
+    title = 'Pay Off the Loan Now';
+    desc = 'Paying off saves ' + mon(intSaved) + ' in interest. Even after accounting for the ' + (invGain > 0 ? mon(invGain) + ' you could earn by investing, ' : '') + 'paying off puts you ahead by ' + mon(netAdv) + '.';
+    tag = 'Payoff Wins — ' + mon(netAdv) + ' ahead';
+  } else if (infRate > apr) {
+    cls = 'invest'; icon = '📈';
+    title = 'Invest the Cash Instead';
+    desc = 'Inflation (' + pct(infRate) + ') is higher than your loan APR (' + pct(apr) + '). Your debt is being eroded in real terms. Investing at ' + pct(invRate) + ' beats paying off by ' + mon(Math.abs(netAdv)) + '.';
+    tag = 'Invest Wins — ' + mon(Math.abs(netAdv)) + ' ahead';
+  } else {
+    cls = 'invest'; icon = '📈';
+    title = 'Invest the Cash Instead';
+    desc = 'Your investment return (' + pct(invRate) + ') beats the loan APR (' + pct(apr) + '). Investing the ' + mon(avail) + ' generates ' + mon(invGain) + ' — outpacing the ' + mon(intSaved) + ' you\'d save by paying off.';
+    tag = 'Invest Wins — ' + mon(Math.abs(netAdv)) + ' ahead';
+  }
+
+  el.className = 'verdict ' + cls;
+  var vcolor = cls === 'payoff' ? 'var(--gn)' : cls === 'invest' ? 'var(--cy)' : cls === 'partial' ? 'var(--gold)' : 'var(--pri)';
+  el.innerHTML = '';
+
+  var iconEl = document.createElement('div'); iconEl.className = 'vi'; iconEl.textContent = icon;
+  var titleEl = document.createElement('div'); titleEl.className = 'vt'; titleEl.style.color = vcolor; titleEl.textContent = title;
+  var descEl = document.createElement('div'); descEl.className = 'vd'; descEl.textContent = desc;
+  var tagEl = document.createElement('div'); tagEl.className = 'vtag'; tagEl.style.background = 'rgba(139,92,246,.12)'; tagEl.style.color = vcolor; tagEl.textContent = tag;
+
+  el.appendChild(iconEl); el.appendChild(titleEl); el.appendChild(descEl); el.appendChild(tagEl);
+  box.innerHTML = ''; box.appendChild(el);
+}
+
+/* ══ 3 SCENARIOS ══ */
+function buildScenarios() {
+  var d = window._pdata;
+  if (!d) return;
+  var grid = document.getElementById('scen-grid');
+  if (!grid) return;
+
+  var mos = d.mos, mr = d.mr, invMr = d.invMr;
+  var availCash = d.availCash, payoffCost = d.payoffCost;
+  var moInst = d.moInst;
+
+  // Scenario A: Pay off now
+  var penAmt = gv('balance') * gv('penalty') / 100;
+  var intSaved = d.totalRemain - d.bal;
+  var scenA = {
+    name: '✅ Pay Off Now',
+    netWorth: availCash - payoffCost,
+    intSaved: intSaved,
+    monFree: moInst,
+    final: availCash - payoffCost + (moInst * mos),
+    color: 'var(--gn)', sc: 'var(--gn)'
+  };
+
+  // Scenario B: Invest cash, keep paying
+  var invFinal;
+  if (invType === 'compound') invFinal = availCash * Math.pow(1 + invMr, mos);
+  else invFinal = availCash * (1 + d.invRate / 100 * mos / 12);
+  var scenB = {
+    name: '📈 Invest Cash',
+    netWorth: invFinal - d.totalRemain,
+    intSaved: 0,
+    monFree: 0,
+    final: invFinal,
+    color: 'var(--cy)', sc: 'var(--cy)'
+  };
+
+  // Scenario C: Partial payoff (half)
+  var partialAmt = Math.min(availCash / 2, d.bal * 0.5);
+  var newBal = d.bal - partialAmt;
+  var newMo = newBal > 0 ? (d.bal > 0 ? moInst * (newBal / d.bal) : 0) : 0;
+  var newTotal = newMo * mos;
+  var partialIntSaved = Math.max(0, d.totalRemain - moInst * mos - (newTotal - newBal));
+  var scenC = {
+    name: '⚖️ Partial Payoff',
+    netWorth: availCash - partialAmt,
+    intSaved: partialIntSaved,
+    monFree: moInst - newMo,
+    final: (availCash - partialAmt) + partialIntSaved,
+    color: 'var(--gold)', sc: 'var(--gold)'
+  };
+
+  var scenarios = [scenA, scenB, scenC];
+  var bestFinal = Math.max(scenA.final, scenB.final, scenC.final);
+
+  grid.innerHTML = '';
+  scenarios.forEach(function(sc) {
+    var card = document.createElement('div');
+    card.className = 'scen-card' + (sc.final === bestFinal ? ' best' : '');
+    card.style.setProperty('--sc', sc.sc);
+
+    var nameRow = document.createElement('div'); nameRow.className = 'scen-name';
+    nameRow.style.color = sc.color;
+    nameRow.textContent = sc.name;
+    if (sc.final === bestFinal) {
+      var lbl = document.createElement('span'); lbl.className = 'best-lbl'; lbl.textContent = 'BEST';
+      nameRow.appendChild(lbl);
+    }
+    card.appendChild(nameRow);
+
+    var rows = [
+      ['Net Position',  mon(sc.netWorth)],
+      ['Interest Saved', sc.intSaved > 0 ? mon(sc.intSaved) : '—'],
+      ['Monthly Freed', sc.monFree > 0 ? mon(sc.monFree) : '—'],
+      ['Final Outcome',  mon(sc.final)]
+    ];
+    rows.forEach(function(r) {
+      var row = document.createElement('div'); row.className = 'scen-row';
+      var k = document.createElement('div'); k.className = 'scen-key'; k.textContent = r[0];
+      var v = document.createElement('div'); v.className = 'scen-val'; v.textContent = r[1];
+      row.appendChild(k); row.appendChild(v); card.appendChild(row);
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* ══ CHART ══ */
+function drawChart() {
+  var d = window._pdata;
+  if (!d) return;
+  var svg = document.getElementById('main-chart');
+  if (!svg) return;
+  var W = 500, H = 190, PAD = 38;
+  var n = parseInt(d.mos);
+  var invMr = d.invMr;
+
+  // Build data: running net worth over time
+  var payoffLine = [], investLine = [], partialLine = [];
+  var payoffBase = d.availCash - d.payoffCost;
+  var investBase = d.availCash;
+  var partialBase = d.availCash - d.availCash * 0.5;
+
+  for (var i = 0; i <= n; i++) {
+    var t = i;
+    // Payoff: save monthly payment, invest freed cash
+    var pVal = payoffBase + (d.moInst * t);
+    // Invest: cash grows, but still paying installments
+    var iVal;
+    if (invType === 'compound') iVal = investBase * Math.pow(1 + invMr, t) - (d.moInst * t);
+    else iVal = investBase * (1 + d.invRate / 100 * t / 12) - (d.moInst * t);
+    // Partial: midpoint
+    var partVal = partialBase + (d.moInst * 0.5 * t);
+
+    payoffLine.push({x: t, y: pVal});
+    investLine.push({x: t, y: iVal});
+    partialLine.push({x: t, y: partVal});
+  }
+
+  // Scale
+  var allVals = payoffLine.concat(investLine).concat(partialLine).map(function(p){return p.y;});
+  var maxY = Math.max.apply(null, allVals) * 1.05;
+  var minY = Math.min(0, Math.min.apply(null, allVals) * 1.05);
+
+  function sx(x){return PAD + (x/n)*(W-PAD*2);}
+  function sy(y){return H-PAD - ((y-minY)/(maxY-minY))*(H-PAD*2);}
+  function pts(arr){return arr.map(function(p){return sx(p.x)+','+sy(p.y);}).join(' ');}
+
+  var html = '';
+  // Grid
+  for (var g = 0; g <= 4; g++) {
+    var gy = PAD + (g/4)*(H-PAD*2);
+    var lv = maxY - (g/4)*(maxY-minY);
+    html += '<line x1="'+PAD+'" y1="'+gy+'" x2="'+(W-PAD)+'" y2="'+gy+'" stroke="rgba(255,255,255,.05)" stroke-width="1"/>';
+    html += '<text x="'+(PAD-4)+'" y="'+(gy+4)+'" fill="rgba(255,255,255,.25)" font-size="9" text-anchor="end">'+mon(lv)+'</text>';
+  }
+  // Zero line
+  if (minY < 0) {
+    var zy = sy(0);
+    html += '<line x1="'+PAD+'" y1="'+zy+'" x2="'+(W-PAD)+'" y2="'+zy+'" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="3,3"/>';
+  }
+  // Lines
+  html += '<polyline points="'+pts(payoffLine)+'" fill="none" stroke="var(--gn)" stroke-width="2.2" stroke-linejoin="round"/>';
+  html += '<polyline points="'+pts(investLine)+'" fill="none" stroke="var(--cy)" stroke-width="2.2" stroke-linejoin="round"/>';
+  html += '<polyline points="'+pts(partialLine)+'" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-dasharray="5,3" stroke-linejoin="round"/>';
+  // End dots
+  var lastP = payoffLine[payoffLine.length-1];
+  var lastI = investLine[investLine.length-1];
+  html += '<circle cx="'+sx(lastP.x)+'" cy="'+sy(lastP.y)+'" r="4" fill="var(--gn)"/>';
+  html += '<circle cx="'+sx(lastI.x)+'" cy="'+sy(lastI.y)+'" r="4" fill="var(--cy)"/>';
+  // X labels
+  [0, Math.round(n/4), Math.round(n/2), Math.round(3*n/4), n].forEach(function(mx){
+    html += '<text x="'+sx(mx)+'" y="'+(H-PAD+14)+'" fill="rgba(255,255,255,.25)" font-size="9" text-anchor="middle">M'+mx+'</text>';
+  });
+  svg.innerHTML = html;
+
+  var insight = 'After ' + n + ' months: Payoff path nets ' + mon(lastP.y) + ' · Invest path nets ' + mon(lastI.y) + '.';
+  if (lastP.y > lastI.y) insight += ' Payoff wins by ' + mon(lastP.y - lastI.y) + '.';
+  else insight += ' Investing wins by ' + mon(lastI.y - lastP.y) + '.';
+  sv('chart-insight', insight);
+}
+
+/* ══ AMORTIZATION ══ */
+function buildAmort(bal, moInst, mos, mr) {
+  var tbl = document.getElementById('amort-tbl');
+  if (!tbl) return;
+  var n = parseInt(mos);
+  var rem = bal;
+  var html = '<table><thead><tr><th>Month</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Balance</th><th></th></tr></thead><tbody>';
+  for (var i = 1; i <= n; i++) {
+    var intPart = rem * mr;
+    var prinPart = moInst - intPart;
+    if (prinPart < 0) prinPart = 0;
+    rem = Math.max(0, rem - prinPart);
+    var isLast = i === n;
+    html += '<tr class="'+(isLast?'payoff-row':'')+'"><td>M'+i+'</td><td>'+mon(moInst)+'</td><td>'+mon(intPart)+'</td><td>'+mon(prinPart)+'</td><td>'+mon(rem)+'</td><td><span class="bs '+(isLast?'bg':'br')+'">'+(isLast?'Last':'Inst')+'</span></td></tr>';
+  }
+  html += '</tbody></table>';
+  tbl.innerHTML = html;
+}
+
+/* ══ EARLY PAYOFF ══ */
+function buildEarlyPayoff(bal, moInst, mos, mr, payoffCost, availCash) {
+  var container = document.getElementById('early-rows');
+  var bestEl = document.getElementById('best-early');
+  if (!container) return;
+  container.innerHTML = '';
+
+  var checkpoints = [3,6,9,12,18,24,36,48,60].filter(function(m){return m < mos;});
+  var bestSave = 0, bestMonth = 0;
+  var rem = bal;
+
+  // Build running balance
+  var balances = [bal];
+  var mr2 = mr;
+  for (var i = 1; i <= mos; i++) {
+    var ip = rem * mr2;
+    var pp = moInst - ip;
+    rem = Math.max(0, rem - pp);
+    balances.push(rem);
+  }
+
+  checkpoints.forEach(function(m) {
+    var remBal = balances[Math.min(m, balances.length-1)];
+    var remMos = mos - m;
+    var futureInterest = Math.max(0, moInst * remMos - remBal);
+    var saving = futureInterest;
+    var canDo = availCash >= remBal;
+    if (saving > bestSave && canDo) { bestSave = saving; bestMonth = m; }
+
+    var row = document.createElement('div');
+    row.className = 'ep-row' + (canDo ? '' : '');
+    row.style.opacity = canDo ? '1' : '0.5';
+
+    var moEl = document.createElement('div'); moEl.className = 'ep-mo'; moEl.textContent = 'M' + m;
+    var barWrap = document.createElement('div'); barWrap.className = 'ep-bar';
+    var barFill = document.createElement('div'); barFill.className = 'ep-fill';
+    barFill.style.width = Math.min(98, (saving / (moInst * mos)) * 100 * 3) + '%';
+    barWrap.appendChild(barFill);
+    var savEl = document.createElement('div'); savEl.className = 'ep-sav';
+    savEl.textContent = canDo ? 'Save ' + mon(saving) : '💔 Not enough';
+    savEl.style.color = canDo ? 'var(--gn)' : 'var(--rd)';
+
+    row.appendChild(moEl); row.appendChild(barWrap); row.appendChild(savEl);
+    container.appendChild(row);
+  });
+
+  if (bestEl) {
+    bestEl.textContent = bestMonth > 0 ? 'Month ' + bestMonth + ' — saves ' + mon(bestSave) : 'Pay off now for maximum savings';
+  }
+}
+
+/* ══ HISTORY ══ */
+var HKEY = 'prism_payoff_hist';
+function saveHist(bal, mo, mos, net) {
+  if (!bal || !mo) return;
+  try {
+    var h = JSON.parse(localStorage.getItem(HKEY)||'[]');
+    h.unshift({t:Date.now(), bal:bal, mo:mo, mos:mos, net:net, curr:CURR});
+    if (h.length > 5) h = h.slice(0,5);
+    localStorage.setItem(HKEY, JSON.stringify(h));
+    renderHist();
+  } catch(e){}
+}
+function renderHist() {
+  try {
+    var h = JSON.parse(localStorage.getItem(HKEY)||'[]');
+    var sec = document.getElementById('hist-sec');
+    var list = document.getElementById('hist-list');
+    if (!sec||!list||!h.length){if(sec)sec.classList.remove('show');return;}
+    sec.classList.add('show'); list.innerHTML = '';
+    h.forEach(function(entry) {
+      var item = document.createElement('div'); item.className = 'hist-item';
+      var lbl = document.createElement('div'); lbl.className = 'hist-lbl';
+      lbl.textContent = (SYMS[entry.curr]||entry.curr)+' '+Math.round(entry.bal)+' · '+entry.mos+' mo';
+      var val = document.createElement('div'); val.className = 'hist-val';
+      val.textContent = entry.net > 0 ? 'Payoff +'+Math.round(entry.net) : 'Invest +'+Math.round(Math.abs(entry.net));
+      item.appendChild(lbl); item.appendChild(val);
+      (function(snap) {
+        item.onclick = function() {
+          document.getElementById('balance').value = snap.bal;
+          document.getElementById('monthly').value = snap.mo;
+          document.getElementById('mosrem').value = snap.mos;
+          updSlider(document.getElementById('mosrem'),'mosrem-v',' mo');
+          setCurr(snap.curr); calc(); toast('Restored ✓');
+        };
+      })(entry);
+      list.appendChild(item);
+    });
+  } catch(e){}
+}
+function clearHist(){try{localStorage.removeItem(HKEY);}catch(e){}var s=document.getElementById('hist-sec');if(s)s.classList.remove('show');toast('Cleared');}
+
+/* ══ SHARE / COPY ══ */
+function doShare() {
+  var params = 'bal='+gv('balance')+'&mo='+gv('monthly')+'&mos='+gv('mosrem')+'&pen='+gv('penalty')+'&cash='+gv('cash')+'&em='+gv('emergency')+'&inv='+gv('inv-rate')+'&inf='+gv('inf-rate')+'&cc='+CURR;
+  var url = window.location.href.split('?')[0]+'?'+params;
+  var box = document.getElementById('urlbox');
+  if (box) { box.textContent = url; box.classList.add('show'); }
+  if (navigator.clipboard) { navigator.clipboard.writeText(url); toast('Link copied ✓'); }
+}
+function doURL() { doShare(); }
+function doCopy() {
+  var lines = ['── Prism Payoff Analysis ──',
+    'Balance: '+gv('balance')+' '+SYM,
+    'Monthly: '+mon(gv('monthly')),
+    'Months: '+gv('mosrem'),
+    'Saved interest: '+(document.getElementById('s-saved')||{}).textContent,
+    'Invest gain: '+(document.getElementById('s-invgain')||{}).textContent,
+    '── getprism.app/payoff'
+  ].join('\n');
+  if (navigator.clipboard) { navigator.clipboard.writeText(lines); toast('Copied ✓'); }
+}
+function doWhatsApp() {
+  var txt = 'Prism Payoff Result\nBalance: '+mon(gv('balance'))+'\nMonths: '+gv('mosrem')+'\ngetprism.app/payoff';
+  window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+}
+
+/* ══ LOAD FROM URL ══ */
+function loadURL() {
+  var p = new URLSearchParams(window.location.search);
+  if (!p.has('bal')) return;
+  var map = {bal:'balance',mo:'monthly',mos:'mosrem',pen:'penalty',cash:'cash',em:'emergency',inv:'inv-rate',inf:'inf-rate'};
+  Object.keys(map).forEach(function(k){var el=document.getElementById(map[k]);if(el&&p.has(k))el.value=p.get(k);});
+  ['mosrem','penalty','inv-rate','inf-rate'].forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    var m={mosrem:['mosrem-v',' mo'],penalty:['penalty-v','%'],'inv-rate':['inv-rate-v','%'],'inf-rate':['inf-v','%']};
+    var mm=m[id];if(mm)updSlider(el,mm[0],mm[1]);
+  });
+  if(p.has('cc'))setCurr(p.get('cc'));
+  calc(); toast('Loaded from shared link ✓');
+}
+
+/* ══ AI TRANSLATION ══ */
+var tCache = {};
+var lnames={ar:'Arabic',fa:'Persian',ur:'Urdu',he:'Hebrew',fr:'French',es:'Spanish',de:'German',it:'Italian',pt:'Portuguese',nl:'Dutch',ru:'Russian',zh:'Simplified Chinese','zh-tw':'Traditional Chinese',ja:'Japanese',ko:'Korean',hi:'Hindi',tr:'Turkish',id:'Indonesian',ms:'Malay',th:'Thai',vi:'Vietnamese',sw:'Swahili',am:'Amharic',yo:'Yoruba',ha:'Hausa',af:'Afrikaans'};
+async function handleLang(lang) {
+  var rtl=['ar','fa','ur','he'];
+  document.documentElement.lang=lang;
+  document.documentElement.dir=rtl.indexOf(lang)!==-1?'rtl':'ltr';
+  if(lang==='en')return;
+  if(tCache[lang]){applyT(tCache[lang]);return;}
+  toast('Translating...');
+  var name=lnames[lang]||lang;
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
+        messages:[{role:'user',content:'Translate to '+name+'. Return ONLY valid JSON.\n\n'+JSON.stringify({
+          h1:'Pay Off Now?',h2:'Or Invest Instead?',
+          hsub:'You have cash. You have an existing loan. Prism tells you exactly what to do.',
+          badge:'Payoff Analyzer',
+          pay_verdict:'Pay Off the Loan Now',
+          inv_verdict:'Invest the Cash Instead',
+          par_verdict:'Partial Payoff Recommended'
+        })}]})
+    });
+    var data=await res.json();
+    var T=JSON.parse(data.content.map(function(c){return c.text||'';}).join('').replace(/```json|```/g,'').trim());
+    tCache[lang]=T; applyT(T);
+    toast('Translated ✓');
+  }catch(e){toast('Translation unavailable');}
+}
+function applyT(T){
+  var h1=document.querySelector('.h1-main');if(h1&&T.h1)h1.textContent=T.h1;
+  var h2=document.querySelector('.h1-acc');if(h2&&T.h2)h2.textContent=T.h2;
+  var hs=document.querySelector('.hero-sub');if(hs&&T.hsub)hs.textContent=T.hsub;
+}
+
+/* ══ SCROLL / BACK TOP / PROGRESS ══ */
+window.addEventListener('scroll',function(){
+  var y=window.scrollY;
+  var sp=document.getElementById('sp');if(sp)sp.style.width=(y/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  var bt=document.getElementById('backtop');if(bt)bt.classList.toggle('show',y>300);
+},{passive:true});
+
+/* ══ INIT ══ */
+window.addEventListener('load',function(){
+setLang("ar");
+  setCurr('USD');
+  ['mosrem','penalty','inv-rate','inf-rate'].forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    var m={mosrem:['mosrem-v',' mo'],penalty:['penalty-v','%'],'inv-rate':['inv-rate-v','%'],'inf-rate':['inf-v','%']};
+    var mm=m[id];if(mm)updSlider(el,mm[0],mm[1]);
+  });
+  calc();
+  loadURL();
+  renderHist();
+  autoDetectCurrency();
+  initBreakEven();
+  initFAQ();
+  initScarcity();
+});
+
+/* ══ AUTO CURRENCY DETECT ══ */
+function autoDetectCurrency(){
+  var lang=navigator.language||'en';
+  var map={'ar':'SAR','ar-SA':'SAR','ar-AE':'AED','ar-KW':'KWD','ar-QA':'QAR','ar-BH':'BHD','ar-OM':'OMR','ar-EG':'EGP','ar-MA':'MAD','ar-DZ':'DZD','ar-TN':'TND','en-GB':'GBP','en-AU':'AUD','en-CA':'CAD','en-IN':'INR','en-NG':'NGN','en-ZA':'ZAR','de':'EUR','fr':'EUR','it':'EUR','es':'EUR','pt-PT':'EUR','pt-BR':'BRL','ru':'RUB','tr':'TRY','ja':'JPY','ko':'KRW','zh':'CNY','zh-CN':'CNY','zh-TW':'TWD','hi':'INR','id':'IDR','ms':'MYR','th':'THB','vi':'VND','uk':'UAH','pl':'PLN','sv':'SEK','no':'NOK','da':'DKK','fi':'EUR','he':'ILS'};
+  var c=map[lang]||map[lang.split('-')[0]];
+  if(c&&c!=='USD'){setCurr(c);toast('Currency set to '+c+' ✓');}
+}
+
+/* ══ KEYBOARD SHORTCUTS ══ */
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')return;
+  if(e.altKey){
+    if(e.key==='v'){e.preventDefault();sGoTo('verdict-wrap');}
+    if(e.key==='s'){e.preventDefault();swTab('scenarios');sGoTo('tp-scenarios');}
+    if(e.key==='c'){e.preventDefault();swTab('chart');sGoTo('tp-chart');drawChart();}
+    if(e.key==='e'){e.preventDefault();swTab('early');sGoTo('tp-early');}
+    if(e.key==='f'){e.preventDefault();sGoTo('faq-section');}
+  }
+  if(e.key==='p'&&!e.altKey&&!e.ctrlKey&&e.target.tagName!=='INPUT'&&e.target.tagName!=='SELECT'){window.print();}
+});
+
+/* ══ BREAK-EVEN RATE ══ */
+function calcBreakEven(){
+  var bal=gv('balance'), moInst=gv('monthly'), mos=gv('mosrem'), penPct=gv('penalty');
+  var cashAv=gv('cash'), emFund=gv('emergency');
+  var availCash=Math.max(0,cashAv-emFund);
+  var penAmt=bal*(penPct/100);
+  var payoffCost=bal+penAmt;
+  var totalRemain=moInst*mos;
+  var intSaved=Math.max(0,totalRemain-bal);
+
+  // Break-even: at what investment rate does invGain === intSaved?
+  // invGain = availCash * (1+r)^mos - availCash = intSaved
+  // (1+r)^mos = 1 + intSaved/availCash
+  // r = (1 + intSaved/availCash)^(1/mos) - 1 (monthly)
+  // APR = r*12
+  var be=0;
+  if(availCash>0&&intSaved>0){
+    var monthlyBE=Math.pow(1+intSaved/availCash,1/mos)-1;
+    be=monthlyBE*12*100;
+  }
+  return be;
+}
+function initBreakEven(){
+  // Add break-even display to summary tab
+  var summEl=document.getElementById('tp-summary');
+  if(!summEl)return;
+  var beDiv=document.createElement('div');
+  beDiv.id='be-row';
+  beDiv.className='hl';
+  beDiv.style.cssText='background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.14);border-radius:7px;margin-top:6px';
+  beDiv.innerHTML='<div class="hlk" style="color:var(--t1);font-weight:600">Break-Even Investment Rate</div><div class="hlv pu" id="be-val">—</div>';
+  summEl.appendChild(beDiv);
+  updateBreakEven();
+}
+function updateBreakEven(){
+  var be=calcBreakEven();
+  var el=document.getElementById('be-val');
+  if(el){
+    var invRate=gv('inv-rate');
+    var color=invRate>be?'var(--cy)':'var(--gn)';
+    el.innerHTML='<span style="color:'+color+'">'+be.toFixed(1)+'%</span><span style="font-size:.6rem;color:var(--t3);margin-inline-start:6px">'+(invRate>be?'Your return beats this → invest':'Pay off beats this → payoff')+'</span>';
+  }
+}
+
+/* ══ SENSITIVITY MINI-TABLE ══ */
+function buildSensitivity(){
+  var existing=document.getElementById('sensitivity-section');
+  if(existing)return;
+  var bal=gv('balance'), moInst=gv('monthly'), mos=gv('mosrem');
+  var cashAv=gv('cash'), emFund=gv('emergency');
+  var availCash=Math.max(0,cashAv-emFund);
+  var totalRemain=moInst*mos, intSaved=Math.max(0,totalRemain-bal);
+
+  var rates=[3,5,7,9,12,15,20];
+  var months=[12,24,36,48,60];
+
+  var sec=document.createElement('div');
+  sec.id='sensitivity-section';
+  sec.className='card';
+  sec.style.marginTop='16px';
+
+  var title=document.createElement('div');
+  title.className='ctitle c-bl';
+  title.innerHTML='📊 Sensitivity — Invest vs Payoff by Rate & Term';
+  sec.appendChild(title);
+
+  var note=document.createElement('div');
+  note.style.cssText='font-size:.72rem;color:var(--t2);margin-bottom:10px';
+  note.textContent='Green = Payoff wins · Blue = Invest wins · Bold = Your scenario';
+  sec.appendChild(note);
+
+  var wrap=document.createElement('div');
+  wrap.style.cssText='overflow-x:auto;border-radius:8px;border:1px solid var(--border)';
+
+  var tbl=document.createElement('table');
+  tbl.style.cssText='width:100%;border-collapse:collapse;font-size:.7rem';
+
+  // Header
+  var hrow='<thead><tr><th style="padding:8px 10px;background:var(--bg2);font-family:var(--fm);font-size:.58rem;letter-spacing:1px;color:var(--t2);border-bottom:1px solid var(--border);text-align:start">Rate↓ / Months→</th>';
+  months.forEach(function(m){hrow+='<th style="padding:8px 10px;background:var(--bg2);font-family:var(--fm);font-size:.58rem;color:var(--t2);border-bottom:1px solid var(--border)">'+m+'mo</th>';});
+  hrow+='</tr></thead>';
+
+  var tbody='<tbody>';
+  rates.forEach(function(r){
+    tbody+='<tr>';
+    tbody+='<td style="padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);font-family:var(--fm);font-size:.68rem;color:var(--t2);font-weight:600">'+r+'%</td>';
+    months.forEach(function(m){
+      var invG;
+      var mr2=r/100/12;
+      invG=availCash*(Math.pow(1+mr2,m)-1);
+      var payoffWins=intSaved>invG;
+      var isCurr=(r===Math.round(gv('inv-rate'))&&m===Math.round(mos/6)*6);
+      var bg=payoffWins?'rgba(34,197,94,.1)':'rgba(6,182,212,.1)';
+      var col=payoffWins?'var(--gn)':'var(--cy)';
+      var label=payoffWins?'Payoff':'Invest';
+      tbody+='<td style="padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center;background:'+bg+';color:'+col+';font-family:var(--fm);font-size:.64rem;font-weight:'+(isCurr?'900':'400')+'">'+(isCurr?'★ ':'')+label+'</td>';
+    });
+    tbody+='</tr>';
+  });
+  tbody+='</tbody>';
+  tbl.innerHTML=hrow+tbody;
+  wrap.appendChild(tbl);
+  sec.appendChild(wrap);
+
+  // Insert after tabs card
+  var tabsCard=document.querySelector('#tp-summary')&&document.querySelector('#tp-summary').closest('.card');
+  if(tabsCard&&tabsCard.parentNode){
+    tabsCard.parentNode.insertBefore(sec,tabsCard.nextSibling);
+  } else {
+    document.querySelector('.app').appendChild(sec);
+  }
+}
+
+/* ══ FAQ SECTION ══ */
+function initFAQ(){
+  var app=document.querySelector('.app');
+  if(!app||document.getElementById('faq-section'))return;
+
+  var faqs=[
+    {q:'What is early loan payoff?',a:'Paying off your remaining loan balance before the scheduled end date. This eliminates future interest payments but may involve a prepayment penalty.'},
+    {q:'When should I pay off vs invest?',a:'Pay off if your loan\'s effective APR is higher than your expected investment return. Invest if your return beats the loan rate. Prism calculates this break-even for you automatically.'},
+    {q:'What is the break-even investment rate?',a:'The return rate at which investing your cash generates exactly the same savings as paying off the loan. Above it: invest. Below it: pay off.'},
+    {q:'Should I keep an emergency fund before paying off?',a:'Always. Financial advisors recommend 3-6 months of expenses in liquid savings before making large lump-sum payments. Prism subtracts your emergency fund from available cash.'},
+    {q:'What is a prepayment penalty?',a:'Some lenders charge 1-3% of the remaining balance if you pay off early. Prism factors this into the payoff cost so your analysis is accurate.'},
+    {q:'Does inflation affect the decision?',a:'Yes. High inflation erodes the real value of future loan payments — making the debt "cheaper" over time. If inflation exceeds your loan APR, holding the loan may be rational.'},
+    {q:'What is partial payoff?',a:'Paying off part of the balance (e.g., half) to reduce monthly payments and total interest, while keeping some cash for investment or emergencies.'},
+  ];
+
+  var sec=document.createElement('div');
+  sec.id='faq-section';
+  sec.style.cssText='margin-top:24px';
+
+  var header=document.createElement('div');
+  header.style.cssText='margin-bottom:16px';
+  header.innerHTML='<div style="font-family:var(--fm);font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--pri);margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:18px;height:1px;background:var(--pri);display:inline-block"></span>FAQ</div><div style="font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700">Common <em style="font-weight:300;font-style:italic;color:var(--t2)">Questions</em></div>';
+  sec.appendChild(header);
+
+  faqs.forEach(function(faq){
+    var item=document.createElement('div');
+    item.style.cssText='background:var(--bg2);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:8px;cursor:pointer;transition:border-color .25s';
+    item.onmouseenter=function(){this.style.borderColor='rgba(139,92,246,.25)';};
+    item.onmouseleave=function(){if(!this.classList.contains('open'))this.style.borderColor='';};
+
+    var qRow=document.createElement('div');
+    qRow.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:15px 18px;font-size:.88rem;font-weight:600;gap:12px';
+    var qText=document.createElement('span'); qText.textContent=faq.q;
+    var arrow=document.createElement('span'); arrow.textContent='▼'; arrow.style.cssText='font-size:.68rem;color:var(--t3);transition:transform .3s;flex-shrink:0';
+    qRow.appendChild(qText); qRow.appendChild(arrow);
+
+    var aWrap=document.createElement('div'); aWrap.style.cssText='max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)';
+    var aInner=document.createElement('div'); aInner.style.cssText='padding:0 18px 14px;font-size:.8rem;color:var(--t2);line-height:1.8;border-top:1px solid rgba(255,255,255,.05);padding-top:12px';
+    aInner.textContent=faq.a;
+    aWrap.appendChild(aInner);
+
+    item.appendChild(qRow); item.appendChild(aWrap);
+    item.onclick=function(){
+      var open=this.classList.contains('open');
+      document.querySelectorAll('#faq-section .open').forEach(function(el){
+        el.classList.remove('open');
+        el.style.borderColor='';
+        el.querySelector('div:last-child').style.maxHeight='0';
+        el.querySelector('span:last-child').style.transform='';
+      });
+      if(!open){
+        this.classList.add('open');
+        this.style.borderColor='rgba(139,92,246,.3)';
+        this.querySelector('div:last-child').style.maxHeight='160px';
+        this.querySelector('span:last-child').style.transform='rotate(180deg)';
+        this.querySelector('span:last-child').style.color='var(--pri)';
+      }
+    };
+    sec.appendChild(item);
+  });
+  app.appendChild(sec);
+}
+
+/* ══ SCARCITY BADGE (inject into hero) ══ */
+function initScarcity(){
+  var hero=document.querySelector('.hero');
+  if(!hero||document.getElementById('scarcity-badge'))return;
+  try{
+    var key='prism_payoff_spots';
+    var spots=parseInt(localStorage.getItem(key)||'34');
+    if(Math.random()>0.7&&spots>10){spots--;localStorage.setItem(key,spots);}
+    var badge=document.createElement('div');
+    badge.id='scarcity-badge';
+    badge.style.cssText='display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18);font-family:var(--fm);font-size:.64rem;letter-spacing:1px;margin-bottom:14px;position:relative;z-index:1';
+    badge.innerHTML='<span style="width:6px;height:6px;border-radius:50%;background:var(--rd);animation:bk 1.5s infinite;display:inline-block"></span><span style="color:var(--rd);font-weight:700">'+spots+'</span><span style="color:var(--t2)"> of 100 Pro early access spots remaining</span>';
+    var htag=hero.querySelector('.hero-tag');
+    if(htag)htag.after(badge);
+    else hero.insertBefore(badge,hero.querySelector('h1'));
+  }catch(e){}
+}
+
+/* ══ PATCH CALC to update break-even ══ */
+var _origCalc=calc;
+calc=function(){
+  _origCalc();
+  updateBreakEven();
+};
+
+/* ══ ADD SENSITIVITY BUTTON TO ACTIONS ══ */
+window.addEventListener('load',function(){
+  var actionsEl=document.querySelector('.actions');
+  if(actionsEl){
+    var sensBtn=document.createElement('button');
+    sensBtn.className='abtn ab-o';
+    sensBtn.innerHTML='📊 Sensitivity';
+    sensBtn.onclick=function(){buildSensitivity();toast('Sensitivity table built ✓');};
+    actionsEl.appendChild(sensBtn);
+  }
+});
+
+/* ══════════════════════════════════════════════
+   GOLDEN RULE — Universal i18n System v1
+   كل نص له ID + ترجمة كاملة
+   المصطلحات المالية تبقى إنجليزية دائماً
+══════════════════════════════════════════════ */
+
+var I18N = {
+  ar:{
+    /* ── Navigation ── */
+    "t-nav-home":"الرئيسية","t-nav-blog":"المدونة","t-nav-glossary":"القاموس","t-nav-kashf":"كشف","t-nav-prism":"Prism","t-get-started":"ابدأ الآن","t-learn-more":"اعرف أكثر",
+    /* ── Inputs ── */
+    "t-price":"سعر العقار","t-down":"الدفعة الأولى","t-years":"مدة التمويل","t-apr":"APR المُعلن %","t-mur":"هامش المرابحة %","t-rent":"الإيجار الشهري","t-income":"الدخل الشهري","t-growth":"نمو سنوي %","t-expenses":"مصاريف سنوية %","t-yr":"سنة","t-mo":"شهر",
+    /* ── Labels ── */
+    "t-emi":"القسط الشهري","t-total":"الإجمالي","t-interest":"الفائدة الكلية","t-fixed":"ثابت طوال المدة","t-dti":"نسبة الدين للدخل","t-mur-monthly":"مرابحة/شهر","t-mur-total":"إجمالي المرابحة",
+    /* ── Sections ── */
+    "t-live":"النتائج المباشرة","t-prop":"بيانات العقار","t-market":"بيانات السوق","t-personal":"وضعك الشخصي","t-proj":"قيمة العقار المتوقعة","t-conv":"قرض تقليدي","t-mur-lbl":"مرابحة إسلامية",
+    /* ── Years ── */
+    "t-y5":"بعد 5 سنوات","t-y10":"بعد 10 سنوات","t-yend":"نهاية المدة",
+    /* ── Formula titles ── */
+    "t-ry-title":"العائد الإيجاري","t-grm-title":"مضاعف الإيجار الإجمالي","t-ptr-title":"نسبة السعر للإيجار","t-cap-title":"معدل الرسملة","t-ber-title":"إيجار التعادل","t-net-title":"صافي مكسب الشراء",
+    /* ── Formula purposes ── */
+    "t-ry-purpose":"يقيس العائد السنوي من الإيجار كنسبة من سعر العقار. أعلى = استثمار إيجاري أفضل. أقل من 4% ضعيف · 4-7% مقبول · 7%+ ممتاز",
+    "t-grm-purpose":"عدد السنوات ليُسدّد العقار سعره من الإيجار. أقل = أسرع عائداً. أقل من 10 ممتاز · 10-15 جيد · أكثر من 20 مرتفع",
+    "t-ptr-purpose":"يحدد هل الشراء أو الإيجار أوفر في هذا السوق. معيار عالمي للمقارنة. أقل من 15 الشراء أفضل · 15-20 منطقة رمادية · أكثر من 20 الإيجار أذكى",
+    "t-cap-purpose":"صافي الدخل بعد المصاريف كنسبة من السعر. أدق من العائد الإيجاري. 5%+ جيد للاستثمار · أقل من 3% ضعيف",
+    "t-ber-purpose":"الحد الأدنى للإيجار الذي يُغطي قسطك ومصاريفك. إيجار السوق أعلى = مربح ✅",
+    "t-net-purpose":"الفرق بين قيمة العقار في نهاية المدة وإجمالي ما دفعته. موجب = بنيت ثروة",
+    /* ── Comparison ── */
+    "t-comp-conv":"قرض تقليدي","t-comp-mur":"مرابحة إسلامية","t-comp-rent":"إيجار فقط","t-comp-invest":"إيجار + استثمار","t-comp-cash":"شراء نقداً",
+    "t-comp-conv-desc":"IRR حقيقي أعلى من APR المُعلن","t-comp-mur-desc":"هامش ثابت — حلال — لا فائدة مركبة","t-comp-rent-desc":"مرونة كاملة — لا تبني ملكية","t-comp-invest-desc":"استثمار الفرق بعائد 8% سنوياً","t-comp-cash-desc":"لا قسط لا فائدة — يحتاج سيولة",
+    "t-best":"الأفضل","t-total-lbl":"الإجمالي","t-net-lbl":"صافي الثروة",
+    /* ── 360 ── */
+    "t-fin":"مالياً","t-shr":"شرعياً","t-mkt":"سوقياً","t-psy":"نفسياً",
+    "t-ok":"✅ مناسب","t-review":"⚠️ راجع",
+    /* ── Recommendation ── */
+    "t-rec-buy":"الشراء منطقي في وضعك","t-rec-caution":"ممكن — لكن بحذر","t-rec-wait":"انتظر وحسّن وضعك","t-rec-no":"لا تشترِ الآن","t-rec-rent":"الإيجار أذكى الآن",
+    "t-best-fin":"التمويل الأنسب","t-net-wealth":"صافي الثروة",
+    /* ── Feasibility ── */
+    "t-feas-score":"نتيجة الجدوى","t-feas-suitable":"مناسب للشراء","t-feas-wait":"انتظر وحسّن","t-feas-rent":"الإيجار أفضل الآن",
+    "t-feas-btn":"احسب نتيجة الجدوى →",
+    /* ── Buttons ── */
+    "t-btn-report":"⬇️ تنزيل التقرير","t-btn-reset":"🔄 إعادة الحساب","t-btn-start":"ابدأ التحليل ↓","t-btn-formulas":"المعادلات العقارية","t-scroll":"مرر للأسفل",
+    /* ── Footer ── */
+    "t-footer-tag":"منظومة رقمية في صفّك","t-footer-copy":"ابحث · احسب · امتلك",
+    /* ── Axiom Zones specific ── */
+    "t-az-hero":"اعرف أكثر. ادفع أقل.","t-az-sub":"منظومة رقمية في صفّك","t-az-desc":"أدوات مالية وتجارية حقيقية بنيت لمساعدتك — لا لمساعدة من يريد أموالك",
+    "t-az-platforms":"المنصات","t-az-blog":"المقالات","t-az-tools":"الأدوات",
+    /* ── Kashf specific ── */
+    "t-k-amount":"مبلغ القرض","t-k-duration":"مدة القرض (شهر)","t-k-monthly":"القسط الشهري","t-k-true-irr":"IRR الحقيقي","t-k-beauty":"درجة التجميل (0-100)","t-k-banks":"مقارنة البنوك","t-k-slogan":"اعرف الحقيقة — قبل أن تدفع ثمنها","t-k-tagline":"نكشف · نحسب · أنت تقرر",
+    /* ── Common values ── */
+    "t-excellent":"ممتاز","t-good":"جيد","t-acceptable":"مقبول","t-weak":"ضعيف","t-danger":"خطر","t-safe":"آمن","t-high":"مرتفع","t-low":"منخفض","t-profitable":"مربح","t-not-profitable":"غير مربح",
+    "t-waiting":"أدخل أرقامك — ستظهر النتيجة فوراً","t-loading":"جاري الحساب..."
+  },
+  en:{
+    "t-nav-home":"Home","t-nav-blog":"Blog","t-nav-glossary":"Glossary","t-nav-kashf":"Kashf","t-nav-prism":"Prism","t-get-started":"Get Started","t-learn-more":"Learn More",
+    "t-price":"Property Price","t-down":"Down Payment","t-years":"Financing Period","t-apr":"Advertised APR %","t-mur":"Murabaha Margin %","t-rent":"Monthly Rent","t-income":"Monthly Income","t-growth":"Annual Growth %","t-expenses":"Annual Expenses %","t-yr":"Year","t-mo":"Month",
+    "t-emi":"Monthly Payment","t-total":"Total Paid","t-interest":"Total Interest","t-fixed":"Fixed for Entire Term","t-dti":"Debt-to-Income Ratio","t-mur-monthly":"Murabaha/Month","t-mur-total":"Total Murabaha",
+    "t-live":"Live Results","t-prop":"Property Data","t-market":"Market Data","t-personal":"Your Situation","t-proj":"Property Value Forecast","t-conv":"Conventional Loan","t-mur-lbl":"Islamic Murabaha",
+    "t-y5":"After 5 Years","t-y10":"After 10 Years","t-yend":"At End of Term",
+    "t-ry-title":"Rental Yield","t-grm-title":"Gross Rent Multiplier","t-ptr-title":"Price-to-Rent Ratio","t-cap-title":"Cap Rate","t-ber-title":"Break-Even Rent","t-net-title":"Net Worth Gain",
+    "t-ry-purpose":"Measures annual rental return as % of property price. Higher = better investment. Under 4% weak · 4-7% acceptable · 7%+ excellent",
+    "t-grm-purpose":"Years for property to pay its price from rent. Lower = faster return. Under 10 excellent · 10-15 good · Over 20 high",
+    "t-ptr-purpose":"Determines if buying or renting is cheaper in this market. Under 15 buy better · 15-20 gray zone · Over 20 rent smarter",
+    "t-cap-purpose":"Net income after expenses as % of price. More accurate than rental yield. 5%+ good · Under 3% weak",
+    "t-ber-purpose":"Minimum rent covering your installment and expenses. Market rent higher = profitable ✅",
+    "t-net-purpose":"Property end value minus total paid. Positive = built wealth",
+    "t-comp-conv":"Conventional Loan","t-comp-mur":"Islamic Murabaha","t-comp-rent":"Rent Only","t-comp-invest":"Rent + Invest","t-comp-cash":"Cash Purchase",
+    "t-comp-conv-desc":"True IRR higher than advertised APR","t-comp-mur-desc":"Fixed margin — halal — no compound interest","t-comp-rent-desc":"Full flexibility — no ownership","t-comp-invest-desc":"Invest the difference at 8% annual return","t-comp-cash-desc":"No installment — no interest — needs liquidity",
+    "t-best":"Best","t-total-lbl":"Total Paid","t-net-lbl":"Net Worth",
+    "t-fin":"Financially","t-shr":"Islamically","t-mkt":"Market-wise","t-psy":"Psychologically",
+    "t-ok":"✅ OK","t-review":"⚠️ Review",
+    "t-rec-buy":"Buying Makes Sense","t-rec-caution":"Possible — With Caution","t-rec-wait":"Wait and Improve","t-rec-no":"Do Not Buy Now","t-rec-rent":"Renting is Smarter",
+    "t-best-fin":"Best Financing","t-net-wealth":"Net Wealth",
+    "t-feas-score":"Feasibility Score","t-feas-suitable":"Suitable for Buying","t-feas-wait":"Wait and Improve","t-feas-rent":"Renting is Better Now",
+    "t-feas-btn":"Calculate Feasibility Score →",
+    "t-btn-report":"⬇️ Download Report","t-btn-reset":"🔄 Reset","t-btn-start":"Start Analysis ↓","t-btn-formulas":"Real Estate Formulas","t-scroll":"Scroll Down",
+    "t-footer-tag":"The Digital Ecosystem on Your Side","t-footer-copy":"Search · Calculate · Own",
+    "t-az-hero":"Know More. Pay Less.","t-az-sub":"The Digital Ecosystem on Your Side","t-az-desc":"Real financial and business tools built to help you — not to help those who want your money",
+    "t-az-platforms":"Platforms","t-az-blog":"Articles","t-az-tools":"Tools",
+    "t-k-amount":"Loan Amount","t-k-duration":"Loan Duration (months)","t-k-monthly":"Monthly Payment","t-k-true-irr":"True IRR","t-k-beauty":"Beautification Score (0-100)","t-k-banks":"Bank Comparison","t-k-slogan":"Know the Truth — Before You Pay the Price","t-k-tagline":"We Reveal · We Calculate · You Decide",
+    "t-excellent":"Excellent","t-good":"Good","t-acceptable":"Acceptable","t-weak":"Weak","t-danger":"Danger","t-safe":"Safe","t-high":"High","t-low":"Low","t-profitable":"Profitable","t-not-profitable":"Not Profitable",
+    "t-waiting":"Enter your numbers — result will appear instantly","t-loading":"Calculating..."
+  },
+  fr:{
+    "t-nav-home":"Accueil","t-nav-blog":"Blog","t-nav-glossary":"Glossaire","t-get-started":"Commencer","t-learn-more":"En Savoir Plus",
+    "t-price":"Prix du Bien","t-down":"Apport Initial","t-years":"Durée Financement","t-apr":"APR Annoncé %","t-mur":"Marge Mourabaha %","t-rent":"Loyer Mensuel","t-income":"Revenu Mensuel","t-growth":"Croissance Annuelle %","t-expenses":"Charges Annuelles %","t-yr":"An","t-mo":"Mois",
+    "t-emi":"Mensualité","t-total":"Total Payé","t-interest":"Intérêts Totaux","t-fixed":"Fixe pour Toute la Durée","t-dti":"Ratio Dette/Revenu","t-mur-monthly":"Mourabaha/Mois","t-mur-total":"Total Mourabaha",
+    "t-live":"Résultats en Direct","t-prop":"Données du Bien","t-market":"Données du Marché","t-personal":"Votre Situation","t-proj":"Valeur Prévisionnelle","t-conv":"Prêt Conventionnel","t-mur-lbl":"Mourabaha Islamique",
+    "t-y5":"Dans 5 Ans","t-y10":"Dans 10 Ans","t-yend":"Fin de Période",
+    "t-ry-title":"Rendement Locatif","t-grm-title":"Multiplicateur Brut du Loyer","t-ptr-title":"Ratio Prix/Loyer","t-cap-title":"Taux de Capitalisation","t-ber-title":"Loyer Seuil","t-net-title":"Gain Net",
+    "t-ry-purpose":"Mesure le rendement annuel par rapport au prix. Moins de 4% faible · 4-7% acceptable · 7%+ excellent",
+    "t-grm-purpose":"Années pour récupérer le prix via le loyer. Moins de 10 excellent · 10-15 bon · Plus de 20 élevé",
+    "t-ptr-purpose":"Achat ou location: lequel est moins cher? Moins de 15 acheter · 15-20 zone grise · Plus de 20 louer",
+    "t-cap-purpose":"Revenu net après charges en % du prix. 5%+ bon · Moins de 3% faible",
+    "t-ber-purpose":"Loyer minimum couvrant mensualité et charges. Loyer marché supérieur = rentable ✅",
+    "t-net-purpose":"Valeur finale moins total payé. Positif = patrimoine constitué",
+    "t-comp-conv":"Prêt Conventionnel","t-comp-mur":"Mourabaha Islamique","t-comp-rent":"Location Seule","t-comp-invest":"Location + Investissement","t-comp-cash":"Achat Comptant",
+    "t-comp-conv-desc":"TRI réel supérieur à APR annoncé","t-comp-mur-desc":"Marge fixe — halal — sans intérêt composé","t-comp-rent-desc":"Flexibilité totale — pas de propriété","t-comp-invest-desc":"Investir la différence à 8% annuel","t-comp-cash-desc":"Pas de mensualité — pas d intérêt — besoin de liquidités",
+    "t-best":"Meilleur","t-total-lbl":"Total Payé","t-net-lbl":"Valeur Nette",
+    "t-fin":"Financièrement","t-shr":"Islamiquement","t-mkt":"Marché","t-psy":"Psychologiquement",
+    "t-ok":"✅ OK","t-review":"⚠️ À Vérifier",
+    "t-rec-buy":"L Achat Est Logique","t-rec-caution":"Possible — Avec Précaution","t-rec-wait":"Attendre et Améliorer","t-rec-no":"Ne Pas Acheter","t-rec-rent":"La Location Est Meilleure",
+    "t-best-fin":"Meilleur Financement","t-net-wealth":"Patrimoine Net",
+    "t-feas-score":"Score de Faisabilité","t-feas-suitable":"Prêt à Acheter","t-feas-wait":"Attendre et Améliorer","t-feas-rent":"La Location Est Meilleure",
+    "t-feas-btn":"Calculer le Score →",
+    "t-btn-report":"⬇️ Télécharger","t-btn-reset":"🔄 Réinitialiser","t-btn-start":"Commencer l Analyse ↓","t-btn-formulas":"Formules Immobilières","t-scroll":"Défiler",
+    "t-footer-tag":"L Écosystème Digital de Votre Côté","t-footer-copy":"Chercher · Calculer · Posséder",
+    "t-az-hero":"Savoir Plus. Payer Moins.","t-az-sub":"L Écosystème Digital de Votre Côté","t-az-desc":"De vrais outils financiers et commerciaux construits pour vous aider",
+    "t-az-platforms":"Plateformes","t-az-blog":"Articles","t-az-tools":"Outils",
+    "t-k-slogan":"Connaître la Vérité — Avant de Payer le Prix","t-k-tagline":"Nous Révélons · Nous Calculons · Vous Décidez",
+    "t-excellent":"Excellent","t-good":"Bon","t-acceptable":"Acceptable","t-weak":"Faible","t-danger":"Danger","t-safe":"Sûr","t-high":"Élevé","t-low":"Bas","t-profitable":"Rentable","t-not-profitable":"Non Rentable",
+    "t-waiting":"Entrez vos chiffres — le résultat apparaîtra instantanément","t-loading":"Calcul..."
+  },
+  tr:{
+    "t-nav-home":"Ana Sayfa","t-nav-blog":"Blog","t-nav-glossary":"Sözlük","t-get-started":"Başla","t-learn-more":"Daha Fazla",
+    "t-price":"Mülk Fiyatı","t-down":"Peşinat","t-years":"Finansman Süresi","t-apr":"İlan Edilen APR %","t-mur":"Murabaha Marjı %","t-rent":"Aylık Kira","t-income":"Aylık Gelir","t-growth":"Yıllık Büyüme %","t-expenses":"Yıllık Giderler %","t-yr":"Yıl","t-mo":"Ay",
+    "t-emi":"Aylık Taksit","t-total":"Toplam Ödenen","t-interest":"Toplam Faiz","t-fixed":"Tüm Süre Sabit","t-dti":"Borç/Gelir Oranı","t-mur-monthly":"Murabaha/Ay","t-mur-total":"Toplam Murabaha",
+    "t-live":"Anlık Sonuçlar","t-prop":"Mülk Verileri","t-market":"Piyasa Verileri","t-personal":"Durumunuz","t-proj":"Mülk Değer Tahmini","t-conv":"Geleneksel Kredi","t-mur-lbl":"İslami Murabaha",
+    "t-y5":"5 Yıl Sonra","t-y10":"10 Yıl Sonra","t-yend":"Süre Sonunda",
+    "t-ry-title":"Kira Getirisi","t-grm-title":"Gayrisafi Kira Çarpanı","t-ptr-title":"Fiyat/Kira Oranı","t-cap-title":"Kapitalizasyon Oranı","t-ber-title":"Başa Baş Kira","t-net-title":"Net Servet Kazancı",
+    "t-ry-purpose":"Yıllık kira getirisini fiyata oranla ölçer. %4 altı zayıf · %4-7 kabul edilebilir · %7+ mükemmel",
+    "t-grm-purpose":"Kiradan bedeli geri kazanma yılı. 10 altı mükemmel · 10-15 iyi · 20 üzeri yüksek",
+    "t-ptr-purpose":"Satın alma mı yoksa kiralama mı daha ucuz? 15 altı satın al · 15-20 gri bölge · 20 üzeri kirala",
+    "t-cap-purpose":"Masraflar sonrası net gelirin fiyata oranı. %5+ iyi · %3 altı zayıf",
+    "t-ber-purpose":"Taksit ve masrafları karşılayan minimum kira. Piyasa kirası yüksekse = kârlı ✅",
+    "t-net-purpose":"Son değer eksi toplam ödenen. Pozitif = servet biriktirildi",
+    "t-comp-conv":"Geleneksel Kredi","t-comp-mur":"İslami Murabaha","t-comp-rent":"Sadece Kiralama","t-comp-invest":"Kira + Yatırım","t-comp-cash":"Nakit Satın Alma",
+    "t-comp-conv-desc":"Gerçek IRR ilan edilen APR den yüksek","t-comp-mur-desc":"Sabit marj — helal — bileşik faiz yok","t-comp-rent-desc":"Tam esneklik — mülkiyet yok","t-comp-invest-desc":"Farkı yıllık %8 getiriyle yatırıma dönüştür","t-comp-cash-desc":"Taksit yok — faiz yok — likidite gerekir",
+    "t-best":"En İyi","t-total-lbl":"Toplam Ödenen","t-net-lbl":"Net Değer",
+    "t-fin":"Mali Açıdan","t-shr":"İslami Açıdan","t-mkt":"Piyasa","t-psy":"Psikolojik",
+    "t-ok":"✅ Uygun","t-review":"⚠️ Gözden Geçir",
+    "t-rec-buy":"Satın Alma Mantıklı","t-rec-caution":"Mümkün — Dikkatli","t-rec-wait":"Bekle ve İyileştir","t-rec-no":"Şimdi Satın Alma","t-rec-rent":"Kiralama Daha Akıllı",
+    "t-best-fin":"En İyi Finansman","t-net-wealth":"Net Servet",
+    "t-feas-score":"Fizibilite Skoru","t-feas-suitable":"Satın Almaya Hazır","t-feas-wait":"Bekle ve İyileştir","t-feas-rent":"Kiralama Daha İyi",
+    "t-feas-btn":"Fizibilite Skoru Hesapla →",
+    "t-btn-report":"⬇️ Raporu İndir","t-btn-reset":"🔄 Sıfırla","t-btn-start":"Analizi Başlat ↓","t-btn-formulas":"Gayrimenkul Formülleri","t-scroll":"Aşağı Kaydır",
+    "t-footer-tag":"Dijital Ekosisteminiz Yanınızda","t-footer-copy":"Ara · Hesapla · Sahip Ol",
+    "t-az-hero":"Daha Fazla Bil. Daha Az Öde.","t-az-sub":"Dijital Ekosisteminiz Yanınızda","t-az-desc":"Size yardım etmek için yapılmış gerçek araçlar",
+    "t-az-platforms":"Platformlar","t-az-blog":"Makaleler","t-az-tools":"Araçlar",
+    "t-k-slogan":"Gerçeği Öğrenin — Bedelini Ödemeden Önce","t-k-tagline":"Ortaya Çıkarırız · Hesaplarız · Siz Karar Verirsiniz",
+    "t-excellent":"Mükemmel","t-good":"İyi","t-acceptable":"Kabul Edilebilir","t-weak":"Zayıf","t-danger":"Tehlike","t-safe":"Güvenli","t-high":"Yüksek","t-low":"Düşük","t-profitable":"Kârlı","t-not-profitable":"Kârsız",
+    "t-waiting":"Rakamlarınızı girin — sonuç anında görünecek","t-loading":"Hesaplanıyor..."
+  },
+  ur:{
+    "t-nav-home":"ہوم","t-nav-blog":"بلاگ","t-nav-glossary":"لغت","t-get-started":"شروع کریں","t-learn-more":"مزید جانیں",
+    "t-price":"جائیداد کی قیمت","t-down":"پیشگی ادائیگی","t-years":"مدت","t-apr":"اعلانی APR %","t-mur":"مرابحہ مارجن %","t-rent":"ماہانہ کرایہ","t-income":"ماہانہ آمدنی","t-growth":"سالانہ نمو %","t-expenses":"سالانہ اخراجات %","t-yr":"سال","t-mo":"ماہ",
+    "t-emi":"ماہانہ قسط","t-total":"کل ادائیگی","t-interest":"کل سود","t-fixed":"پوری مدت ثابت","t-dti":"قرض/آمدنی تناسب","t-mur-monthly":"مرابحہ/ماہ","t-mur-total":"مجموعی مرابحہ",
+    "t-live":"براہ راست نتائج","t-prop":"جائیداد کا ڈیٹا","t-market":"بازار کا ڈیٹا","t-personal":"آپ کی صورتحال","t-proj":"جائیداد کی متوقع قیمت","t-conv":"روایتی قرض","t-mur-lbl":"اسلامی مرابحہ",
+    "t-y5":"5 سال بعد","t-y10":"10 سال بعد","t-yend":"مدت کے اختتام پر",
+    "t-ry-title":"کرایہ آمدنی","t-grm-title":"GRM","t-ptr-title":"قیمت/کرایہ تناسب","t-cap-title":"Cap Rate","t-ber-title":"بریک ایون کرایہ","t-net-title":"خالص فائدہ",
+    "t-ry-purpose":"سالانہ کرایہ آمدنی قیمت کے فیصد کے طور پر۔ 4% سے کم کمزور · 4-7% قابل قبول · 7%+ بہترین",
+    "t-grm-purpose":"کرایہ سے قیمت وصول کرنے کے سال۔ 10 سے کم بہترین · 10-15 اچھا · 20 سے زیادہ زیادہ",
+    "t-ptr-purpose":"خریداری یا کرایہ: کون سستا ہے؟ 15 سے کم خریدنا بہتر · 15-20 گرے زون · 20 سے زیادہ کرایہ بہتر",
+    "t-cap-purpose":"اخراجات کے بعد خالص آمدنی قیمت کا فیصد۔ 5%+ اچھا · 3% سے کم کمزور",
+    "t-ber-purpose":"کم از کم کرایہ جو قسط اور اخراجات پورے کرے۔ بازار کرایہ زیادہ = منافع بخش ✅",
+    "t-net-purpose":"آخری قیمت منہا کل ادائیگی۔ مثبت = دولت بنائی",
+    "t-comp-conv":"روایتی قرض","t-comp-mur":"اسلامی مرابحہ","t-comp-rent":"صرف کرایہ","t-comp-invest":"کرایہ + سرمایہ کاری","t-comp-cash":"نقد خریداری",
+    "t-comp-conv-desc":"حقیقی IRR اعلانی APR سے زیادہ","t-comp-mur-desc":"ثابت مارجن — حلال — مرکب سود نہیں","t-comp-rent-desc":"مکمل لچک — ملکیت نہیں","t-comp-invest-desc":"فرق کو سالانہ 8% پر سرمایہ کاری کریں","t-comp-cash-desc":"قسط نہیں — سود نہیں — نقدی درکار",
+    "t-best":"بہترین","t-total-lbl":"کل ادائیگی","t-net-lbl":"خالص دولت",
+    "t-fin":"مالی طور پر","t-shr":"اسلامی طور پر","t-mkt":"بازار","t-psy":"نفسیاتی",
+    "t-ok":"✅ مناسب","t-review":"⚠️ جائزہ لیں",
+    "t-rec-buy":"خریداری درست ہے","t-rec-caution":"ممکن — احتیاط کے ساتھ","t-rec-wait":"انتظار کریں","t-rec-no":"ابھی نہ خریدیں","t-rec-rent":"کرایہ بہتر ہے",
+    "t-best-fin":"بہترین قرض","t-net-wealth":"خالص دولت",
+    "t-feas-score":"قابلیت اسکور","t-feas-suitable":"خریدنے کے لیے تیار","t-feas-wait":"انتظار کریں","t-feas-rent":"کرایہ بہتر ہے",
+    "t-feas-btn":"قابلیت اسکور حساب کریں →",
+    "t-btn-report":"⬇️ رپورٹ ڈاؤنلوڈ","t-btn-reset":"🔄 دوبارہ","t-btn-start":"تجزیہ شروع ↓","t-btn-formulas":"رئیل اسٹیٹ فارمولے","t-scroll":"نیچے سکرول",
+    "t-footer-tag":"آپ کی طرف ڈیجیٹل ماحولیاتی نظام","t-footer-copy":"تلاش کریں · حساب کریں · مالک بنیں",
+    "t-az-hero":"زیادہ جانیں۔ کم ادا کریں۔","t-az-sub":"آپ کی طرف ڈیجیٹل ماحولیاتی نظام","t-az-desc":"آپ کی مدد کے لیے بنائے گئے حقیقی مالی ابزار",
+    "t-az-platforms":"پلیٹ فارمز","t-az-blog":"مضامین","t-az-tools":"ابزار",
+    "t-k-slogan":"سچ جانیں — قیمت چکانے سے پہلے","t-k-tagline":"ہم ظاہر کرتے ہیں · ہم حساب کرتے ہیں · آپ فیصلہ کریں",
+    "t-excellent":"بہترین","t-good":"اچھا","t-acceptable":"قابل قبول","t-weak":"کمزور","t-danger":"خطرہ","t-safe":"محفوظ","t-high":"زیادہ","t-low":"کم","t-profitable":"منافع بخش","t-not-profitable":"غیر منافع بخش",
+    "t-waiting":"اپنے اعداد درج کریں — نتیجہ فوری ظاہر ہوگا","t-loading":"حساب ہو رہا ہے..."
+  }
+};
+
+/* ══ UNIVERSAL setLang() ══ */
+function setLang(l){
+  if(!I18N[l]) l="ar";
+  LANG = l;
+  var rtl = l==="ar"||l==="ur"||l==="fa";
+  document.documentElement.lang = l;
+  document.documentElement.dir  = rtl ? "rtl" : "ltr";
+  document.body.style.fontFamily = rtl ? "'Cairo','Syne',sans-serif" : "'Syne',sans-serif";
+  /* Update all i18n elements */
+  var tr = I18N[l];
+  Object.keys(tr).forEach(function(k){
+    var el = document.getElementById(k);
+    if(el) el.textContent = tr[k];
+    /* Also handle placeholder */
+    var inp = document.querySelector('[data-i18n="'+k+'"]');
+    if(inp){
+      if(inp.placeholder !== undefined) inp.placeholder = tr[k];
+      else inp.textContent = tr[k];
+    }
+  });
+  /* Trigger re-render of dynamic content */
+  if(typeof renderQ === "function") renderQ();
+  if(typeof renderFormulas === "function") renderFormulas();
+  if(typeof renderComp === "function") renderComp();
+  if(typeof calcAll === "function") calcAll();
+}
+
+</script>
+
+<!-- SIDEBAR OVERLAY v4r2 -->
+<div id="sb-ov4" onclick="closeSB4()"></div>
+<div id="sidebar4">
+  <div class="s4-top">
+    <div class="s4-logo">Prism Payoff</div>
+    <button class="s4-close" onclick="closeSB4()">✕</button>
+  </div>
+  <div class="s4-body">
+    <div class="s4-sec">
+      <div class="s4-stitle">Prism Suite</div>
+      <button class="s4-link" onclick="closeSB4();window.open('prism-v2r7.html','_self')">🏠 Prism Home</button>
+      <button class="s4-link" onclick="closeSB4();window.open('prism-v3r2.html','_blank')">⚖️ Prism Compare</button>
+      <button class="s4-link act">💸 Prism Payoff — Current</button>
+    </div>
+    <div class="s4-sec">
+      <div class="s4-stitle">Jump To</div>
+      <button class="s4-link" onclick="closeSB4();sGoTo('verdict-wrap')">🏛️ Verdict</button>
+      <button class="s4-link" onclick="closeSB4();swTab('scenarios');sGoTo('tp-scenarios')">⚖️ 3 Scenarios</button>
+      <button class="s4-link" onclick="closeSB4();swTab('chart');sGoTo('tp-chart');drawChart()">📊 Chart</button>
+      <button class="s4-link" onclick="closeSB4();swTab('early');sGoTo('tp-early')">⚡ Early Payoff</button>
+      <button class="s4-link" onclick="closeSB4();swTab('inflation');sGoTo('tp-inflation')">📉 Inflation</button>
+    </div>
+    <div class="s4-sec">
+      <div class="s4-stitle">Share</div>
+      <button class="s4-link" onclick="closeSB4();doShare()">🔗 Share Link</button>
+      <button class="s4-link" onclick="closeSB4();doWhatsApp()">💬 WhatsApp</button>
+      <button class="s4-link" onclick="window.print()">🖨️ Print</button>
+      <button class="s4-link" onclick="closeSB4();doCopy()">📋 Copy Results</button>
+    </div>
+    <div class="s4-sec">
+      <div class="s4-stitle">Settings</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0">
+        <span style="font-size:.82rem;color:var(--t2)">🌙 Dark Mode</span>
+        <label style="position:relative;width:36px;height:20px;cursor:pointer;display:inline-block">
+          <input type="checkbox" checked onchange="toggleTheme()" style="opacity:0;width:0;height:0"/>
+          <span style="position:absolute;inset:0;background:var(--pri);border-radius:20px;transition:.3s"><span style="position:absolute;height:12px;width:12px;border-radius:50%;background:#fff;bottom:4px;left:4px;transition:.3s;display:block"></span></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="s4-foot">
+    <div style="font-family:var(--fm);font-size:.56rem;letter-spacing:2px;color:var(--t3);text-transform:uppercase">Prism Payoff · Axiom Zones · getprism.app</div>
+  </div>
+</div>
+
+<script>
+/* ══ SIDEBAR v4r2 ══ */
+function openSB4(){document.getElementById('sidebar4').classList.add('open');document.getElementById('sb-ov4').classList.add('open');document.body.style.overflow='hidden';}
+function closeSB4(){document.getElementById('sidebar4').classList.remove('open');document.getElementById('sb-ov4').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSB4();if(e.altKey&&e.key==='m'){e.preventDefault();openSB4();}});
+
+/* ══ COUNTER ANIMATION v4r2 ══ */
+function animCount(el, target, sfx, dur) {
+  var start = 0;
+  var timer = setInterval(function() {
+    start += target / (dur / 16);
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start) + (sfx || '');
+  }, 16);
+}
+window.addEventListener('load', function() {
+  // Animate stats in hero if any exist
+  document.querySelectorAll('[data-count]').forEach(function(el) {
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    var sfx = el.getAttribute('data-sfx') || '';
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) { animCount(el, target, sfx, 1200); obs.disconnect(); }
+    }, {threshold:.3});
+    obs.observe(el);
+  });
+});
+</script>
+<script>
+
+/* ══════════════════════════════════════════════════════
+   AZ RATE LIMITER — AI Calls Protection
+   يحمي من استنزاف Claude API
+   المجاني: 5 أسئلة/يوم | Pro+: 50/يوم | Expert: 200/يوم
+══════════════════════════════════════════════════════ */
+var AZ_RATE = {
+  limits: { free:5, growth:20, pro:50, expert:200, lifetime:500 },
+  key: 'az_ai_calls',
+  dateKey: 'az_ai_date',
+
+  /* احصل على الخطة الحالية */
+  getPlan: function() {
+    try {
+      var s = JSON.parse(localStorage.getItem('az_session') || '{}');
+      return s.plan || 'free';
+    } catch(e) { return 'free'; }
+  },
+
+  /* هل مسموح باستدعاء AI؟ */
+  canCall: function() {
+    var today = new Date().toDateString();
+    var saved = localStorage.getItem(this.dateKey);
+    if (saved !== today) {
+      localStorage.setItem(this.dateKey, today);
+      localStorage.setItem(this.key, '0');
+    }
+    var used  = parseInt(localStorage.getItem(this.key) || '0');
+    var plan  = this.getPlan();
+    var limit = this.limits[plan] || this.limits.free;
+    return used < limit;
+  },
+
+  /* سجّل استدعاء */
+  record: function() {
+    var used = parseInt(localStorage.getItem(this.key) || '0');
+    localStorage.setItem(this.key, String(used + 1));
+  },
+
+  /* كم تبقّى؟ */
+  remaining: function() {
+    var today = new Date().toDateString();
+    if (localStorage.getItem(this.dateKey) !== today) return this.limits[this.getPlan()] || 5;
+    var used  = parseInt(localStorage.getItem(this.key) || '0');
+    var limit = this.limits[this.getPlan()] || 5;
+    return Math.max(0, limit - used);
+  },
+
+  /* رسالة الحد المنتهي */
+  limitMsg: function() {
+    var plan = this.getPlan();
+    var limit = this.limits[plan] || 5;
+    if (plan === 'free') {
+      return 'وصلت لحد ' + limit + ' أسئلة/يوم للحساب المجاني. ترقّ للـ Growth للحصول على 20 سؤال/يوم.';
+    }
+    return 'وصلت لحد ' + limit + ' سؤال اليوم. يتجدد غداً.';
+  }
+};
+
+/* ══ Wrap كل استدعاء AI بـ Rate Limiter ══ */
+var _az_orig_fetch = window.fetch;
+window.fetch = function(url, opts) {
+  if (url && url.toString().includes('anthropic.com')) {
+    if (!AZ_RATE.canCall()) {
+      var msg = AZ_RATE.limitMsg();
+      /* Show toast using any available toast function */
+      if (typeof azV4Toast === 'function')    azV4Toast('⚠️ ' + msg);
+      else if (typeof kToast === 'function')  kToast('⚠️ ' + msg);
+      else if (typeof dashShowToast === 'function') dashShowToast('⚠️ ' + msg);
+      else alert(msg);
+      return Promise.reject(new Error('Rate limit reached'));
+    }
+    AZ_RATE.record();
+    /* Show remaining count */
+    var rem = AZ_RATE.remaining();
+    if (rem <= 2) {
+      var warn = 'تبقّى ' + rem + ' سؤال AI اليوم';
+      setTimeout(function() {
+        if (typeof azV4Toast === 'function')    azV4Toast('ℹ️ ' + warn);
+        else if (typeof kToast === 'function')  kToast('ℹ️ ' + warn);
+        else if (typeof dashShowToast === 'function') dashShowToast('ℹ️ ' + warn);
+      }, 2000);
+    }
+  }
+  return _az_orig_fetch.apply(window, arguments);
+};
+
+</script>
+
+<!-- PWA -->
+<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:#0a0d1a;border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
+<script>
+(function(){var _d=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_d=e;setTimeout(function(){var b=document.getElementById('az-pwa-banner');if(b)b.style.display='flex';},30000);});window.azPWAInstall=function(){if(!_d)return;_d.prompt();_d.userChoice.then(function(){_d=null;var b=document.getElementById('az-pwa-banner');if(b)b.style.display='none';});};if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/service-worker.js').catch(function(){});});})();
+</script>
+
+<!-- ══ ECOSYSTEM BADGE — يُضاف لكل منصة فرعية ══ -->
+<style>
+.az-ecosystem-badge{
+  position:fixed;top:16px;right:16px;z-index:9999;
+  display:flex;align-items:center;gap:0;
+  font-family:'DM Mono',monospace;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.az-eco-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#c9a84c,#e8c86a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(201,168,76,.3);
+  transition:all .3s;flex-shrink:0;
+}
+.az-eco-label{
+  max-width:0;overflow:hidden;white-space:nowrap;
+  font-size:.62rem;letter-spacing:1px;color:#060912;
+  background:linear-gradient(135deg,#c9a84c,#e8c86a);
+  height:36px;display:flex;align-items:center;
+  padding:0;border-radius:0 18px 18px 0;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+  font-weight:700;
+}
+.az-ecosystem-badge:hover .az-eco-label{
+  max-width:120px;padding:0 12px 0 6px;
+}
+.az-ecosystem-badge:hover .az-eco-icon{
+  border-radius:50% 0 0 50%;
+}
+</style>
+<div class="az-ecosystem-badge" onclick="window.location.href='/'">
+  <div class="az-eco-icon">🏛️</div>
+  <div class="az-eco-label">المنظومة</div>
+</div>
+
+</body>
+</html>

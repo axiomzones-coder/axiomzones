@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>My Dashboard — Axiom Zones</title>
+<meta name="description" content="Axiom Zones User Dashboard — Manage your platforms, subscriptions and account."/>
+<meta name="theme-color" content="#060912"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Axiom Zones"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,600;0,700;1,300&family=Syne:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ══ TOKENS ══ */
+:root{
+  --void:#060912;--ink:#0a0d1a;--deep:#0f1525;--surf:#141c2e;--elev:#1a2338;
+  --gold:#c9a84c;--gold2:#e8c86a;--goldd:rgba(201,168,76,.12);
+  --pri:#3b82f6;--pril:#60a5fa;--prig:rgba(59,130,246,.1);
+  --gn:#22c55e;--rd:#ef4444;--or:#f97316;--cy:#06b6d4;--pu:#8b5cf6;
+  --t1:#f0f2ff;--t2:#8892b0;--t3:#3d4a6b;
+  --fd:'Cormorant',serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+[data-theme=light]{
+  --void:#f0f2ff;--ink:#e8ecfa;--deep:#dde2f5;--surf:#d2d8ee;--elev:#c8cfe5;
+  --t1:#0a0d1a;--t2:#3d4a6b;--t3:#8892b0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px}
+body{background:var(--void);color:var(--t1);font-family:var(--fs);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+::selection{background:rgba(201,168,76,.25)}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
+
+/* ══ LOGIN GATE ══ */
+#login-gate{
+  position:fixed;inset:0;z-index:9999;background:var(--void);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.lg-box{
+  width:100%;max-width:420px;background:var(--ink);
+  border:1px solid rgba(201,168,76,.18);border-radius:20px;
+  padding:36px;position:relative;overflow:hidden;
+}
+.lg-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold))}
+.lg-logo{font-family:var(--fd);font-size:1.8rem;font-weight:700;text-align:center;
+  background:linear-gradient(135deg,var(--t1),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.lg-sub{font-family:var(--fm);font-size:.6rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--t3);text-align:center;margin-bottom:28px}
+.lg-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:22px}
+.lg-tab{flex:1;padding:9px;text-align:center;font-size:.82rem;font-weight:600;
+  cursor:pointer;border:none;background:transparent;color:var(--t2);
+  border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .22s}
+.lg-tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.lg-panel{display:none}
+.lg-panel.on{display:block}
+.f-lbl{display:block;font-size:.72rem;color:var(--t2);margin-bottom:5px}
+.f-i{width:100%;background:var(--deep);border:1.5px solid rgba(255,255,255,.07);
+  color:var(--t1);padding:11px 13px;border-radius:8px;font-family:var(--fs);
+  font-size:.86rem;outline:none;transition:border-color .25s;margin-bottom:12px}
+.f-i:focus{border-color:var(--gold)}
+.f-i.err{border-color:var(--rd);animation:sh .4s}
+@keyframes sh{0%,100%{transform:translateX(0)}25%,75%{transform:translateX(-6px)}50%{transform:translateX(6px)}}
+.lg-btn{width:100%;padding:12px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#0a0d1a;font-weight:700;font-family:var(--fs);font-size:.88rem;
+  border:none;cursor:pointer;transition:all .3s}
+.lg-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.lg-err{display:none;padding:9px 12px;border-radius:7px;background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.2);color:var(--rd);font-size:.76rem;
+  text-align:center;margin-bottom:10px}
+.lg-err.on{display:block}
+.lg-divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--t3);font-size:.72rem}
+.lg-divider::before,.lg-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.lg-social{display:flex;gap:8px}
+.lg-soc{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+  background:transparent;color:var(--t1);cursor:pointer;font-size:.8rem;
+  font-family:var(--fs);transition:all .22s;display:flex;align-items:center;justify-content:center;gap:6px}
+.lg-soc:hover{border-color:var(--gold);color:var(--gold)}
+.lg-footer-txt{font-family:var(--fm);font-size:.64rem;color:var(--t3);
+  text-align:center;margin-top:14px;line-height:1.7}
+.lg-link{color:var(--gold);cursor:pointer;text-decoration:none}
+.lg-link:hover{text-decoration:underline}
+
+/* ══ SCROLL PROGRESS ══ */
+#sp{position:fixed;top:0;left:0;height:2px;z-index:9999;width:0;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));pointer-events:none}
+
+/* ══ LAYOUT ══ */
+#dashboard{display:none;min-height:100vh}
+.dash-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+@media(max-width:900px){.dash-layout{grid-template-columns:1fr}}
+
+/* ══ SIDEBAR ══ */
+.dash-sidebar{
+  background:var(--ink);border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+  overflow-y:auto;
+}
+.dash-sidebar::-webkit-scrollbar{width:2px}
+@media(max-width:900px){.dash-sidebar{display:none}}
+.dsb-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:10px;cursor:pointer}
+.dsb-logo-txt{font-family:var(--fd);font-size:1.1rem;font-weight:700;
+  background:linear-gradient(135deg,var(--t1),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.dsb-nav{flex:1;padding:10px 0}
+.dsb-section{font-family:var(--fm);font-size:.54rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--t3);padding:12px 18px 5px}
+.dsb-item{display:flex;align-items:center;gap:10px;padding:9px 18px;
+  color:var(--t2);cursor:pointer;transition:all .2s;border:none;
+  background:transparent;width:100%;text-align:start;font-family:var(--fs);
+  font-size:.83rem;border-left:2px solid transparent}
+.dsb-item:hover{color:var(--t1);background:rgba(255,255,255,.04)}
+.dsb-item.on{color:var(--gold);background:var(--goldd);border-left-color:var(--gold)}
+.dsb-icon{font-size:.9rem;width:18px;text-align:center;flex-shrink:0}
+.dsb-badge{margin-inline-start:auto;background:rgba(239,68,68,.15);
+  border:1px solid rgba(239,68,68,.2);color:var(--rd);
+  font-family:var(--fm);font-size:.54rem;padding:2px 6px;border-radius:3px}
+.dsb-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,.06)}
+.dsb-user{display:flex;align-items:center;gap:9px}
+.dsb-avatar{width:34px;height:34px;border-radius:50%;
+  background:var(--goldd);border:1px solid rgba(201,168,76,.25);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.dsb-uname{font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dsb-uplan{font-family:var(--fm);font-size:.57rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
+.dsb-logout{background:none;border:none;color:var(--t3);cursor:pointer;
+  font-size:.85rem;padding:4px;border-radius:4px;transition:color .2s;margin-inline-start:auto}
+.dsb-logout:hover{color:var(--rd)}
+
+/* ══ MAIN ══ */
+.dash-main{display:flex;flex-direction:column;min-height:100vh}
+
+/* ══ TOPBAR ══ */
+.dash-topbar{
+  padding:13px 26px;background:rgba(6,9,18,.85);backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;flex-shrink:0;gap:12px;
+}
+[data-theme=light] .dash-topbar{background:rgba(240,242,255,.92)}
+.topbar-title{font-family:var(--fd);font-size:1.15rem;font-weight:700}
+.topbar-sub{font-family:var(--fm);font-size:.58rem;color:var(--t3);margin-top:1px}
+.topbar-r{display:flex;align-items:center;gap:8px}
+.tb-btn{padding:7px 14px;border-radius:8px;font-family:var(--fs);font-size:.76rem;
+  font-weight:600;cursor:pointer;transition:all .25s;border:none;
+  display:flex;align-items:center;gap:5px}
+.tb-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0d1a}
+.tb-gold:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,168,76,.3)}
+.tb-out{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2)}
+.tb-out:hover{border-color:var(--gold);color:var(--gold)}
+.tb-icon{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+  background:transparent;color:var(--t2);cursor:pointer;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;transition:all .25s}
+.tb-icon:hover{border-color:var(--gold);color:var(--gold)}
+#mob-open{display:none}
+@media(max-width:900px){#mob-open{display:flex}}
+
+/* ══ CONTENT ══ */
+.dash-content{flex:1;padding:26px}
+.dash-page{display:none}
+.dash-page.on{display:block}
+
+/* ══ WELCOME BANNER ══ */
+.welcome-banner{
+  background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(139,92,246,.05));
+  border:1px solid rgba(201,168,76,.16);border-radius:14px;
+  padding:22px 26px;margin-bottom:22px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;gap:16px;
+}
+.welcome-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold))}
+.wb-title{font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:4px}
+.wb-sub{font-size:.82rem;color:var(--t2);line-height:1.7}
+.wb-plan{display:inline-flex;align-items:center;gap:6px;margin-top:8px;
+  font-family:var(--fm);font-size:.62rem;letter-spacing:2px;padding:4px 12px;
+  border-radius:20px;text-transform:uppercase}
+.plan-pro{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);color:var(--pu)}
+.plan-free{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--t2)}
+.plan-expert{background:var(--goldd);border:1px solid rgba(201,168,76,.25);color:var(--gold)}
+.plan-lifetime{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(34,197,94,.08));border:1px solid rgba(201,168,76,.3);color:var(--gold)}
+.plan-growth{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:var(--pril)}
+
+/* ══ STATS ROW ══ */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.stats-row{grid-template-columns:1fr 1fr}}
+.stat-box{background:var(--ink);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:18px;position:relative;overflow:hidden;transition:all .3s}
+.stat-box:hover{border-color:rgba(255,255,255,.1);transform:translateY(-2px)}
+.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc,var(--gold))}
+.stat-icon{font-size:1.2rem;margin-bottom:8px}
+.stat-val{font-family:var(--fd);font-size:1.8rem;font-weight:700;line-height:1;margin-bottom:3px}
+.stat-lbl{font-family:var(--fm);font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3)}
+
+/* ══ PLATFORM CARDS (user) ══ */
+.plt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.plt-card{
+  background:var(--ink);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:20px;position:relative;overflow:hidden;
+  transition:all .35s;display:flex;flex-direction:column;
+}
+.plt-card:hover{border-color:rgba(255,255,255,.14);transform:translateY(-4px);
+  box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.plt-card::before{content:'';position:absolute;top:0;left:0;right:0;
+  height:3px;background:var(--pcc,var(--gold));transition:height .3s}
+.plt-card:hover::before{height:4px}
+.plt-card.locked{opacity:.65;filter:grayscale(.3)}
+.plt-card.locked:hover{transform:none}
+.plt-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.plt-ico{width:46px;height:46px;border-radius:11px;display:flex;
+  align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.07)}
+.plt-nm{font-family:var(--fd);font-size:1.15rem;font-weight:700;margin-bottom:2px}
+.plt-tg{font-family:var(--fm);font-size:.57rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3)}
+.plt-desc{font-size:.79rem;color:var(--t2);line-height:1.7;flex:1;margin-bottom:14px}
+.plt-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.pmtag{font-size:.6rem;padding:2px 8px;border-radius:3px;font-family:var(--fm);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--t3)}
+.plt-actions{display:flex;gap:8px;align-items:center;padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.05)}
+.btn-launch{flex:1;padding:10px;border-radius:8px;font-family:var(--fs);font-size:.82rem;
+  font-weight:700;border:none;cursor:pointer;transition:all .3s;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0d1a}
+.btn-launch:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,168,76,.3)}
+.btn-launch:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-sm-out{padding:9px 14px;border-radius:8px;font-family:var(--fs);font-size:.76rem;
+  font-weight:600;background:transparent;border:1px solid rgba(255,255,255,.1);
+  color:var(--t2);cursor:pointer;transition:all .22s}
+.btn-sm-out:hover{border-color:var(--gold);color:var(--gold)}
+.lock-overlay{position:absolute;inset:0;background:rgba(6,9,18,.7);
+  backdrop-filter:blur(3px);border-radius:14px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;z-index:5}
+.lock-icon{font-size:2rem}
+.lock-txt{font-family:var(--fd);font-size:1rem;font-weight:600;text-align:center}
+.lock-sub{font-size:.74rem;color:var(--t2);text-align:center;max-width:200px;line-height:1.6}
+.btn-unlock{padding:9px 20px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#0a0d1a;font-weight:700;font-family:var(--fs);font-size:.8rem;border:none;cursor:pointer;transition:all .25s}
+.btn-unlock:hover{transform:translateY(-1px)}
+
+/* ══ SUBSCRIPTION PANEL ══ */
+.sub-current{
+  background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(139,92,246,.04));
+  border:1px solid rgba(201,168,76,.18);border-radius:14px;
+  padding:24px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.sub-current::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.sub-plan-name{font-family:var(--fd);font-size:2rem;font-weight:700;margin-bottom:4px}
+.sub-price{font-family:var(--fm);font-size:.85rem;color:var(--t2);margin-bottom:14px}
+.sub-features{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:18px}
+@media(max-width:500px){.sub-features{grid-template-columns:1fr}}
+.sub-feat{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--t2)}
+.sub-feat::before{content:'✓';color:var(--gn);font-size:.72rem;flex-shrink:0}
+.sub-actions{display:flex;gap:8px;flex-wrap:wrap}
+/* Upgrade plans grid */
+.upgrade-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.upgrade-card{background:var(--ink);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:20px;transition:all .3s;position:relative}
+.upgrade-card:hover{border-color:rgba(201,168,76,.25);transform:translateY(-3px)}
+.upgrade-card.current{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.04)}
+.upgrade-card.popular{border-color:rgba(139,92,246,.3)}
+.up-pop-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  font-family:var(--fm);font-size:.52rem;letter-spacing:1.5px;padding:3px 10px;
+  border-radius:0 0 6px 6px;background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#0a0d1a;text-transform:uppercase;font-weight:700}
+.up-name{font-size:.9rem;font-weight:700;margin-bottom:8px}
+.up-price{font-family:var(--fd);font-size:2rem;font-weight:700;line-height:1;margin-bottom:3px}
+.up-per{font-family:var(--fm);font-size:.62rem;color:var(--t2);margin-bottom:12px}
+.up-feats{list-style:none;margin-bottom:16px}
+.up-feat{display:flex;align-items:flex-start;gap:6px;font-size:.75rem;
+  color:var(--t2);padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.up-feat:last-child{border-bottom:none}
+.up-feat::before{content:'✓';color:var(--gn);font-size:.65rem;flex-shrink:0;margin-top:2px}
+.up-feat.no::before{content:'✗';color:var(--t3)}
+.up-btn{width:100%;padding:10px;border-radius:8px;font-family:var(--fs);
+  font-size:.8rem;font-weight:700;cursor:pointer;transition:all .3s;border:none}
+.up-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0d1a}
+.up-btn-gold:hover{transform:translateY(-1px)}
+.up-btn-out{background:transparent;border:1.5px solid rgba(255,255,255,.1);color:var(--t2)}
+.up-btn-out:hover{border-color:var(--gold);color:var(--gold)}
+.up-btn-dis{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  color:var(--t3);cursor:default}
+
+/* ══ INVOICES ══ */
+.inv-wrap{overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.06)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 14px;text-align:start;font-family:var(--fm);font-size:.57rem;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);
+  background:var(--deep);border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+tbody td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.81rem}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+.td-mono{font-family:var(--fm);font-size:.75rem}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;
+  border-radius:4px;font-family:var(--fm);font-size:.58rem;letter-spacing:1px;text-transform:uppercase}
+.b-gn{background:rgba(34,197,94,.1);color:var(--gn);border:1px solid rgba(34,197,94,.2)}
+.b-rd{background:rgba(239,68,68,.1);color:var(--rd);border:1px solid rgba(239,68,68,.2)}
+.b-gold{background:var(--goldd);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.b-gray{background:rgba(255,255,255,.04);color:var(--t3);border:1px solid rgba(255,255,255,.07)}
+.b-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* ══ SETTINGS ══ */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.settings-grid{grid-template-columns:1fr}}
+.panel{background:var(--ink);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:20px;margin-bottom:18px}
+.panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.panel-title{font-family:var(--fm);font-size:.62rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--t2);display:flex;align-items:center;gap:6px}
+.panel-title::before{content:'';width:10px;height:2px;background:var(--gold);flex-shrink:0}
+.f-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.f-group label{font-size:.72rem;color:var(--t2)}
+.f-inp{background:var(--deep);border:1.5px solid rgba(255,255,255,.07);
+  color:var(--t1);padding:9px 12px;border-radius:8px;
+  font-family:var(--fs);font-size:.84rem;outline:none;transition:border-color .25s;width:100%}
+.f-inp:focus{border-color:var(--gold)}
+[data-theme=light] .f-inp{background:var(--surf)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.toggle-row:last-child{border-bottom:none}
+.tog-info{flex:1}
+.tog-label{font-size:.82rem;font-weight:600;margin-bottom:2px}
+.tog-desc{font-size:.72rem;color:var(--t2)}
+.tog-sw{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0}
+.tog-sw input{opacity:0;width:0;height:0}
+.tog-track{position:absolute;inset:0;background:rgba(255,255,255,.1);
+  border-radius:22px;transition:.3s;border:1px solid rgba(255,255,255,.1)}
+.tog-track::after{content:'';position:absolute;height:14px;width:14px;
+  left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.tog-sw input:checked + .tog-track{background:var(--gn);border-color:var(--gn)}
+.tog-sw input:checked + .tog-track::after{transform:translateX(18px)}
+
+/* ══ NOTIFICATIONS PAGE ══ */
+.notif-item-pg{display:flex;align-items:flex-start;gap:12px;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.04)}
+.notif-item-pg:last-child{border-bottom:none}
+.ni-ico{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:.9rem;flex-shrink:0}
+.ni-content{flex:1;min-width:0}
+.ni-title{font-size:.84rem;font-weight:600;margin-bottom:3px}
+.ni-body{font-size:.78rem;color:var(--t2);line-height:1.6}
+.ni-time{font-family:var(--fm);font-size:.62rem;color:var(--t3);margin-top:4px}
+.ni-unread{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+
+/* ══ REFERRAL ══ */
+.ref-box{background:linear-gradient(135deg,rgba(34,197,94,.06),rgba(6,182,212,.04));
+  border:1px solid rgba(34,197,94,.18);border-radius:12px;padding:20px;text-align:center}
+.ref-link-wrap{display:flex;gap:8px;max-width:400px;margin:14px auto 0}
+.ref-link-inp{flex:1;background:var(--deep);border:1px solid rgba(255,255,255,.07);
+  color:var(--t2);padding:9px 12px;border-radius:8px;font-family:var(--fm);
+  font-size:.72rem;outline:none}
+
+/* ══ PROGRESS BAR ══ */
+.prog-bar{height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-top:6px}
+.prog-fill{height:100%;border-radius:3px;transition:width .8s var(--ease)}
+
+/* ══ QUICK ACTIONS ══ */
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+@media(max-width:700px){.qa-grid{grid-template-columns:repeat(2,1fr)}}
+.qa-btn{padding:14px 10px;border-radius:11px;background:var(--ink);
+  border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .25s;
+  text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.qa-btn:hover{border-color:rgba(201,168,76,.22);background:var(--goldd);transform:translateY(-2px)}
+.qa-icon{font-size:1.4rem}
+.qa-label{font-size:.72rem;font-weight:600;color:var(--t2)}
+
+/* ══ MOBILE SIDEBAR ══ */
+#mob-ov{position:fixed;inset:0;z-index:1998;background:rgba(0,0,0,.65);
+  backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .35s}
+#mob-ov.open{opacity:1;pointer-events:all}
+#mob-sb{position:fixed;top:0;left:0;bottom:0;z-index:1999;width:min(280px,88vw);
+  background:var(--ink);border-right:1px solid rgba(201,168,76,.12);
+  display:flex;flex-direction:column;transform:translateX(-100%);
+  transition:transform .4s var(--ease)}
+#mob-sb.open{transform:translateX(0)}
+.mob-sb-top{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between}
+.mob-sb-close{width:28px;height:28px;border-radius:6px;
+  border:1px solid rgba(255,255,255,.1);background:transparent;
+  color:var(--t2);cursor:pointer;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;transition:all .25s}
+.mob-sb-close:hover{border-color:var(--rd);color:var(--rd)}
+.mob-sb-body{flex:1;overflow-y:auto;padding:8px 0}
+
+/* ══ BOTTOM NAV ══ */
+#bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:980;
+  background:rgba(10,13,26,.96);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:6px 0 env(safe-area-inset-bottom,6px)}
+[data-theme=light] #bottom-nav{background:rgba(240,242,255,.96)}
+@media(max-width:900px){#bottom-nav{display:block}}
+.bn-inner{display:flex;justify-content:space-around}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:6px 12px;border:none;background:transparent;cursor:pointer;
+  border-radius:8px;color:var(--t3);font-family:var(--fm);transition:all .22s}
+.bn-item.on{color:var(--gold)}
+.bn-icon{font-size:1.1rem}
+.bn-lbl{font-size:.49rem;letter-spacing:1px;text-transform:uppercase}
+
+/* ══ BACK TO TOP ══ */
+#btt{position:fixed;bottom:72px;right:18px;z-index:900;width:36px;height:36px;
+  border-radius:50%;background:var(--goldd);border:1px solid rgba(201,168,76,.3);
+  color:var(--gold);cursor:pointer;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translateY(12px);transition:all .3s var(--ease);pointer-events:none}
+#btt.show{opacity:1;transform:translateY(0);pointer-events:all}
+#btt:hover{background:var(--gold);color:#0a0d1a}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--surf);border:1px solid rgba(201,168,76,.25);color:var(--t1);
+  padding:10px 18px;border-radius:9px;font-size:.76rem;z-index:9999;
+  transition:transform .4s var(--ease);box-shadow:0 12px 40px rgba(0,0,0,.5);
+  font-family:var(--fm);letter-spacing:.5px;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ══ REVEAL ══ */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.vis{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* Print */
+@media print{#bottom-nav,#btt,#mob-sb,#mob-ov,#sp,.topbar-r{display:none!important}}
+
+/* ══ LANGUAGE + CURRENCY SELECTORS ══ */
+.dash-i18n-wrap{display:flex;align-items:center;gap:6px;margin-inline-end:6px}
+.dash-sel{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);
+  color:var(--t1,#f0f2ff);padding:4px 8px;border-radius:7px;font-family:'DM Mono',monospace;
+  font-size:.62rem;cursor:pointer;outline:none;transition:border-color .22s;
+  max-width:130px}
+.dash-sel:focus{border-color:var(--gold-p,#c9a84c)}
+.dash-sel option,.dash-sel optgroup{background:#0a0d1a;color:#f0f2ff}
+.dash-ai-btn{padding:4px 10px;border-radius:7px;border:1.5px solid rgba(201,168,76,.25);
+  background:rgba(201,168,76,.08);color:#c9a84c;font-family:'DM Mono',monospace;
+  font-size:.58rem;cursor:pointer;letter-spacing:1px;transition:all .22s;white-space:nowrap}
+.dash-ai-btn:hover{background:rgba(201,168,76,.18)}
+.dash-ai-btn.loading{opacity:.6;pointer-events:none}
+.dash-curr-sym{font-family:'DM Mono',monospace;font-size:.7rem;
+  color:var(--gold-p,#c9a84c);min-width:28px;text-align:center;font-weight:700}
+
+</style>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Axiom Zones"/>
+  <meta name="theme-color" content="#c9a84c"/>
+  <meta name="msapplication-TileColor" content="#060912"/>
+</head>
+<body>
+
+<div id="sp" aria-hidden="true"></div>
+
+<!-- ══ LOGIN GATE ══ -->
+<div id="login-gate" role="main">
+  <div class="lg-box">
+    <div class="lg-logo">Axiom Zones</div>
+    <div class="lg-sub">My Dashboard</div>
+
+    <div class="lg-tabs" role="tablist">
+      <button class="lg-tab on" role="tab" onclick="lgTab('signin')">Sign In</button>
+      <button class="lg-tab" role="tab" onclick="lgTab('signup')">Create Account</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div class="lg-panel on" id="panel-signin">
+      <div class="lg-err" id="signin-err">Incorrect email or password.</div>
+      <label class="f-lbl" for="si-email">Email</label>
+      <input class="f-i" type="email" id="si-email" placeholder="your@email.com" autocomplete="email"/>
+      <label class="f-lbl" for="si-pass">Password</label>
+      <input class="f-i" type="password" id="si-pass" placeholder="••••••••" autocomplete="current-password"/>
+      <div style="text-align:end;margin:-6px 0 12px">
+        <span class="lg-link" style="font-size:.72rem" onclick="forgotPass()">Forgot password?</span>
+      </div>
+      <button class="lg-btn" onclick="doSignIn()">Sign In →</button>
+      <div class="lg-divider">or continue with</div>
+      <div class="lg-social">
+        <button class="lg-soc" onclick="socialAuth('google')">🔵 Google</button>
+        <button class="lg-soc" onclick="socialAuth('apple')">🍎 Apple</button>
+      </div>
+      <div class="lg-footer-txt">
+        Don't have an account? <span class="lg-link" onclick="lgTab('signup')">Create one free →</span>
+      </div>
+    </div>
+
+    <!-- SIGN UP -->
+    <div class="lg-panel" id="panel-signup">
+      <div class="lg-err" id="signup-err">Please fill all fields correctly.</div>
+      <label class="f-lbl" for="su-name">Full Name</label>
+      <input class="f-i" type="text" id="su-name" placeholder="Your Name"/>
+      <label class="f-lbl" for="su-email">Email</label>
+      <input class="f-i" type="email" id="su-email" placeholder="your@email.com"/>
+      <label class="f-lbl" for="su-pass">Password (min 8 chars)</label>
+      <input class="f-i" type="password" id="su-pass" placeholder="••••••••"/>
+      <button class="lg-btn" onclick="doSignUp()">Create Free Account →</button>
+      <div class="lg-divider">or sign up with</div>
+      <div class="lg-social">
+        <button class="lg-soc" onclick="socialAuth('google')">🔵 Google</button>
+        <button class="lg-soc" onclick="socialAuth('apple')">🍎 Apple</button>
+      </div>
+      <div class="lg-footer-txt">
+        By signing up you agree to our <span class="lg-link">Terms</span> &amp; <span class="lg-link">Privacy Policy</span>.<br/>
+        Already have an account? <span class="lg-link" onclick="lgTab('signin')">Sign in →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD APP ══ -->
+<div id="dashboard">
+  <div class="dash-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dash-sidebar">
+      <div class="dsb-logo" onclick="goTo('overview')">
+        <div style="width:30px;height:30px;border-radius:8px;background:var(--goldd);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0">⚡</div>
+        <div>
+          <div class="dsb-logo-txt">Axiom Zones</div>
+          <div style="font-family:var(--fm);font-size:.5rem;letter-spacing:2px;color:var(--t3);text-transform:uppercase">My Dashboard</div>
+        </div>
+      </div>
+      <nav class="dsb-nav">
+        <div class="dsb-section">Main</div>
+        <button class="dsb-item on" onclick="goTo('overview')"><span class="dsb-icon">🏠</span>Overview</button>
+        <button class="dsb-item" onclick="goTo('platforms')"><span class="dsb-icon">🧩</span>My Platforms</button>
+        <button class="dsb-item" onclick="goTo('subscriptions')"><span class="dsb-icon">💳</span>Subscription</button>
+        <button class="dsb-item" onclick="goTo('invoices')"><span class="dsb-icon">🧾</span>Invoices</button>
+        <div class="dsb-section">Account</div>
+        <button class="dsb-item" onclick="goTo('notifications')"><span class="dsb-icon">🔔</span>Notifications<span class="dsb-badge" id="notif-count">3</span></button>
+        <button class="dsb-item" onclick="goTo('referral')"><span class="dsb-icon">🎁</span>Refer & Earn</button>
+        <button class="dsb-item" onclick="goTo('settings')"><span class="dsb-icon">⚙️</span>Settings</button>
+        <div class="dsb-section">Platforms</div>
+        <button class="dsb-item" onclick="window.open('prism-v2r8.html','_blank')"><span class="dsb-icon">🔮</span>Prism ↗</button>
+        <button class="dsb-item" onclick="window.open('kashf-v2.html','_blank')"><span class="dsb-icon">👁️</span>Kashf ↗</button>
+        <button class="dsb-item" onclick="window.open('axiomzones.html','_blank')"><span class="dsb-icon">🌐</span>Main Site ↗</button>
+      </nav>
+      <div class="dsb-footer">
+        <div class="dsb-user">
+          <div class="dsb-avatar" id="sb-avatar">👤</div>
+          <div style="flex:1;min-width:0">
+            <div class="dsb-uname" id="sb-name">Loading...</div>
+            <div class="dsb-uplan" id="sb-plan">free</div>
+          </div>
+          <button class="dsb-logout" onclick="doLogout()" title="Logout">⎋</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="dash-main">
+
+      <!-- TOP BAR -->
+      <header class="dash-topbar">
+        <div>
+          <div class="topbar-title" id="page-title">Overview</div>
+          <div class="topbar-sub" id="page-sub">Welcome back</div>
+        </div>
+        <div class="topbar-r">
+          <div class="dash-i18n-wrap">
+            <span class="dash-curr-sym" id="dash-curr-sym">$</span>
+            <select class="dash-sel" id="dash-lang-sel" onchange="dashSetLang(this.value)" aria-label="Language">
+              
+    <optgroup label="── Arabic عربية ──">
+      <option value="ar">🇸🇦 العربية</option><option value="fa">🇮🇷 فارسی</option>
+      <option value="ur">🇵🇰 اردو</option><option value="he">🇮🇱 עברית</option>
+      <option value="ku">🇮🇶 Kurdî</option>
+    </optgroup>
+    <optgroup label="── Western Europe ──">
+      <option value="en" selected>🇬🇧 English</option><option value="fr">🇫🇷 Français</option>
+      <option value="es">🇪🇸 Español</option><option value="pt">🇧🇷 Português</option>
+      <option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option>
+      <option value="nl">🇳🇱 Nederlands</option><option value="sv">🇸🇪 Svenska</option>
+      <option value="no">🇳🇴 Norsk</option><option value="da">🇩🇰 Dansk</option>
+      <option value="fi">🇫🇮 Suomi</option><option value="is">🇮🇸 Íslenska</option>
+      <option value="ca">Català</option><option value="eu">Euskara</option>
+      <option value="gl">Galego</option><option value="cy">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg</option>
+      <option value="ga">🇮🇪 Gaeilge</option><option value="lb">Lëtzebuergesch</option>
+    </optgroup>
+    <optgroup label="── Eastern Europe ──">
+      <option value="ru">🇷🇺 Русский</option><option value="uk">🇺🇦 Українська</option>
+      <option value="pl">🇵🇱 Polski</option><option value="cs">🇨🇿 Čeština</option>
+      <option value="sk">🇸🇰 Slovenčina</option><option value="hu">🇭🇺 Magyar</option>
+      <option value="ro">🇷🇴 Română</option><option value="bg">🇧🇬 Български</option>
+      <option value="sr">🇷🇸 Српски</option><option value="hr">🇭🇷 Hrvatski</option>
+      <option value="sl">🇸🇮 Slovenščina</option><option value="lt">🇱🇹 Lietuvių</option>
+      <option value="lv">🇱🇻 Latviešu</option><option value="et">🇪🇪 Eesti</option>
+      <option value="el">🇬🇷 Ελληνικά</option><option value="sq">🇦🇱 Shqip</option>
+      <option value="mk">🇲🇰 Македонски</option><option value="bs">🇧🇦 Bosanski</option>
+      <option value="ka">🇬🇪 ქართული</option><option value="hy">🇦🇲 Հայերեն</option>
+      <option value="az">🇦🇿 Azərbaycan</option><option value="kk">🇰🇿 Қазақ</option>
+      <option value="uz">🇺🇿 O'zbek</option><option value="be">🇧🇾 Беларуская</option>
+      <option value="tr">🇹🇷 Türkçe</option><option value="tk">Türkmençe</option>
+      <option value="ky">Кыргызча</option><option value="tg">Тоҷикӣ</option>
+      <option value="mn">🇲🇳 Монгол</option>
+    </optgroup>
+    <optgroup label="── Asia Pacific ──">
+      <option value="zh">🇨🇳 中文简体</option><option value="zh-tw">🇹🇼 中文繁體</option>
+      <option value="ja">🇯🇵 日本語</option><option value="ko">🇰🇷 한국어</option>
+      <option value="hi">🇮🇳 हिन्दी</option><option value="bn">🇧🇩 বাংলা</option>
+      <option value="ta">🇮🇳 தமிழ்</option><option value="te">🇮🇳 తెలుగు</option>
+      <option value="mr">🇮🇳 मराठी</option><option value="gu">🇮🇳 ગુજરાતી</option>
+      <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option><option value="ne">🇳🇵 नेपाली</option>
+      <option value="si">🇱🇰 සිංහල</option><option value="my">🇲🇲 မြန်မာ</option>
+      <option value="th">🇹🇭 ภาษาไทย</option><option value="lo">🇱🇦 ລາວ</option>
+      <option value="km">🇰🇭 ខ្មែរ</option><option value="vi">🇻🇳 Tiếng Việt</option>
+      <option value="id">🇮🇩 Bahasa Indonesia</option><option value="ms">🇲🇾 Bahasa Melayu</option>
+      <option value="tl">🇵🇭 Filipino</option><option value="jv">Basa Jawa</option>
+      <option value="su">Basa Sunda</option><option value="ceb">Cebuano</option>
+    </optgroup>
+    <optgroup label="── South Asia ──">
+      <option value="ur">🇵🇰 اردو</option><option value="sd">سنڌي</option>
+      <option value="ps">پښتو</option><option value="dv">ދިވެހި</option>
+    </optgroup>
+    <optgroup label="── Africa ──">
+      <option value="sw">🇰🇪 Kiswahili</option><option value="am">🇪🇹 አማርኛ</option>
+      <option value="yo">🇳🇬 Yorùbá</option><option value="ha">🇳🇬 Hausa</option>
+      <option value="ig">🇳🇬 Igbo</option><option value="zu">🇿🇦 isiZulu</option>
+      <option value="af">🇿🇦 Afrikaans</option><option value="so">🇸🇴 Soomaali</option>
+      <option value="rw">🇷🇼 Kinyarwanda</option><option value="sn">ChiShona</option>
+      <option value="st">Sesotho</option><option value="xh">isiXhosa</option>
+      <option value="ny">Chichewa</option><option value="mg">Malagasy</option>
+    </optgroup>
+    <optgroup label="── Americas ──">
+      <option value="pt-br">🇧🇷 Português BR</option><option value="qu">🇵🇪 Quechua</option>
+      <option value="ay">Aymara</option><option value="gn">Guaraní</option>
+    </optgroup>
+    <optgroup label="── Pacific ──">
+      <option value="haw">Hawaiian</option><option value="sm">Gagana Samoa</option>
+      <option value="mi">Māori</option><option value="fj">Vosa Vakaviti</option>
+    </optgroup>
+  
+            </select>
+            <select class="dash-sel" id="dash-curr-sel" onchange="dashSetCurr(this.value)" aria-label="Currency">
+              
+    <optgroup label="── Gulf خليجي ──">
+      <option value="SAR">﷼ SAR — Saudi Riyal</option><option value="AED">د.إ AED — UAE Dirham</option>
+      <option value="KWD">د.ك KWD — Kuwaiti Dinar</option><option value="BHD">BD BHD — Bahraini Dinar</option>
+      <option value="OMR">ر.ع OMR — Omani Rial</option><option value="QAR">ر.ق QAR — Qatari Riyal</option>
+    </optgroup>
+    <optgroup label="── Arab عربي ──">
+      <option value="EGP">ج.م EGP — Egyptian Pound</option><option value="JOD">JD JOD — Jordanian Dinar</option>
+      <option value="LBP">LBP — Lebanese Pound</option><option value="IQD">IQD — Iraqi Dinar</option>
+      <option value="LYD">LD LYD — Libyan Dinar</option><option value="TND">DT TND — Tunisian Dinar</option>
+      <option value="MAD">DH MAD — Moroccan Dirham</option><option value="DZD">DA DZD — Algerian Dinar</option>
+      <option value="SDG">SDG — Sudanese Pound</option><option value="YER">YER — Yemeni Rial</option>
+      <option value="SYP">SYP — Syrian Pound</option>
+    </optgroup>
+    <optgroup label="── Major رئيسي ──">
+      <option value="USD" selected>$ USD — US Dollar</option><option value="EUR">€ EUR — Euro</option>
+      <option value="GBP">£ GBP — British Pound</option><option value="JPY">¥ JPY — Japanese Yen</option>
+      <option value="CNY">¥ CNY — Chinese Yuan</option><option value="CHF">Fr CHF — Swiss Franc</option>
+      <option value="CAD">C$ CAD — Canadian Dollar</option><option value="AUD">A$ AUD — Australian Dollar</option>
+      <option value="NZD">NZ$ NZD — New Zealand Dollar</option><option value="SGD">S$ SGD — Singapore Dollar</option>
+      <option value="HKD">HK$ HKD — Hong Kong Dollar</option><option value="TWD">NT$ TWD — Taiwan Dollar</option>
+    </optgroup>
+    <optgroup label="── Western Europe غرب أوروبا ──">
+      <option value="NOK">kr NOK — Norwegian Krone</option><option value="SEK">kr SEK — Swedish Krona</option>
+      <option value="DKK">kr DKK — Danish Krone</option><option value="ISK">kr ISK — Icelandic Krona</option>
+    </optgroup>
+    <optgroup label="── Eastern Europe شرق أوروبا ──">
+      <option value="PLN">zł PLN — Polish Zloty</option><option value="CZK">Kč CZK — Czech Koruna</option>
+      <option value="HUF">Ft HUF — Hungarian Forint</option><option value="RON">lei RON — Romanian Leu</option>
+      <option value="BGN">лв BGN — Bulgarian Lev</option><option value="HRK">kn HRK — Croatian Kuna</option>
+      <option value="RSD">din RSD — Serbian Dinar</option><option value="ALL">L ALL — Albanian Lek</option>
+      <option value="MKD">den MKD — Macedonian Denar</option><option value="BAM">KM BAM — Bosnian Mark</option>
+      <option value="RUB">₽ RUB — Russian Ruble</option><option value="UAH">₴ UAH — Ukrainian Hryvnia</option>
+      <option value="BYN">Br BYN — Belarusian Ruble</option><option value="MDL">L MDL — Moldovan Leu</option>
+      <option value="GEL">₾ GEL — Georgian Lari</option><option value="AMD">֏ AMD — Armenian Dram</option>
+      <option value="AZN">₼ AZN — Azerbaijani Manat</option><option value="TRY">₺ TRY — Turkish Lira</option>
+    </optgroup>
+    <optgroup label="── South Asia جنوب آسيا ──">
+      <option value="INR">₹ INR — Indian Rupee</option><option value="PKR">₨ PKR — Pakistani Rupee</option>
+      <option value="BDT">৳ BDT — Bangladeshi Taka</option><option value="LKR">Rs LKR — Sri Lankan Rupee</option>
+      <option value="NPR">Rs NPR — Nepalese Rupee</option><option value="MVR">Rf MVR — Maldivian Rufiyaa</option>
+      <option value="BTN">Nu BTN — Bhutanese Ngultrum</option><option value="AFN">؋ AFN — Afghan Afghani</option>
+      <option value="ILS">₪ ILS — Israeli Shekel</option>
+    </optgroup>
+    <optgroup label="── Southeast Asia جنوب شرق آسيا ──">
+      <option value="KRW">₩ KRW — South Korean Won</option><option value="THB">฿ THB — Thai Baht</option>
+      <option value="IDR">Rp IDR — Indonesian Rupiah</option><option value="MYR">RM MYR — Malaysian Ringgit</option>
+      <option value="PHP">₱ PHP — Philippine Peso</option><option value="VND">₫ VND — Vietnamese Dong</option>
+      <option value="MMK">K MMK — Myanmar Kyat</option><option value="KHR">CR KHR — Cambodian Riel</option>
+      <option value="LAK">₭ LAK — Laotian Kip</option><option value="BND">B$ BND — Brunei Dollar</option>
+      <option value="MNT">₮ MNT — Mongolian Tugrik</option>
+    </optgroup>
+    <optgroup label="── Central Asia آسيا الوسطى ──">
+      <option value="KZT">₸ KZT — Kazakhstani Tenge</option><option value="UZS">UZS — Uzbekistani Som</option>
+      <option value="KGS">KGS — Kyrgyzstani Som</option><option value="TJS">TJS — Tajikistani Somoni</option>
+      <option value="TMT">T TMT — Turkmenistani Manat</option>
+    </optgroup>
+    <optgroup label="── North America أمريكا الشمالية ──">
+      <option value="MXN">$ MXN — Mexican Peso</option><option value="GTQ">Q GTQ — Guatemalan Quetzal</option>
+      <option value="HNL">L HNL — Honduran Lempira</option><option value="NIO">C$ NIO — Nicaraguan Córdoba</option>
+      <option value="CRC">₡ CRC — Costa Rican Colón</option><option value="DOP">RD$ DOP — Dominican Peso</option>
+      <option value="JMD">J$ JMD — Jamaican Dollar</option><option value="TTD">TT$ TTD — Trinidad Dollar</option>
+      <option value="BBD">Bds$ BBD — Barbadian Dollar</option><option value="XCD">EC$ XCD — East Caribbean Dollar</option>
+      <option value="BSD">B$ BSD — Bahamian Dollar</option><option value="BZD">BZ$ BZD — Belize Dollar</option>
+      <option value="HTG">G HTG — Haitian Gourde</option><option value="AWG">ƒ AWG — Aruban Florin</option>
+      <option value="ANG">ƒ ANG — Netherlands Antillean Guilder</option><option value="PAB">B/. PAB — Panamanian Balboa</option>
+    </optgroup>
+    <optgroup label="── South America أمريكا الجنوبية ──">
+      <option value="BRL">R$ BRL — Brazilian Real</option><option value="ARS">$ ARS — Argentine Peso</option>
+      <option value="CLP">$ CLP — Chilean Peso</option><option value="COP">$ COP — Colombian Peso</option>
+      <option value="PEN">S/ PEN — Peruvian Sol</option><option value="UYU">$ UYU — Uruguayan Peso</option>
+      <option value="BOB">Bs BOB — Bolivian Boliviano</option><option value="PYG">₲ PYG — Paraguayan Guaraní</option>
+      <option value="VES">Bs VES — Venezuelan Bolívar</option><option value="GYD">G$ GYD — Guyanese Dollar</option>
+      <option value="SRD">$ SRD — Surinamese Dollar</option>
+    </optgroup>
+    <optgroup label="── West Africa غرب أفريقيا ──">
+      <option value="NGN">₦ NGN — Nigerian Naira</option><option value="GHS">₵ GHS — Ghanaian Cedi</option>
+      <option value="XOF">F XOF — West African CFA</option><option value="GMD">D GMD — Gambian Dalasi</option>
+      <option value="GNF">FG GNF — Guinean Franc</option><option value="SLL">Le SLL — Sierra Leonean Leone</option>
+      <option value="LRD">L$ LRD — Liberian Dollar</option><option value="SLE">SLE — Sierra Leone</option>
+    </optgroup>
+    <optgroup label="── East Africa شرق أفريقيا ──">
+      <option value="KES">KSh KES — Kenyan Shilling</option><option value="TZS">TSh TZS — Tanzanian Shilling</option>
+      <option value="UGX">USh UGX — Ugandan Shilling</option><option value="ETB">Br ETB — Ethiopian Birr</option>
+      <option value="RWF">Fr RWF — Rwandan Franc</option><option value="BIF">Fr BIF — Burundian Franc</option>
+      <option value="DJF">Fdj DJF — Djiboutian Franc</option><option value="ERN">Nkf ERN — Eritrean Nakfa</option>
+      <option value="SSP">£ SSP — South Sudanese Pound</option><option value="SOS">Sh SOS — Somali Shilling</option>
+    </optgroup>
+    <optgroup label="── Southern Africa جنوب أفريقيا ──">
+      <option value="ZAR">R ZAR — South African Rand</option><option value="BWP">P BWP — Botswanan Pula</option>
+      <option value="NAD">N$ NAD — Namibian Dollar</option><option value="ZMW">K ZMW — Zambian Kwacha</option>
+      <option value="MWK">MK MWK — Malawian Kwacha</option><option value="MZN">MT MZN — Mozambican Metical</option>
+      <option value="AOA">Kz AOA — Angolan Kwanza</option><option value="ZWL">ZWL — Zimbabwean Dollar</option>
+    </optgroup>
+    <optgroup label="── Central Africa وسط أفريقيا ──">
+      <option value="XAF">F XAF — Central African CFA</option><option value="CDF">FC CDF — Congolese Franc</option>
+      <option value="XAF">F CAF — CAF Franc</option>
+    </optgroup>
+    <optgroup label="── Islands جزر ──">
+      <option value="MGA">Ar MGA — Malagasy Ariary</option><option value="MUR">₨ MUR — Mauritian Rupee</option>
+      <option value="SCR">₨ SCR — Seychellois Rupee</option><option value="CVE">$ CVE — Cape Verdean Escudo</option>
+      <option value="KMF">CF KMF — Comorian Franc</option><option value="STN">Db STN — São Tomé Dobra</option>
+      <option value="FJD">FJ$ FJD — Fijian Dollar</option><option value="PGK">K PGK — Papua New Guinean Kina</option>
+      <option value="WST">T WST — Samoan Tala</option><option value="VUV">Vt VUV — Vanuatu Vatu</option>
+      <option value="SBD">SI$ SBD — Solomon Islands Dollar</option><option value="TOP">T$ TOP — Tongan Paʻanga</option>
+      <option value="XPF">CFP XPF — CFP Franc</option>
+    </optgroup>
+    <optgroup label="── Special خاص ──">
+      <option value="XAU">⊛ XAU — Gold (Troy Oz)</option><option value="XAG">⊛ XAG — Silver (Troy Oz)</option>
+      <option value="XDR">SDR — IMF Special Drawing Rights</option>
+    </optgroup>
+    <optgroup label="── Digital رقمي ──">
+      <option value="BTC">₿ BTC — Bitcoin</option><option value="ETH">Ξ ETH — Ethereum</option>
+      <option value="USDT">₮ USDT — Tether</option><option value="USDC">$ USDC — USD Coin</option>
+      <option value="BNB">BNB — Binance Coin</option><option value="XRP">XRP — Ripple</option>
+      <option value="ADA">₳ ADA — Cardano</option><option value="SOL">◎ SOL — Solana</option>
+    </optgroup>
+  
+            </select>
+            <button class="dash-ai-btn" id="dash-ai-btn" onclick="dashAITranslate()" title="Translate with AI">✨ AI</button>
+          </div>
+          <button class="tb-btn tb-gold" onclick="goTo('subscriptions')" id="upgrade-btn" style="display:none">⬆ Upgrade</button>
+          <button class="tb-icon" onclick="goTo('notifications')" title="Notifications">🔔</button>
+          <button class="tb-icon" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+          <button class="tb-icon tb-icon" id="mob-open" onclick="openMobSB()" title="Menu">☰</button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <div class="dash-content">
+
+        <!-- ① OVERVIEW -->
+        <section class="dash-page on" id="page-overview">
+          <div class="welcome-banner rv">
+            <div>
+              <div class="wb-title" id="wb-name">Welcome back 👋</div>
+              <div class="wb-sub" id="wb-sub">Here's what's happening with your Axiom Zones account today.</div>
+              <div class="wb-plan plan-free" id="wb-plan">Free Plan</div>
+            </div>
+            <div style="text-align:end;flex-shrink:0">
+              <div style="font-family:var(--fm);font-size:.6rem;letter-spacing:1px;color:var(--t3);margin-bottom:6px">MEMBER SINCE</div>
+              <div style="font-family:var(--fd);font-size:1.1rem;font-weight:700" id="wb-since">—</div>
+              <button class="btn-launch" style="margin-top:10px;padding:8px 16px;font-size:.76rem" onclick="goTo('subscriptions')">Manage Plan</button>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="stats-row rv d1">
+            <div class="stat-box" style="--sc:var(--pu)">
+              <div class="stat-icon">🧩</div>
+              <div class="stat-val" style="color:var(--pu)" id="stat-plat">0</div>
+              <div class="stat-lbl">Active Platforms</div>
+            </div>
+            <div class="stat-box" style="--sc:var(--gold)">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-val" style="color:var(--gold)" id="stat-analyses">0</div>
+              <div class="stat-lbl">Analyses Run</div>
+            </div>
+            <div class="stat-box" style="--sc:var(--gn)">
+              <div class="stat-icon">💰</div>
+              <div class="stat-val" style="color:var(--gn)" id="stat-saved">$0</div>
+              <div class="stat-lbl">Interest Saved</div>
+            </div>
+            <div class="stat-box" style="--sc:var(--cy)">
+              <div class="stat-icon">🌍</div>
+              <div class="stat-val" style="color:var(--cy)" id="stat-days">0</div>
+              <div class="stat-lbl">Days as Member</div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div style="font-family:var(--fm);font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--t3);margin-bottom:10px" class="rv d1">Quick Actions</div>
+          <div class="qa-grid rv d1">
+            <button class="qa-btn" onclick="window.open('prism-v2r8.html','_blank')">
+              <span class="qa-icon">🔮</span><span class="qa-label">Open Prism</span>
+            </button>
+            <button class="qa-btn" onclick="window.open('kashf-v2.html','_blank')">
+              <span class="qa-icon">👁️</span><span class="qa-label">Open Kashf</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('subscriptions')">
+              <span class="qa-icon">⬆️</span><span class="qa-label">Upgrade Plan</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('referral')">
+              <span class="qa-icon">🎁</span><span class="qa-label">Refer Friend</span>
+            </button>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="panel rv d2">
+            <div class="panel-hd"><div class="panel-title">Recent Activity</div></div>
+            <div id="recent-activity"></div>
+          </div>
+        </section>
+
+        <!-- ② MY PLATFORMS -->
+        <section class="dash-page" id="page-platforms">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px" class="rv">
+            <div>
+              <div style="font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:2px">My Platforms</div>
+              <div style="font-size:.82rem;color:var(--t2)">Your subscribed tools — launch or manage from here.</div>
+            </div>
+            <button class="btn-launch" style="padding:10px 20px;font-size:.82rem" onclick="goTo('subscriptions')">+ Unlock More</button>
+          </div>
+          <div class="plt-grid" id="platforms-grid"></div>
+        </section>
+
+        <!-- ③ SUBSCRIPTION -->
+        <section class="dash-page" id="page-subscriptions">
+          <!-- Current plan -->
+          <div class="sub-current rv">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+              <div>
+                <div style="font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:5px">Current Plan</div>
+                <div class="sub-plan-name" id="cur-plan-name">Free</div>
+                <div class="sub-price" id="cur-plan-price">$0/month · No credit card required</div>
+              </div>
+              <div style="text-align:end">
+                <div style="font-family:var(--fm);font-size:.6rem;color:var(--t3);margin-bottom:4px">Next Billing</div>
+                <div style="font-family:var(--fd);font-size:1.1rem;font-weight:700" id="next-billing">—</div>
+              </div>
+            </div>
+            <div class="sub-features" id="cur-plan-feats"></div>
+            <div class="sub-actions">
+              <button class="btn-launch" style="padding:9px 20px;font-size:.8rem" onclick="usgToast('cancel')">Cancel Plan</button>
+              <button class="btn-sm-out" onclick="usgToast('pause')">Pause Subscription</button>
+              <button class="btn-sm-out" onclick="downloadInvoice('latest')">Download Invoice</button>
+            </div>
+          </div>
+
+          <!-- Usage -->
+          <div class="panel rv d1">
+            <div class="panel-hd"><div class="panel-title">Usage This Month</div></div>
+            <div id="usage-bars"></div>
+          </div>
+
+          <!-- Upgrade Options -->
+          <div style="font-family:var(--fm);font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--t3);margin-bottom:14px" class="rv d1">Available Plans</div>
+          <div class="upgrade-grid rv d2" id="upgrade-grid"></div>
+
+          <!-- Annual toggle -->
+          <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;flex-wrap:wrap" class="rv d2">
+            <span style="font-family:var(--fm);font-size:.7rem;color:var(--t2)">Monthly</span>
+            <label class="tog-sw">
+              <input type="checkbox" id="annual-tog" onchange="renderUpgrade()"/>
+              <span class="tog-track"></span>
+            </label>
+            <span style="font-family:var(--fm);font-size:.7rem;color:var(--t2)">Annual</span>
+            <span id="ann-save" style="display:none;font-family:var(--fm);font-size:.62rem;padding:2px 8px;border-radius:3px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:var(--gn)">Save 30%</span>
+          </div>
+        </section>
+
+        <!-- ④ INVOICES -->
+        <section class="dash-page" id="page-invoices">
+          <div class="rv" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:2px">Invoices</div>
+              <div style="font-size:.82rem;color:var(--t2)">Your complete billing history.</div>
+            </div>
+            <button class="btn-sm-out" onclick="downloadAllInvoices()">⬇ Download All</button>
+          </div>
+          <div class="panel" style="padding:0">
+            <div class="inv-wrap">
+              <table>
+                <thead>
+                  <tr><th>Invoice #</th><th>Date</th><th>Plan</th><th>Amount</th><th>Method</th><th>Status</th><th>Action</th></tr>
+                </thead>
+                <tbody id="invoices-tbl"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ⑤ NOTIFICATIONS -->
+        <section class="dash-page" id="page-notifications">
+          <div class="rv" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:2px">Notifications</div>
+              <div style="font-size:.82rem;color:var(--t2)">Stay updated on your account activity.</div>
+            </div>
+            <button class="btn-sm-out" onclick="markAllRead()">Mark all read</button>
+          </div>
+          <div class="panel">
+            <div id="notifs-list"></div>
+          </div>
+        </section>
+
+        <!-- ⑥ REFER & EARN -->
+        <section class="dash-page" id="page-referral">
+          <div class="rv" style="margin-bottom:20px">
+            <div style="font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:4px">Refer & Earn</div>
+            <div style="font-size:.82rem;color:var(--t2)">Share Axiom Zones. Earn free months.</div>
+          </div>
+          <div class="ref-box rv d1">
+            <div style="font-size:2rem;margin-bottom:8px">🎁</div>
+            <div style="font-family:var(--fd);font-size:1.4rem;font-weight:700;margin-bottom:6px">Get 1 Month Free</div>
+            <div style="font-size:.84rem;color:var(--t2);line-height:1.8;max-width:440px;margin:0 auto">
+              For every friend who signs up and upgrades using your link, you both get <strong style="color:var(--gold)">1 month free</strong> on your current plan.
+            </div>
+            <div class="ref-link-wrap">
+              <input class="ref-link-inp" type="text" id="ref-link" readonly value="axiomzones.com/ref/AXYZ1247"/>
+              <button class="btn-sm-out" onclick="copyRef()" style="white-space:nowrap">Copy Link</button>
+            </div>
+          </div>
+          <div class="stats-row rv d2" style="margin-top:20px">
+            <div class="stat-box" style="--sc:var(--gn)">
+              <div class="stat-icon">👥</div>
+              <div class="stat-val" style="color:var(--gn)">0</div>
+              <div class="stat-lbl">Friends Referred</div>
+            </div>
+            <div class="stat-box" style="--sc:var(--gold)">
+              <div class="stat-icon">⭐</div>
+              <div class="stat-val" style="color:var(--gold)">0</div>
+              <div class="stat-lbl">Months Earned</div>
+            </div>
+            <div class="stat-box" style="--sc:var(--pu)">
+              <div class="stat-icon">🔄</div>
+              <div class="stat-val" style="color:var(--pu)">0</div>
+              <div class="stat-lbl">Pending</div>
+            </div>
+            <div class="stat-box" style="--sc:var(--cy)">
+              <div class="stat-icon">🏆</div>
+              <div class="stat-val" style="color:var(--cy)">0</div>
+              <div class="stat-lbl">Total Credits</div>
+            </div>
+          </div>
+          <div class="panel rv d3">
+            <div class="panel-hd"><div class="panel-title">How It Works</div></div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:28px;height:28px;border-radius:50%;background:var(--goldd);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.8rem;color:var(--gold);flex-shrink:0">1</div><div><div style="font-size:.84rem;font-weight:600;margin-bottom:2px">Share your unique link</div><div style="font-size:.78rem;color:var(--t2)">Send your referral link to colleagues, friends, or on social media.</div></div></div>
+              <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:28px;height:28px;border-radius:50%;background:var(--goldd);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.8rem;color:var(--gold);flex-shrink:0">2</div><div><div style="font-size:.84rem;font-weight:600;margin-bottom:2px">They sign up and upgrade</div><div style="font-size:.78rem;color:var(--t2)">Your friend creates an account and subscribes to any paid plan.</div></div></div>
+              <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:28px;height:28px;border-radius:50%;background:var(--goldd);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.8rem;color:var(--gold);flex-shrink:0">3</div><div><div style="font-size:.84rem;font-weight:600;margin-bottom:2px">You both get 1 month free</div><div style="font-size:.78rem;color:var(--t2)">The credit is applied automatically to both accounts — no delays.</div></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ⑦ SETTINGS -->
+        <section class="dash-page" id="page-settings">
+          <div class="rv" style="margin-bottom:20px">
+            <div style="font-family:var(--fd);font-size:1.6rem;font-weight:700;margin-bottom:4px">Account Settings</div>
+            <div style="font-size:.82rem;color:var(--t2)">Manage your profile, preferences and security.</div>
+          </div>
+          <div class="settings-grid">
+            <div>
+              <div class="panel rv">
+                <div class="panel-hd"><div class="panel-title">Profile</div><button class="btn-sm-out" style="padding:5px 12px;border-radius:6px;font-size:.72rem" onclick="saveProfile()">Save</button></div>
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+                  <div style="width:56px;height:56px;border-radius:50%;background:var(--goldd);border:1px solid rgba(201,168,76,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem" id="profile-avatar">👤</div>
+                  <button class="btn-sm-out" style="padding:7px 14px;font-size:.74rem" onclick="usgToast('avatar')">Change Photo</button>
+                </div>
+                <div class="f-group"><label>Full Name</label><input class="f-inp" type="text" id="prof-name" placeholder="Your Name"/></div>
+                <div class="f-group"><label>Email</label><input class="f-inp" type="email" id="prof-email" placeholder="your@email.com"/></div>
+                <div class="f-group"><label>Phone (optional)</label><input class="f-inp" type="tel" id="prof-phone" placeholder="+1 234 567 8900"/></div>
+                <div class="f-group"><label>Country</label>
+                  <select class="f-inp" id="prof-country">
+                    <option value="">Select country</option>
+                    <option value="SA">🇸🇦 Saudi Arabia</option><option value="AE">🇦🇪 UAE</option>
+                    <option value="EG">🇪🇬 Egypt</option><option value="US">🇺🇸 USA</option>
+                    <option value="GB">🇬🇧 UK</option><option value="DE">🇩🇪 Germany</option>
+                    <option value="FR">🇫🇷 France</option><option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="panel rv d1">
+                <div class="panel-hd"><div class="panel-title">Security</div></div>
+                <div class="f-group"><label>Current Password</label><input class="f-inp" type="password" id="sec-cur"/></div>
+                <div class="f-group"><label>New Password</label><input class="f-inp" type="password" id="sec-new"/></div>
+                <div class="f-group"><label>Confirm Password</label><input class="f-inp" type="password" id="sec-conf"/></div>
+                <button class="btn-sm-out" style="padding:9px 18px;font-size:.8rem" onclick="changePass()">Update Password</button>
+              </div>
+            </div>
+            <div>
+              <div class="panel rv d1">
+                <div class="panel-hd"><div class="panel-title">Preferences</div></div>
+                <div class="toggle-row">
+                  <div class="tog-info"><div class="tog-label">Email Notifications</div><div class="tog-desc">Receive account updates via email</div></div>
+                  <label class="tog-sw"><input type="checkbox" checked/><span class="tog-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="tog-info"><div class="tog-label">Marketing Emails</div><div class="tog-desc">Tips, new features and promotions</div></div>
+                  <label class="tog-sw"><input type="checkbox"/><span class="tog-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="tog-info"><div class="tog-label">Analysis Reminders</div><div class="tog-desc">Weekly summary of your activity</div></div>
+                  <label class="tog-sw"><input type="checkbox" checked/><span class="tog-track"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="tog-info"><div class="tog-label">Dark Mode</div><div class="tog-desc">Use dark theme across dashboard</div></div>
+                  <label class="tog-sw"><input type="checkbox" checked id="dark-tog" onchange="toggleTheme();this.checked=isDark"/><span class="tog-track"></span></label>
+                </div>
+              </div>
+              <div class="panel rv d2">
+                <div class="panel-hd"><div class="panel-title">Danger Zone</div></div>
+                <div class="toggle-row">
+                  <div class="tog-info"><div class="tog-label" style="color:var(--or)">Pause Account</div><div class="tog-desc">Temporarily disable your account</div></div>
+                  <button class="btn-sm-out" style="padding:6px 12px;font-size:.72rem;border-radius:6px;color:var(--or);border-color:rgba(249,115,22,.25)" onclick="usgToast('pause')">Pause</button>
+                </div>
+                <div class="toggle-row">
+                  <div class="tog-info"><div class="tog-label" style="color:var(--rd)">Delete Account</div><div class="tog-desc">Permanently remove all your data</div></div>
+                  <button class="btn-sm-out" style="padding:6px 12px;font-size:.72rem;border-radius:6px;color:var(--rd);border-color:rgba(239,68,68,.25)" onclick="confirmDelete()">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /dash-content -->
+    </div><!-- /dash-main -->
+  </div><!-- /dash-layout -->
+</div><!-- /dashboard -->
+
+<!-- MOBILE SIDEBAR -->
+<div id="mob-ov" onclick="closeMobSB()"></div>
+<div id="mob-sb">
+  <div class="mob-sb-top">
+    <div style="font-family:var(--fd);font-size:1rem;font-weight:700;background:linear-gradient(135deg,var(--t1),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Axiom Zones</div>
+    <button class="mob-sb-close" onclick="closeMobSB()">✕</button>
+  </div>
+  <div class="mob-sb-body">
+    <button class="dsb-item on" onclick="closeMobSB();goTo('overview')"><span class="dsb-icon">🏠</span>Overview</button>
+    <button class="dsb-item" onclick="closeMobSB();goTo('platforms')"><span class="dsb-icon">🧩</span>My Platforms</button>
+    <button class="dsb-item" onclick="closeMobSB();goTo('subscriptions')"><span class="dsb-icon">💳</span>Subscription</button>
+    <button class="dsb-item" onclick="closeMobSB();goTo('invoices')"><span class="dsb-icon">🧾</span>Invoices</button>
+    <button class="dsb-item" onclick="closeMobSB();goTo('notifications')"><span class="dsb-icon">🔔</span>Notifications</button>
+    <button class="dsb-item" onclick="closeMobSB();goTo('referral')"><span class="dsb-icon">🎁</span>Refer & Earn</button>
+    <button class="dsb-item" onclick="closeMobSB();goTo('settings')"><span class="dsb-icon">⚙️</span>Settings</button>
+    <div style="border-top:1px solid rgba(255,255,255,.06);margin:8px 0"></div>
+    <button class="dsb-item" onclick="window.open('prism-v2r8.html','_blank')"><span class="dsb-icon">🔮</span>Prism ↗</button>
+    <button class="dsb-item" onclick="window.open('kashf-v2.html','_blank')"><span class="dsb-icon">👁️</span>Kashf ↗</button>
+    <div style="border-top:1px solid rgba(255,255,255,.06);margin:8px 0"></div>
+    <button class="dsb-item" style="color:var(--rd)" onclick="doLogout()"><span class="dsb-icon">⎋</span>Logout</button>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav id="bottom-nav">
+  <div class="bn-inner">
+    <button class="bn-item on" onclick="goTo('overview')"><span class="bn-icon">🏠</span><span class="bn-lbl">Home</span></button>
+    <button class="bn-item" onclick="goTo('platforms')"><span class="bn-icon">🧩</span><span class="bn-lbl">Platforms</span></button>
+    <button class="bn-item" onclick="goTo('subscriptions')"><span class="bn-icon">💳</span><span class="bn-lbl">Plan</span></button>
+    <button class="bn-item" onclick="goTo('notifications')"><span class="bn-icon">🔔</span><span class="bn-lbl">Alerts</span></button>
+    <button class="bn-item" onclick="goTo('settings')"><span class="bn-icon">⚙️</span><span class="bn-lbl">Settings</span></button>
+  </div>
+</nav>
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+<div class="toast" id="az-toast"></div>
+
+<script>
+'use strict';
+/* ══════════════════════════════════════
+   AXIOM ZONES USER DASHBOARD v1
+══════════════════════════════════════ */
+
+/* ══ STATE ══ */
+var isDark = true;
+var currentUser = null;
+var currentPage = 'overview';
+
+
+/* ══ ALL 8 PLATFORMS CONFIG ══ */
+var ALL_PLATFORMS = [
+  {
+    id:'prism', name:'Prism Suite', icon:'🔮', color:'#8b5cf6',
+    tag:'Financial Truth · 3 Tools',
+    desc:'Real APR & IRR calculation, sensitivity analysis, 3-offer comparison, early payoff optimizer, refinancing analyzer.',
+    tags:['IRR Exact','Sensitivity','3-Offer','Payoff'],
+    url:'prism-v2r8.html',
+    requiredPlan: 'free',
+    plans:['free','growth','pro','expert','lifetime']
+  },
+  {
+    id:'kashf', name:'Kashf — كشف', icon:'👁️', color:'#7c3aed',
+    tag:'Bank Truth · Loan Exposure',
+    desc:'Beautification Score 0-100, Loan Danger Score, 5-trick expose, 3-bank comparison, refinancing analyzer.',
+    tags:['Beauty Score','Danger Score','5 Tricks'],
+    url:'kashf-v2.html',
+    requiredPlan: 'free',
+    plans:['free','growth','pro','expert','lifetime']
+  },
+  {
+    id:'uniuber', name:'UniUber', icon:'👔', color:'#0891b2',
+    tag:'Global Uniform Sourcing · B2B',
+    desc:'Connect with 1,000+ verified factories. Send RFQs, manage bulk orders, direct factory messaging.',
+    tags:['RFQ','Factories','B2B'],
+    url:'#',
+    requiredPlan: 'growth',
+    plans:['growth','pro','expert','lifetime']
+  },
+  {
+    id:'master', name:'Master 365 Ops', icon:'📊', color:'#0f766e',
+    tag:'Sales Operations',
+    desc:'15 reps, 20 branches, real-time dashboards, custom reports. 50+ languages, 114 currencies.',
+    tags:['15 Reps','20 Branches','Reports'],
+    url:'#',
+    requiredPlan: 'pro',
+    plans:['pro','expert','lifetime']
+  },
+  {
+    id:'mizan', name:'Mizan Pro', icon:'⚖️', color:'#1d4ed8',
+    tag:'Break-Even Analysis',
+    desc:'Multi-product WACM/WACMR, 11 pages, Excel export, scenario modeling, investor-ready reports.',
+    tags:['WACM','Scenarios','Excel'],
+    url:'#',
+    requiredPlan: 'growth',
+    plans:['growth','pro','expert','lifetime']
+  },
+  {
+    id:'kyanat', name:'Kyanat — كيانات', icon:'🇸🇦', color:'#047857',
+    tag:'Saudi Economic Entities',
+    desc:'5,020 Saudi entities, Google Maps integration, 30 languages, real-time search.',
+    tags:['5,020 Entities','Maps','Saudi'],
+    url:'#',
+    requiredPlan: 'free',
+    plans:['free','growth','pro','expert','lifetime']
+  },
+  {
+    id:'prosuite', name:'ProSuite 365', icon:'💼', color:'#6d28d9',
+    tag:'Business Management',
+    desc:'14+ modules, AXZ licensing, CRM, inventory, HR and financial overview.',
+    tags:['14+ Modules','CRM','Licensing'],
+    url:'#',
+    requiredPlan: 'pro',
+    plans:['pro','expert','lifetime']
+  },
+  {
+    id:'tripedia', name:'Tripedia', icon:'✈️', color:'#b45309',
+    tag:'Global Travel · Q2 2025',
+    desc:'7 live APIs, 14-table schema, unified routes, PWA offline. Travel intelligence platform.',
+    tags:['7 APIs','Live Data','PWA'],
+    url:'#',
+    requiredPlan: 'expert',
+    plans:['expert','lifetime']
+  }
+];
+
+/* ══ PLAN CONFIG ══ */
+var PLAN_CONFIG = {
+  free:     {name:'Free',     price:0,   color:'var(--t2)',  class:'plan-free'},
+  growth:   {name:'Growth',   price:29,  color:'var(--pril)',class:'plan-growth'},
+  pro:      {name:'Pro',      price:69,  color:'var(--pu)',  class:'plan-pro'},
+  expert:   {name:'Expert',   price:129, color:'var(--gold)',class:'plan-expert'},
+  lifetime: {name:'Lifetime', price:0,   color:'var(--gold)',class:'plan-lifetime'},
+};
+
+var PLAN_FEATURES = {
+  free:     ['Prism Suite — basic','Kashf — basic','Kyanat','5 analyses/day'],
+  growth:   ['Prism Clear','Kashf Pro','Kyanat','UniUber Starter','Mizan Pro','Unlimited analyses'],
+  pro:      ['Prism Pro','Kashf Advisor','All 7 platforms','Master 365','ProSuite 365','API access'],
+  expert:   ['All 8 platforms','Expert tier everywhere','Client reports','Custom branding','Priority support'],
+  lifetime: ['All 8 platforms — forever','Expert tier everywhere','All future platforms','No monthly fees','VIP support'],
+};
+
+var UPGRADE_OPTIONS = [
+  {plan:'free',    price:0,   aPrice:0,   label:'Free',    popular:false,  feats:['5 analyses/day','Prism + Kashf basic','Kyanat',{no:'UniUber'},{no:'Master 365'}]},
+  {plan:'growth',  price:29,  aPrice:20,  label:'Growth',  popular:false,  feats:['Unlimited analyses','Prism Clear','Kashf Pro','UniUber','Mizan Pro',{no:'Master 365'}]},
+  {plan:'pro',     price:69,  aPrice:48,  label:'Pro All', popular:true,   feats:['All 7 platforms','Prism Pro','Kashf Advisor','Master 365','ProSuite 365','API access']},
+  {plan:'expert',  price:129, aPrice:90,  label:'Expert',  popular:false,  feats:['All 8 platforms','Expert everywhere','Client reports','Custom branding','Priority support']},
+  {plan:'lifetime',price:399, aPrice:399, label:'Lifetime 🔥',popular:false,feats:['All 8 platforms forever','All future platforms','No monthly fees','VIP support','$399 one-time']},
+];
+
+/* ══ LOGIN ══ */
+function lgTab(tab) {
+  document.querySelectorAll('.lg-tab').forEach(function(t,i){t.classList.toggle('on',i===(tab==='signin'?0:1));});
+  document.getElementById('panel-signin').classList.toggle('on',tab==='signin');
+  document.getElementById('panel-signup').classList.toggle('on',tab==='signup');
+  hideErr('signin-err'); hideErr('signup-err');
+}
+
+function doSignIn() {
+  var email = (document.getElementById('si-email').value||'').trim().toLowerCase();
+  var pass = document.getElementById('si-pass').value;
+  if (!email || !pass) { shakeEl('si-email'); return; }
+
+  fetch('/api/user-login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include',
+    body: JSON.stringify({ email: email, password: pass })
+  })
+    .then(function(res){ return res.json().then(function(data){ return {status:res.status, data:data}; }); })
+    .then(function(r){
+      if (r.data && r.data.ok && r.data.user) {
+        currentUser = Object.assign({
+          since: new Date().toISOString().split('T')[0],
+          analyses: 0, saved: 0, platforms: ['prism'],
+          avatar: '👤', notifCount: 1
+        }, r.data.user);
+        launchDashboard();
+      } else {
+        showErr('signin-err');
+        shakeEl('si-email'); shakeEl('si-pass');
+      }
+    })
+    .catch(function(){
+      showToast('تعذّر الاتصال بالسيرفر — تأكد من اتصالك بالإنترنت', 3500);
+    });
+}
+
+function doSignUp() {
+  var name = (document.getElementById('su-name').value||'').trim();
+  var email = (document.getElementById('su-email').value||'').trim().toLowerCase();
+  var pass = document.getElementById('su-pass').value;
+  if (!name || !email || email.indexOf('@')<0 || pass.length<8) {
+    showErr('signup-err'); shakeEl('su-email'); return;
+  }
+
+  fetch('/api/user-signup', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include',
+    body: JSON.stringify({ email: email, password: pass, name: name })
+  })
+    .then(function(res){ return res.json().then(function(data){ return {status:res.status, data:data}; }); })
+    .then(function(r){
+      if (r.data && r.data.ok && r.data.user) {
+        currentUser = Object.assign({
+          since: new Date().toISOString().split('T')[0],
+          analyses: 0, saved: 0,
+          platforms: ['prism','kashf','uniuber','master','mizan','kyanat','prosuite','tripedia'],
+          avatar: '👤', notifCount: 1, trial: true, trialDays: 14
+        }, r.data.user);
+        launchDashboard();
+        showToast('🎉 Welcome! You\'re on Pro trial for 14 days — explore everything!', 4000);
+      } else if (r.data && r.data.error === 'email_exists') {
+        showToast('هذا البريد مسجَّل من قبل — جرّب تسجيل الدخول', 3500);
+      } else {
+        showErr('signup-err');
+      }
+    })
+    .catch(function(){
+      showToast('تعذّر الاتصال بالسيرفر — تأكد من اتصالك بالإنترنت', 3500);
+    });
+}
+
+function socialAuth(provider) { showToast('Connecting to ' + provider.charAt(0).toUpperCase()+provider.slice(1) + '... (Supabase Auth required)', 3500); }
+function forgotPass() { showToast('Password reset email sent! (Requires Supabase email setup)', 3000); }
+
+function showErr(id) { var e=document.getElementById(id);if(e)e.classList.add('on'); setTimeout(function(){var e=document.getElementById(id);if(e)e.classList.remove('on');},4000);}
+function hideErr(id) { var e=document.getElementById(id);if(e)e.classList.remove('on');}
+function shakeEl(id) { var e=document.getElementById(id);if(!e)return;e.classList.add('err');setTimeout(function(){e.classList.remove('err');},500);}
+
+/* ══ LAUNCH DASHBOARD ══ */
+function launchDashboard() {
+  document.getElementById('login-gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  populateUser();
+  renderOverview();
+  renderPlatforms();
+  renderSubscription();
+  renderInvoices();
+  renderNotifications();
+  initReveal();
+  showToast('Welcome back, ' + (currentUser.name.split(' ')[0]) + '! 👋');
+}
+
+function doLogout() {
+  fetch('/api/user-logout', { method: 'POST', credentials: 'include' }).catch(function(){});
+  currentUser = null;
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('login-gate').style.display = 'flex';
+  document.getElementById('si-email').value='';
+  document.getElementById('si-pass').value='';
+}
+
+/* ══ تحقق تلقائي من جلسة سابقة عند تحميل الصفحة — يبقي المستخدم مسجَّلاً دخوله ══ */
+(function azCheckExistingSession(){
+  fetch('/api/user-verify', { credentials: 'include' })
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(data){
+      if (data && data.valid && data.user) {
+        currentUser = Object.assign({
+          since: new Date().toISOString().split('T')[0],
+          analyses: 0, saved: 0, platforms: ['prism'],
+          avatar: '👤', notifCount: 1
+        }, data.user);
+        launchDashboard();
+      }
+    })
+    .catch(function(){ /* لا جلسة سابقة أو تعذّر الاتصال — يبقى في شاشة الدخول بأمان */ });
+})();
+
+/* ══ POPULATE USER DATA ══ */
+function populateUser() {
+  var u = currentUser;
+  var pc = PLAN_CONFIG[u.plan] || PLAN_CONFIG.free;
+  // Sidebar
+  setText('sb-name', u.name);
+  setText('sb-plan', pc.name + (u.trial?' · Trial ':' ') + 'Plan');
+  setText('sb-avatar', u.avatar||'👤');
+  // Upgrade btn
+  var upBtn = document.getElementById('upgrade-btn');
+  if(upBtn) upBtn.style.display = (u.plan==='free'||u.plan==='growth') ? 'flex':'none';
+  // Notif count
+  setText('notif-count', u.notifCount||0);
+  // Profile
+  var pn = document.getElementById('prof-name'); if(pn) pn.value = u.name;
+  var pe = document.getElementById('prof-email'); if(pe) pe.value = u.email;
+  var pc2 = document.getElementById('prof-country'); if(pc2) pc2.value = u.country||'';
+  var pa = document.getElementById('profile-avatar'); if(pa) pa.textContent = u.avatar||'👤';
+  // Ref link
+  var rl = document.getElementById('ref-link');
+  if(rl) rl.value = 'axiomzones.com/ref/' + (u.email.split('@')[0].toUpperCase().replace(/[^A-Z]/g,'').substring(0,4)||'AXYZ') + Math.floor(Math.random()*9000+1000);
+}
+
+/* ══ OVERVIEW ══ */
+function renderOverview() {
+  var u = currentUser;
+  var pc = PLAN_CONFIG[u.plan]||PLAN_CONFIG.free;
+  setText('wb-name', 'Welcome back, ' + u.name.split(' ')[0] + ' 👋');
+  setText('wb-sub', 'You\'ve been a member since ' + u.since + '. Here\'s your account today.');
+  var wb = document.getElementById('wb-plan');
+  if(wb){ wb.textContent = pc.name + ' Plan' + (u.trial?' (Trial)':''); wb.className = 'wb-plan ' + pc.class; }
+  setText('wb-since', u.since);
+  // Stats
+  var plats = ALL_PLATFORMS.filter(function(p){return canAccess(p.id);}).length;
+  setText('stat-plat', plats);
+  setText('stat-analyses', u.analyses.toLocaleString());
+  setText('stat-saved', u.saved>0?'$'+u.saved.toLocaleString():'—');
+  var days = Math.floor((Date.now()-new Date(u.since).getTime())/86400000);
+  setText('stat-days', days);
+  // Activity
+  renderActivity();
+  // Page title
+  updatePageMeta('overview','Overview','Your dashboard at a glance');
+}
+
+function renderActivity() {
+  var el = document.getElementById('recent-activity'); if(!el)return;
+  var activities = [
+    {icon:'🔮',text:'Ran Prism Compare analysis — saved $2,400',time:'2 hours ago',color:'var(--pu)'},
+    {icon:'👁️',text:'Checked bank offer with Kashf — Score: 72/100',time:'Yesterday',color:'#7c3aed'},
+    {icon:'💳',text:'Subscribed to ' + (PLAN_CONFIG[currentUser.plan]||{}).name + ' plan',time:currentUser.since,color:'var(--gold)'},
+  ];
+  el.innerHTML='';
+  activities.forEach(function(a){
+    var d=document.createElement('div');
+    d.style.cssText='display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.04)';
+    d.innerHTML='<div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0">'+a.icon+'</div><div style="flex:1"><div style="font-size:.8rem;line-height:1.5">'+a.text+'</div><div style="font-family:var(--fm);font-size:.62rem;color:'+a.color+';margin-top:3px">'+a.time+'</div></div>';
+    el.appendChild(d);
+  });
+}
+
+/* ══ PLATFORMS ══ */
+function canAccess(platformId) {
+  if (!currentUser) return false;
+  var plt = ALL_PLATFORMS.find(function(p){return p.id===platformId;});
+  if (!plt) return false;
+  var planOrder = ['free','growth','pro','expert','lifetime'];
+  var userPlanIdx = planOrder.indexOf(currentUser.plan);
+  var reqPlanIdx = planOrder.indexOf(plt.requiredPlan);
+  return userPlanIdx >= reqPlanIdx;
+}
+
+function renderPlatforms() {
+  var grid = document.getElementById('platforms-grid'); if(!grid)return;
+  grid.innerHTML='';
+  ALL_PLATFORMS.forEach(function(p){
+    var accessible = canAccess(p.id);
+    var card = document.createElement('div');
+    card.className = 'plt-card' + (accessible?'':' locked');
+    card.style.setProperty('--pcc', p.color);
+    var launchable = accessible && p.url !== '#';
+    card.innerHTML =
+      '<div class="plt-hd">' +
+        '<div class="plt-ico" style="background:'+p.color+'18;border-color:'+p.color+'28">'+p.icon+'</div>' +
+        '<div><div class="plt-nm" style="color:'+p.color+'">'+p.name+'</div><div class="plt-tg">'+p.tag+'</div></div>' +
+        '</div>' +
+      '<p class="plt-desc">'+p.desc+'</p>' +
+      '<div class="plt-meta">'+p.tags.map(function(t){return '<span class="pmtag">'+t+'</span>';}).join('')+'</div>' +
+      '<div class="plt-actions">' +
+        (launchable
+          ? '<button class="btn-launch" onclick="window.open(\''+p.url+'\',\'_blank\')">Launch '+p.name+' →</button>'
+          : accessible
+            ? '<button class="btn-launch" disabled>Coming Soon</button>'
+            : '') +
+        '<button class="btn-sm-out" onclick="showPlatformInfo(\''+p.id+'\')">Info</button>' +
+      '</div>' +
+      (!accessible
+        ? '<div class="lock-overlay"><div class="lock-icon">🔒</div><div class="lock-txt">Upgrade Required</div><div class="lock-sub">This platform requires a '+p.requiredPlan.charAt(0).toUpperCase()+p.requiredPlan.slice(1)+' plan or higher.</div><button class="btn-unlock" onclick="goTo(\'subscriptions\')">Unlock →</button></div>'
+        : '') ;
+    grid.appendChild(card);
+  });
+}
+
+function showPlatformInfo(id) {
+  var p = ALL_PLATFORMS.find(function(x){return x.id===id;});
+  if(p) showToast(p.name+' · '+p.tag);
+}
+
+/* ══ SUBSCRIPTION ══ */
+function renderSubscription() {
+  var u = currentUser;
+  var pc = PLAN_CONFIG[u.plan]||PLAN_CONFIG.free;
+  setText('cur-plan-name', pc.name + (u.trial?' (Trial — '+u.trialDays+' days left)':''));
+  setText('cur-plan-price',
+    u.plan==='lifetime' ? '$399 · One-time payment · Forever' :
+    u.plan==='free' ? '$0/month · Free forever' :
+    '$'+pc.price+'/month · Billed monthly');
+  setText('next-billing',
+    u.plan==='free'||u.plan==='lifetime' ? '—' :
+    u.trial ? 'After trial ends' : '2024-04-01');
+
+  var feats = document.getElementById('cur-plan-feats');
+  if(feats){
+    feats.innerHTML='';
+    (PLAN_FEATURES[u.plan]||[]).forEach(function(f){
+      var div=document.createElement('div');div.className='sub-feat';div.textContent=f;feats.appendChild(div);
+    });
+  }
+  // Usage bars
+  renderUsage();
+  // Upgrade grid
+  renderUpgrade();
+}
+
+function renderUsage() {
+  var el = document.getElementById('usage-bars'); if(!el)return;
+  var u = currentUser;
+  var items = [
+    {label:'Analyses Run',val:u.analyses,max:u.plan==='free'?5*30:9999,color:'var(--pu)'},
+    {label:'Platforms Active',val:ALL_PLATFORMS.filter(function(p){return canAccess(p.id);}).length,max:8,color:'var(--gold)'},
+    {label:'Storage Used',val:2.4,max:u.plan==='free'?5:100,color:'var(--cy)',sfx:'MB'},
+  ];
+  el.innerHTML='';
+  items.forEach(function(item){
+    var pct=Math.min(100,Math.round((item.val/item.max)*100));
+    var div=document.createElement('div');div.style.cssText='margin-bottom:14px';
+    div.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.8rem"><span>'+item.label+'</span><span style="font-family:var(--fm);color:var(--t2)">'+item.val+(item.sfx||'')+' / '+(item.max===9999?'Unlimited':item.max+(item.sfx||''))+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+item.color+'"></div></div>';
+    el.appendChild(div);
+  });
+}
+
+function renderUpgrade() {
+  var isAnnual = document.getElementById('annual-tog') && document.getElementById('annual-tog').checked;
+  var annSave = document.getElementById('ann-save');
+  if(annSave) annSave.style.display = isAnnual?'inline-block':'none';
+  var grid = document.getElementById('upgrade-grid'); if(!grid)return;
+  grid.innerHTML='';
+  var u = currentUser;
+  UPGRADE_OPTIONS.forEach(function(opt){
+    var isCurrent = opt.plan === u.plan;
+    var card = document.createElement('div');
+    card.className = 'upgrade-card' + (isCurrent?' current':'') + (opt.popular?' popular':'');
+    var price = isAnnual && opt.plan!=='lifetime' ? Math.round(opt.aPrice) : opt.price;
+    var featsHTML = opt.feats.map(function(f){
+      if(typeof f==='object'&&f.no) return '<li class="up-feat no">'+f.no+'</li>';
+      return '<li class="up-feat">'+f+'</li>';
+    }).join('');
+    var btnCls = isCurrent?'up-btn up-btn-dis':opt.popular?'up-btn up-btn-gold':'up-btn up-btn-out';
+    var btnTxt = isCurrent?'Current Plan':opt.plan==='lifetime'?'Claim — $399':'Upgrade →';
+    var btnFn = isCurrent?'':('upgradeClick("'+opt.plan+'")');
+    card.innerHTML =
+      (opt.popular?'<div class="up-pop-badge">Most Popular</div>':'') +
+      '<div class="up-name">'+opt.label+'</div>' +
+      '<div class="up-price">'+(price===0?'$0':opt.plan==='lifetime'?'$399':'$'+price)+'</div>' +
+      '<div class="up-per">'+(price===0?'Free forever':opt.plan==='lifetime'?'One-time payment':isAnnual?'/mo billed annually':'/month')+'</div>' +
+      '<ul class="up-feats">'+featsHTML+'</ul>' +
+      '<button class="'+btnCls+'"'+(btnFn?' onclick="'+btnFn+'"':'')+(isCurrent?' disabled':'')+'>'+btnTxt+'</button>';
+    grid.appendChild(card);
+  });
+}
+
+function upgradeClick(plan) {
+  showToast('Redirecting to checkout for ' + (PLAN_CONFIG[plan]||{}).name + ' plan... (Stripe integration required)');
+}
+
+/* ══ INVOICES ══ */
+function renderInvoices() {
+  var tbody = document.getElementById('invoices-tbl'); if(!tbody||tbody.children.length>0)return;
+  var invoices = currentUser.plan==='free'?[]:[
+    {id:'INV-2024-003',date:'2024-03-01',plan:'Pro All',amount:69,method:'Stripe',status:'paid'},
+    {id:'INV-2024-002',date:'2024-02-01',plan:'Pro All',amount:69,method:'Stripe',status:'paid'},
+    {id:'INV-2024-001',date:'2024-01-15',plan:'Pro All',amount:69,method:'Stripe',status:'paid'},
+  ];
+  if(invoices.length===0){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td colspan="7" style="text-align:center;padding:30px;color:var(--t3);font-family:var(--fm);font-size:.76rem">No invoices yet · Upgrade to a paid plan</td>';
+    tbody.appendChild(tr);return;
+  }
+  invoices.forEach(function(inv){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="td-mono" style="font-size:.72rem">'+inv.id+'</td><td class="td-mono" style="font-size:.72rem;color:var(--t3)">'+inv.date+'</td><td><span class="badge b-gold">'+inv.plan+'</span></td><td style="font-family:var(--fm);color:var(--gold);font-weight:700">$'+inv.amount+'</td><td class="td-mono" style="font-size:.74rem">'+inv.method+'</td><td><span class="badge b-gn"><span class="b-dot"></span>'+inv.status+'</span></td><td><button class="btn-sm-out" style="padding:4px 10px;font-size:.7rem;border-radius:5px" onclick="downloadInvoice(\''+inv.id+'\')">⬇ PDF</button></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+/* ══ NOTIFICATIONS ══ */
+function renderNotifications() {
+  var el = document.getElementById('notifs-list'); if(!el||el.children.length>0)return;
+  var notifs = [
+    {icon:'🎉',bg:'rgba(34,197,94,.1)',title:'Welcome to Axiom Zones!',body:'Your account is ready. Start with Prism Suite or Kashf — both free.',time:'Just now',unread:true},
+    {icon:'💡',bg:'rgba(201,168,76,.1)',title:'Try the Kashf Loan Analyzer',body:'See what your bank is hiding. Enter any loan offer and get the Beautification Score instantly.',time:'2 hours ago',unread:true},
+    {icon:'🔥',bg:'rgba(239,68,68,.1)',title:'Lifetime Deal — 73 spots left',body:'$399 once, Pro All-Access forever. First 100 accounts only. Don\'t miss it.',time:'1 day ago',unread:true},
+  ];
+  el.innerHTML='';
+  notifs.forEach(function(n){
+    var div=document.createElement('div');div.className='notif-item-pg';
+    div.innerHTML='<div class="ni-ico" style="background:'+n.bg+'">'+n.icon+'</div><div class="ni-content"><div class="ni-title">'+n.title+'</div><div class="ni-body">'+n.body+'</div><div class="ni-time">'+n.time+'</div></div>'+(n.unread?'<div class="ni-unread" title="Unread"></div>':'');
+    el.appendChild(div);
+  });
+}
+
+function markAllRead() {
+  document.querySelectorAll('.ni-unread').forEach(function(el){el.remove();});
+  setText('notif-count','0');
+  showToast('All notifications marked as read ✓');
+}
+
+/* ══ NAVIGATION ══ */
+var PAGE_META = {
+  overview:      {title:'Overview',       sub:'Your dashboard at a glance'},
+  platforms:     {title:'My Platforms',   sub:'Your subscribed tools'},
+  subscriptions: {title:'Subscription',   sub:'Manage your plan'},
+  invoices:      {title:'Invoices',       sub:'Billing history'},
+  notifications: {title:'Notifications',  sub:'Account updates and alerts'},
+  referral:      {title:'Refer & Earn',   sub:'Share and earn free months'},
+  settings:      {title:'Settings',       sub:'Profile and preferences'},
+};
+
+function goTo(page) {
+  currentPage = page;
+  document.querySelectorAll('.dash-page').forEach(function(p){p.classList.remove('on');});
+  var pg = document.getElementById('page-'+page);
+  if(pg) pg.classList.add('on');
+  document.querySelectorAll('.dsb-item, .bn-item').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'"+page+"'")>-1);
+  });
+  updatePageMeta(page);
+  window.scrollTo(0,0);
+  initReveal();
+}
+
+function updatePageMeta(page, title, sub) {
+  var meta = PAGE_META[page]||{title:page,sub:''};
+  setText('page-title', title||meta.title);
+  setText('page-sub', sub||meta.sub);
+}
+
+/* ══ HELPERS ══ */
+function setText(id,val){var e=document.getElementById(id);if(e)e.textContent=val;}
+
+function showToast(msg,dur){
+  var t=document.getElementById('az-toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},dur||3000);
+}
+
+function usgToast(action){
+  var msgs={
+    cancel:'To cancel your subscription, contact support@axiomzones.com. (Supabase integration required for self-service)',
+    pause:'Account pause feature coming soon with Supabase integration.',
+    avatar:'Photo upload requires storage integration. Coming soon!',
+  };
+  showToast(msgs[action]||'Coming soon!', 4000);
+}
+
+function copyRef(){
+  var el=document.getElementById('ref-link');
+  if(el&&navigator.clipboard){navigator.clipboard.writeText(el.value);showToast('Referral link copied! ✓');}
+}
+
+function downloadInvoice(id){showToast('Invoice '+id+' download started... (PDF generation requires Supabase)');}
+function downloadAllInvoices(){showToast('Downloading all invoices... (Supabase required)');}
+function saveProfile(){showToast('Profile saved! ✓ (Supabase sync coming soon)');}
+function changePass(){showToast('Password updated! ✓ (Supabase Auth required for real change)');}
+function confirmDelete(){if(confirm('Are you sure? This cannot be undone.')){doLogout();}}
+
+/* ══ MOBILE SIDEBAR ══ */
+function openMobSB(){document.getElementById('mob-sb').classList.add('open');document.getElementById('mob-ov').classList.add('open');document.body.style.overflow='hidden';}
+function closeMobSB(){document.getElementById('mob-sb').classList.remove('open');document.getElementById('mob-ov').classList.remove('open');document.body.style.overflow='';}
+
+/* ══ THEME ══ */
+function toggleTheme(){
+  isDark=!isDark;
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+  var btn=document.getElementById('theme-btn');if(btn)btn.textContent=isDark?'🌙':'☀️';
+  var tog=document.getElementById('dark-tog');if(tog)tog.checked=isDark;
+}
+
+/* ══ SCROLL ══ */
+window.addEventListener('scroll',function(){
+  var sp=document.getElementById('sp');
+  if(sp)sp.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  var btt=document.getElementById('btt');if(btt)btt.classList.toggle('show',window.scrollY>300);
+},{passive:true});
+
+/* ══ REVEAL ══ */
+function initReveal(){
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.07});
+  document.querySelectorAll('.rv:not(.vis)').forEach(function(el){obs.observe(el);});
+}
+
+/* ══ ANNUAL TOGGLE ══ */
+document.getElementById('annual-tog') && document.getElementById('annual-tog').addEventListener('change', renderUpgrade);
+
+/* ══ KEYBOARD ══ */
+document.addEventListener('keydown',function(e){
+  if(e.altKey){
+    var s={'1':'overview','2':'platforms','3':'subscriptions','4':'invoices','5':'settings'};
+    if(s[e.key]){e.preventDefault();goTo(s[e.key]);}
+  }
+});
+
+/* ══ ENTER KEY ON LOGIN ══ */
+document.getElementById('si-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doSignIn();});
+document.getElementById('su-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doSignUp();});
+
+/* ══ INIT ══ */
+window.addEventListener('load',function(){
+  initReveal();
+  // Auto-fill demo credentials hint
+  var siEmail = document.getElementById('si-email');
+  if(siEmail) siEmail.placeholder = 'demo@axiomzones.com';
+  var siPass = document.getElementById('si-pass');
+  if(siPass) siPass.placeholder = 'demo1234';
+});
+
+
+/* ══════════════════════════════════════════════
+   DASHBOARD i18n — Language + Currency System
+══════════════════════════════════════════════ */
+
+/* Currency Symbols Map */
+var SM={
+  SAR:'﷼',AED:'د.إ',KWD:'د.ك',BHD:'BD',OMR:'ر.ع',QAR:'ر.ق',
+  EGP:'ج.م',JOD:'JD',LBP:'LL',IQD:'IQD',LYD:'LD',TND:'DT',
+  MAD:'DH',DZD:'DA',SDG:'SDG',YER:'YER',SYP:'SYP',
+  USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',CHF:'Fr',
+  CAD:'C$',AUD:'A$',NZD:'NZ$',SGD:'S$',HKD:'HK$',TWD:'NT$',
+  NOK:'kr',SEK:'kr',DKK:'kr',ISK:'kr',
+  PLN:'zł',CZK:'Kč',HUF:'Ft',RON:'lei',BGN:'лв',HRK:'kn',
+  RSD:'din',ALL:'L',MKD:'den',BAM:'KM',
+  RUB:'₽',UAH:'₴',BYN:'Br',MDL:'L',GEL:'₾',AMD:'֏',AZN:'₼',TRY:'₺',
+  KZT:'₸',UZS:'UZS',KGS:'KGS',TJS:'TJS',TMT:'T',
+  KRW:'₩',INR:'₹',PKR:'₨',BDT:'৳',LKR:'Rs',NPR:'Rs',
+  MVR:'Rf',BTN:'Nu',AFN:'؋',ILS:'₪',
+  THB:'฿',IDR:'Rp',MYR:'RM',PHP:'₱',VND:'₫',
+  MMK:'K',KHR:'CR',LAK:'₭',BND:'B$',MNT:'₮',
+  MXN:'$',GTQ:'Q',HNL:'L',NIO:'C$',CRC:'₡',
+  DOP:'RD$',JMD:'J$',TTD:'TT$',BBD:'Bds$',XCD:'EC$',
+  BSD:'B$',BZD:'BZ$',HTG:'G',AWG:'ƒ',ANG:'ƒ',PAB:'B/.',
+  BRL:'R$',ARS:'$',CLP:'$',COP:'$',PEN:'S/',
+  UYU:'$',BOB:'Bs',PYG:'₲',VES:'Bs',GYD:'G$',SRD:'$',
+  NGN:'₦',GHS:'₵',XOF:'F',GMD:'D',GNF:'FG',SLL:'Le',LRD:'L$',SLE:'SLE',
+  KES:'KSh',TZS:'TSh',UGX:'USh',ETB:'Br',RWF:'Fr',
+  BIF:'Fr',DJF:'Fdj',ERN:'Nkf',SSP:'£',SOS:'Sh',
+  ZAR:'R',BWP:'P',NAD:'N$',ZMW:'K',MWK:'MK',
+  MZN:'MT',AOA:'Kz',ZWL:'Z$',
+  XAF:'F',CDF:'FC',
+  MGA:'Ar',MUR:'₨',SCR:'₨',CVE:'$',KMF:'CF',STN:'Db',
+  FJD:'FJ$',PGK:'K',WST:'T',VUV:'Vt',SBD:'SI$',TOP:'T$',XPF:'CFP',
+  XAU:'Au⊛',XAG:'Ag⊛',XDR:'SDR',
+  BTC:'₿',ETH:'Ξ',USDT:'₮',USDC:'$',BNB:'BNB',
+  XRP:'XRP',ADA:'₳',SOL:'◎'
+}
+
+var DASH_CURR = localStorage.getItem('dash_curr') || 'USD';
+var DASH_LANG = localStorage.getItem('dash_lang') || navigator.language.split('-')[0] || 'en';
+var DASH_SYM  = SM[DASH_CURR] || '$';
+
+/* ══ SET CURRENCY ══ */
+function dashSetCurr(c) {
+  DASH_CURR = c;
+  DASH_SYM  = SM[c] || c;
+  localStorage.setItem('dash_curr', c);
+  // Update symbol display
+  var sym = document.getElementById('dash-curr-sym');
+  if (sym) sym.textContent = DASH_SYM;
+  // Update all currency displays in dashboard
+  document.querySelectorAll('[data-curr]').forEach(function(el) {
+    var base = parseFloat(el.getAttribute('data-base') || el.textContent.replace(/[^0-9.]/g,''));
+    if (!isNaN(base)) el.textContent = DASH_SYM + base.toLocaleString();
+  });
+  // Update plan prices
+  dashUpdatePrices();
+}
+
+function dashUpdatePrices() {
+  var rates = {
+    USD:1, SAR:3.75, AED:3.67, EGP:48.5, KWD:0.31, QAR:3.64,
+    BHD:0.377, OMR:0.385, JOD:0.71, EUR:0.92, GBP:0.79,
+    TRY:32, INR:83, PKR:278, MAD:10, TND:3.1, DZD:135
+  };
+  var rate = rates[DASH_CURR] || 1;
+  document.querySelectorAll('[data-usd]').forEach(function(el) {
+    var usd = parseFloat(el.getAttribute('data-usd'));
+    if (!isNaN(usd)) el.textContent = DASH_SYM + Math.round(usd * rate).toLocaleString();
+  });
+}
+
+/* ══ SET LANGUAGE ══ */
+function dashSetLang(lang) {
+  DASH_LANG = lang;
+  localStorage.setItem('dash_lang', lang);
+  var rtlLangs = ['ar','fa','ur','he','yi','ku'];
+  var isRtl = rtlLangs.includes(lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = isRtl ? 'rtl' : 'ltr';
+  document.body.style.fontFamily = isRtl
+    ? "'Cairo', 'Noto Sans Arabic', sans-serif"
+    : "'Syne', sans-serif";
+  // Store RTL state
+  localStorage.setItem('dash_rtl', isRtl ? '1' : '0');
+  // Apply translations if available
+  dashApplyTranslations(lang);
+}
+
+/* ══ BUILT-IN TRANSLATIONS (Arabic core) ══ */
+var DASH_TRANS = {
+  ar: {
+    'Overview':           'نظرة عامة',
+    'My Platforms':       'منصاتي',
+    'Subscription':       'الاشتراك',
+    'Invoices':           'الفواتير',
+    'Notifications':      'الإشعارات',
+    'Refer & Earn':       'أحِل واكسب',
+    'Settings':           'الإعدادات',
+    'Welcome back':       'مرحباً بعودتك',
+    'Quick Actions':      'إجراءات سريعة',
+    'Upgrade':            'ترقية',
+    'Active':             'نشط',
+    'Trial':              'تجريبي',
+    'Free':               'مجاني',
+    'Days left':          'أيام متبقية',
+    'Launch':             'افتح',
+    'Locked':             'مقفل',
+    'Copy':               'نسخ',
+    'Copied':             'تم النسخ',
+    'Save Changes':       'حفظ التغييرات',
+    'Sign Out':           'تسجيل الخروج',
+    'Dark Mode':          'الوضع الداكن',
+    'Light Mode':         'الوضع الفاتح',
+    'Annual':             'سنوي',
+    'Monthly':            'شهري',
+    'Download':           'تحميل',
+    'Cancel':             'إلغاء',
+    'Confirm':            'تأكيد',
+    'Email':              'البريد الإلكتروني',
+    'Password':           'كلمة المرور',
+    'Name':               'الاسم',
+    'Country':            'الدولة',
+    'Plan':               'الخطة',
+    'Pro':                'برو',
+    'Growth':             'نمو',
+    'Expert':             'خبير',
+    'Lifetime':           'مدى الحياة',
+    'Your referral link': 'رابط الإحالة الخاص بك',
+    'Notifications':      'الإشعارات',
+    'Mark all read':      'تعليم الكل كمقروء',
+  },
+  fr: {
+    'Overview':           'Aperçu',
+    'My Platforms':       'Mes Plateformes',
+    'Subscription':       'Abonnement',
+    'Invoices':           'Factures',
+    'Settings':           'Paramètres',
+    'Welcome back':       'Bon retour',
+    'Launch':             'Lancer',
+    'Locked':             'Verrouillé',
+    'Free':               'Gratuit',
+    'Annual':             'Annuel',
+    'Monthly':            'Mensuel',
+  },
+  es: {
+    'Overview':           'Resumen',
+    'My Platforms':       'Mis Plataformas',
+    'Subscription':       'Suscripción',
+    'Invoices':           'Facturas',
+    'Settings':           'Configuración',
+    'Welcome back':       'Bienvenido de nuevo',
+    'Launch':             'Lanzar',
+    'Free':               'Gratis',
+    'Annual':             'Anual',
+    'Monthly':            'Mensual',
+  },
+  de: {
+    'Overview':           'Übersicht',
+    'My Platforms':       'Meine Plattformen',
+    'Subscription':       'Abonnement',
+    'Invoices':           'Rechnungen',
+    'Settings':           'Einstellungen',
+    'Welcome back':       'Willkommen zurück',
+    'Launch':             'Starten',
+    'Free':               'Kostenlos',
+  },
+};
+
+function dashApplyTranslations(lang) {
+  var trans = DASH_TRANS[lang];
+  if (!trans) return;
+  // Translate all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (trans[key]) el.textContent = trans[key];
+  });
+  // Also scan text nodes for common terms
+  document.querySelectorAll('.nav-label, .page-title-text, .card-title, .section-title, .tb-label').forEach(function(el) {
+    var key = el.textContent.trim();
+    if (trans[key]) el.textContent = trans[key];
+  });
+}
+
+/* ══ AI TRANSLATION (Claude API) ══ */
+async function dashAITranslate() {
+  var btn = document.getElementById('dash-ai-btn');
+  var lang = DASH_LANG;
+  if (lang === 'en') { dashShowToast('Already in English — select another language first'); return; }
+  if (btn) { btn.textContent = '...'; btn.classList.add('loading'); }
+  try {
+    var pageText = [];
+    document.querySelectorAll('.nav-label, h1, h2, h3, .card-title, .page-header').forEach(function(el) {
+      if (el.textContent.trim()) pageText.push({ el: el, text: el.textContent.trim() });
+    });
+    var textArr = pageText.map(function(i){ return i.text; }).slice(0,25);
+    var texts = textArr.join(' | ');
+    var langNames = {ar:'Arabic',fr:'French',es:'Spanish',de:'German',tr:'Turkish',fa:'Persian',ur:'Urdu',id:'Indonesian',ms:'Malay',zh:'Chinese',ja:'Japanese',ko:'Korean',pt:'Portuguese',ru:'Russian',hi:'Hindi'};
+    var langName = langNames[lang] || lang;
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        system: 'Translate each phrase to ' + langName + '. Input is phrases separated by " | ". Return ONLY translated phrases separated by " | ". No extra text.',
+        messages: [{ role: 'user', content: texts }]
+      })
+    });
+    var data = await res.json();
+    var translated = ((data.content || [])[0] || {}).text || '';
+    var lines = translated.split(' | ');
+    pageText.slice(0, lines.length).forEach(function(item, i) {
+      if (lines[i] && lines[i].trim()) item.el.textContent = lines[i].trim();
+    });
+    dashShowToast('Translated to ' + langName + ' by AI');
+  } catch(e) {
+    dashShowToast('Translation error — check connection');
+  } finally {
+    if (btn) { btn.textContent = 'AI'; btn.classList.remove('loading'); }
+  }
+}
+
+/* ══ INIT ══ *//* ══ INIT ══ */
+function dashInitI18n() {
+  // Set saved preferences
+  var savedLang = localStorage.getItem('dash_lang') || navigator.language.split('-')[0] || 'en';
+  var savedCurr = localStorage.getItem('dash_curr') || 'USD';
+  var savedRtl  = localStorage.getItem('dash_rtl') === '1';
+
+  // Apply language
+  var langSel = document.getElementById('dash-lang-sel');
+  if (langSel) langSel.value = savedLang;
+
+  // Apply currency
+  var currSel = document.getElementById('dash-curr-sel');
+  if (currSel) currSel.value = savedCurr;
+
+  // Apply RTL
+  if (savedRtl) {
+    document.documentElement.dir = 'rtl';
+    document.body.style.fontFamily = "'Cairo','Noto Sans Arabic',sans-serif";
+  }
+
+  // Apply symbol
+  var sym = document.getElementById('dash-curr-sym');
+  if (sym) sym.textContent = SM[savedCurr] || '$';
+
+  // Apply translations
+  if (savedLang !== 'en') dashApplyTranslations(savedLang);
+
+  // Update prices
+  dashUpdatePrices();
+}
+
+/* ══ TOAST ══ */
+function dashShowToast(msg) {
+  var t = document.getElementById('dash-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'dash-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(201,168,76,.3);color:#c9a84c;padding:10px 20px;border-radius:9px;font-family:monospace;font-size:.72rem;z-index:9999;transition:transform .4s;pointer-events:none';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){ t.style.transform = 'translateX(-50%) translateY(80px)'; }, 3000);
+}
+
+/* ══ RUN ON LOAD ══ */
+window.addEventListener('load', function(){
+  if (typeof dashInitI18n === 'function') dashInitI18n();
+}, {once:true});
+
+</script>
+<script>
+
+/* ══════════════════════════════════════════════════════
+   AZ RATE LIMITER — AI Calls Protection
+   يحمي من استنزاف Claude API
+   المجاني: 5 أسئلة/يوم | Pro+: 50/يوم | Expert: 200/يوم
+══════════════════════════════════════════════════════ */
+var AZ_RATE = {
+  limits: { free:5, growth:20, pro:50, expert:200, lifetime:500 },
+  key: 'az_ai_calls',
+  dateKey: 'az_ai_date',
+
+  /* احصل على الخطة الحالية */
+  getPlan: function() {
+    try {
+      var s = JSON.parse(localStorage.getItem('az_session') || '{}');
+      return s.plan || 'free';
+    } catch(e) { return 'free'; }
+  },
+
+  /* هل مسموح باستدعاء AI؟ */
+  canCall: function() {
+    var today = new Date().toDateString();
+    var saved = localStorage.getItem(this.dateKey);
+    if (saved !== today) {
+      localStorage.setItem(this.dateKey, today);
+      localStorage.setItem(this.key, '0');
+    }
+    var used  = parseInt(localStorage.getItem(this.key) || '0');
+    var plan  = this.getPlan();
+    var limit = this.limits[plan] || this.limits.free;
+    return used < limit;
+  },
+
+  /* سجّل استدعاء */
+  record: function() {
+    var used = parseInt(localStorage.getItem(this.key) || '0');
+    localStorage.setItem(this.key, String(used + 1));
+  },
+
+  /* كم تبقّى؟ */
+  remaining: function() {
+    var today = new Date().toDateString();
+    if (localStorage.getItem(this.dateKey) !== today) return this.limits[this.getPlan()] || 5;
+    var used  = parseInt(localStorage.getItem(this.key) || '0');
+    var limit = this.limits[this.getPlan()] || 5;
+    return Math.max(0, limit - used);
+  },
+
+  /* رسالة الحد المنتهي */
+  limitMsg: function() {
+    var plan = this.getPlan();
+    var limit = this.limits[plan] || 5;
+    if (plan === 'free') {
+      return 'وصلت لحد ' + limit + ' أسئلة/يوم للحساب المجاني. ترقّ للـ Growth للحصول على 20 سؤال/يوم.';
+    }
+    return 'وصلت لحد ' + limit + ' سؤال اليوم. يتجدد غداً.';
+  }
+};
+
+/* ══ Wrap كل استدعاء AI بـ Rate Limiter ══ */
+var _az_orig_fetch = window.fetch;
+window.fetch = function(url, opts) {
+  if (url && url.toString().includes('anthropic.com')) {
+    if (!AZ_RATE.canCall()) {
+      var msg = AZ_RATE.limitMsg();
+      /* Show toast using any available toast function */
+      if (typeof azV4Toast === 'function')    azV4Toast('⚠️ ' + msg);
+      else if (typeof kToast === 'function')  kToast('⚠️ ' + msg);
+      else if (typeof dashShowToast === 'function') dashShowToast('⚠️ ' + msg);
+      else alert(msg);
+      return Promise.reject(new Error('Rate limit reached'));
+    }
+    AZ_RATE.record();
+    /* Show remaining count */
+    var rem = AZ_RATE.remaining();
+    if (rem <= 2) {
+      var warn = 'تبقّى ' + rem + ' سؤال AI اليوم';
+      setTimeout(function() {
+        if (typeof azV4Toast === 'function')    azV4Toast('ℹ️ ' + warn);
+        else if (typeof kToast === 'function')  kToast('ℹ️ ' + warn);
+        else if (typeof dashShowToast === 'function') dashShowToast('ℹ️ ' + warn);
+      }, 2000);
+    }
+  }
+  return _az_orig_fetch.apply(window, arguments);
+};
+
+</script>
+<script>
+
+/* ══ PAYMENT CONFIG — Dashboard ══ */
+var PAYMENT_CONFIG = {
+  provider: 'paddle',
+  enabled: false,
+  providers: {
+    paddle: {
+      growth_m:null, growth_a:null,
+      pro_all_m:null, pro_all_a:null,
+      expert_all_m:null, expert_all_a:null,
+      lifetime:null,
+    },
+    dodo:   { growth_m:null, pro_all_m:null, lifetime:null },
+    stripe: { growth_m:null, pro_all_m:null, lifetime:null },
+  },
+  prices: {
+    growth:     { global_m:29,  global_a:20.3, arab_m:14,  arab_a:9.8  },
+    pro_all:    { global_m:69,  global_a:48.3, arab_m:34,  arab_a:23.8 },
+    expert_all: { global_m:129, global_a:90.3, arab_m:64,  arab_a:44.8 },
+    lifetime:   { global_m:399, global_a:399,  arab_m:399, arab_a:399  },
+  },
+};
+
+function azCheckout(plan) {
+  if (!PAYMENT_CONFIG.enabled) {
+    if (typeof dashShowToast === 'function') dashShowToast('🔜 قريباً — Coming Soon');
+    return;
+  }
+  var prov = PAYMENT_CONFIG.providers[PAYMENT_CONFIG.provider];
+  var isAnnual = localStorage.getItem('dash_annual') === '1';
+  var key = plan + (isAnnual ? '_a' : '_m');
+  var url = prov ? (prov[key] || prov[plan] || null) : null;
+  if (!url) { if (typeof dashShowToast === 'function') dashShowToast('هذه الخطة قيد الإعداد'); return; }
+  window.open(url, '_blank');
+}
+
+</script>
+<script>
+
+/* ══ PWA Service Worker Registration ══ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function(reg) {
+        console.log('SW registered:', reg.scope);
+        /* Check for updates */
+        reg.addEventListener('updatefound', function() {
+          var nw = reg.installing;
+          if (nw) {
+            nw.addEventListener('statechange', function() {
+              if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('New version available');
+              }
+            });
+          }
+        });
+      })
+      .catch(function(err) { console.log('SW failed:', err); });
+  });
+  /* Request Push Notification permission for Loan Alert */
+  if ('Notification' in window && 'PushManager' in window) {
+    document.addEventListener('DOMContentLoaded', function() {
+      var loanAlertBtn = document.getElementById('loan-alert');
+      if (loanAlertBtn) {
+        loanAlertBtn.addEventListener('click', function() {
+          Notification.requestPermission().then(function(perm) {
+            if (perm === 'granted') console.log('Push notifications enabled for Loan Alert');
+          });
+        });
+      }
+    });
+  }
+}
+</script>
+
+
+<!-- PWA Install Banner -->
+  <div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div>
+  <button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.78rem;border:none;cursor:pointer">تثبيت</button>
+  <button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;line-height:1;padding:0 2px">✕</button>
+</div>
+
+<!-- PWA -->
+<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:#0a0d1a;border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
+<script>
+(function(){var _d=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_d=e;setTimeout(function(){var b=document.getElementById('az-pwa-banner');if(b)b.style.display='flex';},30000);});window.azPWAInstall=function(){if(!_d)return;_d.prompt();_d.userChoice.then(function(){_d=null;var b=document.getElementById('az-pwa-banner');if(b)b.style.display='none';});};if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/service-worker.js').catch(function(){});});})();
+</script>
+</body>
+</html>

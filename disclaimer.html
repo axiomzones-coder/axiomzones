@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>إخلاء المسؤولية — Axiom Zones</title>
+<meta name="description" content="Axiom Zones توفر وضوحاً مالياً — ليس نصيحة مالية. نكشف. نحسب. أنت تقرر."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,700;1,300&family=Syne:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;line-height:1.85}
+a{color:#c9a84c;text-decoration:none}a:hover{text-decoration:underline}
+.hdr{background:#0a0d1a;border-bottom:1px solid rgba(201,168,76,.15);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.hdr-logo{font-family:'Cormorant',serif;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lang-btn{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;padding:5px 12px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#8892b0;cursor:pointer;transition:all .22s}
+.lang-btn.on{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.08)}
+.hdr-back{padding:6px 14px;border-radius:7px;border:1px solid rgba(255,255,255,.1);color:#8892b0;font-size:.76rem;transition:all .22s;text-decoration:none}
+.hdr-back:hover{border-color:#c9a84c;color:#c9a84c;text-decoration:none}
+.hero{min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 0%,rgba(201,168,76,.07),transparent);pointer-events:none}
+.hero-grid{position:absolute;inset:0;opacity:.018;background-image:linear-gradient(rgba(201,168,76,1) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,1) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
+.hero-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:#c9a84c;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hero-tag::before,.hero-tag::after{content:'';width:30px;height:1px;background:#c9a84c;display:inline-block}
+.hero-title{font-family:'Cormorant',serif;font-size:clamp(2.2rem,6vw,4rem);font-weight:700;letter-spacing:-2px;line-height:1;margin-bottom:18px}
+.hero-title em{color:#8892b0;font-weight:300;font-style:italic}
+.hero-motto{font-family:'DM Mono',monospace;font-size:clamp(.7rem,2vw,.9rem);letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:14px}
+.hero-sub{font-size:.9rem;color:#8892b0;max-width:560px;line-height:1.9}
+.wrap{max-width:840px;margin:0 auto;padding:0 24px 80px}
+.main-stmt{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(139,92,246,.04));border:1px solid rgba(201,168,76,.2);border-radius:16px;padding:32px;margin:0 auto 44px;text-align:center;position:relative;overflow:hidden}
+.main-stmt::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a,#c9a84c)}
+.ms-title{font-family:'Cormorant',serif;font-size:clamp(1.4rem,3vw,2.4rem);font-weight:700;letter-spacing:-1px;margin-bottom:12px}
+.ms-body{font-size:.9rem;color:#8892b0;line-height:2;max-width:580px;margin:0 auto}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:44px}
+@media(max-width:650px){.pillars{grid-template-columns:1fr}}
+.pillar{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:22px;text-align:center;position:relative;overflow:hidden}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--pc,#c9a84c)}
+.pillar-icon{font-size:1.8rem;margin-bottom:10px}
+.pillar-title{font-family:'Cormorant',serif;font-size:1.15rem;font-weight:700;margin-bottom:7px;color:var(--pc,#c9a84c)}
+.pillar-body{font-size:.78rem;color:#8892b0;line-height:1.8}
+.sec{margin-bottom:38px}
+.sec-hd{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sec-num{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:2px;color:#c9a84c;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);padding:3px 9px;border-radius:4px;flex-shrink:0}
+.sec-title{font-family:'Cormorant',serif;font-size:1.4rem;font-weight:700}
+.body-text{font-size:.87rem;color:#8892b0;margin-bottom:11px;line-height:1.9}
+.body-text strong{color:#f0f2ff}
+.contrast{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:13px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin:18px 0}
+@media(max-width:580px){.contrast{grid-template-columns:1fr}}
+.con-col{padding:18px}.con-col.no{background:rgba(239,68,68,.04)}.con-col.yes{background:rgba(34,197,94,.04)}
+.con-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,.05)}
+.con-title.no-t{color:#ef4444}.con-title.yes-t{color:#22c55e}
+.con-item{display:flex;align-items:flex-start;gap:7px;font-size:.78rem;color:#8892b0;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.65}
+.con-item:last-child{border-bottom:none}.con-icon{flex-shrink:0;margin-top:1px}
+.callout{border-radius:11px;padding:16px 18px;margin:14px 0;font-size:.83rem;line-height:1.85}
+.c-gold{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);color:#c9a84c}
+.c-green{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.15);color:#22c55e}
+.c-red{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);color:#ef4444}
+.c-blue{background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.15);color:#60a5fa}
+.callout strong{color:#f0f2ff}
+.plt-table{width:100%;border-collapse:collapse;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin:14px 0}
+.plt-table th{padding:9px 13px;text-align:start;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:1.5px;text-transform:uppercase;color:#3d4a6b;background:#0a0d1a;border-bottom:1px solid rgba(255,255,255,.07)}
+.plt-table td{padding:10px 13px;font-size:.8rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.plt-table tr:last-child td{border-bottom:none}
+.td-g{color:#22c55e;font-size:.75rem}.td-gold{color:#c9a84c;font-size:.75rem}
+.divider{height:1px;background:rgba(255,255,255,.05);margin:44px 0}
+.final-stmt{text-align:center;padding:44px 24px;background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(34,197,94,.03));border:1px solid rgba(201,168,76,.15);border-radius:16px;margin:36px 0}
+.final-ar{font-family:'Cormorant',serif;font-size:clamp(1.6rem,5vw,3rem);font-weight:700;letter-spacing:-1px;margin-bottom:8px}
+.final-en{font-family:'Cormorant',serif;font-size:clamp(1.1rem,3vw,1.8rem);font-weight:300;font-style:italic;color:#8892b0;margin-bottom:18px}
+.final-body{font-size:.87rem;color:#8892b0;max-width:540px;margin:0 auto;line-height:1.95}
+.legal-note{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:18px;margin-top:28px;font-family:'DM Mono',monospace;font-size:.66rem;color:#3d4a6b;line-height:1.85}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-logo">Axiom Zones</div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="lang-btn on" onclick="showLang('ar')">عربي</button>
+    <button class="lang-btn" onclick="showLang('en')">EN</button>
+    <a href="/" class="hdr-back">الرئيسية</a>
+  </div>
+</header>
+
+<!-- AR -->
+<div id="c-ar">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-tag">إخلاء مسؤولية · Financial Clarity Statement</div>
+    <h1 class="hero-title">نحن نكشف ما تعرفه البنوك<br/><em>ولا تخبرك به</em></h1>
+    <div class="hero-motto">نكشف · نحسب · أنت تقرر</div>
+    <p class="hero-sub">Axiom Zones ليست بنكاً ولا مستشاراً مالياً — هي محرك وضوح مالي يُظهر الأرقام الحقيقية لأول مرة.</p>
+  </div>
+  <div class="wrap">
+    <div class="main-stmt">
+      <div class="ms-title">الجوهر في جملة واحدة</div>
+      <p class="ms-body">الأرقام المالية كانت موجودة دائماً. نحن فقط جعلناها مرئية — بدقة، بشفافية، بلا مجاملة للبنوك.<br/><br/><strong style="color:#c9a84c;font-size:1.05rem">نحسب الحقيقة. القرار حقّك وحدك.</strong></p>
+    </div>
+    <div class="pillars">
+      <div class="pillar" style="--pc:#c9a84c"><div class="pillar-icon">🔍</div><div class="pillar-title">نكشف</div><div class="pillar-body">نُظهر الأرقام الحقيقية خلف العروض المُجمَّلة — الـ IRR الفعلي، التكلفة الإجمالية، درجة تجميل البنك للعرض.</div></div>
+      <div class="pillar" style="--pc:#60a5fa"><div class="pillar-icon">🧮</div><div class="pillar-title">نحسب</div><div class="pillar-body">نُطبّق معادلات مالية دقيقة على بياناتك — Newton-Raphson للـ IRR، WACM لنقطة التعادل، الاستثمار البديل.</div></div>
+      <div class="pillar" style="--pc:#22c55e"><div class="pillar-icon">👤</div><div class="pillar-title">أنت تقرر</div><div class="pillar-body">نتائجنا مبنية على أرقامك المُدخلة. القرار النهائي — التوقيع أو الرفض، الشراء أو الانتظار — قرارك أنت.</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">01</div><div class="sec-title">ما تفعله منصاتنا بالضبط</div></div>
+      <table class="plt-table">
+        <thead><tr><th>المنصة</th><th>ما تفعله ✅</th><th>ما لا تفعله</th></tr></thead>
+        <tbody>
+          <tr><td><strong>👁️ كشف</strong></td><td class="td-g">يحسب IRR الحقيقي ويُظهر درجة تجميل البنك للعرض</td><td style="color:#3d4a6b;font-size:.75rem">لا ينصح باقتراض أو رفضه</td></tr>
+          <tr><td><strong>🔮 Prism</strong></td><td class="td-g">يقارن عروضاً متعددة ويحسب تكلفة السداد المبكر</td><td style="color:#3d4a6b;font-size:.75rem">لا يوصي بعرض محدد</td></tr>
+          <tr><td><strong>⚖️ ميزان</strong></td><td class="td-g">يحسب نقطة التعادل ويُظهر سيناريوهات متعددة</td><td style="color:#3d4a6b;font-size:.75rem">لا ينصح بدخول سوق أو الخروج</td></tr>
+          <tr><td><strong>📊 Master 365</strong></td><td class="td-g">يتتبع الأداء ويُظهر الأرقام الفعلية للفرق</td><td style="color:#3d4a6b;font-size:.75rem">لا يُعطي توقعات مستقبلية مضمونة</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">02</div><div class="sec-title">الوضوح المالي ≠ النصيحة المالية</div></div>
+      <div class="contrast">
+        <div class="con-col no">
+          <div class="con-title no-t">❌ ما لا نفعله أبداً</div>
+          <div class="con-item"><span class="con-icon">✗</span>نقول لك "اقبل" أو "ارفض" أي عرض</div>
+          <div class="con-item"><span class="con-icon">✗</span>نعطيك توصية استثمارية</div>
+          <div class="con-item"><span class="con-icon">✗</span>نضمن عوائد أو نتائج مالية</div>
+          <div class="con-item"><span class="con-icon">✗</span>نأخذ وضعك المالي الكامل بالاعتبار</div>
+          <div class="con-item"><span class="con-icon">✗</span>نصدر فتاوى شرعية</div>
+        </div>
+        <div class="con-col yes">
+          <div class="con-title yes-t">✅ ما نفعله بدقة</div>
+          <div class="con-item"><span class="con-icon">✓</span>نُظهر الـ IRR الحقيقي مقابل المُعلن</div>
+          <div class="con-item"><span class="con-icon">✓</span>نحسب التكلفة الإجمالية الدقيقة</div>
+          <div class="con-item"><span class="con-icon">✓</span>نُظهر ما يخفيه العرض بالأرقام</div>
+          <div class="con-item"><span class="con-icon">✓</span>نُقارن الخيارات بمعادلات محايدة</div>
+          <div class="con-item"><span class="con-icon">✓</span>نُقدّم الحقيقة — قرارك يبقى قرارك</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">03</div><div class="sec-title">متى تستشير مستشاراً مالياً؟</div></div>
+      <p class="body-text">أدواتنا تكمّل المستشار المالي ولا تستبدله. استخدم منصاتنا للفهم الأولي — واستشر متخصصاً في:</p>
+      <div class="callout c-blue">
+        <strong>قرارات تتجاوز 20% من دخلك السنوي</strong> · قروض العقارات والأعمال · قرارات التقاعد والادخار طويل الأمد · تغيير استراتيجية استثمارية كاملة · أي قرار تشعر بعدم اليقين حيال عواقبه المالية.
+      </div>
+      <div class="callout c-gold">
+        <strong>مثال:</strong> Kashf يحسب IRR قرضك بدقة 99.9%. لكنه لا يعرف دخلك الشهري ولا التزاماتك الأخرى. الحساب لنا — التقييم الشامل لمستشار يعرف وضعك كاملاً.
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">04</div><div class="sec-title">موقفنا من التمويل الإسلامي</div></div>
+      <p class="body-text">منصاتنا تحلل عقود المرابحة والإجارة والمشاركة المتناقصة رياضياً — لإظهار التكلفة الحقيقية مقارنةً بالبدائل.</p>
+      <div class="callout c-green">
+        <strong>موقف واضح:</strong> كشف لا يُشجع على القروض الربوية — بل يُظهر حقيقتها كأداة وعي وحماية. إظهار التكلفة الحقيقية لأي عقد — إسلامي أو تقليدي — خدمة للمستخدم لا ضدّه. للحكم الشرعي: هيئة كبار العلماء والمجامع الفقهية المعتمدة.
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">05</div><div class="sec-title">حدود المسؤولية</div></div>
+      <div class="callout c-red">
+        <strong>Axiom Zones لا تتحمل مسؤولية</strong> أي خسائر مالية ناتجة عن قرارات اتُّخذت بناءً حصراً على نتائج منصاتنا دون استشارة متخصص مالي مؤهل. مسؤوليتنا القصوى لا تتجاوز ما دفعته في اشتراكاتك خلال الـ 12 شهراً الأخيرة.
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="final-stmt">
+      <div class="final-ar">نكشف · نحسب · أنت تقرر</div>
+      <div class="final-en">We Reveal · We Calculate · You Decide</div>
+      <p class="final-body">Axiom Zones وُجدت لأن المعلومات المالية الحقيقية كانت حكراً على البنوك والمؤسسات. الآن هي في يديك — مجانية، دقيقة، بلا مجاملة. استخدمها بوعي. وعند الشك — استشر من يعرف وضعك كاملاً.</p>
+    </div>
+    <div class="legal-note">
+      <div style="color:#c9a84c;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;font-size:.6rem">ملاحظة قانونية</div>
+      يُطبَّق هذا الإخلاء على جميع منصات Axiom Zones. آخر تحديث: مارس 2024. للاستفسارات: <a href="mailto:legal@axiomzones.com">legal@axiomzones.com</a> · <a href="/terms">شروط الاستخدام</a> · <a href="/privacy">سياسة الخصوصية</a>
+    </div>
+  </div>
+</div>
+
+<!-- EN -->
+<div id="c-en" style="display:none;direction:ltr;text-align:left">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-tag">Financial Clarity Statement</div>
+    <h1 class="hero-title">We Reveal What Banks Know<br/><em>But Don't Tell You</em></h1>
+    <div class="hero-motto">We Reveal · We Calculate · You Decide</div>
+    <p class="hero-sub">Axiom Zones is not a bank or financial advisor. It's a financial clarity engine — making real numbers visible for the first time.</p>
+  </div>
+  <div class="wrap">
+    <div class="main-stmt">
+      <div class="ms-title">The Core Principle</div>
+      <p class="ms-body">The financial numbers were always there. We just made them visible — precisely, transparently, without flattering anyone.<br/><br/><strong style="color:#c9a84c;font-size:1.05rem">We calculate the truth. The decision is entirely yours.</strong></p>
+    </div>
+    <div class="pillars">
+      <div class="pillar" style="--pc:#c9a84c"><div class="pillar-icon">🔍</div><div class="pillar-title">We Reveal</div><div class="pillar-body">We expose real numbers behind beautified offers — actual IRR, total cost, and our proprietary Beautification Score.</div></div>
+      <div class="pillar" style="--pc:#60a5fa"><div class="pillar-icon">🧮</div><div class="pillar-title">We Calculate</div><div class="pillar-body">We apply precise financial math to your inputs — Newton-Raphson for IRR, WACM for break-even, alternative investment modeling.</div></div>
+      <div class="pillar" style="--pc:#22c55e"><div class="pillar-icon">👤</div><div class="pillar-title">You Decide</div><div class="pillar-body">Results are based solely on your inputs. The final decision — sign or decline, buy or wait — is always yours alone.</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">01</div><div class="sec-title">What We Do vs. What We Don't</div></div>
+      <div class="contrast">
+        <div class="con-col no">
+          <div class="con-title no-t">❌ Never Financial Advice</div>
+          <div class="con-item"><span class="con-icon">✗</span>Tell you to accept or reject any offer</div>
+          <div class="con-item"><span class="con-icon">✗</span>Provide investment recommendations</div>
+          <div class="con-item"><span class="con-icon">✗</span>Guarantee financial outcomes</div>
+          <div class="con-item"><span class="con-icon">✗</span>Know your complete financial picture</div>
+          <div class="con-item"><span class="con-icon">✗</span>Issue Sharia rulings or fatwas</div>
+        </div>
+        <div class="con-col yes">
+          <div class="con-title yes-t">✅ Precision Financial Clarity</div>
+          <div class="con-item"><span class="con-icon">✓</span>Calculate your loan's true IRR vs. advertised APR</div>
+          <div class="con-item"><span class="con-icon">✓</span>Show total cost of any financial decision</div>
+          <div class="con-item"><span class="con-icon">✓</span>Expose what an offer hides in real numbers</div>
+          <div class="con-item"><span class="con-icon">✓</span>Compare options using neutral mathematics</div>
+          <div class="con-item"><span class="con-icon">✓</span>Deliver truth — your decision stays yours</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-num">02</div><div class="sec-title">Limitation of Liability</div></div>
+      <div class="callout c-red">
+        <strong>Axiom Zones bears no responsibility</strong> for financial losses resulting from decisions made based solely on our tools without consulting a qualified financial professional — especially for major decisions like real estate, business loans, or long-term investments. Our maximum liability shall not exceed what you paid us in the past 12 months.
+      </div>
+      <div class="callout c-gold">
+        <strong>Real Example:</strong> Kashf calculates loan IRR with 99.9% mathematical precision. But it doesn't know your monthly income or other obligations. The calculation is ours — the comprehensive assessment belongs to an advisor who knows your full picture.
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="final-stmt">
+      <div class="final-ar" style="font-size:clamp(1.4rem,4vw,2.6rem)">We Reveal · We Calculate · You Decide</div>
+      <div class="final-en">نكشف · نحسب · أنت تقرر</div>
+      <p class="final-body">Axiom Zones exists because real financial information was monopolized by banks and institutions. Now it's in your hands — free, precise, without flattering anyone. Use it with awareness. When in doubt — consult someone who knows your full picture.</p>
+    </div>
+    <div class="legal-note" style="direction:ltr">
+      <div style="color:#c9a84c;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;font-size:.6rem">Legal Note</div>
+      Applies to all Axiom Zones platforms. Last updated: March 2024. Legal: <a href="mailto:legal@axiomzones.com">legal@axiomzones.com</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function showLang(lang){
+  document.getElementById('c-ar').style.display=lang==='ar'?'block':'none';
+  document.getElementById('c-en').style.display=lang==='en'?'block':'none';
+  document.documentElement.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+  document.documentElement.setAttribute('lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(function(b,i){b.classList.toggle('on',(i===0&&lang==='ar')||(i===1&&lang==='en'));});
+}
+</script>
+</body>
+</html>

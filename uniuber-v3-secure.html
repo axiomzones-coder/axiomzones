@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self)"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>UniUber — Global Uniform Sourcing Platform | Connect Directly with Factories</title>
+<meta name="description" content="The global B2B marketplace for corporate uniforms. Connect procurement teams directly with 1,000+ verified factories. Cut costs by 40-60%. RFQ in 48 hours."/>
+<meta property="og:title" content="UniUber — Skip the Middleman. Source Direct."/>
+<meta property="og:description" content="1,000+ verified uniform factories. 35 countries. Factory-direct prices. RFQ in 48 hours."/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="canonical" href="https://axiomzones.com/uniuber"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,700;1,300&family=Syne:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060912;color:#f0f2ff;font-family:'Syne',sans-serif;line-height:1.8;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#0891b2;border-radius:3px}
+a{color:#38bdf8;text-decoration:none}
+
+/* HEADER */
+.hdr{background:#0a0d1a;border-bottom:1px solid rgba(8,145,178,.2);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.logo{font-family:'Cormorant',serif;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr-r{display:flex;gap:12px;align-items:center}
+.hdr-btn{padding:8px 18px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .25s;border:none}
+.hdr-primary{background:linear-gradient(135deg,#0891b2,#38bdf8);color:#060912}
+.hdr-secondary{background:transparent;border:1.5px solid rgba(56,189,248,.25);color:#38bdf8}
+.hdr-secondary:hover{background:rgba(56,189,248,.08)}
+.hdr-home{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;transition:color .22s;text-decoration:none}
+.hdr-home:hover{color:#38bdf8}
+
+/* HERO */
+.hero{padding:80px 28px 70px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 80% at 50% -20%,rgba(8,145,178,.08),transparent);pointer-events:none}
+.hero-grid{position:absolute;inset:0;opacity:.015;background-image:linear-gradient(rgba(56,189,248,1) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,1) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-inner{max-width:900px;margin:0 auto;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:20px;background:rgba(8,145,178,.1);border:1px solid rgba(8,145,178,.25);font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#38bdf8;margin-bottom:18px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:700;letter-spacing:-2px;line-height:.95;margin-bottom:18px}
+.hero h1 .accent{background:linear-gradient(135deg,#38bdf8,#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 em{color:#8892b0;font-weight:300;font-style:italic}
+.hero-sub{font-size:1rem;color:#8892b0;max-width:580px;margin:0 auto 28px;line-height:1.9}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.btn-primary{padding:13px 28px;border-radius:10px;background:linear-gradient(135deg,#0891b2,#38bdf8);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.92rem;border:none;cursor:pointer;transition:all .3s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(8,145,178,.4)}
+.btn-outline{padding:13px 28px;border-radius:10px;background:transparent;border:1.5px solid rgba(56,189,248,.25);color:#38bdf8;font-family:'Syne',sans-serif;font-size:.92rem;cursor:pointer;transition:all .3s}
+.btn-outline:hover{background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.5)}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.hstat{text-align:center}
+.hstat-val{font-family:'Cormorant',serif;font-size:2.2rem;font-weight:700;color:#38bdf8;display:block;line-height:1}
+.hstat-lbl{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-top:4px}
+
+/* PAIN */
+.pain-sec{background:rgba(239,68,68,.04);border-top:1px solid rgba(239,68,68,.1);border-bottom:1px solid rgba(239,68,68,.1);padding:48px 28px}
+.pain-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+@media(max-width:700px){.pain-inner{grid-template-columns:1fr}}
+.pain-title{font-family:'Cormorant',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-1px;margin-bottom:14px}
+.pain-list{display:flex;flex-direction:column;gap:10px}
+.pain-item{display:flex;align-items:flex-start;gap:10px;font-size:.86rem;color:#8892b0}
+.pain-icon{color:#ef4444;flex-shrink:0;margin-top:2px}
+.pain-stat-box{background:#0a0d1a;border:1px solid rgba(239,68,68,.2);border-radius:14px;padding:24px;text-align:center}
+.pain-big-num{font-family:'Cormorant',serif;font-size:4rem;font-weight:700;color:#ef4444;line-height:1}
+.pain-big-lbl{font-size:.88rem;color:#8892b0;margin-top:8px;line-height:1.7}
+
+/* HOW IT WORKS */
+.how-sec{padding:70px 28px}
+.sec-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:#38bdf8;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.sec-tag::before{content:'';width:20px;height:1px;background:#38bdf8}
+.sec-title{font-family:'Cormorant',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:8px}
+.sec-sub{font-size:.9rem;color:#8892b0;max-width:500px;line-height:1.85}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+@media(max-width:800px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.steps{grid-template-columns:1fr}}
+.step-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:22px;position:relative;overflow:hidden;transition:all .3s}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0891b2,#38bdf8);opacity:0;transition:opacity .3s}
+.step-card:hover{border-color:rgba(56,189,248,.2);transform:translateY(-3px)}
+.step-card:hover::before{opacity:1}
+.step-num{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:3px;color:#0891b2;margin-bottom:10px}
+.step-icon{font-size:1.8rem;margin-bottom:10px}
+.step-title{font-family:'Cormorant',serif;font-size:1.15rem;font-weight:700;margin-bottom:6px}
+.step-desc{font-size:.8rem;color:#8892b0;line-height:1.75}
+
+/* FEATURES */
+.feat-sec{padding:70px 28px;background:rgba(8,145,178,.02)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media(max-width:800px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.feat-grid{grid-template-columns:1fr}}
+.feat-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:22px;transition:all .3s}
+.feat-card:hover{border-color:rgba(56,189,248,.18);transform:translateY(-2px)}
+.feat-icon{font-size:1.6rem;margin-bottom:10px}
+.feat-title{font-size:.96rem;font-weight:700;margin-bottom:6px;color:#f0f2ff}
+.feat-desc{font-size:.8rem;color:#8892b0;line-height:1.8}
+
+/* FACTORIES */
+.factories-sec{padding:70px 28px}
+.country-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.country-tag{padding:7px 14px;border-radius:8px;background:rgba(8,145,178,.08);border:1px solid rgba(8,145,178,.2);font-size:.8rem;color:#38bdf8;display:flex;align-items:center;gap:6px;transition:all .25s;cursor:default}
+.country-tag:hover{background:rgba(8,145,178,.15)}
+
+/* PRICING */
+.pricing-sec{padding:70px 28px;background:rgba(8,145,178,.02)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media(max-width:800px){.pricing-grid{grid-template-columns:1fr}}
+.price-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:28px;position:relative;overflow:hidden;transition:all .3s}
+.price-card.popular{border-color:rgba(56,189,248,.3)}
+.price-card.popular::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0891b2,#38bdf8)}
+.popular-badge{position:absolute;top:16px;right:16px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.3);color:#38bdf8;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;padding:3px 9px;border-radius:4px;text-transform:uppercase}
+.price-name{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:3px;text-transform:uppercase;color:#38bdf8;margin-bottom:10px}
+.price-val{font-family:'Cormorant',serif;font-size:2.8rem;font-weight:700;line-height:1;margin-bottom:4px}
+.price-per{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d4a6b;letter-spacing:1px;margin-bottom:16px}
+.price-feats{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}
+.price-feat{display:flex;align-items:center;gap:7px;font-size:.8rem;color:#8892b0}
+.price-feat::before{content:'✓';color:#22c55e;font-size:.72rem;flex-shrink:0}
+.price-btn{width:100%;padding:11px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;border:none;transition:all .3s}
+.price-btn-primary{background:linear-gradient(135deg,#0891b2,#38bdf8);color:#060912}
+.price-btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(8,145,178,.3)}
+.price-btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.12);color:#8892b0}
+.price-btn-outline:hover{border-color:#38bdf8;color:#38bdf8}
+
+/* RFQ FORM */
+.rfq-sec{padding:70px 28px}
+.rfq-box{max-width:700px;margin:0 auto;background:#0a0d1a;border:1px solid rgba(8,145,178,.2);border-radius:18px;padding:36px;position:relative;overflow:hidden}
+.rfq-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0891b2,#38bdf8,#0891b2)}
+.rfq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+@media(max-width:600px){.rfq-grid{grid-template-columns:1fr}}
+.rfq-inp{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(56,189,248,.15);color:#f0f2ff;padding:10px 13px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.86rem;outline:none;transition:border-color .25s}
+.rfq-inp:focus{border-color:#38bdf8}
+.rfq-inp::placeholder{color:#3d4a6b}
+.rfq-full{grid-column:1/-1}
+.rfq-submit{width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#0891b2,#38bdf8);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.92rem;border:none;cursor:pointer;transition:all .3s;margin-top:6px}
+.rfq-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(8,145,178,.4)}
+
+/* FAQ */
+.faq-sec{padding:70px 28px;background:rgba(8,145,178,.02)}
+.faq-list{max-width:700px;margin:28px auto 0}
+.faq-item{background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color .25s}
+.faq-item:hover{border-color:rgba(56,189,248,.2)}
+.faq-item.open{border-color:rgba(56,189,248,.25)}
+.faq-hd{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.faq-q{font-size:.9rem;font-weight:600}
+.faq-arr{font-size:.75rem;color:#3d4a6b;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arr{transform:rotate(180deg)}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
+.faq-item.open .faq-body{max-height:300px}
+.faq-a{padding:0 18px 16px;font-size:.84rem;color:#8892b0;line-height:1.85;border-top:1px solid rgba(255,255,255,.05)}
+
+/* FOOTER */
+.footer{background:#0a0d1a;border-top:1px solid rgba(255,255,255,.06);padding:36px 28px;text-align:center}
+.footer-logo{font-family:'Cormorant',serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;display:block}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:#3d4a6b;transition:color .22s}
+.footer-links a:hover{color:#38bdf8}
+.footer-copy{font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:10px 20px;border-radius:9px;font-family:'DM Mono',monospace;font-size:.72rem;z-index:9999;transition:transform .4s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+.az-ecosystem-badge{position:fixed;top:16px;right:16px;z-index:9999;display:flex;align-items:center}
+.az-eco-icon{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e8c86a);display:flex;align-items:center;justify-content:center;font-size:.95rem;cursor:pointer;box-shadow:0 4px 16px rgba(201,168,76,.3);transition:all .3s}
+.az-eco-label{max-width:0;overflow:hidden;white-space:nowrap;font-size:.62rem;color:#060912;background:linear-gradient(135deg,#c9a84c,#e8c86a);height:36px;display:flex;align-items:center;padding:0;border-radius:0 18px 18px 0;transition:all .3s;font-weight:700}
+.az-ecosystem-badge:hover .az-eco-label{max-width:120px;padding:0 12px 0 6px}
+.az-ecosystem-badge:hover .az-eco-icon{border-radius:50% 0 0 50%}
+
+</style>
+  <link rel="manifest" href="/manifest.json"/>
+  <link rel="icon" type="image/x-icon" href="/icons/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#c9a84c"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+</head>
+<body>
+<div class="toast" id="uu-toast"></div>
+
+<header class="hdr">
+  <a href="/" class="logo">UniUber</a>
+  <div class="hdr-r">
+    <a href="/" class="hdr-home">← Axiom Zones</a>
+    <button class="hdr-btn hdr-secondary" onclick="scrollTo('rfq')">Send RFQ</button>
+    <button class="hdr-btn hdr-primary" onclick="scrollTo('rfq')">Get Quotes →</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="live-dot"></span>87 Companies Sourcing Now · 1,000+ Verified Factories</div>
+    <h1>Skip the Middleman.<br/><span class="accent">Source Direct.</span><br/><em>Pay Factory Prices.</em></h1>
+    <p class="hero-sub">UniUber connects procurement teams directly with certified uniform factories across 35 countries. Cut costs by 40-60%. Get verified quotes in 48 hours.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="scrollTo('rfq')">📋 Submit RFQ — Free</button>
+      <button class="btn-outline" onclick="scrollTo('how')">See How It Works</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">1,000+</span><span class="hstat-lbl">Verified Factories</span></div>
+      <div class="hstat"><span class="hstat-val">35</span><span class="hstat-lbl">Countries</span></div>
+      <div class="hstat"><span class="hstat-val">48h</span><span class="hstat-lbl">Quote Time</span></div>
+      <div class="hstat"><span class="hstat-val">40-60%</span><span class="hstat-lbl">Cost Saving</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain-sec">
+  <div class="pain-inner">
+    <div>
+      <div class="sec-tag">The Problem</div>
+      <h2 class="pain-title">You're Paying<br/>40-60% More<br/>Than You Should</h2>
+      <div class="pain-list">
+        <div class="pain-item"><span class="pain-icon">✗</span>Intermediaries mark up factory prices by 40-60%</div>
+        <div class="pain-item"><span class="pain-icon">✗</span>No visibility into actual production quality</div>
+        <div class="pain-item"><span class="pain-icon">✗</span>Weeks of back-and-forth with no RFQ system</div>
+        <div class="pain-item"><span class="pain-icon">✗</span>No certification verification for factory compliance</div>
+        <div class="pain-item"><span class="pain-icon">✗</span>One bad supplier ruins your entire order</div>
+      </div>
+    </div>
+    <div class="pain-stat-box">
+      <div class="pain-big-num">$28B</div>
+      <div class="pain-big-lbl">Annual corporate uniform market<br/>60%+ goes to unnecessary intermediaries<br/><strong style="color:#38bdf8">UniUber gives that back to you</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-sec" id="how">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-tag">How It Works</div>
+    <h2 class="sec-title">Factory-Direct in 4 Steps</h2>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">STEP 01</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Submit Your RFQ</div>
+        <div class="step-desc">Fill our structured RFQ form. Specify uniform type, quantity, materials, logo placement, and delivery timeline.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">STEP 02</div>
+        <div class="step-icon">🏭</div>
+        <div class="step-title">Match with Factories</div>
+        <div class="step-desc">We match your RFQ with the most suitable verified factories. Only ISO-certified and pre-audited suppliers.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">STEP 03</div>
+        <div class="step-icon">💬</div>
+        <div class="step-title">Compare Quotes</div>
+        <div class="step-desc">Receive 3-5 competitive quotes within 48 hours. Compare pricing, lead times, and certifications side-by-side.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">STEP 04</div>
+        <div class="step-icon">✅</div>
+        <div class="step-title">Order with Confidence</div>
+        <div class="step-desc">Place your order with quality guarantees, production tracking, and our buyer protection program.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="feat-sec">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-tag">Platform Features</div>
+    <h2 class="sec-title">Everything You Need<br/>to Source Smarter</h2>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon">🏭</div><div class="feat-title">Verified Factory Network</div><div class="feat-desc">Every factory is pre-audited for quality, compliance, and capacity. ISO certifications, labor standards, and financial health checks.</div></div>
+      <div class="feat-card"><div class="feat-icon">📋</div><div class="feat-title">Structured RFQ System</div><div class="feat-desc">Our intelligent RFQ form captures all specifications — fabric weight, thread count, logo placement, packaging requirements.</div></div>
+      <div class="feat-card"><div class="feat-icon">⚖️</div><div class="feat-title">Side-by-Side Comparison</div><div class="feat-desc">Compare quotes on price, lead time, MOQ, certifications, and past buyer reviews — all in one dashboard.</div></div>
+      <div class="feat-card"><div class="feat-icon">📦</div><div class="feat-title">Production Tracking</div><div class="feat-desc">Real-time visibility into your order status from fabric cutting through final quality inspection to shipment.</div></div>
+      <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-title">Buyer Protection</div><div class="feat-desc">Escrow payments, quality inspection at factory, and guaranteed replacement if specifications are not met.</div></div>
+      <div class="feat-card"><div class="feat-icon">🌍</div><div class="feat-title">Global Logistics Support</div><div class="feat-desc">Freight forwarding, customs clearance, and last-mile delivery to 50+ countries through our logistics partners.</div></div>
+      <div class="feat-card"><div class="feat-icon">📐</div><div class="feat-title">Design Specification Upload</div><div class="feat-desc">Upload CAD files, tech packs, Pantone colors, and brand guidelines directly to factories.</div></div>
+      <div class="feat-card"><div class="feat-icon">💳</div><div class="feat-title">Secure Payments</div><div class="feat-desc">Letter of Credit, wire transfer, or escrow. Funds released only after quality confirmation.</div></div>
+      <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title">AI Spec Assistant</div><div class="feat-desc">Not sure about technical specifications? Our AI assistant helps you build complete, professional RFQ documents.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FACTORIES -->
+<section class="factories-sec">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-tag">Our Factory Network</div>
+    <h2 class="sec-title">1,000+ Factories<br/>Across 35 Countries</h2>
+    <p class="sec-sub" style="margin-bottom:0">Specialized in workwear, hospitality, healthcare, military, sports, and corporate uniforms</p>
+    <div class="country-grid">
+      <div class="country-tag">🇹🇷 Turkey — 180+</div>
+      <div class="country-tag">🇧🇩 Bangladesh — 220+</div>
+      <div class="country-tag">🇨🇳 China — 300+</div>
+      <div class="country-tag">🇮🇳 India — 150+</div>
+      <div class="country-tag">🇪🇬 Egypt — 80+</div>
+      <div class="country-tag">🇵🇰 Pakistan — 90+</div>
+      <div class="country-tag">🇻🇳 Vietnam — 60+</div>
+      <div class="country-tag">🇮🇩 Indonesia — 45+</div>
+      <div class="country-tag">🇲🇾 Malaysia — 30+</div>
+      <div class="country-tag">🇵🇹 Portugal — 25+</div>
+      <div class="country-tag">🇲🇦 Morocco — 35+</div>
+      <div class="country-tag">🇹🇳 Tunisia — 20+</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px">
+      <div style="background:#0a0d1a;border:1px solid rgba(56,189,248,.15);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.6rem;margin-bottom:6px">👔</div><div style="font-weight:700;font-size:.88rem;margin-bottom:4px">Corporate</div><div style="font-size:.76rem;color:#8892b0">Office &amp; executive wear</div></div>
+      <div style="background:#0a0d1a;border:1px solid rgba(56,189,248,.15);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.6rem;margin-bottom:6px">🏥</div><div style="font-weight:700;font-size:.88rem;margin-bottom:4px">Healthcare</div><div style="font-size:.76rem;color:#8892b0">Medical &amp; lab coats</div></div>
+      <div style="background:#0a0d1a;border:1px solid rgba(56,189,248,.15);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.6rem;margin-bottom:6px">🏨</div><div style="font-weight:700;font-size:.88rem;margin-bottom:4px">Hospitality</div><div style="font-size:.76rem;color:#8892b0">Hotels &amp; restaurants</div></div>
+      <div style="background:#0a0d1a;border:1px solid rgba(56,189,248,.15);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.6rem;margin-bottom:6px">🏗️</div><div style="font-weight:700;font-size:.88rem;margin-bottom:4px">Industrial</div><div style="font-size:.76rem;color:#8892b0">Safety &amp; workwear</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-sec">
+  <div style="max-width:1000px;margin:0 auto;text-align:center">
+    <div class="sec-tag" style="justify-content:center">Pricing</div>
+    <h2 class="sec-title">Simple, Transparent Pricing</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Browse Free</div>
+        <div class="price-val">$0</div>
+        <div class="price-per">Forever free</div>
+        <div class="price-feats">
+          <div class="price-feat">Browse factory profiles</div>
+          <div class="price-feat">View certifications</div>
+          <div class="price-feat">1 RFQ per month</div>
+          <div class="price-feat">Email support</div>
+        </div>
+        <button class="price-btn price-btn-outline" onclick="scrollTo('rfq')">Start Free</button>
+      </div>
+      <div class="price-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="price-name">Sourcer</div>
+        <div class="price-val">$99</div>
+        <div class="price-per">per month</div>
+        <div class="price-feats">
+          <div class="price-feat">Unlimited RFQs</div>
+          <div class="price-feat">Priority factory matching</div>
+          <div class="price-feat">Direct messaging</div>
+          <div class="price-feat">Order tracking</div>
+          <div class="price-feat">Dedicated sourcing manager</div>
+        </div>
+        <button class="price-btn price-btn-primary" onclick="rfqSubmit()">Get Started →</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Corporate</div>
+        <div class="price-val">$299</div>
+        <div class="price-per">per month</div>
+        <div class="price-feats">
+          <div class="price-feat">Everything in Sourcer</div>
+          <div class="price-feat">Multi-team access</div>
+          <div class="price-feat">ERP integration</div>
+          <div class="price-feat">Custom contracts</div>
+          <div class="price-feat">On-site factory audit</div>
+          <div class="price-feat">24/7 priority support</div>
+        </div>
+        <button class="price-btn price-btn-outline" onclick="rfqSubmit()">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RFQ FORM -->
+<section class="rfq-sec" id="rfq">
+  <div class="rfq-box">
+    <div class="sec-tag">Request for Quotation</div>
+    <h2 class="sec-title">Get Factory Quotes<br/>in 48 Hours</h2>
+    <p style="font-size:.86rem;color:#8892b0;margin-top:4px">Free — No commitment required</p>
+    <div class="rfq-grid">
+      <input class="rfq-inp" type="text" id="rfq-company" placeholder="Company Name *"/>
+      <input class="rfq-inp" type="text" id="rfq-name" placeholder="Your Name *"/>
+      <input class="rfq-inp" type="email" id="rfq-email" placeholder="Work Email *"/>
+      <input class="rfq-inp" type="tel" id="rfq-phone" placeholder="Phone / WhatsApp"/>
+      <div class="rfq-full">
+        <select class="rfq-inp" id="rfq-type">
+          <option value="">Uniform Type *</option>
+          <option>Corporate / Office Wear</option>
+          <option>Healthcare / Medical</option>
+          <option>Hospitality</option>
+          <option>Industrial / Safety</option>
+          <option>Sports / Athletic</option>
+          <option>School / Education</option>
+          <option>Military / Security</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <input class="rfq-inp" type="number" id="rfq-qty" placeholder="Quantity (units) *"/>
+      <input class="rfq-inp" type="text" id="rfq-timeline" placeholder="Required By (Month/Year)"/>
+      <div class="rfq-full"><input class="rfq-inp" type="text" id="rfq-budget" placeholder="Approximate Budget per Unit (USD)"/></div>
+      <div class="rfq-full"><textarea class="rfq-inp" id="rfq-notes" placeholder="Additional specifications, fabric requirements, logo placement..." rows="3" style="resize:vertical;font-family:'Syne',sans-serif"></textarea></div>
+    </div>
+    <button class="rfq-submit" onclick="rfqSubmit()">📋 Submit RFQ — Get 3-5 Quotes in 48 Hours</button>
+    <div style="text-align:center;margin-top:10px;font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b;letter-spacing:1px">FREE · NO COMMITMENT · VERIFIED FACTORIES ONLY</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-sec">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-tag" style="justify-content:center">FAQ</div>
+    <h2 class="sec-title" style="text-align:center">Frequently Asked Questions</h2>
+  </div>
+  <div class="faq-list" id="faq-list"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-logo">UniUber by Axiom Zones</span>
+  <div class="footer-links">
+    <a href="/">Axiom Zones</a>
+    <a href="/kashf">Kashf</a>
+    <a href="/prism">Prism</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/disclaimer">Disclaimer</a>
+  </div>
+  <div class="footer-copy">© 2024 Axiom Zones · UniUber · نكشف · نحسب · أنت تقرر</div>
+</footer>
+
+<script>
+var FAQS = [
+  {q:'How are factories verified?',a:'Every factory goes through a 3-stage verification: document review (licenses, certifications), financial health check, and physical audit by our local inspectors. We verify ISO certifications, labor standards, production capacity, and past buyer references.'},
+  {q:'What is the minimum order quantity (MOQ)?',a:'MOQ varies by factory — typically 100-500 pieces for standard items. Many factories offer sampling from 10-50 pieces. We filter factories by MOQ in your RFQ to ensure only suitable suppliers respond.'},
+  {q:'How does buyer protection work?',a:'Payment is held in escrow until you confirm receipt and quality approval. If the order does not match agreed specifications, we provide replacement or full refund. Our quality inspectors perform random checks before shipment.'},
+  {q:'Can I visit the factory?',a:'Yes — for orders above $50,000, we offer facilitated factory visits. Our local teams in Turkey, Bangladesh, China, and Egypt can accompany you and provide translation.'},
+  {q:'How long does sourcing take?',a:'Typically: RFQ responses within 48 hours, sample production 2-4 weeks, bulk production 4-10 weeks depending on quantity. Rush orders may be available at premium.'},
+  {q:'Is UniUber available in Arabic?',a:'Yes — UniUber is part of Axiom Zones, available in 100+ languages including Arabic, with Arabic-speaking support for GCC countries.'},
+  {q:'Can you handle government and tender projects?',a:'Absolutely. We have experience with large institutional orders including hospitals, airlines, hotel chains, and government entities. We can provide all necessary documentation for tender submissions.'},
+];
+
+function renderFAQ() {
+  var list = document.getElementById('faq-list');
+  FAQS.forEach(function(faq, i) {
+    var item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML =
+      '<div class="faq-hd">' +
+        '<div class="faq-q">' + faq.q + '</div>' +
+        '<div class="faq-arr">▾</div>' +
+      '</div>' +
+      '<div class="faq-body"><div class="faq-a">' + faq.a + '</div></div>';
+    item.querySelector('.faq-hd').onclick = function() {
+      var open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(f){ f.classList.remove('open'); });
+      if (!open) item.classList.add('open');
+    };
+    list.appendChild(item);
+  });
+}
+
+function rfqSubmit() {
+  var company = document.getElementById('rfq-company');
+  var email = document.getElementById('rfq-email');
+  var type = document.getElementById('rfq-type');
+  if (!company || !company.value.trim()) { showUUToast('Please enter company name'); return; }
+  if (!email || !email.value || email.value.indexOf('@') < 0) { showUUToast('Please enter valid email'); return; }
+  if (!type || !type.value) { showUUToast('Please select uniform type'); return; }
+  showUUToast('✅ RFQ submitted! You will receive 3-5 quotes within 48 hours.');
+  if (company) company.value = '';
+  if (email) email.value = '';
+}
+
+function scrollTo(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var y = 0, o = el;
+  while (o) { y += o.offsetTop; o = o.offsetParent; }
+  window.scrollTo({top: Math.max(0, y - 80), behavior: 'smooth'});
+}
+
+function showUUToast(msg) {
+  var t = document.getElementById('uu-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){ t.classList.remove('show'); }, 3500);
+}
+
+window.addEventListener('load', renderFAQ);
+
+var UU_LANG="ar";
+var UU_I18N={
+  ar:{"uu-tag":"مصادر الزي الموحد عالمياً",
+      "uu-hero-h":"الزي الموحد الصحيح — في الوقت الصحيح"},
+  en:{"uu-tag":"Global Uniform Sourcing",
+      "uu-hero-h":"The Right Uniform At The Right Time"},
+  fr:{"uu-tag":"Approvisionnement Uniformes Mondial",
+      "uu-hero-h":"Le Bon Uniforme Au Bon Moment"},
+  tr:{"uu-tag":"Global Forma Tedariki",
+      "uu-hero-h":"Dogru Forma Dogru Zamanda"}
+};
+function uuSetLang(l){
+  UU_LANG=l;
+  var rtl=l==="ar"||l==="ur";
+  document.documentElement.lang=l;
+  document.documentElement.dir=rtl?"rtl":"ltr";
+  var tr=UU_I18N[l]||UU_I18N.ar;
+  Object.keys(tr).forEach(function(k){var el=document.getElementById(k);if(el)el.textContent=tr[k];});
+}
+window.addEventListener("load",function(){uuSetLang("ar");});
+</script>
+<div class="az-ecosystem-badge" onclick="window.location.href='/'"><div class="az-eco-icon">🏛️</div><div class="az-eco-label">المنظومة</div></div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "Axiom Zones — منظومة رقمية في صفّك",
+  "short_name": "Axiom Zones",
+  "description": "The Digital Ecosystem on Your Side — أدوات مالية وإسلامية وتعليمية وتجارية متكاملة",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#060912",
+  "theme_color": "#c9a84c",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["finance", "education", "lifestyle", "utilities"],
+  "icons": [
+    { "src": "/icons/favicon-16x16.png", "sizes": "16x16", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/favicon-32x32.png", "sizes": "32x32", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/favicon-48x48.png", "sizes": "48x48", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "كشف", "short_name": "كشف", "url": "/kashf", "description": "كاشف القرض الحقيقي", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Prism", "short_name": "Prism", "url": "/prism", "description": "مقارنة القروض", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "دار", "short_name": "دار", "url": "/dar", "description": "قرار شراء المنزل", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
