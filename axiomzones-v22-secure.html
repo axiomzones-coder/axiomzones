@@ -1801,7 +1801,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   </select>
 
   <div class="mob-btns">
-    <button class="mob-btn-g" onclick="openLogin();closeMobMenu()" data-i18n="nav.login">Login</button>
+    <button class="mob-btn-g" id="mob-login-btn" onclick="openLogin();closeMobMenu()" data-i18n="nav.login">Login</button>
     <button class="mob-btn-o" onclick="azV4GoTo('pricing');closeMobMenu()" data-i18n="nav.start">Get Started</button>
   </div>
 </div>
@@ -2218,7 +2218,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div class="n-ctrl">
     <!-- THEME TOGGLE -->
     <button class="theme-btn" id="theme-btn" onclick="azV4Theme()" aria-label="Toggle dark/light mode" title="Dark / Light Mode">🌙</button>
-    <button class="btn-no btn-n" onclick="openLogin()" data-i18n="nav.login">Login</button>
+    <button class="btn-no btn-n" id="nav-login-btn" onclick="openLogin()" data-i18n="nav.login">Login</button>
     <button class="btn-ng btn-n" onclick="azV4GoTo('pricing')" data-i18n="nav.start">Get Started</button>
     <button class="btn-no btn-n" style="font-size:.9rem;padding:8px 13px" onclick="openDash()" title="Owner Dashboard" aria-label="Owner Dashboard">⚙</button>
     <!-- HAMBURGER — mobile only -->
@@ -2990,8 +2990,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
     <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
     <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
-      <span id="lo-toggle-text">جديد هنا؟</span>
-      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link">إنشاء حساب مجاني</a>
+      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
+      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
     </div>
   </div>
 </div>
@@ -3421,6 +3421,7 @@ async function azCheckOwnerCode(candidate){
     });
     var data = null;
     try{ data = await res.json(); }catch(e){}
+    if(res.status === 429){ toast('محاولات كثيرة جداً — حاول بعد 15 دقيقة'); return false; }
     if(res.ok && data && data.ok){ azOwnerRegisterSuccess(); return true; }
     azOwnerRegisterFail();
     return false;
@@ -3487,6 +3488,14 @@ async function azLoadRealStats(){
 }
 var aiCount = 0;
 var tCache = {};
+
+/* ══ جلب نص مترجم حسب اللغة النشطة فعلياً (يدعم أي لغة: STATIC أو AI-cache، مع رجوع أخير للإنجليزية) ══ */
+function azT(key){
+  var lang = document.documentElement.lang || 'en';
+  if(STATIC[lang] && STATIC[lang][key] !== undefined) return STATIC[lang][key];
+  if(tCache[lang] && tCache[lang][key] !== undefined) return tCache[lang][key];
+  return (STATIC.en && STATIC.en[key]) || key;
+}
 var dynProjects = [];
 var isDark = true;
 
@@ -3686,6 +3695,12 @@ function setCurr(c){ CURR=c; syncCurrSelects(c); refreshPrices(); }
 var STATIC = {
   en:{
     'nav.p':'Platforms','nav.a':'About','nav.pr':'Pricing','nav.c':'Contact','nav.login':'Login','nav.start':'Get Started',
+    'lo.new':'New here?','lo.create':'Create free account','lo.have':'Already have an account?','lo.signin2':'Sign In','lo.createbtn':'Create Account',
+    'lo.welcome':'Welcome back','lo.created':'Account created successfully, welcome',
+    'err.emailExists':'This email is already registered — try signing in instead','err.invalidCreds':'Incorrect email or password',
+    'err.pwShort':'Password must be at least 8 characters','err.invalidEmail':'Please enter a valid email address',
+    'err.serverErr':'Service not configured yet — contact support','err.generic':'Something went wrong, please try again',
+    'err.network':'Could not reach the server — please try again later','err.fillFields':'Please complete login credentials',
     'h.eye':'✦ World\'s Premier Digital Venture Studio', 'h.search':'What service are you looking for? Describe your need… (e.g. buy vs rent a home)',
     'h.desc':'A global ecosystem of advanced technology platforms — built for the world. Supply chains, real estate, talent, and beyond. Imperial scale. Infinite ambition.',
     'h.cta1':'🚀 Explore Platforms','h.cta2':'View Pricing ↓',
@@ -3727,6 +3742,12 @@ var STATIC = {
   },
   ar:{
     'nav.p':'المنصات','nav.a':'من نحن','nav.pr':'الباقات','nav.c':'تواصل','nav.login':'دخول','nav.start':'ابدأ الآن',
+    'lo.new':'جديد هنا؟','lo.create':'إنشاء حساب مجاني','lo.have':'عندك حساب؟','lo.signin2':'تسجيل الدخول','lo.createbtn':'إنشاء حساب',
+    'lo.welcome':'أهلاً بعودتك','lo.created':'تم إنشاء حسابك بنجاح، أهلاً بك',
+    'err.emailExists':'هذا البريد مسجَّل من قبل — جرّب تسجيل الدخول','err.invalidCreds':'البريد أو كلمة المرور غير صحيحة',
+    'err.pwShort':'كلمة المرور يجب أن تكون 8 أحرف على الأقل','err.invalidEmail':'يرجى إدخال بريد إلكتروني صحيح',
+    'err.serverErr':'الخدمة غير مهيّأة بعد — راجع الإدارة','err.generic':'حدث خطأ، حاول تاني',
+    'err.network':'تعذّر الاتصال بالسيرفر — حاول لاحقاً','err.fillFields':'يرجى إكمال بيانات الدخول',
     'h.eye':'✦ منصة المشاريع الرقمية الأولى عالمياً', 'h.search':'عن أي خدمة تبحث؟ اكتب مشكلتك… (مثال: أشتري بيت ولا أستأجر)',
     'h.desc':'منظومة عالمية متكاملة من منصات التقنية المتقدمة — مبنية للعالم. سلاسل إمداد، عقارات، كفاءات، وأكثر. بمستوى إمبراطوري وطموح لا حدود له.',
     'h.cta1':'🚀 استكشف المنصات','h.cta2':'عرض الباقات ↓',
@@ -3779,6 +3800,12 @@ var STATIC = {
     'pl.en':'Entreprise','pl.enb':'Le Plus Populaire','pl.enc':'Obtenir Maintenant',
     'pl.ch':'Impact — Charité','pl.chc':'Postuler',
     'ft.rights':'Tous droits réservés','lo.t':'ACCÈS MEMBRES','lo.b':'Connexion','lo.c':'Annuler',
+    'lo.new':'Nouveau ici ?','lo.create':'Créer un compte gratuit','lo.have':'Vous avez déjà un compte ?','lo.signin2':'Connexion','lo.createbtn':'Créer un compte',
+    'lo.welcome':'Bon retour','lo.created':'Compte créé avec succès, bienvenue',
+    'err.emailExists':'Cet e-mail est déjà enregistré — essayez de vous connecter','err.invalidCreds':'E-mail ou mot de passe incorrect',
+    'err.pwShort':'Le mot de passe doit contenir au moins 8 caractères','err.invalidEmail':'Veuillez saisir un e-mail valide',
+    'err.serverErr':'Service non configuré — contactez le support','err.generic':'Une erreur est survenue, réessayez',
+    'err.network':'Impossible de contacter le serveur — réessayez plus tard','err.fillFields':'Veuillez compléter vos identifiants',
   }
 };
 
@@ -3930,7 +3957,7 @@ async function doLogin(){
   // كود المالك يبقى بديل سريع في حقل كلمة المرور — كما كان بالضبط
   if(p && await azCheckOwnerCode(p)){ clo('login-modal'); openDashUnlocked(); return; }
 
-  if(!e || !p){ toast('Please complete login credentials'); return; }
+  if(!e || !p){ toast(azT('err.fillFields')); return; }
 
   var isSignup = (AZ_LOGIN_MODE === 'signup');
   var endpoint = isSignup ? '/api/user-signup' : '/api/user-login';
@@ -3947,21 +3974,24 @@ async function doLogin(){
 
     if(res.ok && data && data.ok){
       clo('login-modal');
-      toast(isSignup ? 'تم إنشاء الحساب بنجاح ✦' : 'Welcome back ✦');
+      if(data.user) azApplyUserUI(data.user);
+      var uname = (data.user && (data.user.name || e.split('@')[0])) || '';
+      toast((isSignup ? azT('lo.created') : azT('lo.welcome')) + ' ' + uname + ' ✦');
       try{ fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type: isSignup ? 'signup' : 'login' }) }); }catch(err){}
+      setTimeout(function(){ window.location.href = 'axiomzones-dashboard.html'; }, 1100);
       return;
     }
 
     var code = data && data.error;
-    var msg = 'حدث خطأ، حاول تاني';
-    if(code === 'email_exists') msg = 'هذا البريد مسجَّل من قبل — جرّب تسجيل الدخول';
-    else if(code === 'invalid_credentials') msg = 'البريد أو كلمة المرور غير صحيحة';
-    else if(code === 'password_too_short') msg = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
-    else if(code === 'invalid_email') msg = 'يرجى إدخال بريد إلكتروني صحيح';
-    else if(code === 'server_not_configured') msg = 'الخدمة غير مهيّأة بعد — راجع الإدارة';
+    var msg = azT('err.generic');
+    if(code === 'email_exists') msg = azT('err.emailExists');
+    else if(code === 'invalid_credentials') msg = azT('err.invalidCreds');
+    else if(code === 'password_too_short') msg = azT('err.pwShort');
+    else if(code === 'invalid_email') msg = azT('err.invalidEmail');
+    else if(code === 'server_not_configured') msg = azT('err.serverErr');
     toast(msg);
   }catch(err){
-    toast('تعذّر الاتصال بالسيرفر — حاول لاحقاً');
+    toast(azT('err.network'));
   }
 }
 
@@ -3972,13 +4002,13 @@ function azToggleLoginMode(){
   var toggleText = document.getElementById('lo-toggle-text');
   var toggleLink = document.getElementById('lo-toggle-link');
   if(AZ_LOGIN_MODE === 'signup'){
-    if(btn) btn.textContent = 'Create Account';
-    if(toggleText) toggleText.textContent = 'عندك حساب؟';
-    if(toggleLink) toggleLink.textContent = 'تسجيل الدخول';
+    if(btn) btn.textContent = azT('lo.createbtn');
+    if(toggleText) toggleText.textContent = azT('lo.have');
+    if(toggleLink) toggleLink.textContent = azT('lo.signin2');
   } else {
-    if(btn) btn.textContent = 'Sign In';
-    if(toggleText) toggleText.textContent = 'جديد هنا؟';
-    if(toggleLink) toggleLink.textContent = 'إنشاء حساب مجاني';
+    if(btn) btn.textContent = azT('lo.b');
+    if(toggleText) toggleText.textContent = azT('lo.new');
+    if(toggleLink) toggleLink.textContent = azT('lo.create');
   }
 }
 
@@ -5742,6 +5772,28 @@ var AZ_PLATFORMS_DATA = {
     var saved = localStorage.getItem('az_lang');
     if(saved && saved !== 'en'){ handleLang(saved); }
   }catch(e){}
+})();
+
+/* ══ تحديث زرار Login في الهيدر ليعكس حالة تسجيل الدخول الحقيقية ══ */
+function azApplyUserUI(user){
+  var label = '👤 ' + (user && (user.name || (user.email||'').split('@')[0]) || 'حسابي');
+  ['nav-login-btn','mob-login-btn'].forEach(function(id){
+    var btn = document.getElementById(id);
+    if(!btn) return;
+    btn.textContent = label;
+    btn.removeAttribute('data-i18n'); // منع نظام الترجمة من إعادة النص لـ "Login"
+    btn.onclick = function(){ window.location.href = 'axiomzones-dashboard.html'; };
+  });
+}
+
+/* ══ فحص جلسة المستخدم تلقائياً عند تحميل الصفحة — لو مسجّل دخول من قبل، الهيدر يعكس ذلك فوراً ══ */
+(function azCheckUserSession(){
+  fetch('/api/user-verify', { credentials: 'include' })
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(data){
+      if(data && data.valid && data.user) azApplyUserUI(data.user);
+    })
+    .catch(function(){ /* لا مشكلة — الزرار يبقى "Login" الافتراضي */ });
 })();
 
 /* ══ تسجيل زيارة حقيقية (مرة واحدة لكل تحميل صفحة) — لا يكسر أي شيء لو فشل ══ */
