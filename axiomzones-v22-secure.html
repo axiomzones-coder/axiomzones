@@ -2987,8 +2987,12 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
     <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
     <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" data-i18n="lo.b">Sign In</button>
+    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
     <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
+    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
+      <span id="lo-toggle-text">جديد هنا؟</span>
+      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link">إنشاء حساب مجاني</a>
+    </div>
   </div>
 </div>
 
@@ -3025,7 +3029,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec on" id="ds-overview">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Imperial Dashboard <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
-          <div class="kc"><div class="kl">Subscribers</div><div class="kv gv">128</div><div class="kch ku">↑ 12%</div></div>
+          <div class="kc"><div class="kl">Subscribers</div><div class="kv gv" id="d-subs">—</div><div class="kch" id="d-subs-ch" style="color:var(--t3)">—</div></div>
           <div class="kc"><div class="kl">MRR</div><div class="kv gv" id="d-mrr">—</div><div class="kch ku">↑ 8.3%</div></div>
           <div class="kc"><div class="kl">Retention</div><div class="kv gv">91%</div><div class="kch ku">↑ 2%</div></div>
           <div class="kc"><div class="kl">ARPU</div><div class="kv gv" id="d-arpu">—</div><div class="kch kd">↓ 1.2%</div></div>
@@ -3052,26 +3056,22 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec" id="ds-analytics">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Analytics <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
-          <div class="kc"><div class="kl">Today Visitors</div><div class="kv gv">2,348</div><div class="kch ku">↑ 18%</div></div>
-          <div class="kc"><div class="kl">Bounce Rate</div><div class="kv" style="color:#f87171">34%</div><div class="kch ku">↓ 5% better</div></div>
-          <div class="kc"><div class="kl">Avg Session</div><div class="kv gv">4:32</div><div class="kch ku">↑ 45s</div></div>
-          <div class="kc"><div class="kl">Pages/Session</div><div class="kv gv">5.7</div><div class="kch ku">↑ 0.3</div></div>
+          <div class="kc"><div class="kl">Visits (30 days)</div><div class="kv gv" id="d-visits30"><span style="opacity:.5">—</span></div><div class="kch" style="color:var(--t3)">حقيقي</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">Bounce Rate</div><div class="kv" style="color:#f87171">34%</div><div class="kch" style="color:var(--t3)">Demo — غير مُتتبَّع بعد</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">Avg Session</div><div class="kv gv">4:32</div><div class="kch" style="color:var(--t3)">Demo — غير مُتتبَّع بعد</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">Pages/Session</div><div class="kv gv">5.7</div><div class="kch" style="color:var(--t3)">Demo — غير مُتتبَّع بعد</div></div>
         </div>
-        <div class="dcard"><div class="dct">Platform Performance</div>
+        <div class="dcard"><div class="dct">Platform Performance <span style="font-size:.65rem;color:var(--t3);font-weight:400">(Visitors عرض توضيحي — سيُربط لاحقاً بالنقرات الحقيقية)</span></div>
           <table class="dtbl"><thead><tr><th>Platform</th><th>Visitors</th><th>Subscriptions</th><th>Revenue</th><th>CVR</th></tr></thead>
           <tbody><tr><td>👔 UniUber</td><td>8,240</td><td>54</td><td><span style="color:var(--gold)" id="t-u">—</span></td><td>4.2%</td></tr><tr><td>🔐 LogiShield</td><td>5,100</td><td>32</td><td><span style="color:var(--gold)" id="t-l">—</span></td><td>3.8%</td></tr><tr><td>🏙️ PropPulse</td><td>3,900</td><td>18</td><td><span style="color:var(--gold)" id="t-p">—</span></td><td>2.9%</td></tr><tr><td>🧠 TalentFlow</td><td>6,780</td><td>24</td><td><span style="color:var(--gold)" id="t-t">—</span></td><td>3.5%</td></tr></tbody></table>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div class="dcard"><div class="dct">Top Geographies</div>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">🇸🇦 Saudi Arabia</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">28%</span></div><div class="pbsm"><div class="pfsm" style="width:28%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">🇦🇪 UAE</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">16%</span></div><div class="pbsm"><div class="pfsm" style="width:16%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">🇬🇧 UK</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">12%</span></div><div class="pbsm"><div class="pfsm" style="width:12%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">🇺🇸 USA</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">10%</span></div><div class="pbsm"><div class="pfsm" style="width:10%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">🌍 Others</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">34%</span></div><div class="pbsm"><div class="pfsm" style="width:34%;background:rgba(201,168,76,.3)"></div></div></div>
+          <div class="dcard"><div class="dct">Top Geographies <span style="font-size:.65rem;color:var(--t3);font-weight:400">(حقيقي)</span></div>
+            <div id="d-geo-list" style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:.78rem;color:var(--t3)">جاري التحميل...</div>
             </div>
           </div>
-          <div class="dcard"><div class="dct">Device Types</div>
+          <div class="dcard" style="opacity:.55"><div class="dct">Device Types <span style="font-size:.65rem;color:var(--t3);font-weight:400">(Demo — غير مُتتبَّع بعد)</span></div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">📱 Mobile</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">61%</span></div><div class="pbsm"><div class="pfsm" style="width:61%"></div></div></div>
               <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">💻 Desktop</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">31%</span></div><div class="pbsm"><div class="pfsm" style="width:31%"></div></div></div>
@@ -3139,7 +3139,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec" id="ds-licenses">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">License Manager <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
-          <div class="kc"><div class="kl">Active Licenses</div><div class="kv gv">128</div><div class="kch ku">↑ 12%</div></div>
+          <div class="kc"><div class="kl">Active Licenses</div><div class="kv gv" id="d-lic">—</div><div class="kch" id="d-lic-ch" style="color:var(--t3)">—</div></div>
           <div class="kc"><div class="kl">Expiring (30d)</div><div class="kv" style="color:#f59e0b">14</div><div class="kch kd">⚠ Needs attention</div></div>
           <div class="kc"><div class="kl">Suspended</div><div class="kv" style="color:#f87171">3</div><div class="kch kd">Non-payment</div></div>
           <div class="kc"><div class="kl">Charity (Impact)</div><div class="kv gv">6</div><div class="kch ku">↑ 2 new</div></div>
@@ -3430,7 +3430,61 @@ async function azCheckOwnerCode(candidate){
   }
 }
 var BASE_USD = {pro:237, ent:773, charity:77};
+/* ══ خريطة أسماء دول مبسّطة لعرض Top Geographies — تُستخدم فقط للعرض، الكود الحقيقي من Cloudflare ══ */
+var AZ_COUNTRY_NAMES = {
+  SA:'🇸🇦 Saudi Arabia', AE:'🇦🇪 UAE', EG:'🇪🇬 Egypt', GB:'🇬🇧 UK', US:'🇺🇸 USA',
+  KW:'🇰🇼 Kuwait', QA:'🇶🇦 Qatar', BH:'🇧🇭 Bahrain', OM:'🇴🇲 Oman', JO:'🇯🇴 Jordan',
+  MA:'🇲🇦 Morocco', DZ:'🇩🇿 Algeria', LB:'🇱🇧 Lebanon', DE:'🇩🇪 Germany', FR:'🇫🇷 France',
+  XX:'🌍 Unknown'
+};
+
+/* ══ جلب التحليلات الحقيقية (زيارات 30 يوم + جغرافيا) من AZ_ANALYTICS_KV ══ */
+async function azLoadRealAnalytics(){
+  try{
+    var res = await fetch('/api/owner-analytics', { credentials: 'include' });
+    if(!res.ok) return;
+    var data = await res.json();
+    if(!data || !data.ok || !data.analytics) return;
+    var a = data.analytics;
+
+    var elV = document.getElementById('d-visits30');
+    if(elV) elV.textContent = a.totalPageviews.toLocaleString();
+
+    var geoList = document.getElementById('d-geo-list');
+    if(geoList){
+      var entries = Object.keys(a.byCountry).map(function(cc){ return { cc: cc, n: a.byCountry[cc] }; });
+      entries.sort(function(x,y){ return y.n - x.n; });
+      entries = entries.slice(0, 6);
+      if(entries.length === 0){
+        geoList.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد زيارات مسجَّلة بعد</div>';
+      } else {
+        var total = entries.reduce(function(s,e){ return s + e.n; }, 0);
+        geoList.innerHTML = entries.map(function(e){
+          var pct = total > 0 ? Math.round((e.n / total) * 100) : 0;
+          var label = AZ_COUNTRY_NAMES[e.cc] || ('🌐 ' + e.cc);
+          return '<div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">' + label + '</span><span style="color:var(--gold);font-size:.78rem;font-family:\'DM Mono\',monospace">' + pct + '%</span></div><div class="pbsm"><div class="pfsm" style="width:' + pct + '%"></div></div></div>';
+        }).join('');
+      }
+    }
+  }catch(e){ /* فشل الاتصال — تبقى واجهة "جاري التحميل" أو '—' كما هي */ }
+}
+
 var CURR = 'USD';
+var AZ_REAL_STATS = null; // إحصاءات حقيقية من AZ_USERS_KV عبر /api/owner-stats — تُملأ بعد فتح الداشبورد
+
+/* ══ جلب الإحصاءات الحقيقية (Subscribers, MRR) من AZ_USERS_KV ══ */
+async function azLoadRealStats(){
+  try{
+    var res = await fetch('/api/owner-stats', { credentials: 'include' });
+    if(!res.ok) return;
+    var data = await res.json();
+    if(!data || !data.ok || !data.stats) return;
+    AZ_REAL_STATS = data.stats;
+    refreshPrices();
+    var elS = document.getElementById('d-subs'); if(elS) elS.textContent = AZ_REAL_STATS.totalUsers.toLocaleString();
+    var elL = document.getElementById('d-lic');  if(elL) elL.textContent = AZ_REAL_STATS.totalUsers.toLocaleString();
+  }catch(e){ /* فشل الاتصال — تبقى '—' كما هي، لا رجوع لأرقام وهمية */ }
+}
 var aiCount = 0;
 var tCache = {};
 var dynProjects = [];
@@ -3601,10 +3655,12 @@ function refreshPrices(){
   el=document.getElementById('pr-ent'); if(el) el.textContent=fmtPrice(BASE_USD.ent,c);
   el=document.getElementById('pr-cha'); if(el) el.textContent=fmtPrice(BASE_USD.charity,c);
   el=document.getElementById('u-mrr');  if(el) el.textContent=fmtPrice(5040,c);
-  // Dashboard
-  el=document.getElementById('d-mrr');  if(el) el.textContent=fmtPrice(11333,c);
-  el=document.getElementById('d-mrr2'); if(el) el.textContent=fmtPrice(11333,c);
-  el=document.getElementById('d-arpu'); if(el) el.textContent=fmtPrice(88.5,c);
+  // Dashboard — MRR وARPU حقيقيان لو توفرت بيانات AZ_REAL_STATS، وإلا صفر أمين (لا أرقام وهمية)
+  var realMrr = (AZ_REAL_STATS ? AZ_REAL_STATS.mrr : 0);
+  var realArpu = (AZ_REAL_STATS && AZ_REAL_STATS.totalUsers > 0) ? (realMrr / AZ_REAL_STATS.totalUsers) : 0;
+  el=document.getElementById('d-mrr');  if(el) el.textContent=fmtPrice(realMrr,c);
+  el=document.getElementById('d-mrr2'); if(el) el.textContent=fmtPrice(realMrr,c);
+  el=document.getElementById('d-arpu'); if(el) el.textContent=fmtPrice(realArpu,c);
   el=document.getElementById('d-arr');  if(el) el.textContent=fmtPrice(136000,c);
   el=document.getElementById('d-ltv');  if(el) el.textContent=fmtPrice(2240,c);
   el=document.getElementById('d-cac');  if(el) el.textContent=fmtPrice(170,c);
@@ -3868,11 +3924,62 @@ document.addEventListener('keydown',function(e){
    LOGIN
 ══════════════════════════════════════ */
 async function doLogin(){
-  var e=document.getElementById('l-em').value;
+  var e=document.getElementById('l-em').value.trim();
   var p=document.getElementById('l-pw').value;
+
+  // كود المالك يبقى بديل سريع في حقل كلمة المرور — كما كان بالضبط
   if(p && await azCheckOwnerCode(p)){ clo('login-modal'); openDashUnlocked(); return; }
-  if(e&&p){ toast('Welcome to Axiom Zones ✦'); clo('login-modal'); }
-  else toast('Please complete login credentials');
+
+  if(!e || !p){ toast('Please complete login credentials'); return; }
+
+  var isSignup = (AZ_LOGIN_MODE === 'signup');
+  var endpoint = isSignup ? '/api/user-signup' : '/api/user-login';
+
+  try{
+    var res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email: e, password: p })
+    });
+    var data = null;
+    try{ data = await res.json(); }catch(err){}
+
+    if(res.ok && data && data.ok){
+      clo('login-modal');
+      toast(isSignup ? 'تم إنشاء الحساب بنجاح ✦' : 'Welcome back ✦');
+      try{ fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type: isSignup ? 'signup' : 'login' }) }); }catch(err){}
+      return;
+    }
+
+    var code = data && data.error;
+    var msg = 'حدث خطأ، حاول تاني';
+    if(code === 'email_exists') msg = 'هذا البريد مسجَّل من قبل — جرّب تسجيل الدخول';
+    else if(code === 'invalid_credentials') msg = 'البريد أو كلمة المرور غير صحيحة';
+    else if(code === 'password_too_short') msg = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+    else if(code === 'invalid_email') msg = 'يرجى إدخال بريد إلكتروني صحيح';
+    else if(code === 'server_not_configured') msg = 'الخدمة غير مهيّأة بعد — راجع الإدارة';
+    toast(msg);
+  }catch(err){
+    toast('تعذّر الاتصال بالسيرفر — حاول لاحقاً');
+  }
+}
+
+var AZ_LOGIN_MODE = 'login';
+function azToggleLoginMode(){
+  AZ_LOGIN_MODE = (AZ_LOGIN_MODE === 'login') ? 'signup' : 'login';
+  var btn = document.getElementById('lo-submit-btn');
+  var toggleText = document.getElementById('lo-toggle-text');
+  var toggleLink = document.getElementById('lo-toggle-link');
+  if(AZ_LOGIN_MODE === 'signup'){
+    if(btn) btn.textContent = 'Create Account';
+    if(toggleText) toggleText.textContent = 'عندك حساب؟';
+    if(toggleLink) toggleLink.textContent = 'تسجيل الدخول';
+  } else {
+    if(btn) btn.textContent = 'Sign In';
+    if(toggleText) toggleText.textContent = 'جديد هنا؟';
+    if(toggleLink) toggleLink.textContent = 'إنشاء حساب مجاني';
+  }
 }
 
 /* ══════════════════════════════════════
@@ -3890,6 +3997,8 @@ function openDashUnlocked(){
   document.body.style.overflow='hidden';
   document.getElementById('d-time').textContent=new Date().toLocaleString();
   refreshPrices();
+  azLoadRealStats();
+  azLoadRealAnalytics();
 }
 function closeDash(){ document.getElementById('dash').classList.remove('open'); document.body.style.overflow=''; }
 async function azOwnerLogout(){
@@ -3902,6 +4011,7 @@ function swD(sec,el){
   document.querySelectorAll('.dmi').forEach(function(m){m.classList.remove('on');});
   var ds=document.getElementById('ds-'+sec); if(ds) ds.classList.add('on');
   if(el) el.classList.add('on');
+  if(sec === 'analytics') azLoadRealAnalytics();
 }
 function toggleP(name,el){ toast(el.checked?'✦ '+name+' activated':name+' paused'); }
 
@@ -5634,6 +5744,13 @@ var AZ_PLATFORMS_DATA = {
   }catch(e){}
 })();
 
+/* ══ تسجيل زيارة حقيقية (مرة واحدة لكل تحميل صفحة) — لا يكسر أي شيء لو فشل ══ */
+(function azTrackPageview(){
+  try{
+    fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'pageview' }) });
+  }catch(e){}
+})();
+
 (function azSyncLiveConfig(){
   fetch('/api/config-get')
     .then(function(res){ return res.ok ? res.json() : null; })
@@ -5999,7 +6116,10 @@ function buildPlatformCard(key, plt) {
     iconBox.style.boxShadow = '';
     bar.style.height = '3px';
   };
-  card.onclick = function() { openPltModal(key); };
+  card.onclick = function() {
+    try{ fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'platform_click', platform:key }) }); }catch(e){}
+    openPltModal(key);
+  };
   return card;
 }
 
