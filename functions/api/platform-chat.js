@@ -10,6 +10,18 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ ok: false, error: 'workers_ai_not_configured' }), { status: 500, headers });
   }
 
+  // ── تحديد معدل الطلبات لكل IP — يحمي رصيد Workers AI المجاني اليومي من الاستنزاف الخارجي ──
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  if (env.AZ_CONFIG_KV) {
+    const rlKey = `ratelimit:chat:${ip}`;
+    const raw = await env.AZ_CONFIG_KV.get(rlKey);
+    const count = raw ? (JSON.parse(raw).count || 0) : 0;
+    if (count >= 20) { // 20 سؤال/ساعة لكل زائر — كافٍ لأي استخدام مشروع
+      return new Response(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429, headers });
+    }
+    await env.AZ_CONFIG_KV.put(rlKey, JSON.stringify({ count: count + 1 }), { expirationTtl: 3600 });
+  }
+
   let body;
   try { body = await request.json(); } catch (e) {
     return new Response(JSON.stringify({ ok: false, error: 'bad_request' }), { status: 400, headers });
