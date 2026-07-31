@@ -534,6 +534,10 @@ body.ch #cur-r{width:56px;height:56px;border-color:var(--gold)}
 .n-ctrl{display:flex;align-items:center;gap:8px}
 .sel{background:rgba(201,168,76,.06);border:1px solid var(--border);color:var(--t1);padding:6px 10px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:.74rem;cursor:pointer;outline:none;max-width:150px;transition:border-color .3s}
 .sel:hover{border-color:var(--gold)}
+/* ══ إصلاح تباين القائمة المفتوحة — المتصفح يرسم قائمة الاختيار بخلفية بيضاء دائماً تقريباً بغض النظر عن ثيم الموقع، فنفرض ألوان غامقة واضحة على النصوص والمجموعات هنا لضمان القراءة في كل الحالات ══ */
+.sel option{color:#1a1a2e;background:#ffffff;padding:6px 10px}
+.sel optgroup{color:#0a0d1a;background:#f4f0e6;font-weight:700;font-style:normal}
+.sel option:checked,.sel option:hover{background:#c9a84c;color:#0a0d1a}
 .btn-n{padding:8px 18px;border-radius:8px;font-size:.74rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border:none;cursor:none;transition:all .3s var(--ease-ela);font-family:'Tajawal',sans-serif}
 .btn-ng{background:linear-gradient(135deg,var(--gold-d),var(--gold));color:#000}
 .btn-ng:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.35)}
@@ -2266,7 +2270,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <br/>
         <span class="hw"><span class="hwi gold-w">ZONES</span></span>
       </h1>
-      <div id="az-pronounce" style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:1px;color:var(--t3);margin-top:-22px;margin-bottom:22px;opacity:0;animation:fup .8s var(--ease-imp) 2.4s forwards"></div>
+      <div id="az-pronounce" style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:500;letter-spacing:.5px;color:rgba(201,168,76,.78);margin-top:-14px;margin-bottom:26px;opacity:0;animation:fup .8s var(--ease-imp) 2.4s forwards"></div>
       <p class="h-desc" data-i18n="h.desc">A global ecosystem of advanced technology platforms — built for everyone, everywhere: individuals, businesses, institutions, and governments alike. Supply chains, real estate, talent, finance, and beyond. Imperial scale. Infinite ambition.</p>
 
       <div id="az-search-wrap" class="az-search-wrap">
@@ -3922,11 +3926,11 @@ var RTL = ['ar','fa','ur','he','ku','yi'];
 /* المرحلة الأولى: أهم 6 لغات يدوياً بدقة، يمكن التوسّع لاحقاً حسب الحاجة */
 var AZ_PRONOUNCE = {
   ar: 'أكسيوم زونز',
-  fr: 'Axiome Zones — se prononce "Aksiome Zones"',
-  es: 'Axiom Zones — se pronuncia "Áksiom Zons"',
-  de: 'Axiom Zones — ausgesprochen "Axiom Sohns"',
-  zh: '阿克西姆·佐恩斯 (Ākèxīmǔ Zuǒēnsī)',
-  ja: 'アクシオム ゾーンズ (Akushiomu Zōnzu)',
+  fr: 'Axiome Zones',
+  es: 'Axiom Zones',
+  de: 'Axiom Zones',
+  zh: '阿克西姆·佐恩斯',
+  ja: 'アクシオム ゾーンズ',
 };
 
 function azUpdatePronunciation(lang){
