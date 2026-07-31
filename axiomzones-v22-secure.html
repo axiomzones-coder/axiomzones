@@ -2388,7 +2388,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 </div>
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap">
   <div style="position:relative;flex:1;min-width:200px">
-    <input id="az-search" type="text" placeholder="ابحث عن منصة..." oninput="filterPlatforms()"
+    <input id="az-search" type="text" placeholder="ابحث عن منصة..." oninput="azOnSearchInput(this.value)"
       style="width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);color:#F2EEE8;padding:9px 38px 9px 14px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.84rem;outline:none;transition:border-color .22s"/>
     <span style="position:absolute;top:50%;transform:translateY(-50%);right:12px;opacity:.4;font-size:.9rem">🔍</span>
   </div>
@@ -4703,6 +4703,7 @@ function buildMiniCard(key, plt) {
   var isLive = plt.status === 'live';
   var mini = document.createElement('div');
   mini.className = 'mini-card';
+  mini.dataset.status = plt.status || 'coming'; // يُستخدم في فلترة زرار "مباشرة" الحقيقية
 
   /* Live dot */
   if (isLive) {
@@ -4810,6 +4811,30 @@ function setViewMode(mode) {
   }
 }
 
+
+/* ══ فلترة أزرار التصنيفات (الكل/مالية/إسلامية/تعليمية/أعمال/مباشرة) ══ */
+/* اكتُشفت 30 يوليو 2026: هذه الأزرار كانت تنادي setCat() منذ البداية بدون أن تكون هذه الدالة معرَّفة في الملف أصلاً — كانت معطّلة بصمت تماماً */
+var AZ_ACTIVE_CAT = 'all';
+function setCat(catId, btnEl){
+  AZ_ACTIVE_CAT = catId;
+  document.querySelectorAll('.az-cat-btn').forEach(function(b){ b.classList.remove('on'); });
+  if(btnEl) btnEl.classList.add('on');
+
+  // الفلترة منطقية فقط في عرض التصنيفات (Categories) — نضمن التبديل له أولاً
+  if (typeof setViewMode === 'function' && AZ_VIEW_MODE !== 'categories') { setViewMode('categories'); }
+  else { renderCategoryView(); }
+
+  document.querySelectorAll('.cat-section').forEach(function(sec){
+    if (catId === 'all' || catId === 'live') { sec.style.display = ''; }
+    else { sec.style.display = (sec.id === 'cat-' + catId) ? '' : 'none'; }
+  });
+
+  if (catId === 'live') {
+    document.querySelectorAll('.mini-card').forEach(function(el){
+      el.style.display = (el.dataset.status === 'live') ? '' : 'none';
+    });
+  }
+}
 
 /* ══ INIT ══ */
 window.addEventListener('load',function(){
@@ -5012,7 +5037,7 @@ function v5RenderBlog(){
       '</div>'+
       '<div class="v5-blog-expand" id="blog-expand-'+i+'">'+
         '<div class="v5-blog-full">'+post.full+'</div>'+
-        '<button onclick="v5LaunchKashf()" style="'+launch_style+'">جرّب الأداة مجاناً &#x2192;</button>'+
+        '<button onclick="v5KashfDemo()" style="'+launch_style+'">جرّب الأداة مجاناً &#x2192;</button>'+
       '</div>';
     grid.appendChild(card);
   });
