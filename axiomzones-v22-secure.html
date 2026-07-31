@@ -3141,20 +3141,17 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div style="display:flex;gap:7px"><input class="di" style="width:190px;margin-bottom:0" placeholder="🔍 Search..." type="text"/><button class="db2">+ New</button></div>
         </div>
         <div class="dcard"><table class="dtbl"><thead><tr><th>#</th><th>Name</th><th>Plan</th><th>Revenue</th><th>Status</th><th>Action</th></tr></thead>
-          <tbody><tr><td style="font-family:'DM Mono',monospace;color:var(--t3)">001</td><td>Riyadh Trading Co.</td><td><span class="bdg bo">Enterprise</span></td><td id="s1r">—</td><td><span class="bdg bg">Active</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem">Manage</button></td></tr>
-          <tr><td style="font-family:'DM Mono',monospace;color:var(--t3)">002</td><td>Al Fahad Group</td><td><span class="bdg bb">Professional</span></td><td id="s2r">—</td><td><span class="bdg bg">Active</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem">Manage</button></td></tr>
-          <tr><td style="font-family:'DM Mono',monospace;color:var(--t3)">003</td><td>Global Charity Org</td><td><span class="bdg bg">Impact</span></td><td id="s3r">—</td><td><span class="bdg bg">Active</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem">Manage</button></td></tr>
-          <tr><td style="font-family:'DM Mono',monospace;color:var(--t3)">004</td><td>Golden Consultants</td><td><span class="bdg bb">Professional</span></td><td id="s4r">—</td><td><span class="bdg br">Expired</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem">Renew</button></td></tr></tbody>
+          <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;color:var(--t3);padding:20px">Loading...</td></tr></tbody>
         </table></div>
       </div>
       <!-- PLATFORMS -->
       <div class="dsec" id="ds-platforms">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Platform Control <span style="color:var(--gold)">✦</span></h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">👔</div><div style="font-weight:700;margin-bottom:2px">UniUber</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">uniuber.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" checked onchange="toggleP('UniUber',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🔐</div><div style="font-weight:700;margin-bottom:2px">LogiShield</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">logishield.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" checked onchange="toggleP('LogiShield',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🏙️</div><div style="font-weight:700;margin-bottom:2px">PropPulse</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">proppulse.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" onchange="toggleP('PropPulse',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Coming Soon Mode</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Waitlist</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🧠</div><div style="font-weight:700;margin-bottom:2px">TalentFlow</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">talentflow.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" checked onchange="toggleP('TalentFlow',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
+          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">👔</div><div style="font-weight:700;margin-bottom:2px">UniUber</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">uniuber.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="uniuber" onchange="toggleP('uniuber',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
+          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🔐</div><div style="font-weight:700;margin-bottom:2px">LogiShield</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">logishield.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="logishield" onchange="toggleP('logishield',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
+          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🏙️</div><div style="font-weight:700;margin-bottom:2px">PropPulse</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">proppulse.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="proppulse" onchange="toggleP('proppulse',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Coming Soon Mode</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Waitlist</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
+          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🧠</div><div style="font-weight:700;margin-bottom:2px">TalentFlow</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">talentflow.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="talentflow" onchange="toggleP('talentflow',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
         </div>
       </div>
       <!-- REVENUE -->
@@ -3340,34 +3337,18 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec" id="ds-logs">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">System Logs <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
-          <div class="kc"><div class="kl">Total Events (24h)</div><div class="kv gv">1,847</div><div class="kch ku">Normal activity</div></div>
-          <div class="kc"><div class="kl">Errors (24h)</div><div class="kv" style="color:#f87171">3</div><div class="kch ku">↓ 60% vs yesterday</div></div>
-          <div class="kc"><div class="kl">API Calls (24h)</div><div class="kv gv">5,234</div><div class="kch ku">↑ 12%</div></div>
-          <div class="kc"><div class="kl">Uptime</div><div class="kv gv">99.97%</div><div class="kch ku">SLA met</div></div>
+          <div class="kc"><div class="kl">Admin Events (24h)</div><div class="kv gv" id="log-count-24h">—</div><div class="kch" style="color:var(--t3)">حقيقي</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">Errors (24h)</div><div class="kv" style="color:#f87171">—</div><div class="kch" style="color:var(--t3)">Demo — غير مُتتبَّع بعد</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">API Calls (24h)</div><div class="kv gv">—</div><div class="kch" style="color:var(--t3)">Demo — غير مُتتبَّع بعد</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">Uptime</div><div class="kv gv">—</div><div class="kch" style="color:var(--t3)">Demo — يحتاج أداة مراقبة خارجية</div></div>
         </div>
         <div class="dcard">
           <div class="dct" style="display:flex;justify-content:space-between;align-items:center">
-            Live Event Log
-            <div style="display:flex;gap:7px;align-items:center">
-              <select class="di" style="margin-bottom:0;width:140px;padding:5px 8px;font-size:.72rem">
-                <option>All Events</option><option>Errors Only</option><option>Auth Events</option><option>Payments</option><option>API Calls</option>
-              </select>
-              <button class="db2" style="padding:5px 12px;font-size:.74rem" onclick="clearLogs()">Clear</button>
-            </div>
+            Admin Activity Log <span style="font-size:.65rem;color:var(--t3);font-weight:400">(دخول المالك، تعديل الإعدادات، إدارة المديرين — حقيقي)</span>
+            <button class="db2" style="padding:5px 12px;font-size:.74rem" onclick="azLoadSystemLogs()">🔄 Refresh</button>
           </div>
           <div id="log-stream" style="font-family:'DM Mono',monospace;font-size:.72rem;line-height:1.8;max-height:280px;overflow-y:auto">
-            <div style="color:#4ade80">[2024-08-15 14:23:11] ✅ AUTH &nbsp;&nbsp;— User login: admin@axiomzones.com (Owner)</div>
-            <div style="color:var(--t2)">[2024-08-15 14:22:58] ℹ️  API &nbsp;&nbsp;&nbsp;— Translation request: Japanese (cached)</div>
-            <div style="color:var(--uni-bright)">[2024-08-15 14:21:44] 💳 PAY &nbsp;&nbsp;— Payment received: Riyadh Trading $773</div>
-            <div style="color:var(--logi-bright)">[2024-08-15 14:20:33] 🔑 LIC &nbsp;&nbsp;— License issued: AXZ-ENT-4A2B-9C1D</div>
-            <div style="color:var(--t2)">[2024-08-15 14:19:12] ℹ️  API &nbsp;&nbsp;&nbsp;— Currency sync: 200 rates updated</div>
-            <div style="color:#f87171">[2024-08-15 14:18:01] ❌ ERR &nbsp;&nbsp;— Payment failed: Golden Consultants (card declined)</div>
-            <div style="color:var(--prop-bright)">[2024-08-15 14:17:45] 📧 MAIL — Broadcast sent: 128 recipients</div>
-            <div style="color:var(--tal-bright)">[2024-08-15 14:16:30] 🤖 AI &nbsp;&nbsp;&nbsp;— Claude translation: Korean completed (850ms)</div>
-            <div style="color:var(--t2)">[2024-08-15 14:15:18] ℹ️  SYS &nbsp;&nbsp;— Health check: all 4 platforms OK</div>
-            <div style="color:#4ade80">[2024-08-15 14:14:02] ✅ AUTH &nbsp;&nbsp;— New subscriber: Tech Innovations Ltd</div>
-            <div style="color:var(--t2)">[2024-08-15 14:12:50] ℹ️  API &nbsp;&nbsp;&nbsp;— Webhook fired: Slack #axiom-alerts</div>
-            <div style="color:var(--uni-bright)">[2024-08-15 14:11:38] 💳 PAY &nbsp;&nbsp;— Subscription renewed: Al Fahad Group</div>
+            <div style="color:var(--t3)">Loading...</div>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
@@ -4194,6 +4175,72 @@ async function doLogin(){
 }
 
 /* ══ إدارة المديرين — قسم "Admins" في الداشبورد ══ */
+/* ── تحميل قائمة مشتركين حقيقية من AZ_USERS_KV ── */
+var PLAN_BADGE = { free:'bb', pro:'bo', ent:'bo', charity:'bg' };
+var PLAN_LABEL = { free:'Free', pro:'Pro', ent:'Enterprise', charity:'Impact' };
+async function azLoadRealSubscribers(){
+  var tbody = document.getElementById('subs-tbody');
+  if(!tbody) return;
+  try{
+    var res = await fetch('/api/owner-users-list', { credentials:'include' });
+    var data = await res.json();
+    if(!res.ok || !data || !data.ok){
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#f87171;padding:20px">Failed to load subscribers</td></tr>';
+      return;
+    }
+    var users = data.users || [];
+    if(!users.length){
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:20px">No subscribers yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = users.map(function(u, i){
+      var badge = PLAN_BADGE[u.plan] || 'bb';
+      var label = PLAN_LABEL[u.plan] || u.plan;
+      var num = String(i+1).padStart(3,'0');
+      return '<tr><td style="font-family:\'DM Mono\',monospace;color:var(--t3)">'+num+'</td>'+
+        '<td>'+(u.name||u.email)+'<div style="font-size:.68rem;color:var(--t3)">'+u.email+'</div></td>'+
+        '<td><span class="bdg '+badge+'">'+label+'</span></td>'+
+        '<td>$'+(u.revenue||0)+'/mo</td>'+
+        '<td><span class="bdg bg">Active</span></td>'+
+        '<td><button class="db2" style="padding:3px 9px;font-size:.7rem" disabled title="Coming soon">Manage</button></td></tr>';
+    }).join('');
+  }catch(e){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#f87171;padding:20px">Connection error</td></tr>';
+  }
+}
+
+/* ── تحميل سجل الأحداث الحقيقي (دخول مالك، تعديل إعدادات، إدارة مديرين) ── */
+var LOG_ICONS = { auth:'✅ AUTH', config:'⚙️ CFG', admin:'🛡️ ADM' };
+var LOG_COLORS = { auth:'#4ade80', config:'#60a5fa', admin:'#c9a84c' };
+async function azLoadSystemLogs(){
+  var stream = document.getElementById('log-stream');
+  var countEl = document.getElementById('log-count-24h');
+  if(!stream) return;
+  stream.innerHTML = '<div style="color:var(--t3)">Loading...</div>';
+  try{
+    var res = await fetch('/api/owner-system-logs', { credentials:'include' });
+    var data = await res.json();
+    if(!res.ok || !data || !data.ok){
+      stream.innerHTML = '<div style="color:#f87171">Failed to load logs</div>';
+      return;
+    }
+    if(countEl) countEl.textContent = data.totalEvents24h || 0;
+    var logs = data.logs || [];
+    if(!logs.length){
+      stream.innerHTML = '<div style="color:var(--t3)">No events recorded yet</div>';
+      return;
+    }
+    stream.innerHTML = logs.map(function(l){
+      var color = LOG_COLORS[l.type] || 'var(--t2)';
+      var label = LOG_ICONS[l.type] || ('ℹ️ ' + (l.type||'').toUpperCase());
+      var time = new Date(l.at).toLocaleString();
+      return '<div style="color:'+color+'">['+time+'] '+label+' — '+(l.detail||'')+' <span style="color:var(--t3)">('+(l.actor||'')+')</span></div>';
+    }).join('');
+  }catch(e){
+    stream.innerHTML = '<div style="color:#f87171">Connection error</div>';
+  }
+}
+
 var AZ_PERMISSION_KEYS = ['platforms', 'analytics', 'users'];
 
 async function azLoadAdmins(){
@@ -4406,8 +4453,57 @@ function swD(sec,el){
   if(el) el.classList.add('on');
   if(sec === 'analytics') azLoadRealAnalytics();
   if(sec === 'admins') azLoadAdmins();
+  if(sec === 'platforms') azLoadPlatformToggles();
+  if(sec === 'subs') azLoadRealSubscribers();
+  if(sec === 'logs') azLoadSystemLogs();
 }
-function toggleP(name,el){ toast(el.checked?'✦ '+name+' activated':name+' paused'); }
+async function toggleP(key, el){
+  var checked = el.checked;
+  el.disabled = true;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    if(!config.platforms) config.platforms = {};
+    if(!config.platforms[key]) config.platforms[key] = {};
+    config.platforms[key].active = checked;
+
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+
+    if(saveRes.ok && saveData && saveData.ok){
+      toast('✦ ' + key + (checked ? ' activated' : ' paused'));
+    } else {
+      el.checked = !checked;
+      toast(saveRes.status === 401 ? 'ليس لديك صلاحية تعديل المنصات' : 'فشل الحفظ — حاول تاني');
+    }
+  }catch(e){
+    el.checked = !checked;
+    toast('خطأ في الاتصال بالسيرفر');
+  }
+  el.disabled = false;
+}
+
+/* ── تحميل حالة تفعيل كل منصة الحقيقية عند فتح تبويب Platforms ── */
+async function azLoadPlatformToggles(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var platforms = (data && data.config && data.config.platforms) || {};
+    document.querySelectorAll('[data-plat-toggle]').forEach(function(cb){
+      var key = cb.getAttribute('data-plat-toggle');
+      if(platforms[key] && typeof platforms[key].active === 'boolean'){
+        cb.checked = platforms[key].active;
+      } else {
+        cb.checked = true; // لا يوجد إعداد محفوظ بعد — المنصة تعتبر مفعّلة افتراضياً (نفس السلوك الافتراضي في الموقع الرئيسي)
+      }
+    });
+  }catch(e){ /* تبقى القيم الافتراضية كما هي */ }
+}
 
 /* ══════════════════════════════════════
    UPDATE PRICES FROM DASHBOARD
