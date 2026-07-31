@@ -2280,7 +2280,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             id="az-search-input"
             type="text"
             class="az-search-input"
-            data-i18n="h.search"
+            data-i18n-ph="h.search"
             placeholder="عن أي خدمة تبحث؟ اكتب مشكلتك… (مثال: أشتري بيت ولا أستأجر)"
             oninput="azOnSearchInput(this.value)"
             onfocus="if(this.value.length>=2) azOnSearchInput(this.value)"
@@ -2584,7 +2584,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px">
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>Arab Financial Index</div>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-1px">مؤشر القروض العربي <em style="font-weight:300;font-style:italic;color:#8892b0">— مارس 2024</em></h2>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="afi.h1">مؤشر القروض العربي</span> <em style="font-weight:300;font-style:italic;color:#8892b0" data-i18n="afi.h2">— مارس 2024</em></h2>
         <p style="font-size:.82rem;color:#8892b0;margin-top:6px" data-i18n="afi.sub">متوسط فائدة القروض الشخصية في المنطقة العربية — محدّث شهرياً</p>
       </div>
       <button onclick="v5GoTo('getstarted')" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap" data-i18n="afi.subscribe">اشترك في التقرير الشهري →</button>
@@ -3779,6 +3779,7 @@ var STATIC = {
     'plats.eyebrow':'Our Platforms','plats.sub':'Every platform solves a real financial problem — with professional tools built for the world.',
     'sb.nav':'Navigate','sb.home':'🏠 Home','sb.allplat':'🧩 All Platforms','sb.pricing':'💳 Pricing','sb.how':'⚡ How It Works','sb.faq':'❓ FAQ','sb.startfree':'🚀 Start Free',
     'sb.openplat':'Open Platform','sb.settings':'⚙️ Settings','sb.dark':'🌙 Dark Mode','sb.quickbuy':'💳 Quick Buy','sb.ltd':'🔥 Lifetime Deal — $399','sb.pro':'⭐ Pro All-Access — $69/mo',
+    'afi.h1':'Arab Loan Index','afi.h2':'— March 2024',
     'ltd.h':'Lifetime Deal — First 100 Only','ltd.p':'One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.',
     'ltd.spots':' of 100 lifetime spots remaining','ltd.worth':'Worth $828/year','ltd.tags':'ONE-TIME · ALL PLATFORMS · FOREVER','ltd.btn':'Claim Lifetime Deal →',
     'cta.h1':'Start Your Free Account','cta.h2':'Today','cta.sub':'Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.',
@@ -3883,6 +3884,7 @@ var STATIC = {
     'plats.eyebrow':'منصاتنا · Our Platforms','plats.sub':'كل منصة تحل مشكلة مالية حقيقية — بأدوات احترافية مبنية للعالم كله',
     'sb.nav':'التنقل','sb.home':'🏠 الرئيسية','sb.allplat':'🧩 كل المنصات','sb.pricing':'💳 الأسعار','sb.how':'⚡ كيف تعمل','sb.faq':'❓ الأسئلة الشائعة','sb.startfree':'🚀 ابدأ مجاناً',
     'sb.openplat':'افتح منصة','sb.settings':'⚙️ الإعدادات','sb.dark':'🌙 الوضع الليلي','sb.quickbuy':'💳 شراء سريع','sb.ltd':'🔥 صفقة العمر — $399','sb.pro':'⭐ وصول Pro كامل — $69/شهر',
+    'afi.h1':'مؤشر القروض العربي','afi.h2':'— مارس 2024',
     'ltd.h':'صفقة العمر — لأول 100 عميل فقط','ltd.p':'دفعة واحدة. وصول Pro كامل لكل منصة حالية ومستقبلية. للأبد. من غير رسوم متكررة أبداً. العرض ده بيقفل نهائياً بعد 100 حساب — من غير استثناءات، من غير تمديد.',
     'ltd.spots':' مكان من أصل 100 متبقي','ltd.worth':'بتساوي $828 سنوياً','ltd.tags':'دفعة واحدة · كل المنصات · للأبد','ltd.btn':'احصل على صفقة العمر ←',
     'cta.h1':'ابدأ حسابك المجاني','cta.h2':'اليوم','cta.sub':'انضم لمحترفين من أكتر من 105 دولة بيستخدموا أكسيوم زونز. مجاني للأبد. من غير بطاقة ائتمان.',
@@ -5319,17 +5321,26 @@ function v5ToggleCard(id){
 }
 
 /* ══ FINANCIAL IQ QUIZ ══ */
-var QUIZ_DATA=[
+var QUIZ_DATA_AR=[
   {q:'ما الفرق بين APR و IRR في القروض؟',opts:['لا فرق — كلاهما نفس الشيء','APR يحسب على الرصيد الأصلي، IRR يأخذ التناقص بالاعتبار','IRR دائماً أقل من APR','APR هو معدل سنوي فقط'],correct:1,exp:'APR يحسب على الرصيد الأصلي. IRR يأخذ تناقص الرصيد بالاعتبار — لذا IRR أعلى وأدق.'},
-  {q:'When is a loan financially justified?',opts:['Never — loans always cost money','When investment return exceeds the loan IRR','When monthly payment is under $1,000','When the bank offers 0% interest'],correct:1,exp:'A loan is justified when what you do with the money earns more than the loan costs (IRR).'},
+  {q:'متى يكون القرض مبرراً مالياً؟',opts:['أبداً — القروض دايماً بتكلّف فلوس','لما عائد الاستثمار يكون أعلى من IRR القرض','لما القسط الشهري يكون أقل من 1000 دولار','لما البنك يعرض فايدة 0%'],correct:1,exp:'القرض بيكون مبرَّر لما اللي بتعمله بالفلوس بيكسّب أكتر من تكلفة القرض (IRR).'},
   {q:'ما نسبة الدين للدخل الآمنة DTI؟',opts:['أقل من 20%','أقل من 36%','أقل من 50%','لا يهم'],correct:1,exp:'معظم المعايير المالية تعتبر أقل من 36% آمنة. فوق 43% تبدأ البنوك برفض القروض.'},
-  {q:'What is Kashf Beautification Score?',opts:['Bank appearance rating','A 0-100 score showing how much a bank hides loan costs','Bank credit rating','Customer satisfaction score'],correct:1,exp:'Kashf Beautification Score measures how misleading a loan offer is — comparing advertised APR to true IRR.'},
+  {q:'إيه هي درجة تجميل كشف (Kashf Beautification Score)؟',opts:['تقييم مظهر البنك','درجة من 0-100 توضح مدى إخفاء البنك لتكلفة القرض الحقيقية','التصنيف الائتماني للبنك','درجة رضا العملاء'],correct:1,exp:'درجة تجميل كشف بتقيس مدى تضليل عرض القرض — بمقارنة APR المُعلن بالـ IRR الحقيقي.'},
   {q:'ما هي المرابحة في التمويل الإسلامي؟',opts:['قرض بفائدة متغيرة','البنك يشتري الأصل ثم يبيعه بهامش ربح محدد','شراكة في الأرباح','إيجار ينتهي بالتملك'],correct:1,exp:'المرابحة: البنك يشتري السلعة بسعر X ثم يبيعها للعميل بـ X + هامش ربح معلوم مسبقاً.'}
 ];
+var QUIZ_DATA_EN=[
+  {q:'What is the difference between APR and IRR in loans?',opts:['No difference — they\'re the same thing','APR is calculated on the original balance, IRR accounts for the declining balance','IRR is always lower than APR','APR is only an annual rate'],correct:1,exp:'APR is calculated on the original balance. IRR accounts for the declining balance — so IRR is higher and more accurate.'},
+  {q:'When is a loan financially justified?',opts:['Never — loans always cost money','When investment return exceeds the loan IRR','When monthly payment is under $1,000','When the bank offers 0% interest'],correct:1,exp:'A loan is justified when what you do with the money earns more than the loan costs (IRR).'},
+  {q:'What is the safe Debt-to-Income (DTI) ratio?',opts:['Under 20%','Under 36%','Under 50%','It doesn\'t matter'],correct:1,exp:'Most financial standards consider under 36% safe. Above 43%, banks start rejecting loan applications.'},
+  {q:'What is Kashf Beautification Score?',opts:['Bank appearance rating','A 0-100 score showing how much a bank hides loan costs','Bank credit rating','Customer satisfaction score'],correct:1,exp:'Kashf Beautification Score measures how misleading a loan offer is — comparing advertised APR to true IRR.'},
+  {q:'What is Murabaha in Islamic finance?',opts:['A variable-rate loan','The bank buys the asset then sells it with a fixed profit margin','A profit-sharing partnership','A lease ending in ownership'],correct:1,exp:'Murabaha: the bank buys the item at price X then sells it to the customer at X + a pre-agreed profit margin.'}
+];
+function getQuizData(){ return (document.documentElement.lang === 'en') ? QUIZ_DATA_EN : QUIZ_DATA_AR; }
 var quizCurrent=0,quizScore=0;
 function v5InitQuiz(){quizCurrent=0;quizScore=0;v5ShowQuizQuestion();}
 function v5ShowQuizQuestion(){
-  var q=QUIZ_DATA[quizCurrent];
+  var QD=getQuizData();
+  var q=QD[quizCurrent];
   if(!q){v5ShowQuizResult();return;}
   var qEl=document.getElementById('quiz-question');
   var numEl=document.getElementById('quiz-num');
@@ -5338,8 +5349,8 @@ function v5ShowQuizQuestion(){
   var scoreEl=document.getElementById('quiz-score');
   if(qEl)qEl.textContent=q.q;
   if(numEl)numEl.textContent=quizCurrent+1;
-  if(totEl)totEl.textContent=QUIZ_DATA.length;
-  if(progEl)progEl.style.width=(quizCurrent/QUIZ_DATA.length*100)+'%';
+  if(totEl)totEl.textContent=QD.length;
+  if(progEl)progEl.style.width=(quizCurrent/QD.length*100)+'%';
   if(scoreEl)scoreEl.classList.remove('show');
   var optsEl=document.getElementById('quiz-opts');
   if(!optsEl)return;
@@ -5358,20 +5369,24 @@ function v5AnswerQuiz(selected,correct,exp){
   setTimeout(function(){quizCurrent++;v5ShowQuizQuestion();},1800);
 }
 function v5ShowQuizResult(){
+  var QD=getQuizData();
   var optsEl=document.getElementById('quiz-opts');if(optsEl)optsEl.innerHTML='';
   var progEl=document.getElementById('quiz-prog');if(progEl)progEl.style.width='100%';
   var qEl=document.getElementById('quiz-question');if(qEl)qEl.textContent='';
   var icons=['😔','🤔','📊','💡','🏆'];
-  var msgs=['لا بأس — الوعي المالي يُكتسب. ابدأ بـ Kashf!','جيد! بعض المفاهيم واضحة.','ممتاز! معرفتك فوق المتوسط.','رائع! أنت مدرك مالياً جداً.','مثالي! أنت خبير مالي حقيقي! 🎉'];
+  var isEn=(document.documentElement.lang==='en');
+  var msgs=isEn?['No worries — financial literacy is learned. Start with Kashf!','Good! Some concepts are clear.','Excellent! Your knowledge is above average.','Great! You are very financially aware.','Perfect! You are a true financial expert! 🎉']:['لا بأس — الوعي المالي يُكتسب. ابدأ بـ Kashf!','جيد! بعض المفاهيم واضحة.','ممتاز! معرفتك فوق المتوسط.','رائع! أنت مدرك مالياً جداً.','مثالي! أنت خبير مالي حقيقي! 🎉'];
   var idx=Math.min(quizScore,4);
   var iconEl=document.getElementById('quiz-score-icon');if(iconEl)iconEl.textContent=icons[idx];
-  var numEl=document.getElementById('quiz-score-num');if(numEl)numEl.textContent=quizScore+'/'+QUIZ_DATA.length;
+  var numEl=document.getElementById('quiz-score-num');if(numEl)numEl.textContent=quizScore+'/'+QD.length;
   var msgEl=document.getElementById('quiz-score-msg');if(msgEl)msgEl.textContent=msgs[idx];
   var scoreEl=document.getElementById('quiz-score');if(scoreEl)scoreEl.classList.add('show');
 }
 function v5RestartQuiz(){v5InitQuiz();}
 function v5ShareQuiz(){
-  var txt='اختبرت معرفتي المالية على Axiom Zones وحصلت على '+quizScore+'/'+QUIZ_DATA.length+' 🏆\naxiomzones.com #الوعي_المالي';
+  var QD=getQuizData();
+  var isEn=(document.documentElement.lang==='en');
+  var txt=isEn?('I tested my financial IQ on Axiom Zones and scored '+quizScore+'/'+QD.length+' 🏆\naxiomzones.com #FinancialLiteracy'):('اختبرت معرفتي المالية على Axiom Zones وحصلت على '+quizScore+'/'+QD.length+' 🏆\naxiomzones.com #الوعي_المالي');
   if(navigator.clipboard){navigator.clipboard.writeText(txt);azV4Toast('Text copied — paste on X/Twitter! 🎉');}
 }
 
