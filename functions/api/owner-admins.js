@@ -107,6 +107,7 @@ export async function onRequestPost(context) {
       createdBy: 'owner',
     };
     await env.AZ_ADMINS_KV.put(key, JSON.stringify(record));
+    await writeLog(env, 'admin', 'owner', `Created admin: ${email}`);
     return new Response(JSON.stringify({ ok: true, admin: { email, name, permissions } }), { headers });
   }
 
@@ -129,11 +130,13 @@ export async function onRequestPost(context) {
     }
 
     await env.AZ_ADMINS_KV.put(key, JSON.stringify(rec));
+    await writeLog(env, 'admin', 'owner', `Updated admin: ${email}`);
     return new Response(JSON.stringify({ ok: true, admin: { email: rec.email, name: rec.name, permissions: rec.permissions, disabled: !!rec.disabled } }), { headers });
   }
 
   if (action === 'delete') {
     await env.AZ_ADMINS_KV.delete(key);
+    await writeLog(env, 'admin', 'owner', `Deleted admin: ${email}`);
     return new Response(JSON.stringify({ ok: true }), { headers });
   }
 
@@ -160,4 +163,15 @@ async function hashPassword(password, salt) {
 function base64url(bytes) {
   let str = btoa(String.fromCharCode(...bytes));
   return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function writeLog(env, type, actor, detail) {
+  if (!env.AZ_CONFIG_KV) return;
+  try {
+    const id = crypto.randomUUID();
+    const at = new Date().toISOString();
+    await env.AZ_CONFIG_KV.put(`syslog:${at}:${id}`, JSON.stringify({ type, actor, detail, at }), {
+      expirationTtl: 60 * 60 * 24 * 90,
+    });
+  } catch (e) {}
 }

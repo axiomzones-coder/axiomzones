@@ -42,6 +42,7 @@ export async function onRequestPost(context) {
   await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(body.config));
   // سجل تدقيق بسيط لمعرفة آخر من عدَّل الإعدادات (مالك أو مدير مُحدَّد بالإيميل)
   try { await env.AZ_CONFIG_KV.put('az_master_config_last_editor', JSON.stringify({ actor: actor, at: new Date().toISOString() })); } catch (e) {}
+  await writeLog(env, 'config', actor, 'Updated platform/pricing configuration');
 
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
 }
@@ -94,4 +95,15 @@ async function checkAdminPermission(request, env, permission) {
 function base64url(bytes) {
   let str = btoa(String.fromCharCode(...bytes));
   return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function writeLog(env, type, actor, detail) {
+  if (!env.AZ_CONFIG_KV) return;
+  try {
+    const id = crypto.randomUUID();
+    const at = new Date().toISOString();
+    await env.AZ_CONFIG_KV.put(`syslog:${at}:${id}`, JSON.stringify({ type, actor, detail, at }), {
+      expirationTtl: 60 * 60 * 24 * 90,
+    });
+  } catch (e) {}
 }

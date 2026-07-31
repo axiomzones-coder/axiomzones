@@ -39,6 +39,7 @@ export async function onRequestPost(context) {
 
   await clearRateLimit(env, ip);
   const token = await makeToken(env.OWNER_SECRET || expected);
+  await writeLog(env, 'auth', 'owner', 'Owner logged in');
   const headers = new Headers({ 'content-type': 'application/json' });
   headers.append(
     'Set-Cookie',
@@ -72,6 +73,18 @@ async function registerFailure(env, ip) {
 async function clearRateLimit(env, ip) {
   if (!env.AZ_CONFIG_KV) return;
   try { await env.AZ_CONFIG_KV.delete(`ratelimit:owner:${ip}`); } catch (e) {}
+}
+
+// ── تسجيل حدث في سجل الأحداث الحقيقي (System Logs) — فشل الكتابة لا يوقف العملية الأساسية أبداً ──
+async function writeLog(env, type, actor, detail) {
+  if (!env.AZ_CONFIG_KV) return;
+  try {
+    const id = crypto.randomUUID();
+    const at = new Date().toISOString();
+    await env.AZ_CONFIG_KV.put(`syslog:${at}:${id}`, JSON.stringify({ type, actor, detail, at }), {
+      expirationTtl: 60 * 60 * 24 * 90, // 90 يوماً
+    });
+  } catch (e) {}
 }
 
 // مقارنة بزمن ثابت (تمنع هجمات قياس الزمن) عبر مقارنة هاش القيمتين
