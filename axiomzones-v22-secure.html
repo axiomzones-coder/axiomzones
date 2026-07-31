@@ -10,7 +10,7 @@
 
 <!-- ══ PRIMARY META ══ -->
 <title>Axiom Zones — منظومة رقمية في صفّك | كشف · Prism · دار · عقار · UniUber</title>
-<meta name="description" content="Axiom Zones — منظومة SaaS مالية عالمية: كشف يكشف IRR القروض الحقيقي، Prism لمقارنة القروض، دار وعقار لقرارات الشراء العقاري، UniUber للزي الموحد. مجاناً للمستخدم العربي أولاً."/>
+<meta name="description" content="Axiom Zones — منظومة SaaS عالمية متكاملة: كشف يكشف IRR القروض الحقيقي، Prism لمقارنة القروض، دار وعقار لقرارات الشراء العقاري، UniUber للتوريد والزي الموحد. أدوات احترافية لكل فرد ومؤسسة وشركة حول العالم، بأكثر من 95 لغة."/>
 <meta name="keywords" content="كشف قروض، IRR حقيقي، مقارنة قروض، حاسبة مرابحة، جدوى عقارية، Kashf, Prism loan calculator, Arab financial tools, Islamic finance calculator, loan true cost, real estate feasibility"/>
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://axiomzones.com/"/>
@@ -2218,7 +2218,13 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div class="n-ctrl">
     <!-- THEME TOGGLE -->
     <button class="theme-btn" id="theme-btn" onclick="azV4Theme()" aria-label="Toggle dark/light mode" title="Dark / Light Mode">🌙</button>
-    <button class="btn-no btn-n" id="nav-login-btn" onclick="openLogin()" data-i18n="nav.login">Login</button>
+    <div style="position:relative;display:inline-block">
+      <button class="btn-no btn-n" id="nav-login-btn" onclick="openLogin()" data-i18n="nav.login">Login</button>
+      <div id="nav-user-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:0;min-width:170px;background:var(--bg2,#0a0d1a);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:10px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:200">
+        <a href="axiomzones-dashboard.html" style="display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:7px;color:var(--t2,#c8ccd6);text-decoration:none;font-size:.82rem;font-family:'Tajawal',sans-serif" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='transparent'">🏠 <span>My Dashboard</span></a>
+        <a href="javascript:void(0)" onclick="azUserLogout()" style="display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:7px;color:#f87171;text-decoration:none;font-size:.82rem;font-family:'Tajawal',sans-serif" onmouseover="this.style.background='rgba(239,68,68,.08)'" onmouseout="this.style.background='transparent'">⏻ <span>Logout</span></a>
+      </div>
+    </div>
     <button class="btn-ng btn-n" onclick="azV4GoTo('pricing')" data-i18n="nav.start">Get Started</button>
     <button class="btn-no btn-n" style="font-size:.9rem;padding:8px 13px" onclick="openDash()" title="Owner Dashboard" aria-label="Owner Dashboard">⚙</button>
     <!-- HAMBURGER — mobile only -->
@@ -2260,7 +2266,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <br/>
         <span class="hw"><span class="hwi gold-w">ZONES</span></span>
       </h1>
-      <p class="h-desc" data-i18n="h.desc">A global ecosystem of advanced technology platforms — built for the world. Supply chains, real estate, talent, and beyond. Imperial scale. Infinite ambition.</p>
+      <div id="az-pronounce" style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:1px;color:var(--t3);margin-top:-22px;margin-bottom:22px;opacity:0;animation:fup .8s var(--ease-imp) 2.4s forwards"></div>
+      <p class="h-desc" data-i18n="h.desc">A global ecosystem of advanced technology platforms — built for everyone, everywhere: individuals, businesses, institutions, and governments alike. Supply chains, real estate, talent, finance, and beyond. Imperial scale. Infinite ambition.</p>
 
       <div id="az-search-wrap" class="az-search-wrap">
         <div class="az-search-box">
@@ -2778,15 +2785,15 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div class="ltd-v4 rv4">
       <div>
         <div style="font-size:1.8rem;margin-bottom:8px">🔥</div>
-        <h3 style="font-family:var(--font-display,'Cormorant',serif);font-size:1.7rem;font-weight:700;margin-bottom:6px">Lifetime Deal — First 100 Only</h3>
-        <p style="font-size:.84rem;color:#8892b0;line-height:1.8;max-width:480px">One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.</p>
-        <div class="sc-strip" style="margin-top:12px"><span class="sc-dot"></span><span id="az-ltd-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:#8892b0"> of 100 lifetime spots remaining</span></div>
+        <h3 style="font-family:var(--font-display,'Cormorant',serif);font-size:1.7rem;font-weight:700;margin-bottom:6px" data-i18n="ltd.h">Lifetime Deal — First 100 Only</h3>
+        <p style="font-size:.84rem;color:#8892b0;line-height:1.8;max-width:480px" data-i18n="ltd.p">One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.</p>
+        <div class="sc-strip" style="margin-top:12px"><span class="sc-dot"></span><span id="az-ltd-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:#8892b0" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
       </div>
       <div style="text-align:center;flex-shrink:0">
-        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.7rem;text-decoration:line-through;color:#3d4a6b;margin-bottom:4px">Worth $828/year</div>
+        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.7rem;text-decoration:line-through;color:#3d4a6b;margin-bottom:4px" data-i18n="ltd.worth">Worth $828/year</div>
         <div style="font-family:var(--font-display,'Cormorant',serif);font-size:3.5rem;font-weight:700;background:linear-gradient(135deg,#c9a84c,#e8c86a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">$399</div>
-        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;color:#3d4a6b;margin:3px 0 10px;letter-spacing:1px">ONE-TIME · ALL PLATFORMS · FOREVER</div>
-        <button onclick="azV4Checkout('lifetime')" style="padding:12px 28px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.9rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 30px rgba(201,168,76,.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''">Claim Lifetime Deal →</button>
+        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;color:#3d4a6b;margin:3px 0 10px;letter-spacing:1px" data-i18n="ltd.tags">ONE-TIME · ALL PLATFORMS · FOREVER</div>
+        <button onclick="azV4Checkout('lifetime')" style="padding:12px 28px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.9rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 30px rgba(201,168,76,.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-i18n="ltd.btn">Claim Lifetime Deal →</button>
       </div>
     </div>
   </div>
@@ -2794,14 +2801,14 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 <!-- ══ FINAL CTA / GET STARTED ══ -->
 <section id="cta" style="padding:80px 24px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(201,168,76,.06),transparent);border-top:1px solid rgba(255,255,255,.05)">
-  <div class="sc-strip rv4" style="display:inline-flex;margin-bottom:14px"><span class="sc-dot"></span><span id="az-cta-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:#8892b0"> of 100 lifetime spots remaining</span></div>
-  <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:10px" class="rv4 d1">Start Your Free Account <em style="font-weight:300;font-style:italic;color:#c9a84c">Today</em></h2>
-  <p style="font-size:.92rem;color:#8892b0;max-width:480px;margin:0 auto 24px;line-height:1.9" class="rv4 d2">Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.</p>
+  <div class="sc-strip rv4" style="display:inline-flex;margin-bottom:14px"><span class="sc-dot"></span><span id="az-cta-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:#8892b0" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
+  <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:10px" class="rv4 d1"><span data-i18n="cta.h1">Start Your Free Account</span> <em style="font-weight:300;font-style:italic;color:#c9a84c" data-i18n="cta.h2">Today</em></h2>
+  <p style="font-size:.92rem;color:#8892b0;max-width:480px;margin:0 auto 24px;line-height:1.9" class="rv4 d2" data-i18n="cta.sub">Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.</p>
   <div style="display:flex;gap:8px;max-width:440px;margin:0 auto 12px" class="rv4 d2">
-    <input id="az-final-email" type="email" placeholder="your@email.com" style="flex:1;background:#141c2e;border:1.5px solid rgba(201,168,76,.2);color:#f0f2ff;padding:13px 16px;border-radius:9px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;outline:none" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(201,168,76,.2)'" aria-label="Email address"/>
-    <button onclick="azV4JoinFinal()" style="padding:13px 24px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">Start Free →</button>
+    <input id="az-final-email" type="email" placeholder="your@email.com" data-i18n-ph="cta.email" style="flex:1;background:#141c2e;border:1.5px solid rgba(201,168,76,.2);color:#f0f2ff;padding:13px 16px;border-radius:9px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;outline:none" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(201,168,76,.2)'" aria-label="Email address"/>
+    <button onclick="azV4JoinFinal()" style="padding:13px 24px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''" data-i18n="cta.btn">Start Free →</button>
   </div>
-  <p style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:1px;color:#3d4a6b;text-transform:uppercase" class="rv4">No spam · No credit card · Full free tier · Cancel anytime</p>
+  <p style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:1px;color:#3d4a6b;text-transform:uppercase" class="rv4" data-i18n="cta.note">No spam · No credit card · Full free tier · Cancel anytime</p>
 </section>
 
 </main>
@@ -3738,6 +3745,10 @@ function setCurr(c){ CURR=c; syncCurrSelects(c); refreshPrices(); }
 var STATIC = {
   en:{
     'nav.p':'Platforms','nav.a':'About','nav.pr':'Pricing','nav.c':'Contact','nav.login':'Login','nav.start':'Get Started',
+    'ltd.h':'Lifetime Deal — First 100 Only','ltd.p':'One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.',
+    'ltd.spots':' of 100 lifetime spots remaining','ltd.worth':'Worth $828/year','ltd.tags':'ONE-TIME · ALL PLATFORMS · FOREVER','ltd.btn':'Claim Lifetime Deal →',
+    'cta.h1':'Start Your Free Account','cta.h2':'Today','cta.sub':'Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.',
+    'cta.email':'your@email.com','cta.btn':'Start Free →','cta.note':'No spam · No credit card · Full free tier · Cancel anytime',
     'faq.title1':'Common','faq.title2':'Questions',
     'faq.q1':'Is Axiom Zones really free to start?','faq.a1':'Yes — permanently. Every platform has a free tier that never expires and requires no credit card. The free tiers are genuinely useful, not crippled demos. We believe in earning your subscription through demonstrated value, not trapping you with paywalls.',
     'faq.q2':'One account works across all platforms?','faq.a2':'Yes. Create one Axiom Zones account and it grants access to every platform you subscribe to — on web, iOS, Android, Windows, and macOS. Your subscriptions travel with you across all devices seamlessly.',
@@ -3768,7 +3779,7 @@ var STATIC = {
     'err.serverErr':'Service not configured yet — contact support','err.generic':'Something went wrong, please try again',
     'err.network':'Could not reach the server — please try again later','err.fillFields':'Please complete login credentials',
     'h.eye':'✦ World\'s Premier Digital Venture Studio', 'h.search':'What service are you looking for? Describe your need… (e.g. buy vs rent a home)',
-    'h.desc':'A global ecosystem of advanced technology platforms — built for the world. Supply chains, real estate, talent, and beyond. Imperial scale. Infinite ambition.',
+    'h.desc':'A global ecosystem of advanced technology platforms — built for everyone, everywhere: individuals, businesses, institutions, and governments alike. Supply chains, real estate, talent, finance, and beyond. Imperial scale. Infinite ambition.',
     'h.cta1':'🚀 Explore Platforms','h.cta2':'View Pricing ↓',
     'm.subs':'Clients','m.ret':'Retention','m.plats':'Active Platforms','m.curr':'Currencies','m.lang':'Languages',
     'n.p':'Active Platforms','n.pd':'Integrated SaaS','n.c':'Currencies','n.cd':'Every world currency',
@@ -3808,6 +3819,10 @@ var STATIC = {
   },
   ar:{
     'nav.p':'المنصات','nav.a':'من نحن','nav.pr':'الباقات','nav.c':'تواصل','nav.login':'دخول','nav.start':'ابدأ الآن',
+    'ltd.h':'صفقة العمر — لأول 100 عميل فقط','ltd.p':'دفعة واحدة. وصول Pro كامل لكل منصة حالية ومستقبلية. للأبد. من غير رسوم متكررة أبداً. العرض ده بيقفل نهائياً بعد 100 حساب — من غير استثناءات، من غير تمديد.',
+    'ltd.spots':' مكان من أصل 100 متبقي','ltd.worth':'بتساوي $828 سنوياً','ltd.tags':'دفعة واحدة · كل المنصات · للأبد','ltd.btn':'احصل على صفقة العمر ←',
+    'cta.h1':'ابدأ حسابك المجاني','cta.h2':'اليوم','cta.sub':'انضم لمحترفين من أكتر من 105 دولة بيستخدموا أكسيوم زونز. مجاني للأبد. من غير بطاقة ائتمان.',
+    'cta.email':'بريدك@الإلكتروني.com','cta.btn':'ابدأ مجاناً ←','cta.note':'من غير سبام · من غير بطاقة ائتمان · باقة مجانية كاملة · ألغِ في أي وقت',
     'faq.title1':'الأسئلة','faq.title2':'الشائعة',
     'faq.q1':'هل أكسيوم زونز مجاني فعلاً للبدء؟','faq.a1':'أيوه — بشكل دائم. كل منصة فيها باقة مجانية مالهاش تاريخ انتهاء ومحتاجة بطاقة ائتمان. الباقات المجانية مفيدة فعلاً، مش نسخة تجريبية منقوصة. إحنا بنؤمن إننا نكسب اشتراكك من خلال قيمة حقيقية، مش من خلال حبسك في جدار دفع.',
     'faq.q2':'حساب واحد يشتغل على كل المنصات؟','faq.a2':'أيوه. أنشئ حساب واحد في أكسيوم زونز وهيديك وصول لكل منصة مشترك فيها — على الويب وiOS وAndroid وWindows وmacOS. اشتراكاتك بتتنقل معاك عبر كل أجهزتك بسلاسة.',
@@ -3838,7 +3853,7 @@ var STATIC = {
     'err.serverErr':'الخدمة غير مهيّأة بعد — راجع الإدارة','err.generic':'حدث خطأ، حاول تاني',
     'err.network':'تعذّر الاتصال بالسيرفر — حاول لاحقاً','err.fillFields':'يرجى إكمال بيانات الدخول',
     'h.eye':'✦ منصة المشاريع الرقمية الأولى عالمياً', 'h.search':'عن أي خدمة تبحث؟ اكتب مشكلتك… (مثال: أشتري بيت ولا أستأجر)',
-    'h.desc':'منظومة عالمية متكاملة من منصات التقنية المتقدمة — مبنية للعالم. سلاسل إمداد، عقارات، كفاءات، وأكثر. بمستوى إمبراطوري وطموح لا حدود له.',
+    'h.desc':'منظومة عالمية متكاملة من منصات التقنية المتقدمة — لكل فرد ومؤسسة وشركة وحكومة، في أي مكان حول العالم. سلاسل إمداد، عقارات، كفاءات، تمويل، وأكثر. بمستوى إمبراطوري وطموح لا حدود له.',
     'h.cta1':'🚀 استكشف المنصات','h.cta2':'عرض الباقات ↓',
     'm.subs':'عميل','m.ret':'احتفاظ','m.plats':'منصة نشطة','m.curr':'عملة','m.lang':'لغة',
     'n.p':'منصة نشطة','n.pd':'SaaS متكاملة','n.c':'عملة مدعومة','n.cd':'كل عملات العالم',
@@ -3879,7 +3894,7 @@ var STATIC = {
   fr:{
     'nav.p':'Plateformes','nav.a':'À propos','nav.pr':'Tarifs','nav.c':'Contact','nav.login':'Connexion','nav.start':'Commencer',
     'h.eye':'✦ Premier Venture Studio Digital Mondial', 'h.search':'Quel service recherchez-vous ? Décrivez votre besoin…',
-    'h.desc':'Un écosystème mondial de plateformes technologiques avancées — construit pour le monde. Chaînes d\'approvisionnement, immobilier, talents. À l\'échelle impériale.',
+    'h.desc':'Un écosystème mondial de plateformes technologiques avancées — pour chaque individu, entreprise et institution, partout dans le monde. Chaînes d\'approvisionnement, immobilier, talents, finance. À l\'échelle impériale.',
     'h.cta1':'🚀 Explorer les Plateformes','h.cta2':'Voir les Tarifs ↓',
     'p.u.n':'UniUber','p.l.n':'LogiShield','p.pp.n':'PropPulse','p.t.n':'TalentFlow',
     'st.live':'En ligne','st.beta':'Bêta','st.soon':'Bientôt',
@@ -3903,14 +3918,38 @@ var STATIC = {
 };
 
 var RTL = ['ar','fa','ur','he','ku','yi'];
+/* ══ نطق/كتابة اسم "Axiom Zones" بلغة المستخدم الحالية — تحت الشعار مباشرة ══ */
+/* المرحلة الأولى: أهم 6 لغات يدوياً بدقة، يمكن التوسّع لاحقاً حسب الحاجة */
+var AZ_PRONOUNCE = {
+  ar: 'أكسيوم زونز',
+  fr: 'Axiome Zones — se prononce "Aksiome Zones"',
+  es: 'Axiom Zones — se pronuncia "Áksiom Zons"',
+  de: 'Axiom Zones — ausgesprochen "Axiom Sohns"',
+  zh: '阿克西姆·佐恩斯 (Ākèxīmǔ Zuǒēnsī)',
+  ja: 'アクシオム ゾーンズ (Akushiomu Zōnzu)',
+};
+
+function azUpdatePronunciation(lang){
+  var el = document.getElementById('az-pronounce');
+  if(!el) return;
+  var text = AZ_PRONOUNCE[lang];
+  el.textContent = text || '';
+  el.style.display = text ? 'block' : 'none';
+}
+
 function applyT(lang, T){
   var isRTL = RTL.indexOf(lang) !== -1;
   document.documentElement.lang = lang;
   document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
   document.body.classList.toggle('ltr', !isRTL);
+  azUpdatePronunciation(lang);
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k = el.dataset.i18n, v = T[k];
     if(v !== undefined) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+    var k = el.dataset.i18nPh, v = T[k];
+    if(v !== undefined) el.setAttribute('placeholder', v);
   });
 }
 
@@ -6060,14 +6099,46 @@ var AZ_PLATFORMS_DATA = {
 
 /* ══ تحديث زرار Login في الهيدر ليعكس حالة تسجيل الدخول الحقيقية ══ */
 function azApplyUserUI(user){
-  var label = '👤 ' + (user && (user.name || (user.email||'').split('@')[0]) || 'حسابي');
-  ['nav-login-btn','mob-login-btn'].forEach(function(id){
-    var btn = document.getElementById(id);
-    if(!btn) return;
-    btn.textContent = label;
-    btn.removeAttribute('data-i18n'); // منع نظام الترجمة من إعادة النص لـ "Login"
-    btn.onclick = function(){ window.location.href = 'axiomzones-dashboard.html'; };
-  });
+  var fullName = (user && (user.name || (user.email||'').split('@')[0])) || 'حسابي';
+  var label = '👤 ' + fullName;
+
+  var desktopBtn = document.getElementById('nav-login-btn');
+  if(desktopBtn){
+    desktopBtn.textContent = label;
+    desktopBtn.removeAttribute('data-i18n');
+    desktopBtn.title = fullName;
+    desktopBtn.style.fontSize = '.86rem';
+    desktopBtn.style.maxWidth = '160px';
+    desktopBtn.style.overflow = 'hidden';
+    desktopBtn.style.textOverflow = 'ellipsis';
+    desktopBtn.style.whiteSpace = 'nowrap';
+    desktopBtn.onclick = function(e){
+      e.stopPropagation();
+      var dd = document.getElementById('nav-user-dropdown');
+      if(dd) dd.style.display = (dd.style.display === 'none' || !dd.style.display) ? 'block' : 'none';
+    };
+  }
+
+  var mobBtn = document.getElementById('mob-login-btn');
+  if(mobBtn){
+    mobBtn.textContent = label;
+    mobBtn.removeAttribute('data-i18n');
+    mobBtn.title = fullName;
+    mobBtn.onclick = function(){ window.location.href = 'axiomzones-dashboard.html'; };
+  }
+}
+
+/* ── إغلاق القائمة المنسدلة عند الضغط في أي مكان خارجها ── */
+document.addEventListener('click', function(e){
+  var dd = document.getElementById('nav-user-dropdown');
+  if(!dd || dd.style.display === 'none' || !dd.style.display) return;
+  if(!dd.contains(e.target) && e.target.id !== 'nav-login-btn') dd.style.display = 'none';
+});
+
+/* ── تسجيل خروج المستخدم العادي مباشرة من الهيدر ── */
+async function azUserLogout(){
+  try{ await fetch('/api/user-logout', { method:'POST', credentials:'include' }); }catch(e){}
+  window.location.reload();
 }
 
 /* ══ فحص جلسة المستخدم تلقائياً عند تحميل الصفحة — لو مسجّل دخول من قبل، الهيدر يعكس ذلك فوراً ══ */
