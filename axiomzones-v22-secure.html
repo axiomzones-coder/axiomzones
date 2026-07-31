@@ -3016,7 +3016,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div style="display:flex;align-items:center;gap:12px">
       <button onclick="closeDash()" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t2);padding:6px 12px;border-radius:7px;cursor:none;font-size:.77rem;font-family:'Tajawal',sans-serif">← Back</button>
       <button onclick="azOwnerLogout()" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;padding:6px 12px;border-radius:7px;cursor:none;font-size:.77rem;font-family:'Tajawal',sans-serif">⏻ Logout</button>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:4px"><span style="background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AXIOM</span> <span style="color:var(--t3);font-size:.68rem;letter-spacing:2px;vertical-align:middle;font-family:'DM Mono',monospace">OWNER DASHBOARD</span></div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:4px"><span style="background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AXIOM</span> <span style="color:var(--t3);font-size:.68rem;letter-spacing:2px;vertical-align:middle;font-family:'DM Mono',monospace" id="dash-role-label">OWNER DASHBOARD</span></div>
     </div>
     <div style="display:flex;align-items:center;gap:9px">
       <span style="font-size:.7rem;color:var(--t3);font-family:'DM Mono',monospace">sync: <span style="color:var(--gold)" id="d-time"></span></span>
@@ -4239,6 +4239,7 @@ async function doAdminLogin(){
       AZ_ADMIN_PERMISSIONS = data.admin.permissions || {};
       openDashUnlocked();
       azApplyAdminNavFilter();
+      var roleLabel = document.getElementById('dash-role-label'); if(roleLabel) roleLabel.textContent = 'ADMIN DASHBOARD';
       toast('Welcome, ' + (data.admin.name || email) + ' ✦');
       return;
     }
@@ -4272,7 +4273,7 @@ async function openDash(){
   if(azOwnerLocked()){ toast('محاولات كثيرة — حاول لاحقاً'); return; }
   var code=prompt('🔐 Owner Access Code:');
   if(code===null) return;
-  if(await azCheckOwnerCode(code)){ AZ_CURRENT_ROLE='owner'; openDashUnlocked(); }
+  if(await azCheckOwnerCode(code)){ AZ_CURRENT_ROLE='owner'; var rl=document.getElementById('dash-role-label'); if(rl) rl.textContent='OWNER DASHBOARD'; openDashUnlocked(); }
   else { toast('Incorrect code'); }
 }
 function openDashUnlocked(){
