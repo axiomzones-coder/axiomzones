@@ -3147,11 +3147,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <!-- PLATFORMS -->
       <div class="dsec" id="ds-platforms">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Platform Control <span style="color:var(--gold)">✦</span></h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">👔</div><div style="font-weight:700;margin-bottom:2px">UniUber</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">uniuber.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="uniuber" onchange="toggleP('uniuber',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🔐</div><div style="font-weight:700;margin-bottom:2px">LogiShield</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">logishield.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="logishield" onchange="toggleP('logishield',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🏙️</div><div style="font-weight:700;margin-bottom:2px">PropPulse</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">proppulse.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="proppulse" onchange="toggleP('proppulse',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Coming Soon Mode</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Waitlist</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
-          <div class="dcard" style="padding:16px"><div style="font-size:1.2rem;margin-bottom:6px">🧠</div><div style="font-weight:700;margin-bottom:2px">TalentFlow</div><div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:'DM Mono',monospace">talentflow.axiomzones.com</div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" data-plat-toggle="talentflow" onchange="toggleP('talentflow',this)"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Maintenance</span><label class="tog"><input type="checkbox"/><span class="tsl"></span></label></div><div class="twrap"><span style="font-size:.8rem;color:var(--t2)">New Subs</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div></div>
+        <p style="font-size:.75rem;color:var(--t3);margin-bottom:16px">تُبنى هذه القائمة تلقائياً من كل منصة حقيقية موجودة في الموقع — أي منصة تُضاف للموقع تظهر هنا تلقائياً بدون تعديل يدوي.</p>
+        <div id="platform-toggle-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+          <div style="color:var(--t3);font-size:.8rem">Loading...</div>
         </div>
       </div>
       <!-- REVENUE -->
@@ -4488,21 +4486,33 @@ async function toggleP(key, el){
   el.disabled = false;
 }
 
-/* ── تحميل حالة تفعيل كل منصة الحقيقية عند فتح تبويب Platforms ── */
+/* ── بناء تبويب Platforms ديناميكياً من AZ_PLATFORMS_DATA الحقيقي — نفس مصدر بيانات الموقع الرئيسي بالضبط ── */
 async function azLoadPlatformToggles(){
+  var grid = document.getElementById('platform-toggle-grid');
+  if(!grid) return;
+  grid.innerHTML = '<div style="color:var(--t3);font-size:.8rem">Loading...</div>';
+
+  var config = {};
   try{
     var res = await fetch('/api/config-get');
     var data = await res.json();
-    var platforms = (data && data.config && data.config.platforms) || {};
-    document.querySelectorAll('[data-plat-toggle]').forEach(function(cb){
-      var key = cb.getAttribute('data-plat-toggle');
-      if(platforms[key] && typeof platforms[key].active === 'boolean'){
-        cb.checked = platforms[key].active;
-      } else {
-        cb.checked = true; // لا يوجد إعداد محفوظ بعد — المنصة تعتبر مفعّلة افتراضياً (نفس السلوك الافتراضي في الموقع الرئيسي)
-      }
-    });
-  }catch(e){ /* تبقى القيم الافتراضية كما هي */ }
+    config = (data && data.config) || {};
+  }catch(e){}
+  var platforms = config.platforms || {};
+
+  var keys = Object.keys(AZ_PLATFORMS_DATA);
+  grid.innerHTML = keys.map(function(key){
+    var p = AZ_PLATFORMS_DATA[key];
+    var saved = platforms[key];
+    var isActive = (saved && typeof saved.active === 'boolean') ? saved.active : (p.status === 'live');
+    var checkedAttr = isActive ? 'checked' : '';
+    return '<div class="dcard" style="padding:16px">'+
+      '<div style="font-size:1.2rem;margin-bottom:6px">'+(p.icon||'🔷')+'</div>'+
+      '<div style="font-weight:700;margin-bottom:2px">'+(p.name_en||key)+'</div>'+
+      '<div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:\'DM Mono\',monospace">'+key+'.axiomzones.com</div>'+
+      '<div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" '+checkedAttr+' onchange="toggleP(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
+    '</div>';
+  }).join('');
 }
 
 /* ══════════════════════════════════════
