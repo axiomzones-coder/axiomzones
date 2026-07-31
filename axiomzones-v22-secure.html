@@ -2943,7 +2943,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="fcol"><div class="fct" data-i18n="ft.c3">Legal</div><a href="#" onclick="openLegal('privacy');return false" data-i18n="ft.priv">Privacy Policy</a><a href="#" onclick="openLegal('terms');return false" data-i18n="ft.terms">Terms & Conditions</a><a href="#" onclick="openLegal('disc');return false" data-i18n="ft.disc">Disclaimer</a><a href="#" onclick="openLegal('refund');return false" data-i18n="ft.refund">Refund Policy</a></div>
     </div>
     <div class="fbot">
-      <div class="fcp">© 2024 <span style="color:var(--gold)">AXIOM ZONES</span> · <span data-i18n="ft.rights">All rights reserved</span></div>
+      <div class="fcp">© 2024 <span style="color:var(--gold)">AXIOM ZONES</span> · <span data-i18n="ft.rights">All rights reserved</span> · <a href="javascript:void(0)" onclick="document.getElementById('admin-login-modal').classList.add('open');document.body.style.overflow='hidden';" style="color:var(--t3);text-decoration:none;font-size:.7rem;opacity:.6">Staff</a></div>
       <div class="sw"><a class="sa" href="https://twitter.com/axiomzones" aria-label="X" rel="noopener">𝕏</a><a class="sa" href="https://linkedin.com/company/axiomzones" aria-label="LinkedIn" rel="noopener">in</a><a class="sa" href="#" aria-label="Instagram">◉</a><a class="sa" href="https://wa.me/1" aria-label="WhatsApp" rel="noopener">✆</a></div>
       <div class="fcp">🌍 Global First</div>
     </div>
@@ -2996,6 +2996,20 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   </div>
 </div>
 
+<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
+<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px">STAFF ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace">Admin credentials only</p>
+    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')">Cancel</button>
+  </div>
+</div>
+
+
 <!-- ═══ DASHBOARD ═══ -->
 <div id="dash" role="dialog" aria-modal="true" aria-label="Owner Dashboard">
   <div class="dn">
@@ -3013,19 +3027,48 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div style="display:flex">
     <nav class="dsb">
       <div class="dmi on" onclick="swD('overview',this)"><span>📊</span><span>Overview</span></div>
-      <div class="dmi" onclick="swD('analytics',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('analytics',this);}"><span>📈</span><span>Analytics</span></div>
-      <div class="dmi" onclick="swD('subs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('subs',this);}"><span>👥</span><span>Subscribers</span></div>
-      <div class="dmi" onclick="swD('platforms',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('platforms',this);}"><span>🚀</span><span>Platforms</span></div>
-      <div class="dmi" onclick="swD('revenue',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('revenue',this);}"><span>💰</span><span>Revenue</span></div>
-      <div class="dmi" onclick="swD('marketing',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('marketing',this);}"><span>📢</span><span>Marketing</span></div>
-      <div class="dmi" onclick="swD('licenses',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('licenses',this);}"><span>🔑</span><span>Licenses</span></div>
-      <div class="dmi" onclick="swD('notifications',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('notifications',this);}"><span>🔔</span><span>Notifications</span></div>
-      <div class="dmi" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
-      <div class="dmi" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
-      <div class="dmi" onclick="swD('settings',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('settings',this);}"><span>⚙️</span><span>Settings</span></div>
+      <div class="dmi" data-sec="analytics" onclick="swD('analytics',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('analytics',this);}"><span>📈</span><span>Analytics</span></div>
+      <div class="dmi" data-sec="subs" onclick="swD('subs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('subs',this);}"><span>👥</span><span>Subscribers</span></div>
+      <div class="dmi" data-sec="platforms" onclick="swD('platforms',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('platforms',this);}"><span>🚀</span><span>Platforms</span></div>
+      <div class="dmi" data-sec="revenue" onclick="swD('revenue',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('revenue',this);}"><span>💰</span><span>Revenue</span></div>
+      <div class="dmi" data-sec="marketing" onclick="swD('marketing',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('marketing',this);}"><span>📢</span><span>Marketing</span></div>
+      <div class="dmi" data-sec="licenses" onclick="swD('licenses',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('licenses',this);}"><span>🔑</span><span>Licenses</span></div>
+      <div class="dmi" data-sec="notifications" onclick="swD('notifications',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('notifications',this);}"><span>🔔</span><span>Notifications</span></div>
+      <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
+      <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
+      <div class="dmi" data-sec="settings" onclick="swD('settings',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('settings',this);}"><span>⚙️</span><span>Settings</span></div>
+      <div class="dmi" data-sec="admins" onclick="swD('admins',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('admins',this);}"><span>🛡️</span><span>Admins</span></div>
     </nav>
     <div class="dbody">
       <!-- OVERVIEW -->
+      <div class="dsec" id="ds-admins">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Admins <span style="color:var(--gold)">✦</span></h2>
+
+        <div class="dcard" style="margin-bottom:18px">
+          <div class="dct">➕ Add New Admin</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div><label class="fl">Name</label><input class="di" id="adm-new-name" placeholder="Ahmed Ali"/></div>
+            <div><label class="fl">Email</label><input class="di" id="adm-new-email" type="email" placeholder="admin@company.com"/></div>
+          </div>
+          <label class="fl">Password (min 8 chars)</label><input class="di" id="adm-new-pass" type="password" style="margin-bottom:12px"/>
+          <label class="fl" style="margin-bottom:8px;display:block">Permissions</label>
+          <div style="display:flex;gap:18px;margin-bottom:16px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:6px;font-size:.8rem;cursor:pointer"><input type="checkbox" id="adm-new-perm-platforms"/> Platforms</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.8rem;cursor:pointer"><input type="checkbox" id="adm-new-perm-analytics"/> Analytics</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.8rem;cursor:pointer"><input type="checkbox" id="adm-new-perm-users"/> Users</label>
+          </div>
+          <button class="bsub" style="width:auto;padding:10px 22px" onclick="azCreateAdmin()">Create Admin</button>
+          <div id="adm-create-msg" style="margin-top:10px;font-size:.78rem"></div>
+        </div>
+
+        <div class="dcard">
+          <div class="dct">Current Admins</div>
+          <div id="adm-list" style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
+          </div>
+        </div>
+      </div>
+
       <div class="dsec on" id="ds-overview">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Imperial Dashboard <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
@@ -4045,7 +4088,118 @@ async function doLogin(){
   }
 }
 
-var AZ_LOGIN_MODE = 'login';
+/* ══ إدارة المديرين — قسم "Admins" في الداشبورد ══ */
+var AZ_PERMISSION_KEYS = ['platforms', 'analytics', 'users'];
+
+async function azLoadAdmins(){
+  var box = document.getElementById('adm-list');
+  if(!box) return;
+  box.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">Loading...</div>';
+  try{
+    var res = await fetch('/api/owner-admins', { credentials: 'include' });
+    var data = await res.json();
+    if(!data || !data.ok){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Failed to load admins</div>'; return; }
+    var admins = data.admins || [];
+    if(!admins.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">No admins yet — add one above.</div>'; return; }
+
+    box.innerHTML = admins.map(function(a){
+      var permsHtml = AZ_PERMISSION_KEYS.map(function(p){
+        var checked = a.permissions && a.permissions[p] ? 'checked' : '';
+        return '<label style="display:flex;align-items:center;gap:5px;font-size:.74rem;cursor:pointer"><input type="checkbox" '+checked+' onchange="azUpdateAdminPermission(\''+a.email+'\',\''+p+'\',this.checked)"/> '+p+'</label>';
+      }).join('');
+      var statusColor = a.disabled ? '#f87171' : '#4ade80';
+      var statusText = a.disabled ? 'Disabled' : 'Active';
+      return '<div style="border:1px solid var(--border);border-radius:10px;padding:14px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
+          '<div><div style="font-weight:700;font-size:.86rem">'+a.name+'</div><div style="font-size:.72rem;color:var(--t3)">'+a.email+'</div></div>'+
+          '<div style="display:flex;align-items:center;gap:10px">'+
+            '<span style="font-size:.68rem;color:'+statusColor+'">● '+statusText+'</span>'+
+            '<button style="font-size:.68rem;background:none;border:1px solid var(--border);color:var(--t2);border-radius:6px;padding:4px 8px;cursor:pointer" onclick="azToggleAdminDisabled(\''+a.email+'\','+(!a.disabled)+')">'+(a.disabled?'Enable':'Disable')+'</button>'+
+            '<button style="font-size:.68rem;background:none;border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:4px 8px;cursor:pointer" onclick="azDeleteAdmin(\''+a.email+'\')">Delete</button>'+
+          '</div>'+
+        '</div>'+
+        '<div style="display:flex;gap:16px;flex-wrap:wrap">'+permsHtml+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Connection error</div>';
+  }
+}
+
+async function azCreateAdmin(){
+  var name = document.getElementById('adm-new-name').value.trim();
+  var email = document.getElementById('adm-new-email').value.trim();
+  var password = document.getElementById('adm-new-pass').value;
+  var permissions = {
+    platforms: document.getElementById('adm-new-perm-platforms').checked,
+    analytics: document.getElementById('adm-new-perm-analytics').checked,
+    users: document.getElementById('adm-new-perm-users').checked,
+  };
+  var msg = document.getElementById('adm-create-msg');
+  msg.style.color = 'var(--t3)'; msg.textContent = 'Creating...';
+
+  if(!email || !password){ msg.style.color = '#f87171'; msg.textContent = 'Email and password are required.'; return; }
+
+  try{
+    var res = await fetch('/api/owner-admins', {
+      method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'create', name: name, email: email, password: password, permissions: permissions })
+    });
+    var data = await res.json();
+    if(res.ok && data.ok){
+      msg.style.color = '#4ade80'; msg.textContent = 'Admin created successfully ✦';
+      document.getElementById('adm-new-name').value = '';
+      document.getElementById('adm-new-email').value = '';
+      document.getElementById('adm-new-pass').value = '';
+      document.getElementById('adm-new-perm-platforms').checked = false;
+      document.getElementById('adm-new-perm-analytics').checked = false;
+      document.getElementById('adm-new-perm-users').checked = false;
+      azLoadAdmins();
+    } else {
+      var errMap = { email_exists:'This email is already an admin.', password_too_short:'Password must be at least 8 characters.', invalid_email:'Please enter a valid email.' };
+      msg.style.color = '#f87171'; msg.textContent = errMap[data && data.error] || 'Failed to create admin.';
+    }
+  }catch(e){
+    msg.style.color = '#f87171'; msg.textContent = 'Connection error.';
+  }
+}
+
+async function azUpdateAdminPermission(email, perm, checked){
+  try{
+    // نجيب الحالة الحالية كاملة، نعدّل مفتاح واحد بس، ونرسلها كاملة (تفادي مسح صلاحيات أخرى بالغلط)
+    var res = await fetch('/api/owner-admins', { credentials: 'include' });
+    var data = await res.json();
+    var admin = (data.admins || []).find(function(a){ return a.email === email; });
+    var permissions = Object.assign({}, admin ? admin.permissions : {});
+    permissions[perm] = checked;
+
+    await fetch('/api/owner-admins', {
+      method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'update', email: email, permissions: permissions })
+    });
+  }catch(e){ toast('Failed to update permission'); azLoadAdmins(); }
+}
+
+async function azToggleAdminDisabled(email, disabled){
+  try{
+    await fetch('/api/owner-admins', {
+      method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'update', email: email, disabled: disabled })
+    });
+    azLoadAdmins();
+  }catch(e){ toast('Failed to update admin'); }
+}
+
+async function azDeleteAdmin(email){
+  if(!confirm('Delete admin ' + email + '? This cannot be undone.')) return;
+  try{
+    await fetch('/api/owner-admins', {
+      method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'delete', email: email })
+    });
+    azLoadAdmins();
+  }catch(e){ toast('Failed to delete admin'); }
+}
 function azToggleLoginMode(){
   AZ_LOGIN_MODE = (AZ_LOGIN_MODE === 'login') ? 'signup' : 'login';
   var btn = document.getElementById('lo-submit-btn');
@@ -4065,11 +4219,60 @@ function azToggleLoginMode(){
 /* ══════════════════════════════════════
    DASHBOARD
 ══════════════════════════════════════ */
+var AZ_CURRENT_ROLE = 'owner';
+var AZ_ADMIN_PERMISSIONS = {};
+
+async function doAdminLogin(){
+  var email = document.getElementById('adm-lo-em').value.trim();
+  var password = document.getElementById('adm-lo-pw').value;
+  if(!email || !password){ toast('Please enter email and password'); return; }
+  try{
+    var res = await fetch('/api/admin-login', {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ email: email, password: password })
+    });
+    var data = null;
+    try{ data = await res.json(); }catch(e){}
+    if(res.ok && data && data.ok){
+      clo('admin-login-modal');
+      AZ_CURRENT_ROLE = 'admin';
+      AZ_ADMIN_PERMISSIONS = data.admin.permissions || {};
+      openDashUnlocked();
+      azApplyAdminNavFilter();
+      toast('Welcome, ' + (data.admin.name || email) + ' ✦');
+      return;
+    }
+    var code = data && data.error;
+    var msg = 'Invalid credentials';
+    if(code === 'too_many_attempts') msg = 'Too many attempts — try again in 15 minutes';
+    else if(code === 'account_disabled') msg = 'This admin account has been disabled';
+    toast(msg);
+  }catch(e){ toast('Connection error'); }
+}
+
+/* ── إخفاء تبويبات الداشبورد التي لا يملك المدير صلاحية الوصول لها — Overview متاح دائماً كصفحة هبوط أساسية ── */
+function azApplyAdminNavFilter(){
+  if(AZ_CURRENT_ROLE !== 'admin') return;
+  var permMap = { analytics:['analytics','revenue'], users:['subs'], platforms:['platforms'] };
+  var allowedSections = [];
+  Object.keys(permMap).forEach(function(perm){
+    if(AZ_ADMIN_PERMISSIONS[perm]) allowedSections = allowedSections.concat(permMap[perm]);
+  });
+  document.querySelectorAll('.dmi[data-sec]').forEach(function(item){
+    var sec = item.getAttribute('data-sec');
+    item.style.display = (allowedSections.indexOf(sec) !== -1) ? '' : 'none';
+  });
+}
+
+function azResetAdminNavFilter(){
+  document.querySelectorAll('.dmi[data-sec]').forEach(function(item){ item.style.display = ''; });
+}
+
 async function openDash(){
   if(azOwnerLocked()){ toast('محاولات كثيرة — حاول لاحقاً'); return; }
   var code=prompt('🔐 Owner Access Code:');
   if(code===null) return;
-  if(await azCheckOwnerCode(code)){ openDashUnlocked(); }
+  if(await azCheckOwnerCode(code)){ AZ_CURRENT_ROLE='owner'; openDashUnlocked(); }
   else { toast('Incorrect code'); }
 }
 function openDashUnlocked(){
@@ -4082,7 +4285,11 @@ function openDashUnlocked(){
 }
 function closeDash(){ document.getElementById('dash').classList.remove('open'); document.body.style.overflow=''; }
 async function azOwnerLogout(){
-  try{ await fetch('/api/owner-logout', {method:'POST', credentials:'include'}); }catch(e){}
+  var endpoint = (AZ_CURRENT_ROLE === 'admin') ? '/api/admin-logout' : '/api/owner-logout';
+  try{ await fetch(endpoint, {method:'POST', credentials:'include'}); }catch(e){}
+  AZ_CURRENT_ROLE = 'owner';
+  AZ_ADMIN_PERMISSIONS = {};
+  azResetAdminNavFilter();
   closeDash();
   toast('تم تسجيل الخروج');
 }
@@ -4092,6 +4299,7 @@ function swD(sec,el){
   var ds=document.getElementById('ds-'+sec); if(ds) ds.classList.add('on');
   if(el) el.classList.add('on');
   if(sec === 'analytics') azLoadRealAnalytics();
+  if(sec === 'admins') azLoadAdmins();
 }
 function toggleP(name,el){ toast(el.checked?'✦ '+name+' activated':name+' paused'); }
 
