@@ -1,28 +1,95 @@
-User-agent: *
+# =====================================================
+# Axiom Zones — robots.txt
+# السياسة: منع بوتات "التدريب" — السماح ببوتات "الاسترجاع/الترشيح" ومحركات البحث
+# آخر تحديث: 2026-07-31
+# =====================================================
+
+# -----------------------------------------------------
+# 1) السماح — بوتات الاسترجاع والترشيح (AI Search / Citation)
+#    هذه البوتات لا تُستخدم لتدريب النماذج، بل لجلب صفحتك
+#    لحظة سؤال المستخدم، وترشيح axiomzones كمصدر في الإجابة.
+# -----------------------------------------------------
+User-agent: OAI-SearchBot
 Allow: /
-Allow: /prism
-Allow: /kashf
-Allow: /dar
-Allow: /aqar
-Allow: /uniuber
-Allow: /dashboard
-Allow: /privacy
-Allow: /terms
-Allow: /disclaimer
-Allow: /blog
 
-Disallow: /admin
-Disallow: /axiomzones-admin.html
-Disallow: /tools/generator
-Disallow: /platform-generator.html
-Disallow: /axiomzones-v4-stable.html
-Disallow: /axiomzones-admin-v1-stable.html
-Disallow: /launch-guide.html
-Disallow: /DEPLOY.md
+User-agent: ChatGPT-User
+Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# -----------------------------------------------------
+# 2) السماح — محركات البحث التقليدية (SEO عادي)
+# -----------------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# -----------------------------------------------------
+# 3) منع — بوتات تدريب نماذج الذكاء الاصطناعي
+#    هذه البوتات تسحب المحتوى وتخزّنه داخل أوزان النموذج
+#    نفسه (تدريب) دون عائد مباشر أو ترشيح لموقعك.
+# -----------------------------------------------------
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: img2dataset
+Disallow: /
+
+# -----------------------------------------------------
+# 4) حماية مسارات حساسة من كل البوتات (لو موجودة مستقبلاً)
+# -----------------------------------------------------
+User-agent: *
+Disallow: /admin/
+Disallow: /functions/
+Disallow: /api/
+Allow: /
+
+# -----------------------------------------------------
+# Sitemap
+# -----------------------------------------------------
 Sitemap: https://axiomzones.com/sitemap.xml
-Crawl-delay: 10
-
- 
-
-
