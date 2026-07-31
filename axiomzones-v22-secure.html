@@ -1398,7 +1398,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .faq4-item{background:#0a0d1a;border:1px solid rgba(255,255,255,.06);border-radius:11px;overflow:hidden;margin-bottom:8px;cursor:pointer;transition:border-color .25s}
 .faq4-item:hover{border-color:rgba(201,168,76,.2)}
 .faq4-item.open{border-color:rgba(201,168,76,.28)}
-.faq4-q{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;font-size:.88rem;font-weight:600;gap:12px}
+.faq4-q{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;font-size:.88rem;font-weight:600;gap:12px;color:#F2EEE8}
 .faq4-arr{font-size:.68rem;color:#3d4a6b;transition:transform .3s;flex-shrink:0}
 .faq4-item.open .faq4-arr{transform:rotate(180deg);color:#c9a84c}
 .faq4-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
@@ -1412,7 +1412,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .test4-quote{font-size:.82rem;color:#8892b0;line-height:1.8;font-style:italic;margin-bottom:12px}
 .test4-auth{display:flex;align-items:center;gap:9px}
 .test4-av{width:34px;height:34px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
-.test4-name{font-size:.8rem;font-weight:700}
+.test4-name{font-size:.8rem;font-weight:700;color:#F2EEE8}
 .test4-role{font-size:.7rem;color:#3d4a6b;font-family:var(--font-mono,'DM Mono',monospace)}
 /* Print */
 @media print{#sp,#az-mobnav,#az-top,#az-sb,#az-sbov,.az-modal-ov,.az-toast-el{display:none!important}}
@@ -5744,13 +5744,13 @@ if ('serviceWorker' in navigator) {
 
 
 <!-- PWA Install Banner -->
-  <div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div>
+  <div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:#F2EEE8">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div>
   <button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.78rem;border:none;cursor:pointer">تثبيت</button>
   <button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;line-height:1;padding:0 2px">✕</button>
 </div>
 
 <!-- PWA -->
-<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:#0a0d1a;border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
+<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:#0a0d1a;border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:#F2EEE8">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
 <script>
 (function(){var _d=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_d=e;setTimeout(function(){var b=document.getElementById('az-pwa-banner');if(b)b.style.display='flex';},30000);});window.azPWAInstall=function(){if(!_d)return;_d.prompt();_d.userChoice.then(function(){_d=null;var b=document.getElementById('az-pwa-banner');if(b)b.style.display='none';});};if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/service-worker.js').catch(function(){});});})();
 </script>
