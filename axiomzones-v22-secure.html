@@ -6635,6 +6635,13 @@ async function azUserLogout(){
       }
 
       if (typeof azRenderPlatformCards === 'function') azRenderPlatformCards();
+
+      /* ══ تحديث عدّاد "المنصات النشطة" ليعكس العدد الحقيقي الفعلي، بدل الرقم الثابت في الكود ══ */
+      var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+      document.querySelectorAll('[data-count="4"]').forEach(function(el){
+        el.setAttribute('data-count', liveCount);
+        el.textContent = liveCount;
+      });
     })
     .catch(function(){ /* لا مشكلة — القيم الافتراضية بالكود تبقى فعّالة */ });
 })();
