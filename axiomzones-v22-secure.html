@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" prefix="og: https://ogp.me/ns#">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKMF29MEFF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XKMF29MEFF');
-</script>
 <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self)"/>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKMF29MEFF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XKMF29MEFF');
+</script>
 
 <!-- ══ PRIMARY META ══ -->
 <title>Axiom Zones — منظومة رقمية في صفّك | كشف · Prism · دار · عقار · UniUber</title>
@@ -4728,6 +4728,8 @@ async function toggleP(key, el){
 
     if(saveRes.ok && saveData && saveData.ok){
       toast('✦ ' + key + (checked ? ' activated' : ' paused'));
+      var labelEl = document.getElementById('plat-status-'+key);
+      if(labelEl){ labelEl.textContent = checked ? 'Active' : 'Inactive'; labelEl.style.color = checked ? '#4ade80' : '#f87171'; }
     } else {
       el.checked = !checked;
       toast(saveRes.status === 401 ? 'ليس لديك صلاحية تعديل المنصات' : 'فشل الحفظ — حاول تاني');
@@ -4767,7 +4769,7 @@ async function azLoadPlatformToggles(){
       '<div style="font-size:1.2rem;margin-bottom:6px">'+(p.icon||'🔷')+'</div>'+
       '<div style="font-weight:700;margin-bottom:2px">'+(p.name_en||key)+'</div>'+
       '<div style="font-size:.72rem;color:var(--t2);margin-bottom:12px;font-family:\'DM Mono\',monospace">'+key+'.axiomzones.com</div>'+
-      '<div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" '+checkedAttr+' onchange="toggleP(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
+      '<div class="twrap"><span style="font-size:.8rem;color:'+(isActive?'#4ade80':'#f87171')+'" id="plat-status-'+key+'">'+(isActive?'Active':'Inactive')+'</span><label class="tog"><input type="checkbox" '+checkedAttr+' onchange="toggleP(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
     '</div>';
   }).join('');
 }
