@@ -3018,100 +3018,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 </div>
 
 
-<!-- ═══ DASHBOARD ═══ -->
-<div id="login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
-  <div class="lbox">
-    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">⬡</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="lo.t">MEMBER ACCESS</h2>
-    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
-    <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
-    <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
-    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
-    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
-      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
-      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
-    </div>
-  </div>
-</div>
-
-<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
-<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
-  <div class="lbox">
-    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="staff.t">STAFF ACCESS</h2>
-    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="staff.s">Admin credentials only</p>
-    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
-    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()" data-i18n="lo.b">Sign In</button>
-    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')" data-i18n="lo.c">Cancel</button>
-  </div>
-</div>
-
-
-<!-- ═══ DASHBOARD ═══ -->
-<div id="login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
-  <div class="lbox">
-    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">⬡</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="lo.t">MEMBER ACCESS</h2>
-    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
-    <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
-    <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
-    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
-    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
-      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
-      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
-    </div>
-  </div>
-</div>
-
-<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
-<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
-  <div class="lbox">
-    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="staff.t">STAFF ACCESS</h2>
-    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="staff.s">Admin credentials only</p>
-    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
-    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()" data-i18n="lo.b">Sign In</button>
-    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')" data-i18n="lo.c">Cancel</button>
-  </div>
-</div>
-
-
-<!-- ═══ DASHBOARD ═══ -->
-<div id="login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
-  <div class="lbox">
-    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">⬡</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="lo.t">MEMBER ACCESS</h2>
-    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
-    <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
-    <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
-    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
-    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
-      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
-      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
-    </div>
-  </div>
-</div>
-
-<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
-<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
-  <div class="lbox">
-    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="staff.t">STAFF ACCESS</h2>
-    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="staff.s">Admin credentials only</p>
-    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
-    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
-    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()" data-i18n="lo.b">Sign In</button>
-    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')" data-i18n="lo.c">Cancel</button>
-  </div>
-</div>
-
-
-<!-- ═══ DASHBOARD ═══ -->
+<!-- ═══ DASHBOARD ═<!-- ═══ DASHBOARD ═══ -->
 <div id="dash" role="dialog" aria-modal="true" aria-label="Owner Dashboard">
   <div class="dn">
     <div style="display:flex;align-items:center;gap:12px">
@@ -3192,9 +3099,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             </div>
           </div>
         </div>
-        <div class="dcard"><div class="dct">Recent Activity</div>
-          <table class="dtbl"><thead><tr><th>Client</th><th>Plan</th><th>Platform</th><th>Date</th><th>Status</th></tr></thead>
-          <tbody><tr><td>Riyadh Trading Co.</td><td><span class="bdg bo">Enterprise</span></td><td>UniUber</td><td>Today</td><td><span class="bdg bg">Active</span></td></tr><tr><td>Al Fahad Logistics</td><td><span class="bdg bb">Professional</span></td><td>LogiShield</td><td>Yesterday</td><td><span class="bdg bg">Active</span></td></tr><tr><td>Global Charity Org</td><td><span class="bdg bg">Impact</span></td><td>TalentFlow</td><td>Jul 22</td><td><span class="bdg bg">Active</span></td></tr><tr><td>Golden Consultants</td><td><span class="bdg bb">Professional</span></td><td>UniUber</td><td>Jul 21</td><td><span class="bdg br">Expired</span></td></tr></tbody></table>
+        <div class="dcard"><div class="dct">Recent Activity <span style="font-size:.6rem;color:var(--t3);font-weight:400">(حقيقي)</span></div>
+          <table class="dtbl"><thead><tr><th>Client</th><th>Plan</th><th>Joined</th><th>Status</th></tr></thead>
+          <tbody id="recent-activity-tbody"><tr><td colspan="4" style="text-align:center;color:var(--t3);padding:16px">Loading...</td></tr></tbody></table>
         </div>
       </div>
       <!-- ANALYTICS -->
@@ -3298,13 +3205,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="kc"><div class="kl">LTV</div><div class="kv gv" id="d-ltv">—</div><div class="kch ku">↑ 12%</div></div>
           <div class="kc"><div class="kl">CAC</div><div class="kv" style="color:#60a5fa" id="d-cac">—</div><div class="kch kd">↑ 5%</div></div>
         </div>
-        <div class="dcard"><div class="dct">Revenue by Platform</div>
-          <div style="display:flex;flex-direction:column;gap:11px">
-            <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.8rem;color:var(--t2)">👔 UniUber</span><span style="color:var(--gold);font-family:'DM Mono',monospace;font-size:.8rem" id="rv-u">—</span></div><div class="pbsm"><div class="pfsm" style="width:70%"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.8rem;color:var(--t2)">🔐 LogiShield</span><span style="color:var(--gold);font-family:'DM Mono',monospace;font-size:.8rem" id="rv-l">—</span></div><div class="pbsm"><div class="pfsm" style="width:48%"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.8rem;color:var(--t2)">🧠 TalentFlow</span><span style="color:var(--gold);font-family:'DM Mono',monospace;font-size:.8rem" id="rv-t">—</span></div><div class="pbsm"><div class="pfsm" style="width:36%"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.8rem;color:var(--t2)">🏙️ PropPulse</span><span style="color:var(--gold);font-family:'DM Mono',monospace;font-size:.8rem" id="rv-p">—</span></div><div class="pbsm"><div class="pfsm" style="width:27%"></div></div></div>
-          </div>
+        <div class="dcard" style="opacity:.55"><div class="dct">Revenue by Platform <span style="font-size:.6rem;color:var(--t3);font-weight:400">(Demo — يحتاج نظام دفع حقيقي)</span></div>
+          <div style="font-size:.78rem;color:var(--t3);padding:20px 0;text-align:center">غير متاح بعد — يحتاج ربط نظام دفع فعلي (Dodo Payments) لتتبّع أي إيراد حقيقي لكل منصة</div>
         </div>
       </div>
       <!-- MARKETING -->
@@ -3854,17 +3756,19 @@ function refreshPrices(){
   el=document.getElementById('d-mrr');  if(el) el.textContent=fmtPrice(realMrr,c);
   el=document.getElementById('d-mrr2'); if(el) el.textContent=fmtPrice(realMrr,c);
   el=document.getElementById('d-arpu'); if(el) el.textContent=fmtPrice(realArpu,c);
-  el=document.getElementById('d-arr');  if(el) el.textContent=fmtPrice(136000,c);
-  el=document.getElementById('d-ltv');  if(el) el.textContent=fmtPrice(2240,c);
-  el=document.getElementById('d-cac');  if(el) el.textContent=fmtPrice(170,c);
+  // ARR = MRR الحقيقي × 12 — حساب فعلي ومشتق من بيانات حقيقية، ليس رقماً وهمياً
+  el=document.getElementById('d-arr');  if(el) el.textContent=fmtPrice(realMrr*12,c);
+  // LTV وCAC يحتاجان تتبّع فعلي (معدل التسرّب، مصروف التسويق) غير متوفر بعد — نعرض ذلك بصدق بدل رقم مُلفَّق
+  el=document.getElementById('d-ltv');  if(el) el.textContent='N/A';
+  el=document.getElementById('d-cac');  if(el) el.textContent='N/A';
   el=document.getElementById('t-u');    if(el) el.textContent=fmtPrice(5040,c);
   el=document.getElementById('t-l');    if(el) el.textContent=fmtPrice(3413,c);
   el=document.getElementById('t-p');    if(el) el.textContent=fmtPrice(1920,c);
   el=document.getElementById('t-t');    if(el) el.textContent=fmtPrice(2560,c);
-  el=document.getElementById('rv-u');   if(el) el.textContent=fmtPrice(5040,c);
-  el=document.getElementById('rv-l');   if(el) el.textContent=fmtPrice(3413,c);
-  el=document.getElementById('rv-t');   if(el) el.textContent=fmtPrice(2560,c);
-  el=document.getElementById('rv-p');   if(el) el.textContent=fmtPrice(1920,c);
+  el=document.getElementById('rv-u');   if(el) el.textContent='N/A';
+  el=document.getElementById('rv-l');   if(el) el.textContent='N/A';
+  el=document.getElementById('rv-t');   if(el) el.textContent='N/A';
+  el=document.getElementById('rv-p');   if(el) el.textContent='N/A';
   // Subscribers
   el=document.getElementById('s1r'); if(el) el.textContent=fmtPrice(773,c);
   el=document.getElementById('s2r'); if(el) el.textContent=fmtPrice(237,c);
@@ -4753,6 +4657,24 @@ function openDashUnlocked(){
   refreshPrices();
   azLoadRealStats();
   azLoadRealAnalytics();
+  azLoadRecentActivity();
+}
+
+async function azLoadRecentActivity(){
+  var tbody = document.getElementById('recent-activity-tbody');
+  if(!tbody) return;
+  try{
+    var res = await fetch('/api/owner-users-list', { credentials:'include' });
+    var data = await res.json();
+    if(!res.ok || !data || !data.ok){ tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#f87171;padding:16px">Failed to load</td></tr>'; return; }
+    var users = (data.users || []).slice(0, 5);
+    if(!users.length){ tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:16px">No activity yet</td></tr>'; return; }
+    tbody.innerHTML = users.map(function(u){
+      var label = PLAN_LABEL[u.plan] || u.plan || 'Free';
+      var when = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—';
+      return '<tr><td>'+(u.name||u.email)+'</td><td><span class="bdg bb">'+label+'</span></td><td>'+when+'</td><td><span class="bdg bg">Active</span></td></tr>';
+    }).join('');
+  }catch(e){ tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#f87171;padding:16px">Connection error</td></tr>'; }
 }
 function closeDash(){ document.getElementById('dash').classList.remove('open'); document.body.style.overflow=''; }
 async function azOwnerLogout(){
