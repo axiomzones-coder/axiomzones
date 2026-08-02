@@ -396,7 +396,7 @@ function setLang(l){
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
-<meta name="theme-color" content="#060912"/>
+<meta name="theme-color" content="#060912" id="theme-color-meta"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
@@ -1132,14 +1132,14 @@ body.ltr .dsb{left:0}
 .kc{padding:18px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid var(--border);transition:all .3s}
 [data-theme="light"] .kc{background:rgba(0,0,0,.02)}
 .kc:hover{border-color:var(--border-h);transform:translateY(-2px)}
-.kl{font-size:.66rem;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;font-family:'DM Mono',monospace}
-.kv{font-family:'Bebas Neue',sans-serif;font-size:1.85rem;line-height:1}
+.kl{font-size:.72rem;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;font-family:'DM Mono',monospace;font-weight:600}
+.kv{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1}
 .kv.gv{background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.kch{font-size:.7rem;margin-top:3px}
+.kch{font-size:.76rem;margin-top:3px}
 .ku{color:#4ade80}.kd{color:#f87171}
 .dcard{background:rgba(255,255,255,.018);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}
 [data-theme="light"] .dcard{background:rgba(0,0,0,.02)}
-.dct{font-size:.7rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;font-family:'DM Mono',monospace}
+.dct{font-size:.78rem;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;font-family:'DM Mono',monospace;font-weight:700}
 .dtbl{width:100%;border-collapse:collapse;font-size:.78rem}
 .dtbl th{padding:7px 10px;text-align:start;color:var(--t3);font-size:.66rem;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.05);font-weight:400}
 .dtbl td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--t2);vertical-align:middle}
@@ -1664,10 +1664,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json"/>
   <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Axiom Zones"/>
-  <meta name="theme-color" content="#c9a84c"/>
   <meta name="msapplication-TileColor" content="#060912"/>
 </head>
 <body>
@@ -3026,6 +3023,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div class="dn">
     <div style="display:flex;align-items:center;gap:12px">
       <button onclick="closeDash()" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t2);padding:6px 12px;border-radius:7px;cursor:none;font-size:.77rem;font-family:'Tajawal',sans-serif">← Back</button>
+      <button onclick="azV4Theme()" title="Toggle dark/light mode" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t2);padding:6px 10px;border-radius:7px;cursor:none;font-size:.9rem" id="dash-theme-btn">🌙</button>
       <button onclick="azOwnerLogout()" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;padding:6px 12px;border-radius:7px;cursor:none;font-size:.77rem;font-family:'Tajawal',sans-serif">⏻ Logout</button>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:4px"><span style="background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AXIOM</span> <span style="color:var(--t3);font-size:.68rem;letter-spacing:2px;vertical-align:middle;font-family:'DM Mono',monospace" id="dash-role-label">OWNER DASHBOARD</span></div>
     </div>
@@ -3147,6 +3145,52 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <!-- PLATFORMS -->
       <div class="dsec" id="ds-platforms">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Platform Control <span style="color:var(--gold)">✦</span></h2>
+
+        <div id="add-platform-section" style="display:none;margin-bottom:22px">
+          <div class="dcard" style="border:1px solid rgba(201,168,76,.3)">
+            <div class="dct">➕ Add New Platform <span style="font-size:.65rem;color:var(--t3);font-weight:400">(المالك فقط — يغيّر بنية الموقع)</span></div>
+            <p style="font-size:.75rem;color:var(--t3);margin-bottom:14px">هذا يسجّل "بطاقة" المنصة في الموقع (الاسم، الوصف، رابط الملف). لازم ترفع ملف المنصة نفسه (HTML) على GitHub بنفس الرابط المكتوب هنا بالظبط قبل الحفظ.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+              <div><label class="fl">Key (إنجليزي، بدون مسافات، فريد)</label><input class="di" id="ap-key" placeholder="myplatform"/></div>
+              <div><label class="fl">Icon (إيموجي)</label><input class="di" id="ap-icon" placeholder="🚀"/></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+              <div><label class="fl">Name (Arabic)</label><input class="di" id="ap-name-ar" placeholder="اسم المنصة"/></div>
+              <div><label class="fl">Name (English)</label><input class="di" id="ap-name-en" placeholder="Platform Name"/></div>
+            </div>
+            <div style="margin-bottom:10px"><label class="fl">Short Description</label><input class="di" id="ap-desc" placeholder="وصف مختصر للمنصة"/></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+              <div><label class="fl">File Path (رابط الملف الحقيقي على الموقع)</label><input class="di" id="ap-path" placeholder="myplatform-v1.html"/></div>
+              <div><label class="fl">Category</label>
+                <select class="di" id="ap-category">
+                  <option value="financial">💰 Financial</option>
+                  <option value="islamic">☪️ Islamic</option>
+                  <option value="educational">📚 Educational</option>
+                  <option value="business">💼 Business</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+              <div><label class="fl">Brand Color (hex)</label><input class="di" id="ap-color" placeholder="#c9a84c" value="#c9a84c"/></div>
+              <div><label class="fl">Status</label>
+                <select class="di" id="ap-status">
+                  <option value="live">🟢 Live Now</option>
+                  <option value="coming">🟡 Coming Soon</option>
+                </select>
+              </div>
+            </div>
+            <button class="bsub" style="width:auto;padding:10px 22px" onclick="azCreatePlatform()">Create Platform</button>
+            <div id="ap-create-msg" style="margin-top:10px;font-size:.78rem"></div>
+          </div>
+
+          <div class="dcard" style="margin-top:14px">
+            <div class="dct">Custom Platforms Added</div>
+            <div id="custom-platforms-list" style="display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
+            </div>
+          </div>
+        </div>
+
         <p style="font-size:.75rem;color:var(--t3);margin-bottom:16px">تُبنى هذه القائمة تلقائياً من كل منصة حقيقية موجودة في الموقع — أي منصة تُضاف للموقع تظهر هنا تلقائياً بدون تعديل يدوي.</p>
         <div id="platform-toggle-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
           <div style="color:var(--t3);font-size:.8rem">Loading...</div>
@@ -3341,23 +3385,21 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="kc" style="opacity:.55"><div class="kl">Uptime</div><div class="kv gv">—</div><div class="kch" style="color:var(--t3)">Demo — يحتاج أداة مراقبة خارجية</div></div>
         </div>
         <div class="dcard">
-          <div class="dct" style="display:flex;justify-content:space-between;align-items:center">
-            Admin Activity Log <span style="font-size:.65rem;color:var(--t3);font-weight:400">(دخول المالك، تعديل الإعدادات، إدارة المديرين — حقيقي)</span>
-            <button class="db2" style="padding:5px 12px;font-size:.74rem" onclick="azLoadSystemLogs()">🔄 Refresh</button>
+          <div class="dct" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+            <div>
+              <div>Admin Activity Log</div>
+              <div style="font-size:.68rem;color:var(--t3);font-weight:400;margin-top:4px" dir="rtl">دخول المالك، تعديل الإعدادات، إدارة المديرين — حقيقي</div>
+            </div>
+            <button class="db2" style="padding:5px 12px;font-size:.74rem;flex-shrink:0" onclick="azLoadSystemLogs()">🔄 Refresh</button>
           </div>
-          <div id="log-stream" style="font-family:'DM Mono',monospace;font-size:.72rem;line-height:1.8;max-height:280px;overflow-y:auto">
+          <div id="log-stream" style="font-family:'DM Mono',monospace;font-size:.78rem;line-height:2;max-height:280px;overflow-y:auto;margin-top:10px">
             <div style="color:var(--t3)">Loading...</div>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div class="dcard">
-            <div class="dct">Platform Health</div>
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)"><span style="font-size:.82rem;color:var(--t2)">👔 UniUber</span><span class="bdg bg">99.9% Uptime</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)"><span style="font-size:.82rem;color:var(--t2)">🔐 LogiShield</span><span class="bdg bg">100% Uptime</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)"><span style="font-size:.82rem;color:var(--t2)">🏙️ PropPulse</span><span class="bdg bb">In Development</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0"><span style="font-size:.82rem;color:var(--t2)">🧠 TalentFlow</span><span class="bdg bg">99.7% Uptime</span></div>
-            </div>
+          <div class="dcard" style="opacity:.55">
+            <div class="dct">Platform Health <span style="font-size:.6rem;color:var(--t3);font-weight:400">(Demo — يحتاج أداة مراقبة خارجية حقيقية)</span></div>
+            <div style="font-size:.78rem;color:var(--t3);padding:20px 0;text-align:center">غير متاح بعد — نفس سبب "Uptime" في الأعلى، يحتاج أداة APM حقيقية</div>
           </div>
           <div class="dcard">
             <div class="dct">Infrastructure</div>
@@ -3372,6 +3414,27 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       </div>
       <div class="dsec" id="ds-settings">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Settings <span style="color:var(--gold)">✦</span></h2>
+
+        <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(96,165,250,.3)">
+          <div class="dct" style="color:#60a5fa">💾 Backup & Export</div>
+          <p style="font-size:.76rem;color:var(--t3);margin-bottom:14px">صدّر نسخة احتياطية كاملة من كل بيانات المنصة (المستخدمين، المديرين، الإعدادات، المنصات المخصصة) كملف JSON تقدر تحفظه بنفسك. كلمات المرور المشفَّرة لا تُصدَّر أبداً لحمايتك حتى لو الملف اتسرّب.</p>
+          <button class="db2" onclick="azExportBackup()">⬇️ Export All Data</button>
+          <div id="export-msg" style="margin-top:8px;font-size:.78rem"></div>
+        </div>
+
+        <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(245,158,11,.3)">
+          <div class="dct" style="color:#f59e0b">🔧 Site Maintenance Mode</div>
+          <p style="font-size:.76rem;color:var(--t3);margin-bottom:14px">لما تفعّل ده، أي زائر عادي (غير المالك أو المديرين) هيشوف صفحة "تحت الصيانة" بس بدل الموقع كامل. المالك والمديرون بيشوفوا الموقع الحقيقي زي العادة مع شريط تنبيه فوق.</p>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+            <label class="tog"><input type="checkbox" id="maint-toggle"/><span class="tsl"></span></label>
+            <span id="maint-status-label" style="font-size:.84rem;font-weight:700;color:var(--t2)">Site is Live</span>
+          </div>
+          <label class="fl">Maintenance Message (optional)</label>
+          <textarea class="di" id="maint-message" rows="2" placeholder="الموقع تحت صيانة مؤقتة، هنرجع خلال دقائق. شكراً لصبرك." style="resize:vertical"></textarea>
+          <button class="db2" style="margin-top:10px" onclick="azSaveMaintenance()">Save Maintenance Settings</button>
+          <div id="maint-save-msg" style="margin-top:8px;font-size:.78rem"></div>
+        </div>
+
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
           <div class="dcard"><div class="dct">Company Info</div>
             <label class="fl">Company Name</label><input class="di" value="Axiom Zones"/>
@@ -3534,14 +3597,9 @@ var isDark = true;
 
 /* ══════════════════════════════════════
    THEME TOGGLE
+   ملاحظة: azV4Theme() هي الدالة الفعلية الوحيدة المستخدمة لتبديل الثيم في الموقع كله (الهيدر + الداشبورد).
+   كانت هناك دالة toggleTheme() قديمة مكرَّرة وغير مستخدمة من أي زرار — تم حذفها 31 يوليو 2026 لتجنب الالتباس.
 ══════════════════════════════════════ */
-function toggleTheme(){
-  isDark = !isDark;
-  document.documentElement.setAttribute('data-theme', isDark ? '' : 'light');
-  document.getElementById('theme-btn').textContent = isDark ? '🌙' : '☀️';
-  document.getElementById('theme-color-meta').content = isDark ? '#06060c' : '#f4f1ea';
-  toast(isDark ? '🌙 Dark Mode' : '☀️ Light Mode');
-}
 
 /* ══════════════════════════════════════
    CURSOR
@@ -3949,6 +4007,35 @@ var STATIC = {
     'pl.en':'Entreprise','pl.enb':'Le Plus Populaire','pl.enc':'Obtenir Maintenant',
     'pl.ch':'Impact — Charité','pl.chc':'Postuler',
     'ft.rights':'Tous droits réservés','lo.t':'ACCÈS MEMBRES','lo.b':'Connexion','lo.c':'Annuler',
+    'ab.acc':'Scalabilité','ab.b1':'Plateformes','ab.b2':'Clients','ab.b3':'Fidélisation','ab.f':'Fondée en','ab.hq':'Siège mondial','ab.k1':'Développement des plateformes','ab.k2':'Expansion mondiale',
+    'ab.k3':'Satisfaction client','ab.k4':'Préparation du marché','ab.m':'Modèle économique','afi.h1':'Indice des prêts arabes','afi.h2':'— Mars 2024','afi.notelabel':'Note de nos analystes :','afi.notetext':'Les taux annoncés par les banques sont généralement 3 à 5 % inférieurs au TRI réel. Utilisez Prism ou Kashf pour obtenir le vrai chiffre de votre prêt.','afi.personal':'Personnel',
+    'afi.sub':'Taux d\'intérêt moyen des prêts personnels dans la région arabe — mis à jour chaque mois','afi.subscribe':'S\'abonner au rapport mensuel →','alert.btn':'Activer l\'alerte →','alert.email':'Votre e-mail','alert.note':'Gratuit · Aucune carte requise · Annulation à tout moment','alert.rate':'Votre taux actuel %','alert.sub':'Indiquez le taux de votre prêt actuel — nous vous alertons instantanément lorsque les taux du marché descendent sous ce chiffre, synonyme d\'une opportunité de refinancement et d\'économies réelles.','alert.subs':'Abonné aux alertes',
+    'alert.title':'M\'alerter en cas de baisse des taux','announce.txt':'Plateforme Axiom Zones — 8 plateformes actives dès maintenant · 30 plateformes à venir · axiomzones.com','blog.allbtn1':'Tous les articles →','blog.allbtn2':'Tous les articles ← Blog financier','blog.arlink':'AR','blog.d1':'Comment les banques enjolivent leurs prêts pour paraître moins chers — et comment révéler le vrai TRI avec Kashf.','blog.d2':'Une comparaison chiffrée complète — lequel est vraiment le moins cher ? La réponse surprend beaucoup de gens.','blog.d3':'L\'équation simple qui sauve votre entreprise — calculez-la gratuitement avec Mizan Pro.',
+    'blog.eyebrow':'Derniers articles','blog.h1':'En savoir plus.','blog.h2':'Payer moins.','blog.read':'Lire →','blog.sub':'Des articles financiers réels, sans flatter les banques — en arabe, anglais et français.','blog.t1':'La banque dit 6 %... la vérité est 11,2 %','blog.t2':'Mourabaha contre prêt classique — les chiffres','blog.t3':'Le seuil de rentabilité — la question que 67 % ignorent',
+    'blog.tag1':'📊 Prêts','blog.tag2':'☪️ Islamique','blog.tag3':'💼 Entreprise','c.el':'E-mail','c.hql':'Siège','c.hqv':'Mondial — présent dans 195 pays','cat.all':'Tous','cat.biz':'💼 Affaires',
+    'cat.edu':'📚 Éducatif','cat.fin':'💰 Financier','cat.isl':'☪️ Islamique','cat.live':'● En direct','cta.btn':'Commencer gratuitement →','cta.email':'votre@email.com','cta.h1':'Créez votre compte gratuit','cta.h2':'Aujourd\'hui',
+    'cta.note':'Sans spam · Sans carte de crédit · Palier gratuit complet · Annulation à tout moment','cta.sub':'Rejoignez des professionnels de plus de 105 pays qui utilisent Axiom Zones. Gratuit pour toujours. Sans carte bancaire.','f.msg':'Message','f.n':'Nom','f.send':'Envoyer le message ✦','f.sub':'Sujet','f.sub1':'Demande de devis','f.sub2':'Partenariat stratégique',
+    'f.sub3':'Question technique','f.sub4':'Offre caritative','faq.a1':'Oui — définitivement. Chaque plateforme dispose d\'un palier gratuit sans expiration et sans carte bancaire. Ces paliers gratuits sont réellement utiles, pas de simples démos limitées. Nous préférons mériter votre abonnement par la valeur démontrée plutôt que de vous enfermer derrière un mur de paiement.','faq.a2':'Oui. Créez un seul compte Axiom Zones et il vous donne accès à toutes les plateformes auxquelles vous êtes abonné — sur le web, iOS, Android, Windows et macOS. Vos abonnements vous suivent sur tous vos appareils sans effort.','faq.a3':'Nous appliquons une remise de 50 % pour les utilisateurs d\'Égypte, du Maroc, de Jordanie, de Tunisie, d\'Algérie, de Libye, d\'Irak, de Syrie, du Yémen, du Soudan et du Liban. Cela est détecté automatiquement selon votre IP et la devise choisie. L\'objectif est l\'accessibilité — le monde arabe mérite des outils professionnels à des prix locaux justes.','faq.a4':'Non. Tous les calculs s\'exécutent dans votre navigateur. Aucun chiffre n\'est envoyé à nos serveurs. Lorsque vous partagez un lien, les données sont encodées dans l\'URL elle-même — nous ne les voyons jamais. Les données de votre compte (e-mail, statut d\'abonnement) sont stockées avec un chiffrement complet via Supabase.','faq.a5':'L\'offre à vie (399 $, paiement unique) donne un accès Pro complet à toutes les plateformes actuelles et futures, pour toujours. Elle se ferme définitivement après 100 comptes — non par tactique marketing, mais parce que nous ne pouvons soutenir durablement qu\'un nombre limité de comptes à vie. Une fois épuisée, elle disparaît pour de bon.','faq.a6':'Oui. Annulez depuis votre tableau de bord en un clic, sans aucune question. Vous gardez l\'accès jusqu\'à la fin de votre période de facturation, puis vous repassez automatiquement au palier gratuit. Aucun frais caché, aucun e-mail de rétention, aucune manipulation.',
+    'faq.a7':'Toutes les plateformes sont déjà prêtes en PWA — installez-les depuis votre navigateur sur n\'importe quel appareil, elles fonctionnent comme des applications natives avec support hors ligne. Des applications dédiées App Store et Play Store sont en développement, prévues pour le T2 2025.','faq.a8':'Oui. Garantie de remboursement de 14 jours sur tous les plans payants, sans aucune question. Si Axiom Zones ne vous apporte pas de valeur claire durant vos deux premières semaines, contactez-nous et nous vous remboursons immédiatement. L\'offre à vie bénéficie aussi d\'une fenêtre de remboursement de 14 jours.','faq.q1':'Axiom Zones est-il vraiment gratuit pour commencer ?','faq.q2':'Un seul compte fonctionne-t-il sur toutes les plateformes ?','faq.q3':'Comment fonctionne la tarification pour le monde arabe ?','faq.q4':'Mes données financières sont-elles stockées ou partagées ?','faq.q5':'Qu\'est-ce que l\'offre à vie — va-t-elle vraiment se fermer ?','faq.q6':'Puis-je annuler mon abonnement à tout moment ?',
+    'faq.q7':'Quand les applications mobiles seront-elles lancées ?','faq.q8':'Proposez-vous des remboursements ?','faq.title1':'Questions','faq.title2':'fréquentes','ft.about':'À propos de nous','ft.brand':'Studio de création mondial — nous construisons des plateformes technologiques de classe mondiale qui créent un impact réel dans des secteurs essentiels, pour chaque marché sur terre.','ft.c2':'Entreprise','ft.c3':'Mentions légales',
+    'ft.contact':'Contact','ft.disc':'Avertissement','ft.login':'Portail membre','ft.pricing':'Tarifs','ft.priv':'Politique de confidentialité','ft.refund':'Politique de remboursement','ft.staff':'Personnel','ft.terms':'Conditions générales',
+    'isl.btn':'☪️ Activer le mode islamique','isl.d1':'Saisissez votre contrat Mourabaha et obtenez le coût réel par rapport au prix comptant — sans aucun riba calculé.','isl.d2':'Comparaison directe : lequel est réellement moins cher ? La banque islamique ou conventionnelle pour le même produit ? Avec des chiffres exacts.','isl.d3':'Pour chaque prêt : nous montrons les alternatives halal disponibles — Ijara, Mourabaha, Moucharaka, Qard Hasan, fonds familial.','isl.d4':'Liens vers des fatwas fiables émises par le Conseil des grands oulémas et des académies fiqh accréditées pour chaque type de financement.','isl.d5':'Calculez le coût réel de la Mourabaha — marge effective, taux de profit annuel, et comparaison avec d\'autres offres bancaires.','isl.d6':'Comparez les offres des banques islamiques saoudiennes et du Golfe — laquelle a la marge la plus basse et la plus grande transparence pour le même produit.','isl.sub':'Toutes nos plateformes financières prennent en charge un mode islamique complet — analyse de la Mourabaha, de l\'Ijara et de la Moucharaka décroissante, avec comparaison des alternatives halal.',
+    'isl.t1':'Analyse de la Mourabaha','isl.t2':'Islamique contre conventionnel','isl.t3':'Alternatives halal','isl.t4':'Références charaïques','isl.t5':'Calculateur de Mourabaha','isl.t6':'Comparaison des banques islamiques','lc.curr':'💰 Devise','lc.lang':'🌐 Langue',
+    'lc.title':'Langue et devise','leg.d.h1':'1. Nature du service','leg.d.h2':'2. Responsabilité','leg.d.p1':'Les plateformes sont des outils technologiques professionnels, non des conseils juridiques ou financiers.','leg.d.p2':'Les utilisateurs assument l\'entière responsabilité de vérifier leurs décisions commerciales et opérationnelles.','leg.p.h1':'1. Collecte des données','leg.p.h2':'2. Protection des données','leg.p.h3':'3. Vos droits',
+    'leg.p.p1':'Nous ne collectons que les informations nécessaires à la fourniture des services. Aucune donnée sensible n\'est collectée sans consentement explicite.','leg.p.p2':'Toutes les données sont chiffrées en AES-256. Stockées sur des serveurs certifiés conformes aux normes de sécurité internationales (ISO 27001, RGPD).','leg.p.p3':'Accédez, modifiez ou supprimez vos données à tout moment via privacy@axiomzones.com. Nous ne vendons jamais vos données.','leg.r.h1':'1. Politique SaaS','leg.r.h2':'2. Exceptions','leg.r.p1':'Les abonnements numériques ne sont pas remboursables après activation, conformément aux lois applicables sur le commerce électronique.','leg.r.p2':'Remboursement intégral dans les 48 heures suivant le premier abonnement si aucun service n\'a été utilisé.','leg.t.h1':'1. Acceptation',
+    'leg.t.h2':'2. Usage légal','leg.t.h3':'3. Abonnements','leg.t.p1':'En utilisant les plateformes Axiom Zones, vous acceptez ces conditions. Merci de les lire attentivement avant de vous abonner.','leg.t.p2':'Les utilisateurs doivent utiliser les services à des fins légales uniquement et respecter les droits de propriété intellectuelle.','leg.t.p3':'Les abonnements se renouvellent automatiquement sauf annulation 48 heures avant la date de renouvellement.','lg.d':'Avertissement','lg.p':'Confidentialité','lg.r':'Remboursement',
+    'lg.t':'Cadre juridique','lg.t2':'Conditions','lo.s':'Entrez vos identifiants pour accéder à vos plateformes','ltd.btn':'Profiter de l\'offre à vie →','ltd.h':'Offre à vie — 100 premiers seulement','ltd.p':'Paiement unique. Accès Pro complet à toutes les plateformes actuelles et futures. Pour toujours. Sans frais récurrents, jamais. Cette offre se ferme définitivement après 100 comptes — sans exception, sans prolongation.','ltd.spots':' places à vie restantes sur 100','ltd.tags':'PAIEMENT UNIQUE · TOUTES LES PLATEFORMES · POUR TOUJOURS',
+    'ltd.worth':'Valeur de 828 $/an','m.curr':'Devises','m.lang':'Langues','m.plats':'Plateformes actives','m.ret':'Fidélisation','m.subs':'Clients','n.c':'Devises','n.cd':'Toutes les devises mondiales',
+    'n.co':'Pays','n.cod':'Audience mondiale','n.l':'Langues','n.ld':'Traduction assistée par IA','n.p':'Plateformes actives','n.pd':'SaaS intégré','pf.1.1':'Accès à 1 plateforme','pf.1.2':'Support e-mail de base',
+    'pf.1.3':'Tableau de bord basique','pf.1.4':'API avancée','pf.1.5':'Support dédié','pf.2.1':'Accès complet à 1 plateforme','pf.2.2':'API et intégrations','pf.2.3':'Rapports avancés','pf.2.4':'Support 24h','pf.2.5':'Gestionnaire dédié',
+    'pf.3.1':'Illimité — toutes les plateformes','pf.3.2':'Gestionnaire de compte dédié','pf.3.3':'SLA garanti à 99,9 %','pf.3.4':'Formation d\'équipe','pf.3.5':'Fonctionnalités personnalisées','pf.4.1':'Toutes les fonctionnalités Entreprise','pf.4.2':'Remise automatique de 90 %','pf.4.3':'Support prioritaire',
+    'pf.4.4':'Certificat de partenaire social','pf.4.5':'Rapports d\'impact','pl.chp':'/ mois (90 % de remise)','pl.cht':'Pour ONG et associations — 90 % de remise','pl.enp':'/ mois, toutes les plateformes','pl.ent':'Toutes les plateformes avec support VIP','pl.frp':'/ 14 jours gratuits','pl.frt':'14 jours complets — sans risque',
+    'pl.prp':'/ mois','pl.prt':'Pour les entrepreneurs professionnels','plats.eyebrow':'Nos plateformes','plats.sub':'Chaque plateforme résout un vrai problème financier — avec des outils professionnels conçus pour le monde entier.','plt.buy':'Acheter maintenant','plt.open':'Ouvrir la plateforme →','plt.plans':'Forfaits disponibles','pr.note':'* Prix hors TVA · Annulation à tout moment · Les 200 devises sont prises en charge',
+    'pwa.btn':'Installer','pwa.sub':'Fonctionne hors ligne','pwa.title':'Ajouter à l\'écran d\'accueil','quiz.ofword':'sur','quiz.qword':'Question','quiz.retry':'Réessayer','quiz.share':'Partager mon score','quiz.sub':'10 questions · 60 secondes · découvrez comment vous vous comparez à 94 % des gens',
+    'quiz.trykashf':'Essayer Kashf gratuitement →','s.ah':'Construire l\'avenir\\nnumérique mondial','s.ap':'Axiom Zones est un studio de création mondial spécialisé dans les plateformes SaaS de classe mondiale. Nous construisons, lançons et développons — avec une méthodologie éprouvée et une équipe experte.','s.atag':'À propos de nous','s.ch':'Construisons\\nensemble','s.cp':'Notre équipe mondiale est prête à répondre à vos questions et à lancer des partenariats stratégiques durables.','s.ctag':'Contact','s.prh':'Investissez dans\\nvotre avenir',
+    's.prtag':'Tarifs','sb.allplat':'🧩 Toutes les plateformes','sb.dark':'🌙 Mode sombre','sb.faq':'❓ FAQ','sb.home':'🏠 Accueil','sb.how':'⚡ Comment ça marche','sb.ltd':'🔥 Offre à vie — 399 $','sb.nav':'Navigation',
+    'sb.openplat':'Ouvrir la plateforme','sb.pricing':'💳 Tarifs','sb.pro':'⭐ Accès Pro complet — 69 $/mois','sb.quickbuy':'💳 Achat rapide','sb.settings':'⚙️ Paramètres','sb.startfree':'🚀 Commencer gratuitement','staff.s':'Identifiants administrateur uniquement','staff.t':'ACCÈS PERSONNEL',
+    'stat.curr':'Devises prises en charge','stat.free':'Gratuit à essayer','stat.lang':'Langues prises en charge','stat.live':'En direct','usr.dash':'Mon tableau de bord','usr.logout':'Déconnexion','view.label':'MODE D\'AFFICHAGE',
     'soc.eyebrow':'Preuve sociale','soc.title1':'Approuvé par les','soc.title2':'professionnels',
     'soc.q1':'"Prism m\'a montré que ma banque cachait 4,8% de TAEG supplémentaire sur mon prêt auto. Cela m\'aurait coûté 3 200 $ à l\'aveugle. Maintenant j\'utilise Kashf avant de signer quoi que ce soit."','soc.r1':'Analyste financier · Riyad',
     'soc.q2':'"UniUber nous a mis en relation avec 3 usines certifiées en Turquie en 48 heures. Nous avons approvisionné 2 000 uniformes pour notre réseau hospitalier à 30% moins cher."','soc.r2':'Directrice des achats · Dubaï',
@@ -4172,8 +4259,148 @@ async function doLogin(){
   }
 }
 
+
+/* ── إضافة/عرض/حذف منصات جديدة كلياً — المالك فقط ── */
+async function azCreatePlatform(){
+  var key = document.getElementById('ap-key').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
+  var msg = document.getElementById('ap-create-msg');
+  var payload = {
+    action: 'create',
+    key: key,
+    icon: document.getElementById('ap-icon').value.trim() || '\ud83d\udd37',
+    name_ar: document.getElementById('ap-name-ar').value.trim(),
+    name_en: document.getElementById('ap-name-en').value.trim(),
+    desc_short: document.getElementById('ap-desc').value.trim(),
+    path: document.getElementById('ap-path').value.trim(),
+    category: document.getElementById('ap-category').value,
+    color: document.getElementById('ap-color').value.trim() || '#c9a84c',
+    status: document.getElementById('ap-status').value,
+  };
+
+  if(!key || key.length < 2){ msg.style.color='#f87171'; msg.textContent='Key مطلوب (حروف إنجليزية صغيرة فقط، حرفين على الأقل)'; return; }
+  if(!payload.name_ar || !payload.name_en || !payload.path){ msg.style.color='#f87171'; msg.textContent='الاسم بالعربي والإنجليزي ورابط الملف كلهم مطلوبين'; return; }
+
+  msg.style.color='var(--t3)'; msg.textContent='Creating...';
+  try{
+    var res = await fetch('/api/owner-platforms', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    if(res.ok && data && data.ok){
+      msg.style.color='#4ade80'; msg.textContent='تمت إضافة المنصة بنجاح ✦ — تأكد إنك رفعت ملفها الحقيقي على GitHub بنفس المسار';
+      ['ap-key','ap-icon','ap-name-ar','ap-name-en','ap-desc','ap-path'].forEach(function(id){ document.getElementById(id).value=''; });
+      azLoadCustomPlatforms();
+    } else {
+      var errMap = { key_exists:'المفتاح ده مستخدم بالفعل، اختار اسم تاني', missing_required_fields:'حقول مطلوبة ناقصة', unauthorized:'المالك فقط يقدر يضيف منصات جديدة' };
+      msg.style.color='#f87171'; msg.textContent = errMap[data && data.error] || 'فشل الإنشاء — حاول تاني';
+    }
+  }catch(e){ msg.style.color='#f87171'; msg.textContent='خطأ في الاتصال بالسيرفر'; }
+}
+
+async function azLoadCustomPlatforms(){
+  var box = document.getElementById('custom-platforms-list');
+  if(!box) return;
+  try{
+    var res = await fetch('/api/owner-platforms', { credentials:'include' });
+    var data = await res.json();
+    if(!res.ok || !data || !data.ok){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Failed to load</div>'; return; }
+    var platforms = data.platforms || {};
+    var keys = Object.keys(platforms);
+    if(!keys.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لسه مفيش منصات مخصصة مضافة</div>'; return; }
+    box.innerHTML = keys.map(function(key){
+      var p = platforms[key];
+      return '<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:8px;padding:10px 14px">'+
+        '<div>'+(p.icon||'\ud83d\udd37')+' <strong>'+(p.name_en||key)+'</strong> <span style="font-size:.7rem;color:var(--t3)">('+key+' \u00b7 '+(p.path||'')+')</span></div>'+
+        '<button class="db2" style="padding:4px 10px;font-size:.7rem;color:#f87171;border-color:rgba(239,68,68,.3)" onclick="azDeleteCustomPlatform(\''+key+'\')">Delete</button>'+
+      '</div>';
+    }).join('');
+  }catch(e){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Connection error</div>'; }
+}
+
+async function azDeleteCustomPlatform(key){
+  if(!confirm('حذف منصة "'+key+'" من الموقع؟ ده هيشيلها من الصفحة الرئيسية فوراً (الملف نفسه يفضل موجود على GitHub بس مش هيظهر في الموقع).')) return;
+  try{
+    await fetch('/api/owner-platforms', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'delete', key:key })
+    });
+    azLoadCustomPlatforms();
+    azLoadPlatformToggles();
+  }catch(e){ toast('فشل الحذف'); }
+}
+
 /* ══ إدارة المديرين — قسم "Admins" في الداشبورد ══ */
-/* ── تحميل قائمة مشتركين حقيقية من AZ_USERS_KV ── */
+/* ── تصدير نسخة احتياطية كاملة ── */
+async function azExportBackup(){
+  var msg = document.getElementById('export-msg');
+  msg.style.color = 'var(--t3)'; msg.textContent = 'Exporting...';
+  try{
+    var res = await fetch('/api/owner-export', { credentials:'include' });
+    if(!res.ok){
+      msg.style.color = '#f87171';
+      msg.textContent = res.status === 401 ? 'ليس لديك صلاحية (المالك فقط)' : 'فشل التصدير';
+      return;
+    }
+    var blob = await res.blob();
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'axiomzones-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    msg.style.color = '#4ade80'; msg.textContent = 'تم تصدير النسخة الاحتياطية بنجاح ✦ — احفظها في مكان آمن';
+  }catch(e){
+    msg.style.color = '#f87171'; msg.textContent = 'خطأ في الاتصال بالسيرفر';
+  }
+}
+
+/* ── وضع الصيانة العام للموقع ── */
+async function azLoadMaintenanceSettings(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var maint = (data && data.config && data.config.maintenance) || {};
+    var toggle = document.getElementById('maint-toggle');
+    var label = document.getElementById('maint-status-label');
+    var msgBox = document.getElementById('maint-message');
+    if(toggle) toggle.checked = !!maint.enabled;
+    if(label){ label.textContent = maint.enabled ? 'Maintenance ON — Visitors see maintenance page' : 'Site is Live'; label.style.color = maint.enabled ? '#f59e0b' : 'var(--t2)'; }
+    if(msgBox) msgBox.value = maint.message || '';
+  }catch(e){}
+}
+
+async function azSaveMaintenance(){
+  var enabled = document.getElementById('maint-toggle').checked;
+  var message = document.getElementById('maint-message').value.trim();
+  var msgEl = document.getElementById('maint-save-msg');
+  msgEl.style.color = 'var(--t3)'; msgEl.textContent = 'Saving...';
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.maintenance = { enabled: enabled, message: message };
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msgEl.style.color = '#4ade80';
+      msgEl.textContent = enabled ? 'تم تفعيل وضع الصيانة ✦' : 'تم إيقاف وضع الصيانة — الموقع شغّال عادي ✦';
+      var label = document.getElementById('maint-status-label');
+      if(label){ label.textContent = enabled ? 'Maintenance ON — Visitors see maintenance page' : 'Site is Live'; label.style.color = enabled ? '#f59e0b' : 'var(--t2)'; }
+    } else {
+      msgEl.style.color = '#f87171';
+      msgEl.textContent = saveRes.status === 401 ? 'ليس لديك صلاحية تعديل الإعدادات' : 'فشل الحفظ — حاول تاني';
+    }
+  }catch(e){
+    msgEl.style.color = '#f87171'; msgEl.textContent = 'خطأ في الاتصال بالسيرفر';
+  }
+}
 var PLAN_BADGE = { free:'bb', pro:'bo', ent:'bo', charity:'bg' };
 var PLAN_LABEL = { free:'Free', pro:'Pro', ent:'Enterprise', charity:'Impact' };
 async function azLoadRealSubscribers(){
@@ -4454,6 +4681,7 @@ function swD(sec,el){
   if(sec === 'platforms') azLoadPlatformToggles();
   if(sec === 'subs') azLoadRealSubscribers();
   if(sec === 'logs') azLoadSystemLogs();
+  if(sec === 'settings') azLoadMaintenanceSettings();
 }
 async function toggleP(key, el){
   var checked = el.checked;
@@ -4488,6 +4716,10 @@ async function toggleP(key, el){
 
 /* ── بناء تبويب Platforms ديناميكياً من AZ_PLATFORMS_DATA الحقيقي — نفس مصدر بيانات الموقع الرئيسي بالضبط ── */
 async function azLoadPlatformToggles(){
+  var addSection = document.getElementById('add-platform-section');
+  if(addSection) addSection.style.display = (AZ_CURRENT_ROLE === 'owner') ? 'block' : 'none';
+  if(AZ_CURRENT_ROLE === 'owner') azLoadCustomPlatforms();
+
   var grid = document.getElementById('platform-toggle-grid');
   if(!grid) return;
   grid.innerHTML = '<div style="color:var(--t3);font-size:.8rem">Loading...</div>';
@@ -4693,23 +4925,6 @@ function clearLogs(){
   if(ls){ ls.innerHTML = '<div style="color:var(--t3);text-align:center;padding:20px">Log cleared</div>'; }
   toast('Logs cleared');
 }
-// Auto-append log entries
-setInterval(function(){
-  var ls = document.getElementById('log-stream');
-  if(!ls || !document.getElementById('ds-logs').classList.contains('on')) return;
-  var events = [
-    ['var(--t2)','ℹ️  API','Currency rate sync completed'],
-    ['#4ade80','✅ AUTH','Health check passed — all OK'],
-    ['var(--uni-bright)','💳 PAY','Recurring charge processed'],
-    ['var(--tal-bright)','🤖 AI','Translation cache hit: French'],
-    ['var(--t2)','ℹ️  SYS','Backup completed successfully'],
-  ];
-  var ev = events[Math.floor(Math.random()*events.length)];
-  var now = new Date().toISOString().replace('T',' ').substring(0,19);
-  var line = '<div style="color:'+ev[0]+'">['+now+'] '+ev[1]+' — '+ev[2]+'</div>';
-  ls.insertAdjacentHTML('afterbegin', line);
-  if(ls.children.length > 20) ls.lastElementChild.remove();
-}, 4000);
 var sections = ['hero','projects','about','pricing','contact'];
 function scrollTo(id){
   var el = document.getElementById(id);
@@ -4771,6 +4986,10 @@ function azV4Theme(){
   // Also update any existing theme button
   var existBtn=document.getElementById('theme-btn')||document.getElementById('az-theme-btn');
   if(existBtn)existBtn.textContent=azV4Dark?'🌙':'☀️';
+  var dashBtn=document.getElementById('dash-theme-btn');
+  if(dashBtn)dashBtn.textContent=azV4Dark?'🌙':'☀️';
+  var themeColorMeta=document.getElementById('theme-color-meta');
+  if(themeColorMeta)themeColorMeta.content=azV4Dark?'#060912':'#f4f1ea';
 }
 
 /* Sidebar */
@@ -6347,8 +6566,15 @@ async function azUserLogout(){
   fetch('/api/config-get')
     .then(function(res){ return res.ok ? res.json() : null; })
     .then(function(data){
-      if (!data || !data.ok || !data.config || !data.config.platforms) return;
-      var overrides = data.config.platforms;
+      if (!data || !data.ok || !data.config) return;
+
+      /* ══ وضع الصيانة العام — يُفحص أولاً قبل أي شيء آخر ══ */
+      if (data.config.maintenance && data.config.maintenance.enabled) {
+        azCheckMaintenanceAccess(data.config.maintenance);
+      }
+
+      if (!data.config.platforms && !data.config.customPlatforms) return;
+      var overrides = data.config.platforms || {};
       Object.keys(overrides).forEach(function(key){
         if (!AZ_PLATFORMS_DATA[key]) return;
         var o = overrides[key];
@@ -6359,10 +6585,81 @@ async function azUserLogout(){
         if (o.name_ar) AZ_PLATFORMS_DATA[key].name_ar = o.name_ar;
         if (o.name_en) AZ_PLATFORMS_DATA[key].name_en = o.name_en;
       });
+
+      /* ══ دمج المنصات المخصصة المضافة عبر الداشبورد (Add New Platform) — مصدر واحد للحقيقة ══ */
+      if (data.config.customPlatforms) {
+        Object.keys(data.config.customPlatforms).forEach(function(key){
+          if (AZ_PLATFORMS_DATA[key]) return; // لا نستبدل منصة مبنية بالكود أصلاً
+          var cp = data.config.customPlatforms[key];
+          AZ_PLATFORMS_DATA[key] = {
+            icon: cp.icon || '🔷', color: cp.color || '#c9a84c', colorLight: cp.colorLight || cp.color || '#e8c86a',
+            name_ar: cp.name_ar || key, name_en: cp.name_en || key,
+            tagline_ar: cp.tagline_ar || '', tagline_en: cp.tagline_en || '',
+            desc_short: cp.desc_short || '', desc_full: cp.desc_full || cp.desc_short || '',
+            path: cp.path || '#', status: cp.status || 'coming',
+          };
+          var cat = AZ_CATEGORIES.find(function(c){ return c.id === cp.category; });
+          if (cat) {
+            if (cat.all.indexOf(key) === -1) cat.all.push(key);
+            if (cp.featured && cat.featured.indexOf(key) === -1) cat.featured.push(key);
+          }
+          azInjectPlatformSEO(key, AZ_PLATFORMS_DATA[key]);
+        });
+      }
+
       if (typeof azRenderPlatformCards === 'function') azRenderPlatformCards();
     })
     .catch(function(){ /* لا مشكلة — القيم الافتراضية بالكود تبقى فعّالة */ });
 })();
+
+/* ══ حقن JSON-LD تلقائي لكل منصة مخصصة جديدة — يساعد جوجل يكتشفها حتى لو ظهرت عبر JS ══ */
+/* ملاحظة تقنية صريحة: هذا تحسين جزئي فقط. محركات البحث الحديثة (جوجل) تنفّذ JS وتقرا هذا،
+   لكن السيو الكامل المثالي يحتاج Server-Side Rendering حقيقي — خارج نطاق الموقع الحالي (ملف HTML ثابت) */
+function azInjectPlatformSEO(key, plt){
+  try{
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'seo-' + key;
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: plt.name_en || key,
+      alternateName: plt.name_ar || '',
+      description: plt.desc_full || plt.desc_short || '',
+      applicationCategory: 'FinanceApplication',
+      url: 'https://axiomzones.com/' + (plt.path || ''),
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    });
+    document.head.appendChild(script);
+  }catch(e){}
+}
+async function azCheckMaintenanceAccess(maint){
+  try{
+    var ownerRes = await fetch('/api/owner-verify', { credentials:'include' });
+    if(ownerRes.ok){ var od = await ownerRes.json(); if(od && od.valid){ azShowMaintenanceBanner(); return; } }
+  }catch(e){}
+  try{
+    var adminRes = await fetch('/api/admin-verify', { credentials:'include' });
+    if(adminRes.ok){ var ad = await adminRes.json(); if(ad && ad.valid){ azShowMaintenanceBanner(); return; } }
+  }catch(e){}
+  azRenderMaintenancePage(maint);
+}
+
+function azShowMaintenanceBanner(){
+  var b = document.createElement('div');
+  b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#f59e0b;color:#000;text-align:center;padding:8px;font-family:Tajawal,sans-serif;font-size:.82rem;font-weight:700';
+  b.textContent = '🔧 وضع الصيانة مفعّل — الزوار العاديون يشوفون صفحة صيانة، إنت شايف الموقع الحقيقي كمالك/مدير';
+  document.body.prepend(b);
+}
+
+function azRenderMaintenancePage(maint){
+  document.documentElement.innerHTML = '<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Axiom Zones — Under Maintenance</title>'+
+    '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#060912;color:#F2EEE8;font-family:Tajawal,sans-serif;text-align:center;padding:30px}'+
+    '.mw{max-width:480px}.mi{font-size:3rem;margin-bottom:20px}h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:1.8rem;margin-bottom:14px;color:#c9a84c}p{color:#8892b0;line-height:1.9;font-size:.95rem}</style></head>'+
+    '<body><div class="mw"><div class="mi">🔧</div><h1>Axiom Zones — تحت الصيانة</h1><p>'+
+    (maint.message || 'الموقع تحت صيانة مؤقتة، هنرجع خلال دقائق. شكراً لصبرك.')+
+    '</p></div></body>';
+}
 
 /* ══════════════════════════════════════════════════════
    AZ SMART SEARCH ENGINE — بحث ذكي فوري، بدون AI، بدون تكلفة
