@@ -7,7 +7,7 @@ export async function onRequestGet(context) {
 
   const headers = new Headers({
     'content-type': 'application/json',
-    'Cache-Control': 'public, max-age=60', // تحديث كل دقيقة كحد أقصى — يوازن بين السرعة والتحديث الفوري
+    'Cache-Control': 'no-store', // لا تخزين مؤقت أبداً — أي تعديل من المالك (تفعيل/تعطيل منصة، صيانة...) يجب أن يظهر فوراً لكل زائر جديد
   });
 
   try {
