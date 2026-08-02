@@ -3019,6 +3019,99 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 
 <!-- ═══ DASHBOARD ═══ -->
+<div id="login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">⬡</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="lo.t">MEMBER ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
+    <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
+    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
+      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
+      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
+<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="staff.t">STAFF ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="staff.s">Admin credentials only</p>
+    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()" data-i18n="lo.b">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')" data-i18n="lo.c">Cancel</button>
+  </div>
+</div>
+
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">⬡</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="lo.t">MEMBER ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
+    <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
+    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
+      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
+      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
+<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="staff.t">STAFF ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="staff.s">Admin credentials only</p>
+    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()" data-i18n="lo.b">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')" data-i18n="lo.c">Cancel</button>
+  </div>
+</div>
+
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">⬡</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="lo.t">MEMBER ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="lo.s">Enter credentials to access your platforms</p>
+    <input class="fi" type="email" id="l-em" placeholder="email@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doLogin()" id="lo-submit-btn" data-i18n="lo.b">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('login-modal')" data-i18n="lo.c">Cancel</button>
+    <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--t3);font-family:'Tajawal',sans-serif">
+      <span id="lo-toggle-text" data-i18n="lo.new">New here?</span>
+      <a href="javascript:void(0)" onclick="azToggleLoginMode()" style="color:var(--gold);text-decoration:underline;cursor:pointer" id="lo-toggle-link" data-i18n="lo.create">Create free account</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ نافذة دخول المديرين — مستقلة تماماً عن دخول المالك (كود) ودخول الأعضاء (Member Access) ══ -->
+<div id="admin-login-modal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}" role="dialog" aria-modal="true">
+  <div class="lbox">
+    <div style="font-size:2.2rem;margin-bottom:12px" aria-hidden="true">🛡️</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:7px" data-i18n="staff.t">STAFF ACCESS</h2>
+    <p style="color:var(--t3);font-size:.76rem;margin-bottom:24px;font-family:'DM Mono',monospace" data-i18n="staff.s">Admin credentials only</p>
+    <input class="fi" type="email" id="adm-lo-em" placeholder="admin@company.com" autocomplete="email" style="margin-bottom:10px"/>
+    <input class="fi" type="password" id="adm-lo-pw" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:18px"/>
+    <button class="bsub" style="margin-bottom:10px" onclick="doAdminLogin()" data-i18n="lo.b">Sign In</button>
+    <button style="width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);color:var(--t2);background:transparent;cursor:none;font-family:'Tajawal',sans-serif;font-size:.82rem" onclick="clo('admin-login-modal')" data-i18n="lo.c">Cancel</button>
+  </div>
+</div>
+
+
+<!-- ═══ DASHBOARD ═══ -->
 <div id="dash" role="dialog" aria-modal="true" aria-label="Owner Dashboard">
   <div class="dn">
     <div style="display:flex;align-items:center;gap:12px">
@@ -3073,7 +3166,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div class="dcard">
           <div class="dct">Current Admins</div>
           <div id="adm-list" style="display:flex;flex-direction:column;gap:10px">
-            <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
+            <div style="font-size:.78rem;color:var(--t2)">Loading...</div>
           </div>
         </div>
       </div>
@@ -3120,7 +3213,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
           <div class="dcard"><div class="dct">Top Geographies <span style="font-size:.65rem;color:var(--t3);font-weight:400">(حقيقي)</span></div>
             <div id="d-geo-list" style="display:flex;flex-direction:column;gap:8px">
-              <div style="font-size:.78rem;color:var(--t3)">جاري التحميل...</div>
+              <div style="font-size:.78rem;color:var(--t2)">جاري التحميل...</div>
             </div>
           </div>
           <div class="dcard" style="opacity:.55"><div class="dct">Device Types <span style="font-size:.65rem;color:var(--t3);font-weight:400">(Demo — غير مُتتبَّع بعد)</span></div>
@@ -3149,7 +3242,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div id="add-platform-section" style="display:none;margin-bottom:22px">
           <div class="dcard" style="border:1px solid rgba(201,168,76,.3)">
             <div class="dct">➕ Add New Platform <span style="font-size:.65rem;color:var(--t3);font-weight:400">(المالك فقط — يغيّر بنية الموقع)</span></div>
-            <p style="font-size:.75rem;color:var(--t3);margin-bottom:14px">هذا يسجّل "بطاقة" المنصة في الموقع (الاسم، الوصف، رابط الملف). لازم ترفع ملف المنصة نفسه (HTML) على GitHub بنفس الرابط المكتوب هنا بالظبط قبل الحفظ.</p>
+            <p style="font-size:.75rem;color:var(--t2);margin-bottom:14px">هذا يسجّل "بطاقة" المنصة في الموقع (الاسم، الوصف، رابط الملف). لازم ترفع ملف المنصة نفسه (HTML) على GitHub بنفس الرابط المكتوب هنا بالظبط قبل الحفظ.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
               <div><label class="fl">Key (إنجليزي، بدون مسافات، فريد)</label><input class="di" id="ap-key" placeholder="myplatform"/></div>
               <div><label class="fl">Icon (إيموجي)</label><input class="di" id="ap-icon" placeholder="🚀"/></div>
@@ -3186,12 +3279,12 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="dcard" style="margin-top:14px">
             <div class="dct">Custom Platforms Added</div>
             <div id="custom-platforms-list" style="display:flex;flex-direction:column;gap:10px">
-              <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
+              <div style="font-size:.78rem;color:var(--t2)">Loading...</div>
             </div>
           </div>
         </div>
 
-        <p style="font-size:.75rem;color:var(--t3);margin-bottom:16px">تُبنى هذه القائمة تلقائياً من كل منصة حقيقية موجودة في الموقع — أي منصة تُضاف للموقع تظهر هنا تلقائياً بدون تعديل يدوي.</p>
+        <p style="font-size:.75rem;color:var(--t2);margin-bottom:16px">تُبنى هذه القائمة تلقائياً من كل منصة حقيقية موجودة في الموقع — أي منصة تُضاف للموقع تظهر هنا تلقائياً بدون تعديل يدوي.</p>
         <div id="platform-toggle-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
           <div style="color:var(--t3);font-size:.8rem">Loading...</div>
         </div>
@@ -3399,7 +3492,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
           <div class="dcard" style="opacity:.55">
             <div class="dct">Platform Health <span style="font-size:.6rem;color:var(--t3);font-weight:400">(Demo — يحتاج أداة مراقبة خارجية حقيقية)</span></div>
-            <div style="font-size:.78rem;color:var(--t3);padding:20px 0;text-align:center">غير متاح بعد — نفس سبب "Uptime" في الأعلى، يحتاج أداة APM حقيقية</div>
+            <div style="font-size:.78rem;color:var(--t2);padding:20px 0;text-align:center">غير متاح بعد — نفس سبب "Uptime" في الأعلى، يحتاج أداة APM حقيقية</div>
           </div>
           <div class="dcard">
             <div class="dct">Infrastructure</div>
@@ -3417,14 +3510,14 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
         <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(96,165,250,.3)">
           <div class="dct" style="color:#60a5fa">💾 Backup & Export</div>
-          <p style="font-size:.76rem;color:var(--t3);margin-bottom:14px">صدّر نسخة احتياطية كاملة من كل بيانات المنصة (المستخدمين، المديرين، الإعدادات، المنصات المخصصة) كملف JSON تقدر تحفظه بنفسك. كلمات المرور المشفَّرة لا تُصدَّر أبداً لحمايتك حتى لو الملف اتسرّب.</p>
+          <p style="font-size:.76rem;color:var(--t2);margin-bottom:14px">صدّر نسخة احتياطية كاملة من كل بيانات المنصة (المستخدمين، المديرين، الإعدادات، المنصات المخصصة) كملف JSON تقدر تحفظه بنفسك. كلمات المرور المشفَّرة لا تُصدَّر أبداً لحمايتك حتى لو الملف اتسرّب.</p>
           <button class="db2" onclick="azExportBackup()">⬇️ Export All Data</button>
           <div id="export-msg" style="margin-top:8px;font-size:.78rem"></div>
         </div>
 
         <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(245,158,11,.3)">
           <div class="dct" style="color:#f59e0b">🔧 Site Maintenance Mode</div>
-          <p style="font-size:.76rem;color:var(--t3);margin-bottom:14px">لما تفعّل ده، أي زائر عادي (غير المالك أو المديرين) هيشوف صفحة "تحت الصيانة" بس بدل الموقع كامل. المالك والمديرون بيشوفوا الموقع الحقيقي زي العادة مع شريط تنبيه فوق.</p>
+          <p style="font-size:.76rem;color:var(--t2);margin-bottom:14px">لما تفعّل ده، أي زائر عادي (غير المالك أو المديرين) هيشوف صفحة "تحت الصيانة" بس بدل الموقع كامل. المالك والمديرون بيشوفوا الموقع الحقيقي زي العادة مع شريط تنبيه فوق.</p>
           <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
             <label class="tog"><input type="checkbox" id="maint-toggle"/><span class="tsl"></span></label>
             <span id="maint-status-label" style="font-size:.84rem;font-weight:700;color:var(--t2)">Site is Live</span>
@@ -3459,7 +3552,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             <p style="color:var(--t3);font-size:.76rem;line-height:1.7;margin-bottom:12px">60 languages supported. AI translates UI in real-time using Claude Sonnet. Results cached for performance.</p>
             <div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Auto Translation</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div>
             <div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Translation Cache</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div>
-            <div style="margin-top:10px;padding:9px;background:rgba(201,168,76,.04);border-radius:7px;font-size:.74rem;color:var(--t3);font-family:'DM Mono',monospace">Built-in: <span style="color:var(--gold)">3</span> · AI-translated: <span style="color:var(--gold)" id="ai-cnt">0</span> · Total: 60</div>
+            <div style="margin-top:10px;padding:9px;background:rgba(201,168,76,.04);border-radius:7px;font-size:.74rem;color:var(--t2);font-family:'DM Mono',monospace">Built-in: <span style="color:var(--gold)">3</span> · AI-translated: <span style="color:var(--gold)" id="ai-cnt">0</span> · Total: 60</div>
           </div>
         </div>
       </div>
@@ -3553,7 +3646,7 @@ async function azLoadRealAnalytics(){
       entries.sort(function(x,y){ return y.n - x.n; });
       entries = entries.slice(0, 6);
       if(entries.length === 0){
-        geoList.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد زيارات مسجَّلة بعد</div>';
+        geoList.innerHTML = '<div style="font-size:.78rem;color:var(--t2)">لا توجد زيارات مسجَّلة بعد</div>';
       } else {
         var total = entries.reduce(function(s,e){ return s + e.n; }, 0);
         geoList.innerHTML = entries.map(function(e){
@@ -4307,7 +4400,7 @@ async function azLoadCustomPlatforms(){
     if(!res.ok || !data || !data.ok){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Failed to load</div>'; return; }
     var platforms = data.platforms || {};
     var keys = Object.keys(platforms);
-    if(!keys.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لسه مفيش منصات مخصصة مضافة</div>'; return; }
+    if(!keys.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t2)">لسه مفيش منصات مخصصة مضافة</div>'; return; }
     box.innerHTML = keys.map(function(key){
       var p = platforms[key];
       return '<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:8px;padding:10px 14px">'+
@@ -4471,13 +4564,13 @@ var AZ_PERMISSION_KEYS = ['platforms', 'analytics', 'users'];
 async function azLoadAdmins(){
   var box = document.getElementById('adm-list');
   if(!box) return;
-  box.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">Loading...</div>';
+  box.innerHTML = '<div style="font-size:.78rem;color:var(--t2)">Loading...</div>';
   try{
     var res = await fetch('/api/owner-admins', { credentials: 'include' });
     var data = await res.json();
     if(!data || !data.ok){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Failed to load admins</div>'; return; }
     var admins = data.admins || [];
-    if(!admins.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">No admins yet — add one above.</div>'; return; }
+    if(!admins.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t2)">No admins yet — add one above.</div>'; return; }
 
     box.innerHTML = admins.map(function(a){
       var permsHtml = AZ_PERMISSION_KEYS.map(function(p){
@@ -4488,7 +4581,7 @@ async function azLoadAdmins(){
       var statusText = a.disabled ? 'Disabled' : 'Active';
       return '<div style="border:1px solid var(--border);border-radius:10px;padding:14px">'+
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
-          '<div><div style="font-weight:700;font-size:.86rem">'+a.name+'</div><div style="font-size:.72rem;color:var(--t3)">'+a.email+'</div></div>'+
+          '<div><div style="font-weight:700;font-size:.86rem">'+a.name+'</div><div style="font-size:.72rem;color:var(--t2)">'+a.email+'</div></div>'+
           '<div style="display:flex;align-items:center;gap:10px">'+
             '<span style="font-size:.68rem;color:'+statusColor+'">● '+statusText+'</span>'+
             '<button style="font-size:.68rem;background:none;border:1px solid var(--border);color:var(--t2);border-radius:6px;padding:4px 8px;cursor:pointer" onclick="azToggleAdminDisabled(\''+a.email+'\','+(!a.disabled)+')">'+(a.disabled?'Enable':'Disable')+'</button>'+
@@ -4741,7 +4834,7 @@ async function azLoadPlatformToggles(){
     return '<div class="dcard" style="padding:16px">'+
       '<div style="font-size:1.2rem;margin-bottom:6px">'+(p.icon||'🔷')+'</div>'+
       '<div style="font-weight:700;margin-bottom:2px">'+(p.name_en||key)+'</div>'+
-      '<div style="font-size:.72rem;color:var(--t3);margin-bottom:12px;font-family:\'DM Mono\',monospace">'+key+'.axiomzones.com</div>'+
+      '<div style="font-size:.72rem;color:var(--t2);margin-bottom:12px;font-family:\'DM Mono\',monospace">'+key+'.axiomzones.com</div>'+
       '<div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Active</span><label class="tog"><input type="checkbox" '+checkedAttr+' onchange="toggleP(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
     '</div>';
   }).join('');
