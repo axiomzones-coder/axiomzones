@@ -6,41 +6,10 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const headers = new Headers({ 'content-type': 'application/json' });
 
-  // ── تحقق من جلسة المالك ──
-  const cookieHeader = request.headers.get('Cookie') || '';
-  const match = cookieHeader.match(/az_owner_session=([^;]+)/);
-  if (!match) {
-    return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), { status: 401, headers });
-  }
+  const ownerOk = await checkOwnerSession(request, env);
+  const adminOk = ownerOk ? false : (await checkAdminPermission(request, env, 'analytics')).ok;
 
-  const token = decodeURIComponent(match[1]);
-  const parts = token.split('.');
-  if (parts.length !== 3) {
-    return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), { status: 401, headers });
-  }
-
-  const [tag, expStr, sig] = parts;
-  if (tag !== 'owner') {
-    return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), { status: 401, headers });
-  }
-
-  const exp = parseInt(expStr, 10);
-  if (!exp || Date.now() > exp) {
-    return new Response(JSON.stringify({ ok: false, error: 'session_expired' }), { status: 401, headers });
-  }
-
-  const secret = env.OWNER_SECRET || env.OWNER_CODE || '';
-  const payload = `${tag}.${expStr}`;
-  const key = await crypto.subtle.importKey(
-    'raw',
-    new TextEncoder().encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign']
-  );
-  const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
-  const expectedSig = base64url(new Uint8Array(sigBuf));
-  if (expectedSig !== sig) {
+  if (!ownerOk && !adminOk) {
     return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), { status: 401, headers });
   }
 
@@ -107,4 +76,49 @@ function emptyStats() {
 function base64url(bytes) {
   let str = btoa(String.fromCharCode(...bytes));
   return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function checkOwnerSession(request, env) {
+  const cookieHeader = request.headers.get('Cookie') || '';
+  const match = cookieHeader.match(/az_owner_session=([^;]+)/);
+  if (!match) return false;
+  const token = decodeURIComponent(match[1]);
+  const parts = token.split('.');
+  if (parts.length !== 3) return false;
+  const [tag, expStr, sig] = parts;
+  if (tag !== 'owner') return false;
+  const exp = parseInt(expStr, 10);
+  if (!exp || Date.now() > exp) return false;
+  const secret = env.OWNER_SECRET || env.OWNER_CODE || '';
+  const payload = `${tag}.${expStr}`;
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  return base64url(new Uint8Array(sigBuf)) === sig;
+}
+
+async function checkAdminPermission(request, env, permission) {
+  if (!env.AZ_ADMINS_KV) return { ok: false };
+  const cookieHeader = request.headers.get('Cookie') || '';
+  const match = cookieHeader.match(/az_admin_session=([^;]+)/);
+  if (!match) return { ok: false };
+  const token = decodeURIComponent(match[1]);
+  const parts = token.split('.');
+  if (parts.length !== 4) return { ok: false };
+  const [tag, emailB64, expStr, sig] = parts;
+  if (tag !== 'admin') return { ok: false };
+  const exp = parseInt(expStr, 10);
+  if (!exp || Date.now() > exp) return { ok: false };
+  const secret = env.OWNER_SECRET || 'fallback-secret-change-me';
+  const payload = `${tag}.${emailB64}.${expStr}`;
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  if (base64url(new Uint8Array(sigBuf)) !== sig) return { ok: false };
+  let email;
+  try { email = atob(emailB64); } catch (e) { return { ok: false }; }
+  const raw = await env.AZ_ADMINS_KV.get('admin:' + email);
+  if (!raw) return { ok: false };
+  const rec = JSON.parse(raw);
+  if (rec.disabled) return { ok: false };
+  if (!rec.permissions || !rec.permissions[permission]) return { ok: false };
+  return { ok: true, email };
 }

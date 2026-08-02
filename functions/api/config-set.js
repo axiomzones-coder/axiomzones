@@ -39,7 +39,16 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ ok: false, error: 'missing_config' }), { status: 400, headers });
   }
 
-  await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(body.config));
+  if (!ownerOk && adminOk) {
+    // ── مدير بصلاحية platforms — تقييد حقيقي: يقدر يعدّل مفتاح "platforms" بس، أي مفتاح تاني (maintenance, customPlatforms, pricing...) يُتجاهل حتى لو حاول إرساله ──
+    const existingRaw = await env.AZ_CONFIG_KV.get('az_master_config');
+    const existingConfig = existingRaw ? JSON.parse(existingRaw) : {};
+    const restrictedConfig = Object.assign({}, existingConfig, { platforms: (body.config && body.config.platforms) || existingConfig.platforms || {} });
+    await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(restrictedConfig));
+  } else {
+    // ── المالك — كتابة كاملة بلا قيود ──
+    await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(body.config));
+  }
   // سجل تدقيق بسيط لمعرفة آخر من عدَّل الإعدادات (مالك أو مدير مُحدَّد بالإيميل)
   try { await env.AZ_CONFIG_KV.put('az_master_config_last_editor', JSON.stringify({ actor: actor, at: new Date().toISOString() })); } catch (e) {}
   await writeLog(env, 'config', actor, 'Updated platform/pricing configuration');
