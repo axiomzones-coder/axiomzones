@@ -3200,10 +3200,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec" id="ds-revenue">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Revenue <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
-          <div class="kc"><div class="kl">ARR</div><div class="kv gv" id="d-arr">—</div><div class="kch ku">↑ 32%</div></div>
-          <div class="kc"><div class="kl">MRR</div><div class="kv gv" id="d-mrr2">—</div><div class="kch ku">↑ 8.3%</div></div>
-          <div class="kc"><div class="kl">LTV</div><div class="kv gv" id="d-ltv">—</div><div class="kch ku">↑ 12%</div></div>
-          <div class="kc"><div class="kl">CAC</div><div class="kv" style="color:#60a5fa" id="d-cac">—</div><div class="kch kd">↑ 5%</div></div>
+          <div class="kc"><div class="kl">ARR</div><div class="kv gv" id="d-arr">—</div><div class="kch" style="color:var(--t3)">حقيقي</div></div>
+          <div class="kc"><div class="kl">MRR</div><div class="kv gv" id="d-mrr2">—</div><div class="kch" style="color:var(--t3)">حقيقي</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">LTV</div><div class="kv gv" id="d-ltv">—</div><div class="kch" style="color:var(--t3)">Demo — يحتاج تتبّع churn</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">CAC</div><div class="kv" style="color:#60a5fa" id="d-cac">—</div><div class="kch" style="color:var(--t3)">Demo — يحتاج بيانات تسويق</div></div>
         </div>
         <div class="dcard" style="opacity:.55"><div class="dct">Revenue by Platform <span style="font-size:.6rem;color:var(--t3);font-weight:400">(Demo — يحتاج نظام دفع حقيقي)</span></div>
           <div style="font-size:.78rem;color:var(--t3);padding:20px 0;text-align:center">غير متاح بعد — يحتاج ربط نظام دفع فعلي (Dodo Payments) لتتبّع أي إيراد حقيقي لكل منصة</div>
@@ -3735,6 +3735,7 @@ function fmtPrice(usd, c){
   var r = RATES[c] || 1;
   var v = usd * r;
   var s = SYMS[c] || c;
+  if(v === 0) return s+' 0';
   if(c==='BTC'||c==='ETH') return s+' '+v.toFixed(6);
   if(v<1) return s+' '+v.toFixed(4);
   if(v>10000000) return s+' '+Math.round(v/1000000)+'M';
