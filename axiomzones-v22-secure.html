@@ -2947,11 +2947,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div style="margin-top:14px;font-size:.72rem;color:var(--t3);font-family:'DM Mono',monospace">🌐 axiomzones.com &nbsp;·&nbsp; 📧 info@axiomzones.com</div>
       </div>
       <div class="fcol"><div class="fct">Platforms</div>
-<a onclick="window.open(\"prism-v2r8.html\",\"_blank\")">🔮 Prism Suite</a>
-<a onclick="window.open(\"kashf-v2.html\",\"_blank\")">👁️ Kashf</a>
-<a onclick="azV4Toast('UniUber coming soon!')">👔 UniUber</a>
+<div id="footer-platforms-list"><a onclick="azV4Toast('Loading...')">🔮 Prism Suite</a><a onclick="azV4Toast('Loading...')">👁️ Kashf</a><a onclick="azV4Toast('Loading...')">👔 UniUber</a><a onclick="azV4Toast('Loading...')">⚖️ Mizan Pro</a></div>
 <a onclick="azV4Toast('Master 365 coming soon!')">📊 Master 365</a>
-<a onclick="azV4Toast('Mizan Pro coming soon!')">⚖️ Mizan Pro</a>
 <a onclick="azV4Toast('ProSuite 365 in testing!')">💼 ProSuite 365</a>
 <a onclick="azV4Toast('Kyanat coming soon!')">🇸🇦 Kyanat</a>
 <a onclick="azV4Toast('Tripedia Q2 2025!')">✈️ Tripedia</a>
@@ -3161,13 +3158,18 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             <p style="font-size:.75rem;color:var(--t2);margin-bottom:14px">هذا يسجّل "بطاقة" المنصة في الموقع (الاسم، الوصف، رابط الملف). لازم ترفع ملف المنصة نفسه (HTML) على GitHub بنفس الرابط المكتوب هنا بالظبط قبل الحفظ.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
               <div><label class="fl">Key (إنجليزي، بدون مسافات، فريد)</label><input class="di" id="ap-key" placeholder="myplatform"/></div>
-              <div><label class="fl">Icon (إيموجي)</label><input class="di" id="ap-icon" placeholder="🚀"/></div>
+              <div><label class="fl">Icon (إيموجي — بديل لو مفيش لوجو)</label><input class="di" id="ap-icon" placeholder="🚀"/></div>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
               <div><label class="fl">Name (Arabic)</label><input class="di" id="ap-name-ar" placeholder="اسم المنصة"/></div>
               <div><label class="fl">Name (English)</label><input class="di" id="ap-name-en" placeholder="Platform Name"/></div>
             </div>
             <div style="margin-bottom:10px"><label class="fl">Short Description</label><input class="di" id="ap-desc" placeholder="وصف مختصر للمنصة"/></div>
+            <div style="margin-bottom:10px">
+              <label class="fl">Logo (اختياري — صورة حقيقية PNG/JPG/WebP، أقصى حجم 250KB)</label>
+              <input class="di" id="ap-logo" type="file" accept="image/png,image/jpeg,image/webp" onchange="azPreviewLogo(this)"/>
+              <div id="ap-logo-preview" style="margin-top:8px"></div>
+            </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
               <div><label class="fl">File Path (رابط الملف الحقيقي على الموقع)</label><input class="di" id="ap-path" placeholder="myplatform-v1.html"/></div>
               <div><label class="fl">Category</label>
@@ -3190,6 +3192,29 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             </div>
             <button class="bsub" style="width:auto;padding:10px 22px" onclick="azCreatePlatform()">Create Platform</button>
             <div id="ap-create-msg" style="margin-top:10px;font-size:.78rem"></div>
+          </div>
+
+          <div class="dcard" style="margin-top:14px;border:1px solid rgba(96,165,250,.3)">
+            <div class="dct" style="color:#60a5fa">🏷️ Add New Category</div>
+            <p style="font-size:.75rem;color:var(--t2);margin-bottom:14px">التصنيف الجديد هيظهر فوراً كزرار فلتر في الموقع الرئيسي، وكاختيار في قائمة "Category" فوق.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div><label class="fl">Category ID (إنجليزي، فريد)</label><input class="di" id="ac-id" placeholder="health"/></div>
+              <div><label class="fl">Icon (إيموجي)</label><input class="di" id="ac-icon" placeholder="🏥"/></div>
+              <div><label class="fl">Color (hex)</label><input class="di" id="ac-color" placeholder="#22c55e" value="#22c55e"/></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+              <div><label class="fl">Title (Arabic)</label><input class="di" id="ac-title-ar" placeholder="الصحة"/></div>
+              <div><label class="fl">Title (English)</label><input class="di" id="ac-title-en" placeholder="Health"/></div>
+            </div>
+            <button class="bsub" style="width:auto;padding:10px 22px" onclick="azCreateCategory()">Create Category</button>
+            <div id="ac-create-msg" style="margin-top:10px;font-size:.78rem"></div>
+          </div>
+
+          <div class="dcard" style="margin-top:14px">
+            <div class="dct">Custom Categories Added</div>
+            <div id="custom-categories-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:6px">
+              <div style="font-size:.78rem;color:var(--t2)">Loading...</div>
+            </div>
           </div>
 
           <div class="dcard" style="margin-top:14px">
@@ -4267,6 +4292,101 @@ async function doLogin(){
 }
 
 
+function azPreviewLogo(input){
+  var box = document.getElementById('ap-logo-preview');
+  var file = input.files[0];
+  if(!file){ box.innerHTML = ''; return; }
+  if(file.size > 250000){ box.innerHTML = '<span style="color:#f87171;font-size:.76rem">حجم الصورة أكبر من 250KB — اختار صورة أصغر</span>'; input.value=''; return; }
+  var reader = new FileReader();
+  reader.onload = function(){ box.innerHTML = '<img src="'+reader.result+'" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:1px solid var(--border)"/>'; };
+  reader.readAsDataURL(file);
+}
+
+/* ── إضافة/عرض/حذف تصنيفات جديدة كلياً — المالك فقط ── */
+async function azCreateCategory(){
+  var catId = document.getElementById('ac-id').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
+  var msg = document.getElementById('ac-create-msg');
+  var payload = {
+    action: 'create_category',
+    catId: catId,
+    icon: document.getElementById('ac-icon').value.trim() || '🔷',
+    color: document.getElementById('ac-color').value.trim() || '#c9a84c',
+    title_ar: document.getElementById('ac-title-ar').value.trim(),
+    title_en: document.getElementById('ac-title-en').value.trim(),
+  };
+  if(!catId || catId.length < 2){ msg.style.color='#f87171'; msg.textContent='Category ID مطلوب (حرفين على الأقل)'; return; }
+  if(!payload.title_ar || !payload.title_en){ msg.style.color='#f87171'; msg.textContent='العنوان بالعربي والإنجليزي مطلوبين'; return; }
+
+  msg.style.color='var(--t3)'; msg.textContent='Creating...';
+  try{
+    var res = await fetch('/api/owner-platforms', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    if(res.ok && data && data.ok){
+      msg.style.color='#4ade80'; msg.textContent='تمت إضافة التصنيف بنجاح ✦';
+      ['ac-id','ac-icon','ac-title-ar','ac-title-en'].forEach(function(id){ document.getElementById(id).value=''; });
+      azLoadCustomCategories();
+      azRefreshCategoryDropdown();
+    } else {
+      var errMap = { key_exists:'المعرّف ده مستخدم بالفعل، اختار اسم تاني', missing_required_fields:'حقول مطلوبة ناقصة', unauthorized:'المالك فقط يقدر يضيف تصنيفات جديدة' };
+      msg.style.color='#f87171'; msg.textContent = errMap[data && data.error] || 'فشل الإنشاء — حاول تاني';
+    }
+  }catch(e){ msg.style.color='#f87171'; msg.textContent='خطأ في الاتصال بالسيرفر'; }
+}
+
+async function azLoadCustomCategories(){
+  var box = document.getElementById('custom-categories-list');
+  if(!box) return;
+  try{
+    var res = await fetch('/api/owner-platforms', { credentials:'include' });
+    var data = await res.json();
+    if(!res.ok || !data || !data.ok){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Failed to load</div>'; return; }
+    var cats = data.categories || {};
+    var ids = Object.keys(cats);
+    if(!ids.length){ box.innerHTML = '<div style="font-size:.78rem;color:var(--t2)">لسه مفيش تصنيفات مخصصة مضافة</div>'; return; }
+    box.innerHTML = ids.map(function(id){
+      var c = cats[id];
+      return '<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:8px;padding:10px 14px">'+
+        '<div>'+(c.icon||'🔷')+' <strong>'+(c.title_en||id)+'</strong> <span style="font-size:.7rem;color:var(--t2)">('+id+')</span></div>'+
+        '<button class="db2" style="padding:4px 10px;font-size:.7rem;color:#f87171;border-color:rgba(239,68,68,.3)" onclick="azDeleteCustomCategory(\''+id+'\')">Delete</button>'+
+      '</div>';
+    }).join('');
+  }catch(e){ box.innerHTML = '<div style="font-size:.78rem;color:#f87171">Connection error</div>'; }
+}
+
+async function azDeleteCustomCategory(catId){
+  if(!confirm('حذف تصنيف "'+catId+'"؟ أي منصة كانت مصنَّفة فيه هتفضل موجودة بس بدون تصنيف واضح.')) return;
+  try{
+    await fetch('/api/owner-platforms', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'delete_category', catId:catId })
+    });
+    azLoadCustomCategories();
+    azRefreshCategoryDropdown();
+  }catch(e){ toast('فشل الحذف'); }
+}
+
+/* تحديث قائمة "Category" المنسدلة في فورم إضافة منصة لتشمل التصنيفات المخصصة الجديدة */
+async function azRefreshCategoryDropdown(){
+  var select = document.getElementById('ap-category');
+  if(!select) return;
+  try{
+    var res = await fetch('/api/owner-platforms', { credentials:'include' });
+    var data = await res.json();
+    if(!res.ok || !data || !data.ok) return;
+    var cats = data.categories || {};
+    Object.keys(cats).forEach(function(id){
+      if(select.querySelector('option[value="'+id+'"]')) return;
+      var opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = (cats[id].icon||'🔷') + ' ' + (cats[id].title_en || id);
+      select.appendChild(opt);
+    });
+  }catch(e){}
+}
+
 /* ── إضافة/عرض/حذف منصات جديدة كلياً — المالك فقط ── */
 async function azCreatePlatform(){
   var key = document.getElementById('ap-key').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
@@ -4287,6 +4407,20 @@ async function azCreatePlatform(){
   if(!key || key.length < 2){ msg.style.color='#f87171'; msg.textContent='Key مطلوب (حروف إنجليزية صغيرة فقط، حرفين على الأقل)'; return; }
   if(!payload.name_ar || !payload.name_en || !payload.path){ msg.style.color='#f87171'; msg.textContent='الاسم بالعربي والإنجليزي ورابط الملف كلهم مطلوبين'; return; }
 
+  // ── تحويل اللوجو المرفوع (لو موجود) لـ base64 قبل الإرسال ──
+  var logoFile = document.getElementById('ap-logo').files[0];
+  if(logoFile){
+    if(logoFile.size > 250000){ msg.style.color='#f87171'; msg.textContent='حجم اللوجو أكبر من 250KB — اختار صورة أصغر'; return; }
+    try{
+      payload.logoData = await new Promise(function(resolve, reject){
+        var reader = new FileReader();
+        reader.onload = function(){ resolve(reader.result); };
+        reader.onerror = reject;
+        reader.readAsDataURL(logoFile);
+      });
+    }catch(e){ msg.style.color='#f87171'; msg.textContent='فشل قراءة ملف اللوجو'; return; }
+  }
+
   msg.style.color='var(--t3)'; msg.textContent='Creating...';
   try{
     var res = await fetch('/api/owner-platforms', {
@@ -4297,6 +4431,8 @@ async function azCreatePlatform(){
     if(res.ok && data && data.ok){
       msg.style.color='#4ade80'; msg.textContent='تمت إضافة المنصة بنجاح ✦ — تأكد إنك رفعت ملفها الحقيقي على GitHub بنفس المسار';
       ['ap-key','ap-icon','ap-name-ar','ap-name-en','ap-desc','ap-path'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.getElementById('ap-logo').value = '';
+      document.getElementById('ap-logo-preview').innerHTML = '';
       azLoadCustomPlatforms();
     } else {
       var errMap = { key_exists:'المفتاح ده مستخدم بالفعل، اختار اسم تاني', missing_required_fields:'حقول مطلوبة ناقصة', unauthorized:'المالك فقط يقدر يضيف منصات جديدة' };
@@ -4745,7 +4881,11 @@ async function toggleP(key, el){
 async function azLoadPlatformToggles(){
   var addSection = document.getElementById('add-platform-section');
   if(addSection) addSection.style.display = (AZ_CURRENT_ROLE === 'owner') ? 'block' : 'none';
-  if(AZ_CURRENT_ROLE === 'owner') azLoadCustomPlatforms();
+  if(AZ_CURRENT_ROLE === 'owner'){
+    azLoadCustomPlatforms();
+    azLoadCustomCategories();
+    azRefreshCategoryDropdown();
+  }
 
   var grid = document.getElementById('platform-toggle-grid');
   if(!grid) return;
@@ -6589,6 +6729,36 @@ async function azUserLogout(){
   }catch(e){}
 })();
 
+/* ══ بناء روابط المنصات الحقيقية في الفوتر — مصدر واحد للحقيقة (AZ_PLATFORMS_DATA)، لا روابط ثابتة منفصلة بعد الآن ══ */
+/* ══ إضافة زرار فلتر تصنيف جديد ديناميكياً في شريط التصنيفات — لتصنيفات مخصصة أضافها المالك ══ */
+function azAddCategoryFilterButton(catId, cc){
+  var box = document.getElementById('az-cat-filters');
+  if(!box) return;
+  if(document.querySelector('[data-custom-cat="'+catId+'"]')) return; // موجود بالفعل، لا تكرار
+  var btn = document.createElement('button');
+  btn.className = 'az-cat-btn';
+  btn.setAttribute('data-custom-cat', catId);
+  btn.textContent = (cc.icon || '🔷') + ' ' + (cc.title_ar || catId);
+  btn.onclick = function(){ setCat(catId, this); };
+  box.appendChild(btn);
+}
+
+function azRenderFooterPlatforms(){
+  var box = document.getElementById('footer-platforms-list');
+  if(!box) return;
+  var keys = ['prism', 'kashf', 'uniuber', 'mizan']; // المنصات المختارة للعرض في الفوتر (مساحة محدودة) — تقرأ حالتها الحقيقية دائماً
+  box.innerHTML = keys.map(function(key){
+    var p = AZ_PLATFORMS_DATA[key];
+    if(!p) return '';
+    var name = p.name_en || key;
+    var icon = p.icon || '🔷';
+    if(p.status === 'live' && p.path){
+      return '<a onclick="window.open(\''+p.path+'\',\'_blank\')">'+icon+' '+name+'</a>';
+    }
+    return '<a onclick="azV4Toast(\''+name+' coming soon!\')">'+icon+' '+name+'</a>';
+  }).join('');
+}
+
 (function azSyncLiveConfig(){
   fetch('/api/config-get')
     .then(function(res){ return res.ok ? res.json() : null; })
@@ -6600,7 +6770,7 @@ async function azUserLogout(){
         azCheckMaintenanceAccess(data.config.maintenance);
       }
 
-      if (!data.config.platforms && !data.config.customPlatforms) return;
+      if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
       var overrides = data.config.platforms || {};
       Object.keys(overrides).forEach(function(key){
         if (!AZ_PLATFORMS_DATA[key]) return;
@@ -6613,6 +6783,20 @@ async function azUserLogout(){
         if (o.name_en) AZ_PLATFORMS_DATA[key].name_en = o.name_en;
       });
 
+      /* ══ دمج التصنيفات المخصصة الجديدة (Add New Category) — لازم قبل دمج المنصات لأنها تعتمد عليها ══ */
+      if (data.config.customCategories) {
+        Object.keys(data.config.customCategories).forEach(function(catId){
+          if (AZ_CATEGORIES.some(function(c){ return c.id === catId; })) return; // موجود بالفعل
+          var cc = data.config.customCategories[catId];
+          AZ_CATEGORIES.push({
+            id: catId, icon: cc.icon || '🔷', color: cc.color || '#c9a84c',
+            title_ar: cc.title_ar || catId, title_en: cc.title_en || catId,
+            subtitle: '', desc: '', featured: [], all: [],
+          });
+          azAddCategoryFilterButton(catId, cc);
+        });
+      }
+
       /* ══ دمج المنصات المخصصة المضافة عبر الداشبورد (Add New Platform) — مصدر واحد للحقيقة ══ */
       if (data.config.customPlatforms) {
         Object.keys(data.config.customPlatforms).forEach(function(key){
@@ -6624,6 +6808,7 @@ async function azUserLogout(){
             tagline_ar: cp.tagline_ar || '', tagline_en: cp.tagline_en || '',
             desc_short: cp.desc_short || '', desc_full: cp.desc_full || cp.desc_short || '',
             path: cp.path || '#', status: cp.status || 'coming',
+            logoData: cp.logoData || null,
           };
           var cat = AZ_CATEGORIES.find(function(c){ return c.id === cp.category; });
           if (cat) {
@@ -6634,7 +6819,18 @@ async function azUserLogout(){
         });
       }
 
-      if (typeof azRenderPlatformCards === 'function') azRenderPlatformCards();
+      /* ══ إعادة الرسم مع احترام وضع العرض الحالي (تصنيفات أو شبكة) — لا نفرض الشبكة المسطّحة دائماً ══ */
+      if (AZ_VIEW_MODE === 'categories' && typeof renderCategoryView === 'function') {
+        renderCategoryView();
+      } else if (typeof azRenderPlatformCards === 'function') {
+        azRenderPlatformCards();
+      }
+      /* إعادة تطبيق فلتر التصنيف المختار حالياً (لو مش "الكل") — لضمان عدم تصفير اختيار المستخدم بعد أي تحديث إعدادات في الخلفية */
+      if (typeof AZ_ACTIVE_CAT !== 'undefined' && AZ_ACTIVE_CAT !== 'all') {
+        document.querySelectorAll('.cat-section').forEach(function(sec){
+          sec.style.display = (sec.id === 'cat-' + AZ_ACTIVE_CAT) ? '' : 'none';
+        });
+      }
 
       /* ══ تحديث عدّاد "المنصات النشطة" ليعكس العدد الحقيقي الفعلي، بدل الرقم الثابت في الكود ══ */
       var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
@@ -6642,6 +6838,8 @@ async function azUserLogout(){
         el.setAttribute('data-count', liveCount);
         el.textContent = liveCount;
       });
+
+      azRenderFooterPlatforms();
     })
     .catch(function(){ /* لا مشكلة — القيم الافتراضية بالكود تبقى فعّالة */ });
 })();
@@ -6943,8 +7141,16 @@ function buildPlatformCard(key, plt) {
   topRow.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:10px';
   
   var iconBox = document.createElement('div');
-  iconBox.style.cssText = 'width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:' + plt.color + '12;border:1px solid ' + plt.color + '25;transition:transform .3s,box-shadow .3s';
-  iconBox.textContent = plt.icon;
+  iconBox.style.cssText = 'width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:' + plt.color + '12;border:1px solid ' + plt.color + '25;transition:transform .3s,box-shadow .3s;overflow:hidden';
+  if(plt.logoData){
+    var logoImg = document.createElement('img');
+    logoImg.src = plt.logoData;
+    logoImg.alt = plt.name_en || key;
+    logoImg.style.cssText = 'width:100%;height:100%;object-fit:cover';
+    iconBox.appendChild(logoImg);
+  } else {
+    iconBox.textContent = plt.icon;
+  }
 
   var nameBox = document.createElement('div');
   nameBox.style.cssText = 'flex:1;min-width:0';
@@ -7084,8 +7290,16 @@ function openPltModal(key) {
   hdr.style.cssText = 'display:flex;align-items:flex-start;gap:18px;margin-bottom:22px';
 
   var iconEl = document.createElement('div');
-  iconEl.style.cssText = 'width:70px;height:70px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;background:' + plt.color + '15;border:1.5px solid ' + plt.color + '30';
-  iconEl.textContent = plt.icon;
+  iconEl.style.cssText = 'width:70px;height:70px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;background:' + plt.color + '15;border:1.5px solid ' + plt.color + '30;overflow:hidden';
+  if(plt.logoData){
+    var modalLogoImg = document.createElement('img');
+    modalLogoImg.src = plt.logoData;
+    modalLogoImg.alt = plt.name_en || key;
+    modalLogoImg.style.cssText = 'width:100%;height:100%;object-fit:cover';
+    iconEl.appendChild(modalLogoImg);
+  } else {
+    iconEl.textContent = plt.icon;
+  }
 
   var info = document.createElement('div');
   info.style.cssText = 'flex:1';
