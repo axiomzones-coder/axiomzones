@@ -26,10 +26,11 @@ async function verifyOwnerSession(request, env) {
   return base64url(new Uint8Array(sigBuf)) === sig;
 }
 
-// أسماء التصنيفات المسموحة — يجب أن تطابق AZ_CATEGORIES في الموقع الرئيسي بالضبط
-const ALLOWED_CATEGORIES = ['financial', 'islamic', 'educational', 'business'];
+// أسماء التصنيفات المسموحة — يجب أن تطابق AZ_CATEGORIES في الموقع الرئيسي بالضبط (تُحدَّث ديناميكياً لاحقاً لتشمل التصنيفات المخصَّصة)
+const BUILTIN_CATEGORIES = ['financial', 'islamic', 'educational', 'business'];
 // حقول اختيارية بيضاء القائمة فقط — أي حقل غير هذه القائمة يُتجاهل بصمت لمنع حقن بيانات غير متوقعة
-const ALLOWED_FIELDS = ['icon', 'color', 'colorLight', 'name_ar', 'name_en', 'tagline_ar', 'tagline_en', 'desc_short', 'desc_full', 'path', 'category', 'status', 'featured'];
+const ALLOWED_FIELDS = ['icon', 'color', 'colorLight', 'name_ar', 'name_en', 'tagline_ar', 'tagline_en', 'desc_short', 'desc_full', 'path', 'category', 'status', 'featured', 'logoData'];
+const MAX_LOGO_SIZE = 350000; // ~350KB بعد الترميز base64 — حماية لحجم KV
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -39,13 +40,13 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), { status: 401, headers });
   }
   if (!env.AZ_CONFIG_KV) {
-    return new Response(JSON.stringify({ ok: true, platforms: {} }), { headers });
+    return new Response(JSON.stringify({ ok: true, platforms: {}, categories: {} }), { headers });
   }
 
   try {
     const raw = await env.AZ_CONFIG_KV.get('az_master_config');
     const config = raw ? JSON.parse(raw) : {};
-    return new Response(JSON.stringify({ ok: true, platforms: config.customPlatforms || {} }), { headers });
+    return new Response(JSON.stringify({ ok: true, platforms: config.customPlatforms || {}, categories: config.customCategories || {} }), { headers });
   } catch (err) {
     return new Response(JSON.stringify({ ok: false, error: 'kv_error' }), { status: 500, headers });
   }
@@ -68,21 +69,55 @@ export async function onRequestPost(context) {
   }
 
   const action = String((body && body.action) || '');
-  const key = String((body && body.key) || '').trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
-
-  if (!key || key.length < 2) {
-    return new Response(JSON.stringify({ ok: false, error: 'invalid_key' }), { status: 400, headers });
-  }
-
   const raw = await env.AZ_CONFIG_KV.get('az_master_config');
   const config = raw ? JSON.parse(raw) : {};
   if (!config.customPlatforms) config.customPlatforms = {};
+  if (!config.customCategories) config.customCategories = {};
+
+  // ── إدارة التصنيفات (منفصلة عن إدارة المنصات، لكن بنفس نقطة الدخول لتوفير الاعتماد على جلسة المالك) ──
+  if (action === 'create_category') {
+    const catId = String((body && body.catId) || '').trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+    if (!catId || catId.length < 2) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_key' }), { status: 400, headers });
+    }
+    if (BUILTIN_CATEGORIES.includes(catId) || config.customCategories[catId]) {
+      return new Response(JSON.stringify({ ok: false, error: 'key_exists' }), { status: 409, headers });
+    }
+    const title_ar = String((body && body.title_ar) || '').trim();
+    const title_en = String((body && body.title_en) || '').trim();
+    if (!title_ar || !title_en) {
+      return new Response(JSON.stringify({ ok: false, error: 'missing_required_fields' }), { status: 400, headers });
+    }
+    config.customCategories[catId] = {
+      icon: String((body && body.icon) || '🔷'),
+      color: String((body && body.color) || '#c9a84c'),
+      title_ar, title_en,
+    };
+    await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));
+    await writeLog(env, 'category', 'owner', `Created new category: ${catId} (${title_en})`);
+    return new Response(JSON.stringify({ ok: true, catId, category: config.customCategories[catId] }), { headers });
+  }
+
+  if (action === 'delete_category') {
+    const catId = String((body && body.catId) || '');
+    delete config.customCategories[catId];
+    await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));
+    await writeLog(env, 'category', 'owner', `Deleted category: ${catId}`);
+    return new Response(JSON.stringify({ ok: true }), { headers });
+  }
+
+  // ── إدارة المنصات (كما كانت، مع دعم قبول أي تصنيف مسجَّل فعلياً — ثابت أو مخصَّص) ──
+  const key = String((body && body.key) || '').trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  if (!key || key.length < 2) {
+    return new Response(JSON.stringify({ ok: false, error: 'invalid_key' }), { status: 400, headers });
+  }
+  const allCategoryIds = BUILTIN_CATEGORIES.concat(Object.keys(config.customCategories));
 
   if (action === 'create') {
     if (config.customPlatforms[key]) {
       return new Response(JSON.stringify({ ok: false, error: 'key_exists' }), { status: 409, headers });
     }
-    const platform = sanitizePlatform(body);
+    const platform = sanitizePlatform(body, allCategoryIds);
     if (!platform.name_ar || !platform.name_en || !platform.path) {
       return new Response(JSON.stringify({ ok: false, error: 'missing_required_fields' }), { status: 400, headers });
     }
@@ -96,7 +131,7 @@ export async function onRequestPost(context) {
     if (!config.customPlatforms[key]) {
       return new Response(JSON.stringify({ ok: false, error: 'not_found' }), { status: 404, headers });
     }
-    const updated = Object.assign({}, config.customPlatforms[key], sanitizePlatform(body));
+    const updated = Object.assign({}, config.customPlatforms[key], sanitizePlatform(body, allCategoryIds));
     config.customPlatforms[key] = updated;
     await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));
     await writeLog(env, 'platform', 'owner', `Updated platform: ${key}`);
@@ -113,12 +148,17 @@ export async function onRequestPost(context) {
   return new Response(JSON.stringify({ ok: false, error: 'invalid_action' }), { status: 400, headers });
 }
 
-function sanitizePlatform(body) {
+function sanitizePlatform(body, allCategoryIds) {
   const out = {};
   ALLOWED_FIELDS.forEach(function (f) {
     if (body[f] !== undefined) out[f] = body[f];
   });
-  if (out.category && !ALLOWED_CATEGORIES.includes(out.category)) delete out.category;
+  if (out.category && allCategoryIds && !allCategoryIds.includes(out.category)) delete out.category;
+  if (out.logoData) {
+    if (typeof out.logoData !== 'string' || !out.logoData.startsWith('data:image/') || out.logoData.length > MAX_LOGO_SIZE) {
+      delete out.logoData; // لوجو غير صالح أو كبير جداً — يُتجاهل بصمت، تفضل الأيقونة (إيموجي) كبديل
+    }
+  }
   if (out.status && out.status !== 'live' && out.status !== 'coming') out.status = 'coming';
   if (!out.colorLight && out.color) out.colorLight = out.color;
   out.featured = !!out.featured;
