@@ -1366,28 +1366,28 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 #az-sb.open{transform:translateX(0)}
 .az-sb-top{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;background:rgba(201,168,76,.04);flex-shrink:0}
 .az-sb-logo{font-family:var(--font-display,'Cormorant',serif);font-size:1.15rem;font-weight:700;background:linear-gradient(135deg,#f0f2ff,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.az-sb-close{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#8892b0;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.az-sb-close{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--t2);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
 .az-sb-close:hover{border-color:#ef4444;color:#ef4444}
 .az-sb-body{flex:1;overflow-y:auto;padding:0}
 .az-sb-body::-webkit-scrollbar{width:2px}
 .az-sb-body::-webkit-scrollbar-thumb{background:#c9a84c}
 .az-sb-sec{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
 .az-sb-title{font-family:var(--font-mono,'DM Mono',monospace);font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;margin-bottom:9px}
-.az-sb-link{display:flex;align-items:center;padding:9px 11px;border-radius:8px;margin-bottom:4px;color:#f0f2ff;font-size:.84rem;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .22s;width:100%;text-align:start;font-family:var(--font-sans,'Syne',sans-serif)}
+.az-sb-link{display:flex;align-items:center;padding:9px 11px;border-radius:8px;margin-bottom:4px;color:var(--t1);font-size:.84rem;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .22s;width:100%;text-align:start;font-family:var(--font-sans,'Syne',sans-serif)}
 .az-sb-link:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.15)}
 .az-sb-foot{padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
-.az-toast-el{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(201,168,76,.3);color:#f0f2ff;padding:10px 20px;border-radius:9px;font-size:.76rem;z-index:9999;transition:transform .4s cubic-bezier(.16,1,.3,1);box-shadow:0 12px 40px rgba(0,0,0,.5);font-family:var(--font-mono,'DM Mono',monospace);letter-spacing:.5px;pointer-events:none;white-space:nowrap}
+.az-toast-el{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(80px);background:#141c2e;border:1px solid rgba(201,168,76,.3);color:var(--t1);padding:10px 20px;border-radius:9px;font-size:.76rem;z-index:9999;transition:transform .4s cubic-bezier(.16,1,.3,1);box-shadow:0 12px 40px rgba(0,0,0,.5);font-family:var(--font-mono,'DM Mono',monospace);letter-spacing:.5px;pointer-events:none;white-space:nowrap}
 .az-toast-el.show{transform:translateX(-50%) translateY(0)}
 .az-modal-ov{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.85);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s}
 .az-modal-ov.open{opacity:1;pointer-events:all}
 .az-modal-box{background:#0f1525;border:1px solid rgba(201,168,76,.18);border-radius:18px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;position:relative}
 .az-modal-hd{padding:22px 22px 0;display:flex;align-items:flex-start;gap:14px;position:sticky;top:0;background:#0f1525;z-index:1;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
-.az-modal-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#8892b0;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.az-modal-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--t2);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
 .az-modal-close:hover{border-color:#ef4444;color:#ef4444}
 .az-modal-body{padding:18px 22px 22px}
 .az-modal-feats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
 @media(max-width:480px){.az-modal-feats{grid-template-columns:1fr}}
-.az-modal-feat{display:flex;align-items:flex-start;gap:7px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:7px;font-size:.76rem;color:#8892b0;line-height:1.5}
+.az-modal-feat{display:flex;align-items:flex-start;gap:7px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:7px;font-size:.76rem;color:var(--t2);line-height:1.5}
 .rv4{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
 .rv4.vis{opacity:1;transform:none}
 .rv4.d1{transition-delay:.1s}.rv4.d2{transition-delay:.2s}.rv4.d3{transition-delay:.3s}
@@ -1401,42 +1401,42 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 @keyframes bk4{0%,100%{opacity:1}50%{opacity:.3}}
 /* Region toggle */
 .rgn-toggle{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
-.rgn-btn{padding:6px 16px;border-radius:7px;font-family:var(--font-mono,'DM Mono',monospace);font-size:.64rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .25s;border:1px solid rgba(255,255,255,.1);background:transparent;color:#8892b0}
+.rgn-btn{padding:6px 16px;border-radius:7px;font-family:var(--font-mono,'DM Mono',monospace);font-size:.64rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .25s;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--t2)}
 .rgn-btn.on{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.25);color:#c9a84c}
 /* FAQ */
-.faq4-item{background:#0a0d1a;border:1px solid rgba(255,255,255,.06);border-radius:11px;overflow:hidden;margin-bottom:8px;cursor:pointer;transition:border-color .25s}
+.faq4-item{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:8px;cursor:pointer;transition:border-color .25s}
 .faq4-item:hover{border-color:rgba(201,168,76,.2)}
 .faq4-item.open{border-color:rgba(201,168,76,.28)}
-.faq4-q{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;font-size:.88rem;font-weight:600;gap:12px;color:#F2EEE8}
-.faq4-arr{font-size:.68rem;color:#3d4a6b;transition:transform .3s;flex-shrink:0}
+.faq4-q{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;font-size:.88rem;font-weight:600;gap:12px;color:var(--t1)}
+.faq4-arr{font-size:.68rem;color:var(--t3);transition:transform .3s;flex-shrink:0}
 .faq4-item.open .faq4-arr{transform:rotate(180deg);color:#c9a84c}
 .faq4-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
 .faq4-item.open .faq4-a{max-height:200px}
-.faq4-inner{padding:0 18px 14px;font-size:.8rem;color:#8892b0;line-height:1.85;border-top:1px solid rgba(255,255,255,.05);padding-top:12px}
+.faq4-inner{padding:0 18px 14px;font-size:.8rem;color:var(--t2);line-height:1.85;border-top:1px solid var(--border);padding-top:12px}
 /* Testimonials */
 .test4-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
 @media(max-width:700px){.test4-grid{grid-template-columns:1fr}}
-.test4-card{background:#0a0d1a;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px}
+.test4-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
 .test4-stars{color:#c9a84c;font-size:.75rem;margin-bottom:8px}
-.test4-quote{font-size:.82rem;color:#8892b0;line-height:1.8;font-style:italic;margin-bottom:12px}
+.test4-quote{font-size:.82rem;color:var(--t2);line-height:1.8;font-style:italic;margin-bottom:12px}
 .test4-auth{display:flex;align-items:center;gap:9px}
 .test4-av{width:34px;height:34px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
-.test4-name{font-size:.8rem;font-weight:700;color:#F2EEE8}
-.test4-role{font-size:.7rem;color:#3d4a6b;font-family:var(--font-mono,'DM Mono',monospace)}
+.test4-name{font-size:.8rem;font-weight:700;color:var(--t1)}
+.test4-role{font-size:.7rem;color:var(--t3);font-family:var(--font-mono,'DM Mono',monospace)}
 /* Print */
 @media print{#sp,#az-mobnav,#az-top,#az-sb,#az-sbov,.az-modal-ov,.az-toast-el{display:none!important}}
 
 
 .p-ico{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:12px;border:1px solid rgba(255,255,255,.06)}
 .p-name{font-family:var(--font-display,'Cormorant',serif);font-size:1.3rem;font-weight:700;margin-bottom:3px}
-.p-tag{font-family:var(--font-mono,'DM Mono',monospace);font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-bottom:10px}
-.p-desc{font-size:.8rem;color:#8892b0;line-height:1.7;margin-bottom:10px}
+.p-tag{font-family:var(--font-mono,'DM Mono',monospace);font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.p-desc{font-size:.8rem;color:var(--t2);line-height:1.7;margin-bottom:10px}
 .p-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.ptag-s{font-size:.6rem;padding:2px 7px;border-radius:3px;font-family:var(--font-mono,'DM Mono',monospace);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#3d4a6b}
+.ptag-s{font-size:.6rem;padding:2px 7px;border-radius:3px;font-family:var(--font-mono,'DM Mono',monospace);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--t3)}
 .p-footer{padding-top:12px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .p-price{font-family:var(--font-display,'Cormorant',serif);font-size:1rem;font-weight:700}
 .p-btns{display:flex;gap:6px}
-.p-btn-s{padding:6px 12px;border-radius:6px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.74rem;font-weight:600;cursor:pointer;transition:all .22s;background:transparent;border:1px solid rgba(255,255,255,.1);color:#8892b0}
+.p-btn-s{padding:6px 12px;border-radius:6px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.74rem;font-weight:600;cursor:pointer;transition:all .22s;background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2)}
 .p-btn-s:hover{transform:translateY(-1px)}
 
 
@@ -1455,22 +1455,22 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-pcard-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
 .v5-pcard-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;border:1px solid rgba(255,255,255,.08)}
 .v5-pcard-nm{font-family:'Cormorant',Georgia,serif;font-size:1.3rem;font-weight:700;margin-bottom:3px}
-.v5-pcard-tg{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b}
+.v5-pcard-tg{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3)}
 
 /* Pain opener */
 .v5-pain{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12);border-radius:9px;padding:11px 13px;margin-bottom:12px;font-size:.8rem;color:#ef4444;line-height:1.6}
 .v5-pain-icon{margin-inline-end:5px}
 
 /* Summary */
-.v5-summary{font-size:.83rem;color:#8892b0;line-height:1.75;margin-bottom:14px}
+.v5-summary{font-size:.83rem;color:var(--t2);line-height:1.75;margin-bottom:14px}
 
 /* Tags */
 .v5-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.v5-tag{font-size:.6rem;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:#3d4a6b}
+.v5-tag{font-size:.6rem;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--t3)}
 .v5-tag.islamic{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:#22c55e}
 
 /* Live social proof */
-.v5-live{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;margin-bottom:12px}
+.v5-live{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t2);margin-bottom:12px}
 .v5-live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:v5bk 2s infinite;flex-shrink:0}
 @keyframes v5bk{0%,100%{opacity:1}50%{opacity:.3}}
 
@@ -1493,14 +1493,14 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-ba-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
 .v5-ba-row{display:flex;justify-content:space-between;padding:4px 0;font-size:.75rem;border-bottom:1px solid rgba(255,255,255,.04)}
 .v5-ba-row:last-child{border-bottom:none}
-.v5-ba-lbl{color:#8892b0}
+.v5-ba-lbl{color:var(--t2)}
 .v5-ba-val{font-family:'DM Mono',monospace;font-size:.72rem;font-weight:700}
 
 /* Mini demo */
 .v5-mini-demo{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;margin-bottom:16px}
 .v5-demo-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px}
 .v5-demo-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
-.v5-demo-inp{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#f0f2ff;padding:7px 10px;border-radius:6px;font-family:'DM Mono',monospace;font-size:.78rem;outline:none;-moz-appearance:textfield}
+.v5-demo-inp{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--t1);padding:7px 10px;border-radius:6px;font-family:'DM Mono',monospace;font-size:.78rem;outline:none;-moz-appearance:textfield}
 .v5-demo-inp::-webkit-inner-spin-button{-webkit-appearance:none}
 .v5-demo-inp:focus{border-color:#c9a84c}
 .v5-demo-btn{padding:7px 14px;border-radius:6px;background:#c9a84c;color:#060912;font-weight:700;font-size:.74rem;border:none;cursor:pointer;font-family:'Syne',sans-serif;white-space:nowrap;transition:all .25s}
@@ -1509,10 +1509,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-demo-result.show{display:block}
 
 /* Full description */
-.v5-full-desc{font-size:.82rem;color:#8892b0;line-height:1.85;margin-bottom:14px}
+.v5-full-desc{font-size:.82rem;color:var(--t2);line-height:1.85;margin-bottom:14px}
 .v5-features{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:14px}
 @media(max-width:500px){.v5-features{grid-template-columns:1fr}}
-.v5-feat{display:flex;align-items:flex-start;gap:6px;font-size:.76rem;color:#8892b0;padding:4px 0}
+.v5-feat{display:flex;align-items:flex-start;gap:6px;font-size:.76rem;color:var(--t2);padding:4px 0}
 .v5-feat::before{content:'✓';color:#22c55e;font-size:.68rem;flex-shrink:0;margin-top:2px}
 
 /* Islamic note */
@@ -1521,9 +1521,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 /* Email capture in card */
 .v5-email-cap{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:9px;padding:13px;margin-bottom:14px}
-.v5-email-cap-title{font-size:.76rem;font-weight:600;margin-bottom:8px;color:#f0f2ff}
+.v5-email-cap-title{font-size:.76rem;font-weight:600;margin-bottom:8px;color:var(--t1)}
 .v5-email-cap-row{display:flex;gap:7px}
-.v5-email-inp{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#f0f2ff;padding:7px 10px;border-radius:6px;font-family:'Syne',sans-serif;font-size:.78rem;outline:none}
+.v5-email-inp{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--t1);padding:7px 10px;border-radius:6px;font-family:'Syne',sans-serif;font-size:.78rem;outline:none}
 .v5-email-inp:focus{border-color:#c9a84c}
 
 /* Ask AI button */
@@ -1533,10 +1533,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-ai-chat.open{display:block}
 .v5-ai-messages{max-height:200px;overflow-y:auto;margin-bottom:8px;display:flex;flex-direction:column;gap:6px}
 .v5-ai-msg{font-size:.78rem;line-height:1.6;padding:8px 10px;border-radius:7px}
-.v5-ai-msg.user{background:rgba(255,255,255,.06);color:#f0f2ff;align-self:flex-end;max-width:80%}
+.v5-ai-msg.user{background:rgba(255,255,255,.06);color:var(--t1);align-self:flex-end;max-width:80%}
 .v5-ai-msg.ai{background:rgba(139,92,246,.12);color:#c4b5fd;align-self:flex-start;max-width:85%}
 .v5-ai-inp-row{display:flex;gap:6px}
-.v5-ai-inp{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#f0f2ff;padding:7px 10px;border-radius:6px;font-family:'Syne',sans-serif;font-size:.76rem;outline:none}
+.v5-ai-inp{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--t1);padding:7px 10px;border-radius:6px;font-family:'Syne',sans-serif;font-size:.76rem;outline:none}
 
 /* Card footer */
 .v5-pcard-footer{padding:14px 22px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,.05)}
@@ -1544,7 +1544,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-ctas{display:flex;gap:7px}
 .v5-btn-launch{padding:9px 18px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.78rem;border:none;cursor:pointer;transition:all .3s}
 .v5-btn-launch:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,168,76,.3)}
-.v5-btn-outline{padding:9px 14px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.1);color:#8892b0;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;transition:all .25s}
+.v5-btn-outline{padding:9px 14px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2);font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;transition:all .25s}
 .v5-btn-outline:hover{border-color:#c9a84c;color:#c9a84c}
 
 /* ISLAMIC MODE TOOLBAR BUTTON */
@@ -1558,7 +1558,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-islamic-card:hover{border-color:rgba(34,197,94,.25);transform:translateY(-3px)}
 .v5-islamic-card-icon{font-size:1.8rem;margin-bottom:10px}
 .v5-islamic-card-title{font-family:'Cormorant',Georgia,serif;font-size:1.1rem;font-weight:700;color:#22c55e;margin-bottom:6px}
-.v5-islamic-card-desc{font-size:.79rem;color:#8892b0;line-height:1.75}
+.v5-islamic-card-desc{font-size:.79rem;color:var(--t2);line-height:1.75}
 
 /* FINANCIAL IQ QUIZ */
 .v5-quiz-sec{padding:80px 0;border-top:1px solid rgba(255,255,255,.05)}
@@ -1566,7 +1566,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-quiz-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a)}
 .v5-quiz-q{font-family:'Cormorant',Georgia,serif;font-size:1.3rem;font-weight:700;margin-bottom:18px;min-height:60px}
 .v5-quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.v5-quiz-opt{padding:11px 16px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);cursor:pointer;font-size:.84rem;transition:all .25s;text-align:start;font-family:'Syne',sans-serif;color:#f0f2ff}
+.v5-quiz-opt{padding:11px 16px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);cursor:pointer;font-size:.84rem;transition:all .25s;text-align:start;font-family:'Syne',sans-serif;color:var(--t1)}
 .v5-quiz-opt:hover{border-color:#c9a84c;background:rgba(201,168,76,.07)}
 .v5-quiz-opt.correct{border-color:#22c55e;background:rgba(34,197,94,.1);color:#22c55e}
 .v5-quiz-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.1);color:#ef4444}
@@ -1580,7 +1580,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-alert-box{max-width:700px;margin:0 auto;background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.15);border-radius:14px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
 @media(max-width:600px){.v5-alert-box{grid-template-columns:1fr}}
 .v5-alert-form{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.v5-alert-inp{flex:1;min-width:120px;background:rgba(255,255,255,.06);border:1.5px solid rgba(59,130,246,.2);color:#f0f2ff;padding:10px 13px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.84rem;outline:none;transition:border-color .25s}
+.v5-alert-inp{flex:1;min-width:120px;background:rgba(255,255,255,.06);border:1.5px solid rgba(59,130,246,.2);color:var(--t1);padding:10px 13px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.84rem;outline:none;transition:border-color .25s}
 .v5-alert-inp:focus{border-color:#3b82f6}
 
 /* BLOG PREVIEW */
@@ -1591,25 +1591,25 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-blog-card:hover{border-color:rgba(201,168,76,.2);transform:translateY(-3px)}
 .v5-blog-cat{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px}
 .v5-blog-title{font-family:'Cormorant',Georgia,serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;line-height:1.3}
-.v5-blog-excerpt{font-size:.78rem;color:#8892b0;line-height:1.7;margin-bottom:12px}
-.v5-blog-meta{font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b;display:flex;align-items:center;justify-content:space-between}
+.v5-blog-excerpt{font-size:.78rem;color:var(--t2);line-height:1.7;margin-bottom:12px}
+.v5-blog-meta{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--t3);display:flex;align-items:center;justify-content:space-between}
 .v5-blog-expand{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1)}
 .v5-blog-card.open .v5-blog-expand{max-height:800px}
-.v5-blog-full{padding-top:14px;border-top:1px solid rgba(255,255,255,.05);font-size:.8rem;color:#8892b0;line-height:1.85}
+.v5-blog-full{padding-top:14px;border-top:1px solid rgba(255,255,255,.05);font-size:.8rem;color:var(--t2);line-height:1.85}
 
 /* ARAB FINANCIAL INDEX */
 .v5-afi-sec{padding:60px 0;background:rgba(201,168,76,.02);border-top:1px solid rgba(255,255,255,.05)}
 .v5-afi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:20px}
 .v5-afi-country{background:var(--ink,#0a0d1a);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;text-align:center}
 .v5-afi-flag{font-size:1.6rem;margin-bottom:6px}
-.v5-afi-name{font-size:.72rem;color:#8892b0;margin-bottom:6px}
+.v5-afi-name{font-size:.72rem;color:var(--t2);margin-bottom:6px}
 .v5-afi-rate{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700}
-.v5-afi-label{font-size:.58rem;color:#3d4a6b;font-family:'DM Mono',monospace;margin-top:2px}
+.v5-afi-label{font-size:.58rem;color:var(--t3);font-family:'DM Mono',monospace;margin-top:2px}
 
 /* SHAREABLE BADGE */
 .v5-badge-modal{position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.85);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s}
 .v5-badge-modal.open{opacity:1;pointer-events:all}
-.v5-badge-box{background:#0a0d1a;border:1px solid rgba(201,168,76,.2);border-radius:18px;max-width:480px;width:100%;padding:28px;text-align:center}
+.v5-badge-box{background:var(--bg-card);border:1px solid rgba(201,168,76,.2);border-radius:18px;max-width:480px;width:100%;padding:28px;text-align:center}
 #v5-badge-canvas{border-radius:10px;width:100%;margin-bottom:12px;cursor:pointer}
 
 /* VERSION BADGE */
@@ -1678,10 +1678,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 </head>
 <body>
 <noscript>
-  <div style="position:fixed;inset:0;background:#060912;color:#f0f2ff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:99999;font-family:sans-serif">
+  <div style="position:fixed;inset:0;background:#060912;color:var(--t1);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:99999;font-family:sans-serif">
     <div>
       <p style="font-size:1.3rem;margin-bottom:10px">⚠️ يتطلب هذا الموقع تفعيل JavaScript للعمل</p>
-      <p style="color:#8892b0">This site requires JavaScript to be enabled to function properly.</p>
+      <p style="color:var(--t2)">This site requires JavaScript to be enabled to function properly.</p>
     </div>
   </div>
 </noscript>
@@ -2296,8 +2296,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div id="az-search-results" class="az-search-results"></div>
       </div>
 
-      <div class="h-ctas">
-        <button class="btn-cta" onclick="azV4GoTo('platforms')" data-i18n="h.cta1">🚀 Explore Platforms</button>
+      <div class="h-ctas" style="margin-top:28px">
+        <button class="btn-cta" onclick="azV4GoTo('projects')" data-i18n="h.cta1">🚀 Explore Platforms</button>
         <button class="btn-cta-s" onclick="azV4GoTo('pricing')" data-i18n="h.cta2">View Pricing ↓</button>
       </div>
     </div>
@@ -2322,21 +2322,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 <!-- MARQUEE -->
 <div class="mqstrip" aria-hidden="true">
-  <div class="mqtrack">
-    <span class="mqitem uni-q">UniUber <span>✦</span></span><span class="mqitem logi-q">LogiShield <span>✦</span></span>
-    <span class="mqitem prop-q">PropPulse <span>✦</span></span><span class="mqitem tal-q">TalentFlow <span>✦</span></span>
-    <span class="mqitem">200 Currencies <span>✦</span></span><span class="mqitem">60 Languages <span>✦</span></span>
-    <span class="mqitem">195 Countries <span>✦</span></span><span class="mqitem">Venture Studio <span>✦</span></span>
-    <span class="mqitem logi-q">Blockchain <span>✦</span></span><span class="mqitem tal-q">AI Powered <span>✦</span></span>
-    <span class="mqitem prop-q">AR / VR <span>✦</span></span><span class="mqitem uni-q">Supply Chain <span>✦</span></span>
-    <span class="mqitem uni-q">UniUber <span>✦</span></span><span class="mqitem logi-q">LogiShield <span>✦</span></span>
-    <span class="mqitem prop-q">PropPulse <span>✦</span></span><span class="mqitem tal-q">TalentFlow <span>✦</span></span>
-    <span class="mqitem">200 Currencies <span>✦</span></span><span class="mqitem">60 Languages <span>✦</span></span>
-    <span class="mqitem">195 Countries <span>✦</span></span><span class="mqitem">Venture Studio <span>✦</span></span>
-    <span class="mqitem logi-q">Blockchain <span>✦</span></span><span class="mqitem tal-q">AI Powered <span>✦</span></span>
-    <span class="mqitem prop-q">AR / VR <span>✦</span></span><span class="mqitem uni-q">Supply Chain <span>✦</span></span>
-  </div>
+  <div class="mqtrack" id="mq-track"></div>
 </div>
+
 
 <!-- NUMBERS -->
 <section class="sec" aria-label="Key Metrics">
@@ -2360,23 +2348,23 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:20px">
       <div>
         <p style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px" data-i18n="plats.eyebrow">منصاتنا · Our Platforms</p>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.05;letter-spacing:-1px">منصات متخصصة.<br/><em style="color:#8892b0;font-weight:300;font-style:italic">حقيقة واحدة.</em></h2>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.05;letter-spacing:-1px">منصات متخصصة.<br/><em style="color:var(--t2);font-weight:300;font-style:italic">حقيقة واحدة.</em></h2>
       </div>
-      <p style="font-size:.88rem;color:#8892b0;max-width:340px;line-height:1.8" data-i18n="plats.sub">كل منصة تحل مشكلة مالية حقيقية — بأدوات احترافية مبنية للسوق العربي أولاً</p>
+      <p style="font-size:.88rem;color:var(--t2);max-width:340px;line-height:1.8" data-i18n="plats.sub">كل منصة تحل مشكلة حقيقية — بأدوات احترافية مبنية للعالم كله</p>
     </div>
 
     <!-- Platform Cards Grid -->
     
 
 <!-- Live Stats Bar -->
-<div style="background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.12);border-radius:16px;padding:20px 28px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:16px">
+<div class="ry" style="background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.12);border-radius:16px;padding:20px 28px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:16px">
   <div style="text-align:center">
-    <div style="font-family:'Cormorant',serif;font-size:2.2rem;font-weight:700;color:#c9a84c;line-height:1" data-count="30" data-suffix="+">0+</div>
+    <div style="font-family:'Cormorant',serif;font-size:2.2rem;font-weight:700;color:#c9a84c;line-height:1" id="stat-total-plats" data-count="30" data-suffix="+">0+</div>
     <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:#5a5878;margin-top:4px">منصة</div>
   </div>
   <div style="width:1px;height:40px;background:rgba(255,255,255,.08)"></div>
   <div style="text-align:center">
-    <div style="font-family:'Cormorant',serif;font-size:2.2rem;font-weight:700;color:#22c55e;line-height:1" data-count="8">0</div>
+    <div style="font-family:'Cormorant',serif;font-size:2.2rem;font-weight:700;color:#22c55e;line-height:1" id="stat-live-plats" data-count="8">0</div>
     <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:#5a5878;margin-top:4px" data-i18n="stat.live">مباشرة الآن</div>
   </div>
   <div style="width:1px;height:40px;background:rgba(255,255,255,.08)"></div>
@@ -2431,31 +2419,31 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 <!-- ══ PLATFORM DETAIL MODAL ══ -->
 <div id="plt-modal-overlay" style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);display:none;overflow-y:auto" onclick="closePltModal(event)">
-  <div id="plt-modal-box" style="max-width:680px;margin:40px auto;background:#0a0d1a;border-radius:20px;overflow:hidden;position:relative" onclick="event.stopPropagation()">
+  <div id="plt-modal-box" style="max-width:680px;margin:40px auto;background:var(--bg-card);border-radius:20px;overflow:hidden;position:relative" onclick="event.stopPropagation()">
     <!-- Modal Header Bar -->
     <div id="plt-modal-bar" style="height:4px;background:linear-gradient(90deg,#c9a84c,#e8c86a)"></div>
     <div style="padding:28px 28px 0">
       <!-- Close -->
-      <button onclick="closePltModal()" style="position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#f0f2ff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;z-index:1" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#f0f2ff'">✕</button>
+      <button onclick="closePltModal()" style="position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--t1);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;z-index:1" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#f0f2ff'">✕</button>
 
       <!-- Platform Identity -->
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
         <div id="plt-modal-icon" style="width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2)">👁️</div>
         <div>
           <div id="plt-modal-name" style="font-family:'Cormorant',Georgia,serif;font-size:1.8rem;font-weight:700;letter-spacing:-.5px;line-height:1.1">كشف</div>
-          <div id="plt-modal-name-en" style="font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-top:3px">Kashf</div>
+          <div id="plt-modal-name-en" style="font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-top:3px">Kashf</div>
         </div>
       </div>
 
       <!-- Short Description -->
-      <p id="plt-modal-desc" style="font-size:.9rem;color:#8892b0;line-height:1.9;margin-bottom:20px">وصف المنصة</p>
+      <p id="plt-modal-desc" style="font-size:.9rem;color:var(--t2);line-height:1.9;margin-bottom:20px">وصف المنصة</p>
 
       <!-- Features List -->
       <div id="plt-modal-features" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px"></div>
 
       <!-- Plans Preview -->
       <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:16px;margin-bottom:22px">
-        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-bottom:12px" data-i18n="plt.plans">الخطط المتاحة</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:12px" data-i18n="plt.plans">الخطط المتاحة</div>
         <div id="plt-modal-plans" style="display:flex;gap:8px;flex-wrap:wrap"></div>
       </div>
     </div>
@@ -2463,7 +2451,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <!-- Modal Actions -->
     <div style="padding:0 28px 28px;display:flex;gap:10px;flex-wrap:wrap">
       <button id="plt-modal-open-btn" style="flex:1;min-width:160px;padding:13px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;border:none;cursor:pointer;transition:all .3s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'" data-i18n="plt.open">افتح المنصة ←</button>
-      <button id="plt-modal-sub-btn" style="flex:1;min-width:160px;padding:13px;border-radius:10px;background:transparent;border:1.5px solid rgba(255,255,255,.1);color:#8892b0;font-family:'Syne',sans-serif;font-size:.88rem;cursor:pointer;transition:all .3s" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#8892b0'" data-i18n="plt.buy">اشترِ الآن</button>
+      <button id="plt-modal-sub-btn" style="flex:1;min-width:160px;padding:13px;border-radius:10px;background:transparent;border:1.5px solid rgba(255,255,255,.1);color:var(--t2);font-family:'Syne',sans-serif;font-size:.88rem;cursor:pointer;transition:all .3s" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#8892b0'" data-i18n="plt.buy">اشترِ الآن</button>
     </div>
   </div>
 </div>
@@ -2516,8 +2504,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#22c55e;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="width:20px;height:1px;background:#22c55e;display:inline-block"></span>☪️ Islamic Finance</div>
-      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:10px">تمويل حلال <em style="font-weight:300;font-style:italic;color:#8892b0">· Halal Finance</em></h2>
-      <p style="font-size:.9rem;color:#8892b0;max-width:560px;margin:0 auto;line-height:1.9" data-i18n="isl.sub">جميع منصاتنا المالية تدعم وضع إسلامي كامل — تحليل المرابحة والإجارة والمشاركة المتناقصة مع مقارنة بالبدائل الحلال.</p>
+      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:10px">تمويل حلال <em style="font-weight:300;font-style:italic;color:var(--t2)">· Halal Finance</em></h2>
+      <p style="font-size:.9rem;color:var(--t2);max-width:560px;margin:0 auto;line-height:1.9" data-i18n="isl.sub">جميع منصاتنا المالية تدعم وضع إسلامي كامل — تحليل المرابحة والإجارة والمشاركة المتناقصة مع مقارنة بالبدائل الحلال.</p>
     </div>
     <div class="v5-islamic-grid">
       <div class="v5-islamic-card">
@@ -2562,21 +2550,21 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="text-align:center;margin-bottom:28px">
       <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>Financial IQ</div>
-      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:10px">ما درجتك المالية؟ <em style="font-weight:300;font-style:italic;color:#8892b0">Test Your Financial IQ</em></h2>
-      <p style="font-size:.9rem;color:#8892b0;max-width:500px;margin:0 auto;line-height:1.9" data-i18n="quiz.sub">10 أسئلة · 60 ثانية · اكتشف كيف تقارن بـ 94% من الناس</p>
+      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:10px">ما درجتك المالية؟ <em style="font-weight:300;font-style:italic;color:var(--t2)">Test Your Financial IQ</em></h2>
+      <p style="font-size:.9rem;color:var(--t2);max-width:500px;margin:0 auto;line-height:1.9" data-i18n="quiz.sub">10 أسئلة · 60 ثانية · اكتشف كيف تقارن بـ 94% من الناس</p>
     </div>
     <div class="v5-quiz-box">
       <div class="v5-quiz-progress"><div class="v5-quiz-prog-fill" id="quiz-prog" style="width:0%"></div></div>
-      <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:#3d4a6b;margin-bottom:12px"><span data-i18n="quiz.qword">Question</span> <span id="quiz-num">1</span> <span data-i18n="quiz.ofword">of</span> <span id="quiz-total">5</span></div>
+      <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:1px;color:var(--t3);margin-bottom:12px"><span data-i18n="quiz.qword">Question</span> <span id="quiz-num">1</span> <span data-i18n="quiz.ofword">of</span> <span id="quiz-total">5</span></div>
       <div class="v5-quiz-q" id="quiz-question">Loading...</div>
       <div class="v5-quiz-opts" id="quiz-opts"></div>
       <div class="v5-quiz-score" id="quiz-score">
         <div style="font-size:2rem;margin-bottom:10px" id="quiz-score-icon">🏆</div>
         <div style="font-family:'Cormorant',Georgia,serif;font-size:2.5rem;font-weight:700;color:#c9a84c;margin-bottom:6px" id="quiz-score-num">0/5</div>
-        <div style="font-size:.9rem;color:#8892b0;margin-bottom:16px" id="quiz-score-msg"></div>
+        <div style="font-size:.9rem;color:var(--t2);margin-bottom:16px" id="quiz-score-msg"></div>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
           <button onclick="v5ShareQuiz()" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.82rem;cursor:pointer" data-i18n="quiz.share">Share My Score</button>
-          <button onclick="v5RestartQuiz()" style="padding:10px 20px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.1);color:#8892b0;font-family:'Syne',sans-serif;font-size:.82rem;cursor:pointer" data-i18n="quiz.retry">Try Again</button>
+          <button onclick="v5RestartQuiz()" style="padding:10px 20px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2);font-family:'Syne',sans-serif;font-size:.82rem;cursor:pointer" data-i18n="quiz.retry">Try Again</button>
           <button onclick="window.open(\"kashf-v2.html\",\"_blank\")" style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;border:none;cursor:pointer" data-i18n="quiz.trykashf">Try Kashf Free →</button>
         </div>
       </div>
@@ -2590,8 +2578,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px">
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>Arab Financial Index</div>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="afi.h1">مؤشر القروض العربي</span> <em style="font-weight:300;font-style:italic;color:#8892b0" data-i18n="afi.h2">— مارس 2024</em></h2>
-        <p style="font-size:.82rem;color:#8892b0;margin-top:6px" data-i18n="afi.sub">متوسط فائدة القروض الشخصية في المنطقة العربية — محدّث شهرياً</p>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="afi.h1">مؤشر القروض العربي</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="afi.h2">— مارس 2024</em></h2>
+        <p style="font-size:.82rem;color:var(--t2);margin-top:6px" data-i18n="afi.sub">متوسط فائدة القروض الشخصية في المنطقة العربية — محدّث شهرياً</p>
       </div>
       <button onclick="v5GoTo('getstarted')" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap" data-i18n="afi.subscribe">اشترك في التقرير الشهري →</button>
     </div>
@@ -2605,7 +2593,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="v5-afi-country"><div class="v5-afi-flag">🇯🇴</div><div class="v5-afi-name">الأردن</div><div class="v5-afi-rate" style="color:#f97316">11-15%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
       <div class="v5-afi-country"><div class="v5-afi-flag">🇹🇳</div><div class="v5-afi-name">تونس</div><div class="v5-afi-rate" style="color:#f97316">12-18%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
     </div>
-    <div style="margin-top:14px;padding:14px 16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-size:.8rem;color:#8892b0;line-height:1.8">
+    <div style="margin-top:14px;padding:14px 16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-size:.8rem;color:var(--t2);line-height:1.8">
       📊 <strong style="color:#c9a84c" data-i18n="afi.notelabel">ملاحظة محللينا:</strong> <span data-i18n="afi.notetext">الفائدة المُعلنة من البنوك عادةً أقل من الـ IRR الحقيقي بفارق 3-5%. استخدم Prism أو Kashf للحصول على الرقم الحقيقي لقرضك.</span>
     </div>
   </div>
@@ -2618,17 +2606,17 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#3b82f6;margin-bottom:8px">🔔 Loan Alert</div>
         <h3 style="font-family:'Cormorant',Georgia,serif;font-size:1.6rem;font-weight:700;margin-bottom:6px" data-i18n="alert.title">نبّهني عند انخفاض الفائدة</h3>
-        <p style="font-size:.82rem;color:#8892b0;line-height:1.8;max-width:420px" data-i18n="alert.sub">أدخل فائدة قرضك الحالي — سنُرسل لك إشعاراً فورياً عندما تنخفض أسعار السوق دون هذا الرقم، مما يعني فرصة لإعادة التمويل وتوفير آلاف الريالات.</p>
+        <p style="font-size:.82rem;color:var(--t2);line-height:1.8;max-width:420px" data-i18n="alert.sub">أدخل فائدة قرضك الحالي — سنُرسل لك إشعاراً فورياً عندما تنخفض أسعار السوق دون هذا الرقم، مما يعني فرصة لإعادة التمويل وتوفير آلاف الريالات.</p>
         <div class="v5-alert-form">
           <input class="v5-alert-inp" type="email" id="alert-email" data-i18n-ph="alert.email" placeholder="بريدك الإلكتروني"/>
           <input class="v5-alert-inp" type="number" id="alert-rate" data-i18n-ph="alert.rate" placeholder="فائدتك الحالية %" step="0.1" style="max-width:140px"/>
           <button onclick="v5SetAlert()" style="padding:10px 18px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;font-weight:700;font-family:'Syne',sans-serif;font-size:.82rem;border:none;cursor:pointer;white-space:nowrap;transition:all .3s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''" data-i18n="alert.btn">فعّل التنبيه →</button>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;color:#3d4a6b;margin-top:8px;text-transform:uppercase" data-i18n="alert.note">مجاني · لا بطاقة بنكية · إلغاء بنقرة</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;color:var(--t3);margin-top:8px;text-transform:uppercase" data-i18n="alert.note">مجاني · لا بطاقة بنكية · إلغاء بنقرة</div>
       </div>
       <div style="text-align:center;flex-shrink:0">
         <div style="font-family:'Cormorant',Georgia,serif;font-size:3rem;font-weight:700;color:#3b82f6;line-height:1" id="alert-count">1,247</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;color:#3d4a6b;text-transform:uppercase" data-i18n="alert.subs">مشترك في التنبيهات</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase" data-i18n="alert.subs">مشترك في التنبيهات</div>
       </div>
     </div>
   </div>
@@ -2640,7 +2628,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>Financial Knowledge</div>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">اعرف أكثر. <em style="font-weight:300;font-style:italic;color:#8892b0">ادفع أقل.</em></h2>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">اعرف أكثر. <em style="font-weight:300;font-style:italic;color:var(--t2)">ادفع أقل.</em></h2>
       </div>
       <button onclick="v5GoTo('getstarted')" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap" data-i18n="blog.allbtn1">كل المقالات →</button>
     </div>
@@ -2718,7 +2706,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <h2 class="sh" data-i18n="s.ch">Let's Build<br/><em style="color:var(--gold-p);font-style:italic">Together</em></h2>
         <p class="ssub" data-i18n="s.cp">Our global team is ready to answer your questions and launch lasting strategic partnerships.</p>
         <div class="clnks">
-          <a href="mailto:info@axiomzones.com" class="clnk"><div class="cli" aria-hidden="true">📧</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.el">Email</div>info@axiomzones.com</div></a>
+          <a href="mailto:info@axiomzones.com" class="clnk" id="contact-email-link"><div class="cli" aria-hidden="true">📧</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.el">Email</div><span id="contact-email-text">info@axiomzones.com</span></div></a>
           <a href="https://wa.me/1" class="clnk"><div class="cli" aria-hidden="true">✆</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">WhatsApp</div>Available globally</div></a>
           <a href="https://linkedin.com/company/axiomzones" class="clnk" rel="noopener"><div class="cli" aria-hidden="true">in</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">LinkedIn</div>Axiom Zones</div></a>
           <div class="clnk" style="cursor:default"><div class="cli" aria-hidden="true">🌐</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.hql">Headquarters</div><span data-i18n="c.hqv">Global — Serving 195 Countries</span></div></div>
@@ -2748,7 +2736,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 <section id="testimonials" style="padding:80px 0;border-top:1px solid rgba(255,255,255,.05)">
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;display:flex;align-items:center;gap:8px" class="rv4"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span><span data-i18n="soc.eyebrow">Social Proof</span></div>
-    <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:28px" class="rv4 d1"><span data-i18n="soc.title1">Trusted by</span> <em style="font-weight:300;font-style:italic;color:#8892b0" data-i18n="soc.title2">Professionals</em></h2>
+    <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px;margin-bottom:28px" class="rv4 d1"><span data-i18n="soc.title1">Trusted by</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="soc.title2">Professionals</em></h2>
     <div class="test4-grid">
       <article class="test4-card rv4 d1">
         <div class="test4-stars" aria-label="5 stars">★★★★★</div>
@@ -2774,7 +2762,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="text-align:center;margin-bottom:32px">
       <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px" class="rv4"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>FAQ</div>
-      <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px" class="rv4 d1"><span data-i18n="faq.title1">Common</span> <em style="font-weight:300;font-style:italic;color:#8892b0" data-i18n="faq.title2">Questions</em></h2>
+      <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px" class="rv4 d1"><span data-i18n="faq.title1">Common</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="faq.title2">Questions</em></h2>
     </div>
     <div style="max-width:760px;margin:0 auto">
       <div class="faq4-item rv4 d1" onclick="azV4FAQ(this)"><div class="faq4-q"><span data-i18n="faq.q1">Is Axiom Zones really free to start?</span><span class="faq4-arr" aria-hidden="true">▼</span></div><div class="faq4-a"><div class="faq4-inner" data-i18n="faq.a1">Yes — permanently. Every platform has a free tier that never expires and requires no credit card. The free tiers are genuinely useful, not crippled demos. We believe in earning your subscription through demonstrated value, not trapping you with paywalls.</div></div></div>
@@ -2796,13 +2784,13 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div>
         <div style="font-size:1.8rem;margin-bottom:8px">🔥</div>
         <h3 style="font-family:var(--font-display,'Cormorant',serif);font-size:1.7rem;font-weight:700;margin-bottom:6px" data-i18n="ltd.h">Lifetime Deal — First 100 Only</h3>
-        <p style="font-size:.84rem;color:#8892b0;line-height:1.8;max-width:480px" data-i18n="ltd.p">One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.</p>
-        <div class="sc-strip" style="margin-top:12px"><span class="sc-dot"></span><span id="az-ltd-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:#8892b0" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
+        <p style="font-size:.84rem;color:var(--t2);line-height:1.8;max-width:480px" data-i18n="ltd.p">One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.</p>
+        <div class="sc-strip" style="margin-top:12px"><span class="sc-dot"></span><span id="az-ltd-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:var(--t2)" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
       </div>
       <div style="text-align:center;flex-shrink:0">
-        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.7rem;text-decoration:line-through;color:#3d4a6b;margin-bottom:4px" data-i18n="ltd.worth">Worth $828/year</div>
+        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.7rem;text-decoration:line-through;color:var(--t3);margin-bottom:4px" data-i18n="ltd.worth">Worth $828/year</div>
         <div style="font-family:var(--font-display,'Cormorant',serif);font-size:3.5rem;font-weight:700;background:linear-gradient(135deg,#c9a84c,#e8c86a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">$399</div>
-        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;color:#3d4a6b;margin:3px 0 10px;letter-spacing:1px" data-i18n="ltd.tags">ONE-TIME · ALL PLATFORMS · FOREVER</div>
+        <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;color:var(--t3);margin:3px 0 10px;letter-spacing:1px" data-i18n="ltd.tags">ONE-TIME · ALL PLATFORMS · FOREVER</div>
         <button onclick="azV4Checkout('lifetime')" style="padding:12px 28px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.9rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 30px rgba(201,168,76,.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-i18n="ltd.btn">Claim Lifetime Deal →</button>
       </div>
     </div>
@@ -2811,14 +2799,14 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 <!-- ══ FINAL CTA / GET STARTED ══ -->
 <section id="cta" style="padding:80px 24px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(201,168,76,.06),transparent);border-top:1px solid rgba(255,255,255,.05)">
-  <div class="sc-strip rv4" style="display:inline-flex;margin-bottom:14px"><span class="sc-dot"></span><span id="az-cta-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:#8892b0" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
+  <div class="sc-strip rv4" style="display:inline-flex;margin-bottom:14px"><span class="sc-dot"></span><span id="az-cta-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:var(--t2)" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
   <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:10px" class="rv4 d1"><span data-i18n="cta.h1">Start Your Free Account</span> <em style="font-weight:300;font-style:italic;color:#c9a84c" data-i18n="cta.h2">Today</em></h2>
-  <p style="font-size:.92rem;color:#8892b0;max-width:480px;margin:0 auto 24px;line-height:1.9" class="rv4 d2" data-i18n="cta.sub">Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.</p>
+  <p style="font-size:.92rem;color:var(--t2);max-width:480px;margin:0 auto 24px;line-height:1.9" class="rv4 d2" data-i18n="cta.sub">Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.</p>
   <div style="display:flex;gap:8px;max-width:440px;margin:0 auto 12px" class="rv4 d2">
-    <input id="az-final-email" type="email" placeholder="your@email.com" data-i18n-ph="cta.email" style="flex:1;background:#141c2e;border:1.5px solid rgba(201,168,76,.2);color:#f0f2ff;padding:13px 16px;border-radius:9px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;outline:none" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(201,168,76,.2)'" aria-label="Email address"/>
+    <input id="az-final-email" type="email" placeholder="your@email.com" data-i18n-ph="cta.email" style="flex:1;background:#141c2e;border:1.5px solid rgba(201,168,76,.2);color:var(--t1);padding:13px 16px;border-radius:9px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;outline:none" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(201,168,76,.2)'" aria-label="Email address"/>
     <button onclick="azV4JoinFinal()" style="padding:13px 24px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''" data-i18n="cta.btn">Start Free →</button>
   </div>
-  <p style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:1px;color:#3d4a6b;text-transform:uppercase" class="rv4" data-i18n="cta.note">No spam · No credit card · Full free tier · Cancel anytime</p>
+  <p style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:1px;color:var(--t3);text-transform:uppercase" class="rv4" data-i18n="cta.note">No spam · No credit card · Full free tier · Cancel anytime</p>
 </section>
 
 </main>
@@ -2830,63 +2818,63 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div class="sec-in">
     <div style="text-align:center;margin-bottom:36px">
       <p style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px" data-i18n="blog.eyebrow">آخر المقالات</p>
-      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="blog.h1">اعرف أكثر.</span> <em style="color:#8892b0;font-weight:300;font-style:italic" data-i18n="blog.h2">ادفع أقل.</em></h2>
-      <p style="font-size:.88rem;color:#8892b0;margin-top:8px;max-width:480px;margin-inline:auto" data-i18n="blog.sub">مقالات مالية حقيقية بدون مجاملة للبنوك — بالعربية والإنجليزية والفرنسية</p>
+      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="blog.h1">اعرف أكثر.</span> <em style="color:var(--t2);font-weight:300;font-style:italic" data-i18n="blog.h2">ادفع أقل.</em></h2>
+      <p style="font-size:.88rem;color:var(--t2);margin-top:8px;max-width:480px;margin-inline:auto" data-i18n="blog.sub">مقالات مالية حقيقية بدون مجاملة للبنوك — بالعربية والإنجليزية والفرنسية</p>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px">
 
       <!-- Article 1 -->
-      <a href="/blog/bank-hides-irr" style="background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0;overflow:hidden;text-decoration:none;transition:all .3s;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(201,168,76,.25)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'">
+      <a href="/blog/bank-hides-irr" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0;overflow:hidden;text-decoration:none;transition:all .3s;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(201,168,76,.25)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'">
         <div style="height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a)"></div>
         <div style="padding:18px;flex:1">
           <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px" data-i18n="blog.tag1">📊 قروض</div>
-          <div style="font-family:'Cormorant',Georgia,serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;color:#f0f2ff;line-height:1.2" data-i18n="blog.t1">البنك يقول 6%... الحقيقة 11.2%</div>
-          <div style="font-size:.8rem;color:#8892b0;line-height:1.75" data-i18n="blog.d1">كيف تستخدم البنوك تجميل القروض لتبدو أرخص — وكيف تكشف IRR الحقيقي مع كشف.</div>
+          <div style="font-family:'Cormorant',Georgia,serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--t1);line-height:1.2" data-i18n="blog.t1">البنك يقول 6%... الحقيقة 11.2%</div>
+          <div style="font-size:.8rem;color:var(--t2);line-height:1.75" data-i18n="blog.d1">كيف تستخدم البنوك تجميل القروض لتبدو أرخص — وكيف تكشف IRR الحقيقي مع كشف.</div>
         </div>
         <div style="padding:10px 18px 14px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:8px">
             <a href="/blog/bank-hides-irr" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(201,168,76,.2);color:#c9a84c" data-i18n="blog.arlink">عربي</a>
-            <a href="/en/blog/bank-hides-irr" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#8892b0">EN</a>
-            <a href="/fr/blog/bank-hides-irr" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#8892b0">FR</a>
+            <a href="/en/blog/bank-hides-irr" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--t2)">EN</a>
+            <a href="/fr/blog/bank-hides-irr" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--t2)">FR</a>
           </div>
-          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b" data-i18n="blog.read">اقرأ ←</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--t3)" data-i18n="blog.read">اقرأ ←</span>
         </div>
       </a>
 
       <!-- Article 2 -->
-      <a href="/blog/murabaha-vs-loan" style="background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0;overflow:hidden;text-decoration:none;transition:all .3s;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(34,197,94,.25)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'">
+      <a href="/blog/murabaha-vs-loan" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0;overflow:hidden;text-decoration:none;transition:all .3s;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(34,197,94,.25)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'">
         <div style="height:3px;background:linear-gradient(90deg,#22c55e,#34d399)"></div>
         <div style="padding:18px;flex:1">
           <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#22c55e;margin-bottom:8px" data-i18n="blog.tag2">☪️ إسلامي</div>
-          <div style="font-family:'Cormorant',Georgia,serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;color:#f0f2ff;line-height:1.2" data-i18n="blog.t2">المرابحة vs القرض التقليدي — الأرقام</div>
-          <div style="font-size:.8rem;color:#8892b0;line-height:1.75" data-i18n="blog.d2">مقارنة شاملة بالأرقام — أيهما أرخص فعلاً؟ الجواب يفاجئ كثيرين.</div>
+          <div style="font-family:'Cormorant',Georgia,serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--t1);line-height:1.2" data-i18n="blog.t2">المرابحة vs القرض التقليدي — الأرقام</div>
+          <div style="font-size:.8rem;color:var(--t2);line-height:1.75" data-i18n="blog.d2">مقارنة شاملة بالأرقام — أيهما أرخص فعلاً؟ الجواب يفاجئ كثيرين.</div>
         </div>
         <div style="padding:10px 18px 14px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:8px">
             <a href="/blog/murabaha-vs-loan" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(34,197,94,.2);color:#22c55e" data-i18n="blog.arlink">عربي</a>
-            <a href="/en/blog/murabaha-vs-loan" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#8892b0">EN</a>
-            <a href="/fr/blog/murabaha-vs-loan" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#8892b0">FR</a>
+            <a href="/en/blog/murabaha-vs-loan" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--t2)">EN</a>
+            <a href="/fr/blog/murabaha-vs-loan" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--t2)">FR</a>
           </div>
-          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b" data-i18n="blog.read">اقرأ ←</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--t3)" data-i18n="blog.read">اقرأ ←</span>
         </div>
       </a>
 
       <!-- Article 3 -->
-      <a href="/blog/break-even-guide" style="background:#0a0d1a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0;overflow:hidden;text-decoration:none;transition:all .3s;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(96,165,250,.25)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'">
+      <a href="/blog/break-even-guide" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:0;overflow:hidden;text-decoration:none;transition:all .3s;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(96,165,250,.25)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)';this.style.transform='translateY(0)'">
         <div style="height:3px;background:linear-gradient(90deg,#60a5fa,#93c5fd)"></div>
         <div style="padding:18px;flex:1">
           <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#60a5fa;margin-bottom:8px" data-i18n="blog.tag3">💼 أعمال</div>
-          <div style="font-family:'Cormorant',Georgia,serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;color:#f0f2ff;line-height:1.2" data-i18n="blog.t3">نقطة التعادل — السؤال الذي يجهله 67%</div>
-          <div style="font-size:.8rem;color:#8892b0;line-height:1.75" data-i18n="blog.d3">المعادلة البسيطة التي تنقذ عملك — احسبها مجاناً مع ميزان برو.</div>
+          <div style="font-family:'Cormorant',Georgia,serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--t1);line-height:1.2" data-i18n="blog.t3">نقطة التعادل — السؤال الذي يجهله 67%</div>
+          <div style="font-size:.8rem;color:var(--t2);line-height:1.75" data-i18n="blog.d3">المعادلة البسيطة التي تنقذ عملك — احسبها مجاناً مع ميزان برو.</div>
         </div>
         <div style="padding:10px 18px 14px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:8px">
             <a href="/blog/break-even-guide" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(96,165,250,.2);color:#60a5fa" data-i18n="blog.arlink">عربي</a>
-            <a href="/en/blog/break-even-guide" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#8892b0">EN</a>
-            <a href="/fr/blog/break-even-guide" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#8892b0">FR</a>
+            <a href="/en/blog/break-even-guide" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--t2)">EN</a>
+            <a href="/fr/blog/break-even-guide" style="font-family:'DM Mono',monospace;font-size:.58rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--t2)">FR</a>
           </div>
-          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#3d4a6b" data-i18n="blog.read">اقرأ ←</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--t3)" data-i18n="blog.read">اقرأ ←</span>
         </div>
       </a>
 
@@ -2906,33 +2894,33 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div class="sec-in">
     <div style="text-align:center;margin-bottom:28px">
       <p style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px">أدوات متخصصة</p>
-      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-1px">كشف لكل قرض <em style="color:#8892b0;font-weight:300;font-style:italic">— بالتفصيل</em></h2>
+      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-1px">كشف لكل قرض <em style="color:var(--t2);font-weight:300;font-style:italic">— بالتفصيل</em></h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;max-width:960px;margin:0 auto">
-      <a href="/kashf/car-loan" style="background:#0a0d1a;border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
+      <a href="/kashf/car-loan" style="background:var(--bg-card);border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
         <div style="font-size:1.6rem;margin-bottom:6px">🚗</div>
-        <div style="font-size:.84rem;font-weight:700;color:#f0f2ff;margin-bottom:3px">قرض السيارة</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b">Car Loan Calculator</div>
+        <div style="font-size:.84rem;font-weight:700;color:var(--t1);margin-bottom:3px">قرض السيارة</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t3)">Car Loan Calculator</div>
       </a>
-      <a href="/kashf/home-loan" style="background:#0a0d1a;border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
+      <a href="/kashf/home-loan" style="background:var(--bg-card);border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
         <div style="font-size:1.6rem;margin-bottom:6px">🏠</div>
-        <div style="font-size:.84rem;font-weight:700;color:#f0f2ff;margin-bottom:3px">قرض المنزل</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b">Home Loan Calculator</div>
+        <div style="font-size:.84rem;font-weight:700;color:var(--t1);margin-bottom:3px">قرض المنزل</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t3)">Home Loan Calculator</div>
       </a>
-      <a href="/kashf/rajhi-bank" style="background:#0a0d1a;border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
+      <a href="/kashf/rajhi-bank" style="background:var(--bg-card);border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
         <div style="font-size:1.6rem;margin-bottom:6px">🏦</div>
-        <div style="font-size:.84rem;font-weight:700;color:#f0f2ff;margin-bottom:3px">بنك الراجحي</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b">Rajhi Loan Analyzer</div>
+        <div style="font-size:.84rem;font-weight:700;color:var(--t1);margin-bottom:3px">بنك الراجحي</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t3)">Rajhi Loan Analyzer</div>
       </a>
-      <a href="/kashf/nbd-calculator" style="background:#0a0d1a;border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
+      <a href="/kashf/nbd-calculator" style="background:var(--bg-card);border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
         <div style="font-size:1.6rem;margin-bottom:6px">🇦🇪</div>
-        <div style="font-size:.84rem;font-weight:700;color:#f0f2ff;margin-bottom:3px">إمارات NBD</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b">NBD Loan Calculator</div>
+        <div style="font-size:.84rem;font-weight:700;color:var(--t1);margin-bottom:3px">إمارات NBD</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t3)">NBD Loan Calculator</div>
       </a>
-      <a href="/kashf/personal-loan" style="background:#0a0d1a;border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
+      <a href="/kashf/personal-loan" style="background:var(--bg-card);border:1px solid rgba(201,168,76,.12);border-radius:11px;padding:16px;text-decoration:none;transition:all .3s;text-align:center" onmouseover="this.style.borderColor='rgba(201,168,76,.3)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.12)';this.style.transform='translateY(0)'">
         <div style="font-size:1.6rem;margin-bottom:6px">💳</div>
-        <div style="font-size:.84rem;font-weight:700;color:#f0f2ff;margin-bottom:3px">قرض شخصي</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#3d4a6b">Personal Loan Analyzer</div>
+        <div style="font-size:.84rem;font-weight:700;color:var(--t1);margin-bottom:3px">قرض شخصي</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t3)">Personal Loan Analyzer</div>
       </a>
     </div>
   </div>
@@ -2944,10 +2932,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div>
         <div class="flogo"><span class="flg">AXIOM</span> <span style="color:var(--t3)">ZONES</span></div>
         <p class="fbrand" data-i18n="ft.brand">Global digital venture studio — building world-class technology platforms that create real impact across vital industries, for every market on earth.</p>
-        <div style="margin-top:14px;font-size:.72rem;color:var(--t3);font-family:'DM Mono',monospace">🌐 axiomzones.com &nbsp;·&nbsp; 📧 info@axiomzones.com</div>
+        <div style="margin-top:14px;font-size:.72rem;color:var(--t3);font-family:'DM Mono',monospace">🌐 <span id="footer-domain-text">axiomzones.com</span> &nbsp;·&nbsp; 📧 <span id="footer-email-text">info@axiomzones.com</span></div>
       </div>
       <div class="fcol"><div class="fct">Platforms</div>
-<div id="footer-platforms-list"><a onclick="azV4Toast('Loading...')">🔮 Prism Suite</a><a onclick="azV4Toast('Loading...')">👁️ Kashf</a><a onclick="azV4Toast('Loading...')">👔 UniUber</a><a onclick="azV4Toast('Loading...')">⚖️ Mizan Pro</a></div>
+<div id="footer-platforms-list" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:2px"><a onclick="azV4Toast('Loading...')">🔮 Prism Suite</a><a onclick="azV4Toast('Loading...')">👁️ Kashf</a><a onclick="azV4Toast('Loading...')">👔 UniUber</a><a onclick="azV4Toast('Loading...')">⚖️ Mizan Pro</a></div>
 <a onclick="azV4Toast('Master 365 coming soon!')">📊 Master 365</a>
 <a onclick="azV4Toast('ProSuite 365 in testing!')">💼 ProSuite 365</a>
 <a onclick="azV4Toast('Kyanat coming soon!')">🇸🇦 Kyanat</a>
@@ -3466,10 +3454,11 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
           <div class="dcard"><div class="dct">Company Info</div>
-            <label class="fl">Company Name</label><input class="di" value="Axiom Zones"/>
-            <label class="fl">Domain</label><input class="di" value="axiomzones.com"/>
-            <label class="fl">Email</label><input class="di" value="info@axiomzones.com"/>
-            <button class="db2" onclick="toast('Saved ✦')">Save</button>
+            <label class="fl">Company Name</label><input class="di" id="ci-name" value="Axiom Zones"/>
+            <label class="fl">Domain</label><input class="di" id="ci-domain" value="axiomzones.com"/>
+            <label class="fl">Email</label><input class="di" id="ci-email" value="info@axiomzones.com"/>
+            <button class="db2" onclick="azSaveCompanyInfo()">Save</button>
+            <div id="ci-save-msg" style="margin-top:8px;font-size:.76rem"></div>
           </div>
           <div class="dcard"><div class="dct">System Features</div>
             <div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Open Registration</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div>
@@ -3845,7 +3834,8 @@ var STATIC = {
     'blog.tag3':'💼 Business','blog.t3':'Break-Even Point — The Question 67% Don\'t Know','blog.d3':'The simple equation that saves your business — calculate it free with Mizan Pro.',
     'blog.arlink':'AR','blog.read':'Read →','blog.allbtn1':'All Articles →','blog.allbtn2':'All Articles ← Financial Blog',
     'lc.title':'Language & Currency','lc.lang':'🌐 Language','lc.curr':'💰 Currency',
-    'plats.eyebrow':'Our Platforms','plats.sub':'Every platform solves a real financial problem — with professional tools built for the world.',
+    'plats.eyebrow':'Our Platforms','plats.sub':'Every platform solves a real problem — financial, spiritual, educational, or operational — with professional tools built for the world.',
+    'mq.curr':'200 Currencies','mq.lang':'98 Languages','mq.countries':'195 Countries','mq.venture':'Global Venture Studio',
     'sb.nav':'Navigate','sb.home':'🏠 Home','sb.allplat':'🧩 All Platforms','sb.pricing':'💳 Pricing','sb.how':'⚡ How It Works','sb.faq':'❓ FAQ','sb.startfree':'🚀 Start Free',
     'sb.openplat':'Open Platform','sb.settings':'⚙️ Settings','sb.dark':'🌙 Dark Mode','sb.quickbuy':'💳 Quick Buy','sb.ltd':'🔥 Lifetime Deal — $399','sb.pro':'⭐ Pro All-Access — $69/mo',
     'afi.h1':'Arab Loan Index','afi.h2':'— March 2024',
@@ -3950,7 +3940,8 @@ var STATIC = {
     'blog.tag3':'💼 أعمال','blog.t3':'نقطة التعادل — السؤال الذي يجهله 67%','blog.d3':'المعادلة البسيطة التي تنقذ عملك — احسبها مجاناً مع ميزان برو.',
     'blog.arlink':'عربي','blog.read':'اقرأ ←','blog.allbtn1':'كل المقالات →','blog.allbtn2':'كل المقالات ← المدونة المالية',
     'lc.title':'اللغة والعملة','lc.lang':'🌐 اللغة','lc.curr':'💰 العملة',
-    'plats.eyebrow':'منصاتنا · Our Platforms','plats.sub':'كل منصة تحل مشكلة مالية حقيقية — بأدوات احترافية مبنية للعالم كله',
+    'plats.eyebrow':'منصاتنا · Our Platforms','plats.sub':'كل منصة تحل مشكلة حقيقية — مالية أو روحانية أو تعليمية أو تشغيلية — بأدوات احترافية مبنية للعالم كله',
+    'mq.curr':'200 عملة','mq.lang':'98 لغة','mq.countries':'195 دولة','mq.venture':'استوديو مشاريع عالمي',
     'sb.nav':'التنقل','sb.home':'🏠 الرئيسية','sb.allplat':'🧩 كل المنصات','sb.pricing':'💳 الأسعار','sb.how':'⚡ كيف تعمل','sb.faq':'❓ الأسئلة الشائعة','sb.startfree':'🚀 ابدأ مجاناً',
     'sb.openplat':'افتح منصة','sb.settings':'⚙️ الإعدادات','sb.dark':'🌙 الوضع الليلي','sb.quickbuy':'💳 شراء سريع','sb.ltd':'🔥 صفقة العمر — $399','sb.pro':'⭐ وصول Pro كامل — $69/شهر',
     'afi.h1':'مؤشر القروض العربي','afi.h2':'— مارس 2024',
@@ -4062,7 +4053,8 @@ var STATIC = {
     'pf.1.3':'Tableau de bord basique','pf.1.4':'API avancée','pf.1.5':'Support dédié','pf.2.1':'Accès complet à 1 plateforme','pf.2.2':'API et intégrations','pf.2.3':'Rapports avancés','pf.2.4':'Support 24h','pf.2.5':'Gestionnaire dédié',
     'pf.3.1':'Illimité — toutes les plateformes','pf.3.2':'Gestionnaire de compte dédié','pf.3.3':'SLA garanti à 99,9 %','pf.3.4':'Formation d\'équipe','pf.3.5':'Fonctionnalités personnalisées','pf.4.1':'Toutes les fonctionnalités Entreprise','pf.4.2':'Remise automatique de 90 %','pf.4.3':'Support prioritaire',
     'pf.4.4':'Certificat de partenaire social','pf.4.5':'Rapports d\'impact','pl.chp':'/ mois (90 % de remise)','pl.cht':'Pour ONG et associations — 90 % de remise','pl.enp':'/ mois, toutes les plateformes','pl.ent':'Toutes les plateformes avec support VIP','pl.frp':'/ 14 jours gratuits','pl.frt':'14 jours complets — sans risque',
-    'pl.prp':'/ mois','pl.prt':'Pour les entrepreneurs professionnels','plats.eyebrow':'Nos plateformes','plats.sub':'Chaque plateforme résout un vrai problème financier — avec des outils professionnels conçus pour le monde entier.','plt.buy':'Acheter maintenant','plt.open':'Ouvrir la plateforme →','plt.plans':'Forfaits disponibles','pr.note':'* Prix hors TVA · Annulation à tout moment · Les 200 devises sont prises en charge',
+    'pl.prp':'/ mois','pl.prt':'Pour les entrepreneurs professionnels','plats.eyebrow':'Nos plateformes','plats.sub':'Chaque plateforme résout un vrai problème — financier, spirituel, éducatif ou opérationnel — avec des outils professionnels conçus pour le monde entier.','plt.buy':'Acheter maintenant','plt.open':'Ouvrir la plateforme →','plt.plans':'Forfaits disponibles','pr.note':'* Prix hors TVA · Annulation à tout moment · Les 200 devises sont prises en charge',
+    'mq.curr':'200 devises','mq.lang':'98 langues','mq.countries':'195 pays','mq.venture':'Studio de création mondial',
     'pwa.btn':'Installer','pwa.sub':'Fonctionne hors ligne','pwa.title':'Ajouter à l\'écran d\'accueil','quiz.ofword':'sur','quiz.qword':'Question','quiz.retry':'Réessayer','quiz.share':'Partager mon score','quiz.sub':'10 questions · 60 secondes · découvrez comment vous vous comparez à 94 % des gens',
     'quiz.trykashf':'Essayer Kashf gratuitement →','s.ah':'Construire l\'avenir\\nnumérique mondial','s.ap':'Axiom Zones est un studio de création mondial spécialisé dans les plateformes SaaS de classe mondiale. Nous construisons, lançons et développons — avec une méthodologie éprouvée et une équipe experte.','s.atag':'À propos de nous','s.ch':'Construisons\\nensemble','s.cp':'Notre équipe mondiale est prête à répondre à vos questions et à lancer des partenariats stratégiques durables.','s.ctag':'Contact','s.prh':'Investissez dans\\nvotre avenir',
     's.prtag':'Tarifs','sb.allplat':'🧩 Toutes les plateformes','sb.dark':'🌙 Mode sombre','sb.faq':'❓ FAQ','sb.home':'🏠 Accueil','sb.how':'⚡ Comment ça marche','sb.ltd':'🔥 Offre à vie — 399 $','sb.nav':'Navigation',
@@ -4101,12 +4093,29 @@ function azUpdatePronunciation(lang){
   el.style.display = text ? 'block' : 'none';
 }
 
+/* ══ بناء الشريط المتحرك ديناميكياً — منصات حقيقية نشطة فقط، مترجَمة حسب اللغة الحالية ══ */
+function azRenderMarquee(){
+  var track = document.getElementById('mq-track');
+  if(!track || typeof AZ_PLATFORMS_DATA === 'undefined') return;
+  var lang = document.documentElement.lang || 'en';
+  var liveKeys = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; });
+  var items = liveKeys.map(function(k){
+    var p = AZ_PLATFORMS_DATA[k];
+    return (lang === 'ar' ? p.name_ar : p.name_en) || k;
+  });
+  items = items.concat([azT('mq.curr'), azT('mq.lang'), azT('mq.countries'), azT('mq.venture')]);
+  if(!items.length) return;
+  var html = items.map(function(t){ return '<span class="mqitem">'+t+' <span>✦</span></span>'; }).join('');
+  track.innerHTML = html + html; // تكرار للحلقة السلسة بدون فجوة
+}
+
 function applyT(lang, T){
   var isRTL = RTL.indexOf(lang) !== -1;
   document.documentElement.lang = lang;
   document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
   document.body.classList.toggle('ltr', !isRTL);
   azUpdatePronunciation(lang);
+  azRenderMarquee();
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k = el.dataset.i18n, v = T[k];
     if(v !== undefined) el.textContent = v;
@@ -4500,6 +4509,61 @@ async function azExportBackup(){
   }
 }
 
+/* ── بيانات التواصل (اسم الشركة، الدومين، الإيميل) — حفظ وتحميل حقيقي ── */
+async function azSaveCompanyInfo(){
+  var msg = document.getElementById('ci-save-msg');
+  var name = document.getElementById('ci-name').value.trim();
+  var domain = document.getElementById('ci-domain').value.trim();
+  var email = document.getElementById('ci-email').value.trim();
+  if(!email || !email.includes('@')){ msg.style.color='#f87171'; msg.textContent='بريد إلكتروني غير صالح'; return; }
+  msg.style.color='var(--t3)'; msg.textContent='Saving...';
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.companyInfo = { name: name, domain: domain, email: email };
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color='#4ade80'; msg.textContent='تم الحفظ بنجاح ✦';
+      azApplyCompanyInfo(config.companyInfo);
+    } else {
+      msg.style.color='#f87171'; msg.textContent='فشل الحفظ — حاول تاني';
+    }
+  }catch(e){ msg.style.color='#f87171'; msg.textContent='خطأ في الاتصال بالسيرفر'; }
+}
+
+async function azLoadCompanyInfo(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var ci = (data && data.config && data.config.companyInfo) || null;
+    if(!ci) return;
+    if(document.getElementById('ci-name')) document.getElementById('ci-name').value = ci.name || 'Axiom Zones';
+    if(document.getElementById('ci-domain')) document.getElementById('ci-domain').value = ci.domain || 'axiomzones.com';
+    if(document.getElementById('ci-email')) document.getElementById('ci-email').value = ci.email || 'info@axiomzones.com';
+  }catch(e){}
+}
+
+/* تطبيق بيانات التواصل على كل أماكن العرض العامة في الموقع الرئيسي */
+function azApplyCompanyInfo(ci){
+  if(!ci) return;
+  var emailText = document.getElementById('contact-email-text');
+  var emailLink = document.getElementById('contact-email-link');
+  var footerEmail = document.getElementById('footer-email-text');
+  var footerDomain = document.getElementById('footer-domain-text');
+  if(ci.email){
+    if(emailText) emailText.textContent = ci.email;
+    if(emailLink) emailLink.href = 'mailto:' + ci.email;
+    if(footerEmail) footerEmail.textContent = ci.email;
+  }
+  if(ci.domain && footerDomain) footerDomain.textContent = ci.domain;
+}
+
 /* ── وضع الصيانة العام للموقع ── */
 async function azLoadMaintenanceSettings(){
   try{
@@ -4842,7 +4906,7 @@ function swD(sec,el){
   if(sec === 'platforms') azLoadPlatformToggles();
   if(sec === 'subs') azLoadRealSubscribers();
   if(sec === 'logs') azLoadSystemLogs();
-  if(sec === 'settings') azLoadMaintenanceSettings();
+  if(sec === 'settings'){ azLoadMaintenanceSettings(); azLoadCompanyInfo(); }
 }
 async function toggleP(key, el){
   var checked = el.checked;
@@ -5404,6 +5468,16 @@ var AZ_VIEW_MODE = 'categories'; // 'categories' or 'grid'
 var AZ_EXPANDED_CATS = {};
 
 /* ══ RENDER CATEGORY VIEW ══ */
+/* ══ تحديث عدّاد "منصاتنا · X مباشرة · Y إجمالاً" بالأرقام الحقيقية — كانت تُنادى بدون تعريف من قبل ══ */
+function updatePlatformCount(){
+  var liveEl = document.getElementById('az-live-count');
+  var totalEl = document.getElementById('az-total-count');
+  var keys = Object.keys(AZ_PLATFORMS_DATA);
+  var liveN = keys.filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+  if(liveEl) liveEl.textContent = liveN;
+  if(totalEl) totalEl.textContent = keys.length;
+}
+
 function renderCategoryView() {
   var grid = document.getElementById('az-platforms-grid');
   if (!grid) return;
@@ -5753,7 +5827,7 @@ window.addEventListener('load',function(){
     <div class="az-sb-sec">
       <div class="az-sb-title" data-i18n="sb.settings">⚙️ Settings</div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0">
-        <span style="font-size:.82rem;color:#8892b0" data-i18n="sb.dark">🌙 Dark Mode</span>
+        <span style="font-size:.82rem;color:var(--t2)" data-i18n="sb.dark">🌙 Dark Mode</span>
         <label style="position:relative;width:38px;height:21px;cursor:pointer;display:inline-block">
           <input type="checkbox" id="az-sb-dark" checked onchange="azV4Theme()" style="opacity:0;width:0;height:0"/>
           <span style="position:absolute;inset:0;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:21px;transition:.3s"><span style="position:absolute;height:13px;width:13px;border-radius:50%;background:#c9a84c;bottom:3px;left:3px;transition:.3s;display:block" id="az-sb-ball"></span></span>
@@ -5767,7 +5841,7 @@ window.addEventListener('load',function(){
     </div>
   </div>
   <div class="az-sb-foot">
-    <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.56rem;letter-spacing:2px;color:#3d4a6b;text-transform:uppercase">Axiom Zones · axiomzones.com · 2024</div>
+    <div style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.56rem;letter-spacing:2px;color:var(--t3);text-transform:uppercase">Axiom Zones · axiomzones.com · 2024</div>
   </div>
 </aside>
 
@@ -5778,12 +5852,12 @@ window.addEventListener('load',function(){
       <div id="az-m-icon" style="width:48px;height:48px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)"></div>
       <div style="flex:1">
         <div id="az-m-name" style="font-family:var(--font-display,'Cormorant',serif);font-size:1.4rem;font-weight:700"></div>
-        <div id="az-m-tag" style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#3d4a6b;margin-top:2px"></div>
+        <div id="az-m-tag" style="font-family:var(--font-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-top:2px"></div>
       </div>
       <button class="az-modal-close" onclick="azCloseModalDirect()" aria-label="Close">✕</button>
     </div>
     <div class="az-modal-body">
-      <p id="az-m-desc" style="font-size:.86rem;color:#8892b0;line-height:1.9;margin-bottom:16px"></p>
+      <p id="az-m-desc" style="font-size:.86rem;color:var(--t2);line-height:1.9;margin-bottom:16px"></p>
       <div class="az-modal-feats" id="az-m-feats"></div>
       <div id="az-m-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)"></div>
     </div>
@@ -6311,13 +6385,13 @@ if ('serviceWorker' in navigator) {
 
 
 <!-- PWA Install Banner -->
-  <div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:#F2EEE8" data-i18n="pwa.title">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px" data-i18n="pwa.sub">يعمل بدون إنترنت</div></div>
+  <div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:#F2EEE8" data-i18n="pwa.title">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t2);letter-spacing:1px" data-i18n="pwa.sub">يعمل بدون إنترنت</div></div>
   <button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:'Syne',sans-serif;font-size:.78rem;border:none;cursor:pointer">تثبيت</button>
-  <button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;line-height:1;padding:0 2px">✕</button>
+  <button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:1.2rem;line-height:1;padding:0 2px">✕</button>
 </div>
 
 <!-- PWA -->
-<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:#0a0d1a;border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:#F2EEE8" data-i18n="pwa.title">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:#8892b0;letter-spacing:1px" data-i18n="pwa.sub">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap" data-i18n="pwa.btn">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:#3d4a6b;cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
+<div id="az-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:var(--bg-card);border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px"><div style="font-size:1.6rem">📱</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:#F2EEE8" data-i18n="pwa.title">أضف للشاشة الرئيسية</div><div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--t2);letter-spacing:1px" data-i18n="pwa.sub">يعمل بدون إنترنت</div></div><button onclick="azPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap" data-i18n="pwa.btn">تثبيت</button><button onclick="document.getElementById('az-pwa-banner').style.display='none'" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button></div>
 <script>
 (function(){var _d=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_d=e;setTimeout(function(){var b=document.getElementById('az-pwa-banner');if(b)b.style.display='flex';},30000);});window.azPWAInstall=function(){if(!_d)return;_d.prompt();_d.userChoice.then(function(){_d=null;var b=document.getElementById('az-pwa-banner');if(b)b.style.display='none';});};if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/service-worker.js').catch(function(){});});})();
 </script>
@@ -6746,7 +6820,7 @@ function azAddCategoryFilterButton(catId, cc){
 function azRenderFooterPlatforms(){
   var box = document.getElementById('footer-platforms-list');
   if(!box) return;
-  var keys = ['prism', 'kashf', 'uniuber', 'mizan']; // المنصات المختارة للعرض في الفوتر (مساحة محدودة) — تقرأ حالتها الحقيقية دائماً
+  var keys = Object.keys(AZ_PLATFORMS_DATA); // كل المنصات الحقيقية — 17 الأساسية + أي منصة مخصصة تُضاف لاحقاً
   box.innerHTML = keys.map(function(key){
     var p = AZ_PLATFORMS_DATA[key];
     if(!p) return '';
@@ -6769,6 +6843,9 @@ function azRenderFooterPlatforms(){
       if (data.config.maintenance && data.config.maintenance.enabled) {
         azCheckMaintenanceAccess(data.config.maintenance);
       }
+
+      /* ══ تطبيق بيانات التواصل الحقيقية (اسم الشركة، الدومين، الإيميل) على الصفحة العامة ══ */
+      if (data.config.companyInfo) azApplyCompanyInfo(data.config.companyInfo);
 
       if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
       var overrides = data.config.platforms || {};
@@ -6834,10 +6911,17 @@ function azRenderFooterPlatforms(){
 
       /* ══ تحديث عدّاد "المنصات النشطة" ليعكس العدد الحقيقي الفعلي، بدل الرقم الثابت في الكود ══ */
       var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+      var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
       document.querySelectorAll('[data-count="4"]').forEach(function(el){
         el.setAttribute('data-count', liveCount);
         el.textContent = liveCount;
       });
+      var totalEl = document.getElementById('stat-total-plats');
+      if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
+      var liveEl2 = document.getElementById('stat-live-plats');
+      if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
+      if(typeof updatePlatformCount === 'function') updatePlatformCount();
+      azRenderMarquee();
 
       azRenderFooterPlatforms();
     })
@@ -6887,7 +6971,7 @@ function azShowMaintenanceBanner(){
 function azRenderMaintenancePage(maint){
   document.documentElement.innerHTML = '<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Axiom Zones — Under Maintenance</title>'+
     '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#060912;color:#F2EEE8;font-family:Tajawal,sans-serif;text-align:center;padding:30px}'+
-    '.mw{max-width:480px}.mi{font-size:3rem;margin-bottom:20px}h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:1.8rem;margin-bottom:14px;color:#c9a84c}p{color:#8892b0;line-height:1.9;font-size:.95rem}</style></head>'+
+    '.mw{max-width:480px}.mi{font-size:3rem;margin-bottom:20px}h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:1.8rem;margin-bottom:14px;color:#c9a84c}p{color:var(--t2);line-height:1.9;font-size:.95rem}</style></head>'+
     '<body><div class="mw"><div class="mi">🔧</div><h1>Axiom Zones — تحت الصيانة</h1><p>'+
     (maint.message || 'الموقع تحت صيانة مؤقتة، هنرجع خلال دقائق. شكراً لصبرك.')+
     '</p></div></body>';
