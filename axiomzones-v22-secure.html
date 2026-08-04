@@ -2487,9 +2487,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="kbar"><div class="kbrow"><span class="kbl" data-i18n="ab.k3">Customer Satisfaction</span><span class="kbv">94%</span></div><div class="pb"><div class="pf" style="width:0" data-fill="94"></div></div></div>
           <div class="kbar"><div class="kbrow"><span class="kbl" data-i18n="ab.k4">Market Readiness</span><span class="kbv">78%</span></div><div class="pb"><div class="pf" style="width:0" data-fill="78"></div></div></div>
           <div class="ab-bads">
-            <div class="ab-b"><span class="ab-bv">4</span><span class="ab-bl" data-i18n="ab.b1">Platforms</span></div>
-            <div class="ab-b"><span class="ab-bv">128</span><span class="ab-bl" data-i18n="ab.b2">Clients</span></div>
-            <div class="ab-b"><span class="ab-bv">91%</span><span class="ab-bl" data-i18n="ab.b3">Retention</span></div>
+            <div class="ab-b"><span class="ab-bv" id="ab-plats-v">4</span><span class="ab-bl" data-i18n="ab.b1">Platforms</span></div>
+            <div class="ab-b"><span class="ab-bv" id="ab-clients-v">128</span><span class="ab-bl" data-i18n="ab.b2">Clients</span></div>
+            <div class="ab-b"><span class="ab-bv">98</span><span class="ab-bl" data-i18n="ab.b3">Languages</span></div>
           </div>
         </div>
         <div class="ab-acc"><span class="ab-an">∞</span><div class="ab-al" data-i18n="ab.acc">Scalability</div></div>
@@ -2580,6 +2580,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>Arab Financial Index</div>
         <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="afi.h1">مؤشر القروض العربي</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="afi.h2">— مارس 2024</em></h2>
         <p style="font-size:.82rem;color:var(--t2);margin-top:6px" data-i18n="afi.sub">متوسط فائدة القروض الشخصية في المنطقة العربية — محدّث شهرياً</p>
+        <p style="font-size:.68rem;color:var(--t3);margin-top:4px" data-i18n="afi.note2">* نطاقات تقديرية بناءً على أبحاث السوق العامة، وليست بيانات حية من مؤسسات مالية محدَّدة</p>
       </div>
       <button onclick="v5GoTo('getstarted')" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap" data-i18n="afi.subscribe">اشترك في التقرير الشهري →</button>
     </div>
@@ -2707,7 +2708,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <p class="ssub" data-i18n="s.cp">Our global team is ready to answer your questions and launch lasting strategic partnerships.</p>
         <div class="clnks">
           <a href="mailto:info@axiomzones.com" class="clnk" id="contact-email-link"><div class="cli" aria-hidden="true">📧</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.el">Email</div><span id="contact-email-text">info@axiomzones.com</span></div></a>
-          <a href="https://wa.me/1" class="clnk"><div class="cli" aria-hidden="true">✆</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">WhatsApp</div>Available globally</div></a>
+          <a href="https://wa.me/1" class="clnk" id="contact-whatsapp-link"><div class="cli" aria-hidden="true">✆</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">WhatsApp</div><span id="contact-whatsapp-text">Available globally</span></div></a>
           <a href="https://linkedin.com/company/axiomzones" class="clnk" rel="noopener"><div class="cli" aria-hidden="true">in</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">LinkedIn</div>Axiom Zones</div></a>
           <div class="clnk" style="cursor:default"><div class="cli" aria-hidden="true">🌐</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.hql">Headquarters</div><span data-i18n="c.hqv">Global — Serving 195 Countries</span></div></div>
         </div>
@@ -3019,7 +3020,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <button onclick="closeDash()" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t2);padding:6px 12px;border-radius:7px;cursor:none;font-size:.77rem;font-family:'Tajawal',sans-serif">← Back</button>
       <button onclick="azV4Theme()" title="Toggle dark/light mode" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t2);padding:6px 10px;border-radius:7px;cursor:none;font-size:.9rem" id="dash-theme-btn">🌙</button>
       <button onclick="azOwnerLogout()" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#ef4444;padding:6px 12px;border-radius:7px;cursor:none;font-size:.77rem;font-family:'Tajawal',sans-serif">⏻ Logout</button>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:4px"><span style="background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AXIOM</span> <span style="color:var(--t3);font-size:.68rem;letter-spacing:2px;vertical-align:middle;font-family:'DM Mono',monospace" id="dash-role-label">OWNER DASHBOARD</span></div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:4px"><span style="background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AXIOM ZONES</span> <span style="color:var(--t3);font-size:.68rem;letter-spacing:2px;vertical-align:middle;font-family:'DM Mono',monospace" id="dash-role-label">OWNER DASHBOARD</span></div>
     </div>
     <div style="display:flex;align-items:center;gap:9px">
       <span style="font-size:.7rem;color:var(--t3);font-family:'DM Mono',monospace">sync: <span style="color:var(--gold)" id="d-time"></span></span>
@@ -3456,7 +3457,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="dcard"><div class="dct">Company Info</div>
             <label class="fl">Company Name</label><input class="di" id="ci-name" value="Axiom Zones"/>
             <label class="fl">Domain</label><input class="di" id="ci-domain" value="axiomzones.com"/>
-            <label class="fl">Email</label><input class="di" id="ci-email" value="info@axiomzones.com"/>
+            <label class="fl" style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">Email Addresses <button class="db2" style="padding:2px 8px;font-size:.68rem" onclick="azAddContactRow('ci-emails-list','email@company.com')">+ Add</button></label>
+            <div id="ci-emails-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px"></div>
+            <label class="fl" style="display:flex;justify-content:space-between;align-items:center">WhatsApp Numbers <button class="db2" style="padding:2px 8px;font-size:.68rem" onclick="azAddContactRow('ci-whatsapp-list','+9665XXXXXXXX')">+ Add</button></label>
+            <div id="ci-whatsapp-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px"></div>
             <button class="db2" onclick="azSaveCompanyInfo()">Save</button>
             <div id="ci-save-msg" style="margin-top:8px;font-size:.76rem"></div>
           </div>
@@ -3838,7 +3842,7 @@ var STATIC = {
     'mq.curr':'200 Currencies','mq.lang':'98 Languages','mq.countries':'195 Countries','mq.venture':'Global Venture Studio',
     'sb.nav':'Navigate','sb.home':'🏠 Home','sb.allplat':'🧩 All Platforms','sb.pricing':'💳 Pricing','sb.how':'⚡ How It Works','sb.faq':'❓ FAQ','sb.startfree':'🚀 Start Free',
     'sb.openplat':'Open Platform','sb.settings':'⚙️ Settings','sb.dark':'🌙 Dark Mode','sb.quickbuy':'💳 Quick Buy','sb.ltd':'🔥 Lifetime Deal — $399','sb.pro':'⭐ Pro All-Access — $69/mo',
-    'afi.h1':'Arab Loan Index','afi.h2':'— March 2024',
+    'afi.h1':'Arab Loan Index','afi.h2':'— March 2024','afi.note2':'* Estimated ranges based on general market research, not live data from specific institutions',
     'ltd.h':'Lifetime Deal — First 100 Only','ltd.p':'One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.',
     'ltd.spots':' of 100 lifetime spots remaining','ltd.worth':'Worth $828/year','ltd.tags':'ONE-TIME · ALL PLATFORMS · FOREVER','ltd.btn':'Claim Lifetime Deal →',
     'cta.h1':'Start Your Free Account','cta.h2':'Today','cta.sub':'Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.',
@@ -3889,7 +3893,7 @@ var STATIC = {
     's.ap':'Axiom Zones is a global Venture Studio specializing in world-class SaaS platforms. We build, launch, and grow — with a proven methodology and expert team.',
     'ab.f':'Founded','ab.hq':'Global HQ','ab.m':'Business Model',
     'ab.k1':'Platform Development','ab.k2':'Global Expansion','ab.k3':'Customer Satisfaction','ab.k4':'Market Readiness',
-    'ab.b1':'Platforms','ab.b2':'Clients','ab.b3':'Retention','ab.acc':'Scalability',
+    'ab.b1':'Platforms','ab.b2':'Clients','ab.b3':'Languages','ab.acc':'Scalability',
     's.prtag':'Pricing','s.prh':'Invest in\nYour Future',
     'pl.fr':'Free Trial','pl.frt':'14 full days — no risk','pl.frp':'/ 14 days free','pl.frc':'Start Free',
     'pf.1.1':'Access to 1 platform','pf.1.2':'Basic email support','pf.1.3':'Basic dashboard','pf.1.4':'Advanced API','pf.1.5':'Dedicated support',
@@ -3944,7 +3948,7 @@ var STATIC = {
     'mq.curr':'200 عملة','mq.lang':'98 لغة','mq.countries':'195 دولة','mq.venture':'استوديو مشاريع عالمي',
     'sb.nav':'التنقل','sb.home':'🏠 الرئيسية','sb.allplat':'🧩 كل المنصات','sb.pricing':'💳 الأسعار','sb.how':'⚡ كيف تعمل','sb.faq':'❓ الأسئلة الشائعة','sb.startfree':'🚀 ابدأ مجاناً',
     'sb.openplat':'افتح منصة','sb.settings':'⚙️ الإعدادات','sb.dark':'🌙 الوضع الليلي','sb.quickbuy':'💳 شراء سريع','sb.ltd':'🔥 صفقة العمر — $399','sb.pro':'⭐ وصول Pro كامل — $69/شهر',
-    'afi.h1':'مؤشر القروض العربي','afi.h2':'— مارس 2024',
+    'afi.h1':'مؤشر القروض العربي','afi.h2':'— مارس 2024','afi.note2':'* نطاقات تقديرية بناءً على أبحاث السوق العامة، وليست بيانات حية من مؤسسات مالية محدَّدة',
     'ltd.h':'صفقة العمر — لأول 100 عميل فقط','ltd.p':'دفعة واحدة. وصول Pro كامل لكل منصة حالية ومستقبلية. للأبد. من غير رسوم متكررة أبداً. العرض ده بيقفل نهائياً بعد 100 حساب — من غير استثناءات، من غير تمديد.',
     'ltd.spots':' مكان من أصل 100 متبقي','ltd.worth':'بتساوي $828 سنوياً','ltd.tags':'دفعة واحدة · كل المنصات · للأبد','ltd.btn':'احصل على صفقة العمر ←',
     'cta.h1':'ابدأ حسابك المجاني','cta.h2':'اليوم','cta.sub':'انضم لمحترفين من أكتر من 105 دولة بيستخدموا أكسيوم زونز. مجاني للأبد. من غير بطاقة ائتمان.',
@@ -3995,7 +3999,7 @@ var STATIC = {
     's.ap':'Axiom Zones استوديو مشاريع عالمي متخصص في بناء منصات SaaS بمستوى عالمي.',
     'ab.f':'التأسيس','ab.hq':'المقر العالمي','ab.m':'نموذج العمل',
     'ab.k1':'تطوير المنصات','ab.k2':'التوسع العالمي','ab.k3':'رضا العملاء','ab.k4':'جاهزية للسوق',
-    'ab.b1':'منصة','ab.b2':'عميل','ab.b3':'احتفاظ','ab.acc':'إمكانية التوسع',
+    'ab.b1':'منصة','ab.b2':'عميل','ab.b3':'لغة','ab.acc':'إمكانية التوسع',
     's.prtag':'الباقات','s.prh':'استثمارك\nفي المستقبل',
     'pl.fr':'تجربة مجانية','pl.frt':'14 يوماً كاملاً — بلا مخاطر','pl.frp':'/ 14 يوماً مجاناً','pl.frc':'ابدأ مجاناً',
     'pf.1.1':'وصول لمنصة واحدة','pf.1.2':'دعم أساسي عبر البريد','pf.1.3':'لوحة تحكم مبسطة','pf.1.4':'API متقدمة','pf.1.5':'دعم مخصص',
@@ -4030,7 +4034,7 @@ var STATIC = {
     'pl.en':'Entreprise','pl.enb':'Le Plus Populaire','pl.enc':'Obtenir Maintenant',
     'pl.ch':'Impact — Charité','pl.chc':'Postuler',
     'ft.rights':'Tous droits réservés','lo.t':'ACCÈS MEMBRES','lo.b':'Connexion','lo.c':'Annuler',
-    'ab.acc':'Scalabilité','ab.b1':'Plateformes','ab.b2':'Clients','ab.b3':'Fidélisation','ab.f':'Fondée en','ab.hq':'Siège mondial','ab.k1':'Développement des plateformes','ab.k2':'Expansion mondiale',
+    'ab.acc':'Scalabilité','ab.b1':'Plateformes','ab.b2':'Clients','ab.b3':'Langues','ab.f':'Fondée en','ab.hq':'Siège mondial','ab.k1':'Développement des plateformes','ab.k2':'Expansion mondiale',
     'ab.k3':'Satisfaction client','ab.k4':'Préparation du marché','ab.m':'Modèle économique','afi.h1':'Indice des prêts arabes','afi.h2':'— Mars 2024','afi.notelabel':'Note de nos analystes :','afi.notetext':'Les taux annoncés par les banques sont généralement 3 à 5 % inférieurs au TRI réel. Utilisez Prism ou Kashf pour obtenir le vrai chiffre de votre prêt.','afi.personal':'Personnel',
     'afi.sub':'Taux d\'intérêt moyen des prêts personnels dans la région arabe — mis à jour chaque mois','afi.subscribe':'S\'abonner au rapport mensuel →','alert.btn':'Activer l\'alerte →','alert.email':'Votre e-mail','alert.note':'Gratuit · Aucune carte requise · Annulation à tout moment','alert.rate':'Votre taux actuel %','alert.sub':'Indiquez le taux de votre prêt actuel — nous vous alertons instantanément lorsque les taux du marché descendent sous ce chiffre, synonyme d\'une opportunité de refinancement et d\'économies réelles.','alert.subs':'Abonné aux alertes',
     'alert.title':'M\'alerter en cas de baisse des taux','announce.txt':'Plateforme Axiom Zones — 8 plateformes actives dès maintenant · 30 plateformes à venir · axiomzones.com','blog.allbtn1':'Tous les articles →','blog.allbtn2':'Tous les articles ← Blog financier','blog.arlink':'AR','blog.d1':'Comment les banques enjolivent leurs prêts pour paraître moins chers — et comment révéler le vrai TRI avec Kashf.','blog.d2':'Une comparaison chiffrée complète — lequel est vraiment le moins cher ? La réponse surprend beaucoup de gens.','blog.d3':'L\'équation simple qui sauve votre entreprise — calculez-la gratuitement avec Mizan Pro.',
@@ -4509,19 +4513,41 @@ async function azExportBackup(){
   }
 }
 
-/* ── بيانات التواصل (اسم الشركة، الدومين، الإيميل) — حفظ وتحميل حقيقي ── */
+/* ── بيانات التواصل (اسم الشركة، الدومين، إيميلات وأرقام واتساب متعددة) — حفظ وتحميل حقيقي ── */
+function azAddContactRow(containerId, placeholder, value){
+  var box = document.getElementById(containerId);
+  if(!box) return;
+  var row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:6px;align-items:center';
+  var input = document.createElement('input');
+  input.className = 'di';
+  input.style.marginBottom = '0';
+  input.placeholder = placeholder;
+  if(value) input.value = value;
+  var removeBtn = document.createElement('button');
+  removeBtn.className = 'db2';
+  removeBtn.style.cssText = 'padding:6px 10px;font-size:.7rem;color:#f87171;flex-shrink:0';
+  removeBtn.textContent = '✕';
+  removeBtn.onclick = function(){ row.remove(); };
+  row.appendChild(input);
+  row.appendChild(removeBtn);
+  box.appendChild(row);
+}
+
 async function azSaveCompanyInfo(){
   var msg = document.getElementById('ci-save-msg');
   var name = document.getElementById('ci-name').value.trim();
   var domain = document.getElementById('ci-domain').value.trim();
-  var email = document.getElementById('ci-email').value.trim();
-  if(!email || !email.includes('@')){ msg.style.color='#f87171'; msg.textContent='بريد إلكتروني غير صالح'; return; }
+  var emails = Array.from(document.querySelectorAll('#ci-emails-list input')).map(function(i){ return i.value.trim(); }).filter(Boolean);
+  var whatsapps = Array.from(document.querySelectorAll('#ci-whatsapp-list input')).map(function(i){ return i.value.trim(); }).filter(Boolean);
+  if(!emails.length){ msg.style.color='#f87171'; msg.textContent='لازم إيميل واحد على الأقل'; return; }
+  for(var i=0;i<emails.length;i++){ if(!emails[i].includes('@')){ msg.style.color='#f87171'; msg.textContent='إيميل غير صالح: '+emails[i]; return; } }
   msg.style.color='var(--t3)'; msg.textContent='Saving...';
   try{
     var res = await fetch('/api/config-get');
     var data = await res.json();
     var config = (data && data.config) || {};
-    config.companyInfo = { name: name, domain: domain, email: email };
+    config.companyInfo = { name: name, domain: domain, emails: emails, whatsapps: whatsapps };
     var saveRes = await fetch('/api/config-set', {
       method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ config: config })
@@ -4542,26 +4568,49 @@ async function azLoadCompanyInfo(){
     var res = await fetch('/api/config-get');
     var data = await res.json();
     var ci = (data && data.config && data.config.companyInfo) || null;
-    if(!ci) return;
-    if(document.getElementById('ci-name')) document.getElementById('ci-name').value = ci.name || 'Axiom Zones';
-    if(document.getElementById('ci-domain')) document.getElementById('ci-domain').value = ci.domain || 'axiomzones.com';
-    if(document.getElementById('ci-email')) document.getElementById('ci-email').value = ci.email || 'info@axiomzones.com';
+    if(document.getElementById('ci-name')) document.getElementById('ci-name').value = (ci && ci.name) || 'Axiom Zones';
+    if(document.getElementById('ci-domain')) document.getElementById('ci-domain').value = (ci && ci.domain) || 'axiomzones.com';
+
+    var emailsBox = document.getElementById('ci-emails-list');
+    var waBox = document.getElementById('ci-whatsapp-list');
+    if(emailsBox){
+      emailsBox.innerHTML = '';
+      var emails = (ci && ci.emails && ci.emails.length) ? ci.emails : ['info@axiomzones.com'];
+      emails.forEach(function(e){ azAddContactRow('ci-emails-list','email@company.com', e); });
+    }
+    if(waBox){
+      waBox.innerHTML = '';
+      var whats = (ci && ci.whatsapps) || [];
+      if(!whats.length){ azAddContactRow('ci-whatsapp-list','+9665XXXXXXXX'); }
+      else whats.forEach(function(w){ azAddContactRow('ci-whatsapp-list','+9665XXXXXXXX', w); });
+    }
   }catch(e){}
 }
 
 /* تطبيق بيانات التواصل على كل أماكن العرض العامة في الموقع الرئيسي */
 function azApplyCompanyInfo(ci){
   if(!ci) return;
+  var emails = ci.emails && ci.emails.length ? ci.emails : (ci.email ? [ci.email] : []);
+  var primaryEmail = emails[0];
   var emailText = document.getElementById('contact-email-text');
   var emailLink = document.getElementById('contact-email-link');
   var footerEmail = document.getElementById('footer-email-text');
   var footerDomain = document.getElementById('footer-domain-text');
-  if(ci.email){
-    if(emailText) emailText.textContent = ci.email;
-    if(emailLink) emailLink.href = 'mailto:' + ci.email;
-    if(footerEmail) footerEmail.textContent = ci.email;
+  if(primaryEmail){
+    if(emailText) emailText.textContent = primaryEmail;
+    if(emailLink) emailLink.href = 'mailto:' + primaryEmail;
+    if(footerEmail) footerEmail.textContent = primaryEmail;
   }
   if(ci.domain && footerDomain) footerDomain.textContent = ci.domain;
+
+  var whatsapps = ci.whatsapps || [];
+  var waLink = document.getElementById('contact-whatsapp-link');
+  var waText = document.getElementById('contact-whatsapp-text');
+  if(whatsapps.length && waLink){
+    var clean = whatsapps[0].replace(/[^0-9]/g, '');
+    waLink.href = 'https://wa.me/' + clean;
+    if(waText) waText.textContent = whatsapps.length > 1 ? (whatsapps[0] + ' (+' + (whatsapps.length-1) + ' more)') : whatsapps[0];
+  }
 }
 
 /* ── وضع الصيانة العام للموقع ── */
@@ -6794,6 +6843,20 @@ async function azUserLogout(){
       if(data && data.valid && data.user) azApplyUserUI(data.user);
     })
     .catch(function(){ /* لا مشكلة — الزرار يبقى "Login" الافتراضي */ });
+})();
+
+/* ══ جلب أرقام حقيقية عامة (منصات + عملاء) لقسم About Us — بدون تسجيل دخول ══ */
+(function azLoadPublicStats(){
+  fetch('/api/public-stats')
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(data){
+      if(!data || !data.ok) return;
+      var plEl = document.getElementById('ab-plats-v');
+      var clEl = document.getElementById('ab-clients-v');
+      if(plEl) plEl.textContent = data.totalPlatforms;
+      if(clEl) clEl.textContent = data.totalUsers;
+    })
+    .catch(function(){ /* تبقى القيم الافتراضية كما هي عند فشل الاتصال */ });
 })();
 
 /* ══ تسجيل زيارة حقيقية (مرة واحدة لكل تحميل صفحة) — لا يكسر أي شيء لو فشل ══ */
