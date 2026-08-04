@@ -369,6 +369,24 @@ var I18N = {
 };
 
 /* ══ UNIVERSAL setLang() ══ */
+/* ══ تحديث أرقام شريط الإعلان العلوي (منصات مباشرة/قادمة) بالعدد الحقيقي — بدل النص الثابت "8" في الكود ══
+   يعمل بشكل مستقل عن اللغة: يبدّل أول رقمين ظاهرين في النص فقط، محتفظاً بباقي الصياغة اللغوية كما هي */
+var AZ_LAST_ANNOUNCE_COUNTS = null;
+function azUpdateAnnounceCounts(liveN, comingN){
+  AZ_LAST_ANNOUNCE_COUNTS = { live: liveN, coming: comingN };
+  var el = document.getElementById('az-announce-txt');
+  if(!el) return;
+  var txt = el.textContent;
+  var n = 0;
+  txt = txt.replace(/\d+/g, function(match){
+    n++;
+    if(n === 1) return String(liveN);
+    if(n === 2) return String(comingN);
+    return match;
+  });
+  el.textContent = txt;
+}
+
 function setLang(l){
   if(!I18N[l]) l="ar";
   LANG = l;
@@ -394,6 +412,8 @@ function setLang(l){
   if(typeof renderFormulas === "function") renderFormulas();
   if(typeof renderComp === "function") renderComp();
   if(typeof calcAll === "function") calcAll();
+  /* إعادة تطبيق الأرقام الحقيقية على شريط الإعلان بعد استبدال النصوص بالترجمة الجديدة */
+  if(AZ_LAST_ANNOUNCE_COUNTS) azUpdateAnnounceCounts(AZ_LAST_ANNOUNCE_COUNTS.live, AZ_LAST_ANNOUNCE_COUNTS.coming);
 }
 
 </script>
@@ -1703,26 +1723,133 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div>
     <span class="flp-label" data-i18n="lc.lang">🌐 Language</span>
     <select class="flp-sel" id="float-lang-sel" onchange="handleLang(this.value);syncLangSelects(this.value)" aria-label="Select Language">
-      <optgroup label="── Arabic Region ──"><option value="ar">🇸🇦 العربية</option><option value="fa">🇮🇷 فارسی</option><option value="ur">🇵🇰 اردو</option><option value="he">🇮🇱 עברית</option><option value="ku">🇮🇶 Kurdî</option></optgroup>
-      <optgroup label="── Western Europe ──"><option value="en">🇬🇧 English</option><option value="fr">🇫🇷 Français</option><option value="es">🇪🇸 Español</option><option value="pt">🇧🇷 Português</option><option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option><option value="nl">🇳🇱 Nederlands</option><option value="sv">🇸🇪 Svenska</option><option value="no">🇳🇴 Norsk</option><option value="da">🇩🇰 Dansk</option><option value="fi">🇫🇮 Suomi</option><option value="is">🇮🇸 Íslenska</option><option value="ca">Català</option><option value="eu">Euskara</option><option value="gl">Galego</option><option value="cy">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg</option><option value="ga">🇮🇪 Gaeilge</option></optgroup>
-      <optgroup label="── Eastern Europe ──"><option value="ru">🇷🇺 Русский</option><option value="uk">🇺🇦 Українська</option><option value="pl">🇵🇱 Polski</option><option value="cs">🇨🇿 Čeština</option><option value="sk">🇸🇰 Slovenčina</option><option value="hu">🇭🇺 Magyar</option><option value="ro">🇷🇴 Română</option><option value="bg">🇧🇬 Български</option><option value="sr">🇷🇸 Српски</option><option value="hr">🇭🇷 Hrvatski</option><option value="sl">🇸🇮 Slovenščina</option><option value="lt">🇱🇹 Lietuvių</option><option value="lv">🇱🇻 Latviešu</option><option value="et">🇪🇪 Eesti</option><option value="el">🇬🇷 Ελληνικά</option><option value="ka">🇬🇪 ქართული</option><option value="hy">🇦🇲 Հայերեն</option><option value="az">🇦🇿 Azərbaycan</option><option value="kk">🇰🇿 Қазақ</option><option value="uz">🇺🇿 O'zbek</option><option value="be">🇧🇾 Беларуская</option></optgroup>
-      <optgroup label="── Asia Pacific ──"><option value="zh">🇨🇳 中文简体</option><option value="zh-tw">🇹🇼 中文繁體</option><option value="ja">🇯🇵 日本語</option><option value="ko">🇰🇷 한국어</option><option value="hi">🇮🇳 हिन्दी</option><option value="bn">🇧🇩 বাংলা</option><option value="ta">🇮🇳 தமிழ்</option><option value="te">🇮🇳 తెలుగు</option><option value="th">🇹🇭 ภาษาไทย</option><option value="vi">🇻🇳 Tiếng Việt</option><option value="id">🇮🇩 Bahasa Indonesia</option><option value="ms">🇲🇾 Bahasa Melayu</option><option value="tl">🇵🇭 Filipino</option><option value="my">🇲🇲 မြန်မာ</option><option value="km">🇰🇭 ខ្មែរ</option><option value="mn">🇲🇳 Монгол</option><option value="ne">🇳🇵 नेपाली</option><option value="si">🇱🇰 සිංහල</option></optgroup>
-      <optgroup label="── Africa ──"><option value="sw">🇰🇪 Kiswahili</option><option value="am">🇪🇹 አማርኛ</option><option value="yo">🇳🇬 Yorùbá</option><option value="ha">🇳🇬 Hausa</option><option value="zu">🇿🇦 isiZulu</option><option value="af">🇿🇦 Afrikaans</option><option value="so">🇸🇴 Soomaali</option></optgroup>
+      <optgroup label="── Arabic Region ──">
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="fa">🇮🇷 فارسی</option>
+        <option value="ur">🇵🇰 اردو</option>
+        <option value="he">🇮🇱 עברית</option>
+        <option value="ku">🇮🇶 Kurdî</option>
+        <option value="tr">🇹🇷 Türkçe</option>
+      </optgroup>
+      <optgroup label="── Western Europe ──">
+        <option value="en">🇬🇧 English</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="pt">🇧🇷 Português</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="nl">🇳🇱 Nederlands</option>
+        <option value="sv">🇸🇪 Svenska</option>
+        <option value="no">🇳🇴 Norsk</option>
+        <option value="da">🇩🇰 Dansk</option>
+        <option value="fi">🇫🇮 Suomi</option>
+        <option value="is">🇮🇸 Íslenska</option>
+        <option value="ca">Català</option>
+        <option value="eu">Euskara</option>
+        <option value="gl">Galego</option>
+        <option value="cy">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg</option>
+        <option value="ga">🇮🇪 Gaeilge</option>
+      </optgroup>
+      <optgroup label="── Eastern Europe ──">
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="uk">🇺🇦 Українська</option>
+        <option value="pl">🇵🇱 Polski</option>
+        <option value="cs">🇨🇿 Čeština</option>
+        <option value="sk">🇸🇰 Slovenčina</option>
+        <option value="hu">🇭🇺 Magyar</option>
+        <option value="ro">🇷🇴 Română</option>
+        <option value="bg">🇧🇬 Български</option>
+        <option value="sr">🇷🇸 Српски</option>
+        <option value="hr">🇭🇷 Hrvatski</option>
+        <option value="sl">🇸🇮 Slovenščina</option>
+        <option value="lt">🇱🇹 Lietuvių</option>
+        <option value="lv">🇱🇻 Latviešu</option>
+        <option value="et">🇪🇪 Eesti</option>
+        <option value="el">🇬🇷 Ελληνικά</option>
+        <option value="sq">🇦🇱 Shqip</option>
+        <option value="mk">🇲🇰 Македонски</option>
+        <option value="bs">🇧🇦 Bosanski</option>
+        <option value="ka">🇬🇪 ქართული</option>
+        <option value="hy">🇦🇲 Հայերեն</option>
+        <option value="az">🇦🇿 Azərbaycan</option>
+        <option value="kk">🇰🇿 Қазақ</option>
+        <option value="uz">🇺🇿 O'zbek</option>
+        <option value="be">🇧🇾 Беларуская</option>
+      </optgroup>
+      <optgroup label="── Asia Pacific ──">
+        <option value="zh">🇨🇳 中文简体</option>
+        <option value="zh-tw">🇹🇼 中文繁體</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="hi">🇮🇳 हिन्दी</option>
+        <option value="bn">🇧🇩 বাংলা</option>
+        <option value="ta">🇮🇳 தமிழ்</option>
+        <option value="te">🇮🇳 తెలుగు</option>
+        <option value="mr">🇮🇳 मराठी</option>
+        <option value="gu">🇮🇳 ગુજરાતી</option>
+        <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+        <option value="ne">🇳🇵 नेपाली</option>
+        <option value="si">🇱🇰 සිංහල</option>
+        <option value="th">🇹🇭 ภาษาไทย</option>
+        <option value="vi">🇻🇳 Tiếng Việt</option>
+        <option value="id">🇮🇩 Bahasa Indonesia</option>
+        <option value="ms">🇲🇾 Bahasa Melayu</option>
+        <option value="tl">🇵🇭 Filipino</option>
+        <option value="my">🇲🇲 မြန်မာ</option>
+        <option value="km">🇰🇭 ខ្មែរ</option>
+        <option value="lo">🇱🇦 ລາວ</option>
+        <option value="mn">🇲🇳 Монгол</option>
+      </optgroup>
+      <optgroup label="── Africa ──">
+        <option value="sw">🇰🇪 Kiswahili</option>
+        <option value="am">🇪🇹 አማርኛ</option>
+        <option value="yo">🇳🇬 Yorùbá</option>
+        <option value="ig">🇳🇬 Igbo</option>
+        <option value="ha">🇳🇬 Hausa</option>
+        <option value="zu">🇿🇦 isiZulu</option>
+        <option value="af">🇿🇦 Afrikaans</option>
+        <option value="so">🇸🇴 Soomaali</option>
+      </optgroup>
+      <optgroup label="── Americas ──">
+        <option value="pt-br">🇧🇷 Português BR</option>
+        <option value="qu">🇵🇪 Quechua</option>
+        <option value="gn">🇵🇾 Guaraní</option>
+      </optgroup>
     
-    <optgroup label="── More Languages ──">
-      <option value="ky">Кыргызча</option>
-      <option value="tg">Тоҷикӣ</option>
-      <option value="tk">Türkmençe</option>
-      <option value="lb">Lëtzebuergesch</option>
-      <option value="ga">🇮🇪 Gaeilge</option>
-      <option value="cy">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg</option>
-      <option value="eu">Euskara</option>
-      <option value="ca">Català</option>
-      <option value="gl">Galego</option>
-      <option value="is">🇮🇸 Íslenska</option>
-      <option value="jv">Basa Jawa</option>
-      <option value="su">Basa Sunda</option>
-      <option value="ceb">Cebuano</option>
+    <optgroup label="── South Asia ──">
+      <option value="ne">🇳🇵 नेपाली</option>
+      <option value="si">🇱🇰 සිංහල</option>
+      <option value="my">🇲🇲 မြန်မာ</option>
+      <option value="lo">🇱🇦 ລາວ</option>
+      <option value="km">🇰🇭 ខ្មែរ</option>
+      <option value="sd">سنڌي</option>
+      <option value="ps">پښتو</option>
+      <option value="dv">ދިވެހި</option>
+    </optgroup>
+    <optgroup label="── Africa ──">
+      <option value="yo">🇳🇬 Yorùbá</option>
+      <option value="ha">🇳🇬 Hausa</option>
+      <option value="ig">🇳🇬 Igbo</option>
+      <option value="zu">🇿🇦 isiZulu</option>
+      <option value="rw">🇷🇼 Kinyarwanda</option>
+      <option value="sn">ChiShona</option>
+      <option value="st">Sesotho</option>
+      <option value="xh">isiXhosa</option>
+      <option value="ny">Chichewa</option>
+      <option value="mg">Malagasy</option>
+      <option value="so">🇸🇴 Soomaali</option>
+    </optgroup>
+    <optgroup label="── Americas ──">
+      <option value="pt-br">🇧🇷 Português BR</option>
+      <option value="qu">🇵🇪 Quechua</option>
+      <option value="ay">Aymara</option>
+      <option value="gn">Guaraní</option>
+    </optgroup>
+    <optgroup label="── Pacific ──">
+      <option value="haw">Hawaiian</option>
+      <option value="sm">Gagana Samoa</option>
+      <option value="mi">Māori</option>
+      <option value="fj">Vosa Vakaviti</option>
     </optgroup>
   </select>
     <!-- Quick access most popular -->
@@ -1865,6 +1992,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <option value="ur">🇵🇰 اردو</option>
         <option value="he">🇮🇱 עברית</option>
         <option value="ku">🇮🇶 Kurdî</option>
+        <option value="tr">🇹🇷 Türkçe</option>
       </optgroup>
       <optgroup label="── Western Europe ──">
         <option value="en">🇬🇧 English</option>
@@ -2313,7 +2441,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         </div>
         <div class="h-met rgt">
           <div class="mchip prop-chip"><div class="mv">200</div><div class="ml" data-i18n="m.curr">Currencies</div></div>
-          <div class="mchip tal-chip"><div class="mv" data-count="60">0</div><div class="ml" data-i18n="m.lang">Languages</div></div>
+          <div class="mchip tal-chip"><div class="mv" data-count="107">0</div><div class="ml" data-i18n="m.lang">Languages</div></div>
         </div>
       </div>
     </div>
@@ -2332,7 +2460,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div class="numgrid ry">
       <div class="ni uni-ni"><span class="nb" data-count="4">0</span><div class="nl" data-i18n="n.p">Active Platforms</div><div class="nd" data-i18n="n.pd">Integrated SaaS</div></div>
       <div class="ni logi-ni"><span class="nb" data-count="200">0</span><div class="nl" data-i18n="n.c">Currencies</div><div class="nd" data-i18n="n.cd">Every world currency</div></div>
-      <div class="ni prop-ni"><span class="nb" data-count="60">0</span><div class="nl" data-i18n="n.l">Languages</div><div class="nd" data-i18n="n.ld">AI-powered translation</div></div>
+      <div class="ni prop-ni"><span class="nb" data-count="107">0</span><div class="nl" data-i18n="n.l">Languages</div><div class="nd" data-i18n="n.ld">AI-powered translation</div></div>
       <div class="ni tal-ni"><span class="nb" data-count="195">0</span><div class="nl" data-i18n="n.co">Countries</div><div class="nd" data-i18n="n.cod">Global audience</div></div>
     </div>
   </div>
@@ -2489,7 +2617,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="ab-bads">
             <div class="ab-b"><span class="ab-bv" id="ab-plats-v">4</span><span class="ab-bl" data-i18n="ab.b1">Platforms</span></div>
             <div class="ab-b"><span class="ab-bv" id="ab-clients-v">128</span><span class="ab-bl" data-i18n="ab.b2">Clients</span></div>
-            <div class="ab-b"><span class="ab-bv">98</span><span class="ab-bl" data-i18n="ab.b3">Languages</span></div>
+            <div class="ab-b"><span class="ab-bv">107</span><span class="ab-bl" data-i18n="ab.b3">Languages</span></div>
           </div>
         </div>
         <div class="ab-acc"><span class="ab-an">∞</span><div class="ab-al" data-i18n="ab.acc">Scalability</div></div>
@@ -2803,7 +2931,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 <section id="cta" style="padding:80px 24px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(201,168,76,.06),transparent);border-top:1px solid rgba(255,255,255,.05)">
   <div class="sc-strip rv4" style="display:inline-flex;margin-bottom:14px"><span class="sc-dot"></span><span id="az-cta-spots" style="color:#ef4444;font-weight:700">73</span><span style="color:var(--t2)" data-i18n="ltd.spots"> of 100 lifetime spots remaining</span></div>
   <h2 style="font-family:var(--font-display,'Cormorant',serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:10px" class="rv4 d1"><span data-i18n="cta.h1">Start Your Free Account</span> <em style="font-weight:300;font-style:italic;color:#c9a84c" data-i18n="cta.h2">Today</em></h2>
-  <p style="font-size:.92rem;color:var(--t2);max-width:480px;margin:0 auto 24px;line-height:1.9" class="rv4 d2" data-i18n="cta.sub">Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.</p>
+  <p style="font-size:.92rem;color:var(--t2);max-width:480px;margin:0 auto 24px;line-height:1.9" class="rv4 d2" data-i18n="cta.sub">Join professionals from 195+ countries using Axiom Zones. Free forever. No card required.</p>
   <div style="display:flex;gap:8px;max-width:440px;margin:0 auto 12px" class="rv4 d2">
     <input id="az-final-email" type="email" placeholder="your@email.com" data-i18n-ph="cta.email" style="flex:1;background:#141c2e;border:1.5px solid rgba(201,168,76,.2);color:var(--t1);padding:13px 16px;border-radius:9px;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;outline:none" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(201,168,76,.2)'" aria-label="Email address"/>
     <button onclick="azV4JoinFinal()" style="padding:13px 24px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:var(--font-sans,'Syne',sans-serif);font-size:.88rem;border:none;cursor:pointer;transition:all .3s;white-space:nowrap" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''" data-i18n="cta.btn">Start Free →</button>
@@ -3383,7 +3511,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
                 <div><label class="fl">CTA Button 1</label><input class="di" type="text" value="🚀 Explore Platforms"/></div>
                 <div><label class="fl">CTA Button 2</label><input class="di" type="text" value="View Pricing ↓"/></div>
                 <div><label class="fl">SEO Title</label><input class="di" type="text" value="Axiom Zones | World's Premier Digital Venture Studio"/></div>
-                <div><label class="fl">SEO Description</label><textarea class="di" rows="2">A global Venture Studio building world-class SaaS platforms. 200 currencies · 60 languages · 195 countries.</textarea></div>
+                <div><label class="fl">SEO Description</label><textarea class="di" rows="2">A global Venture Studio building world-class SaaS platforms. 200 currencies · 107 languages · 195 countries.</textarea></div>
               </div>
               <div style="display:flex;gap:8px;margin-top:14px">
                 <button class="db2" style="flex:1;padding:10px" onclick="saveContent()">Save Changes ✦</button>
@@ -3504,7 +3632,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             <button class="db2" onclick="updatePrices()">Update Prices</button>
           </div>
           <div class="dcard"><div class="dct">Claude AI Translation</div>
-            <p style="color:var(--t3);font-size:.76rem;line-height:1.7;margin-bottom:12px">60 languages supported. AI translates UI in real-time using Claude Sonnet. Results cached for performance.</p>
+            <p style="color:var(--t3);font-size:.76rem;line-height:1.7;margin-bottom:12px">107 languages supported. AI translates UI in real-time using Claude Sonnet. Results cached for performance.</p>
             <div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Auto Translation</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div>
             <div class="twrap"><span style="font-size:.8rem;color:var(--t2)">Translation Cache</span><label class="tog"><input type="checkbox" checked/><span class="tsl"></span></label></div>
             <div style="margin-top:10px;padding:9px;background:rgba(201,168,76,.04);border-radius:7px;font-size:.74rem;color:var(--t2);font-family:'DM Mono',monospace">Built-in: <span style="color:var(--gold)">3</span> · AI-translated: <span style="color:var(--gold)" id="ai-cnt">0</span> · Total: 60</div>
@@ -3865,13 +3993,13 @@ var STATIC = {
     'blog.arlink':'AR','blog.read':'Read →','blog.allbtn1':'All Articles →','blog.allbtn2':'All Articles ← Financial Blog',
     'lc.title':'Language & Currency','lc.lang':'🌐 Language','lc.curr':'💰 Currency',
     'plats.eyebrow':'Our Platforms','plats.sub':'Every platform solves a real problem — financial, spiritual, educational, or operational — with professional tools built for the world.',
-    'mq.curr':'200 Currencies','mq.lang':'98 Languages','mq.countries':'195 Countries','mq.venture':'Global Venture Studio',
+    'mq.curr':'200 Currencies','mq.lang':'107 Languages','mq.countries':'195 Countries','mq.venture':'Global Venture Studio',
     'sb.nav':'Navigate','sb.home':'🏠 Home','sb.allplat':'🧩 All Platforms','sb.pricing':'💳 Pricing','sb.how':'⚡ How It Works','sb.faq':'❓ FAQ','sb.startfree':'🚀 Start Free',
     'sb.openplat':'Open Platform','sb.settings':'⚙️ Settings','sb.dark':'🌙 Dark Mode','sb.quickbuy':'💳 Quick Buy','sb.ltd':'🔥 Lifetime Deal — $399','sb.pro':'⭐ Pro All-Access — $69/mo',
     'afi.h1':'Arab Loan Index','afi.h2':'— March 2024','afi.note2':'* Estimated ranges based on general market research, not live data from specific institutions',
     'ltd.h':'Lifetime Deal — First 100 Only','ltd.p':'One payment. Pro All-Access to every current and future platform. Forever. No recurring fees, ever. This offer closes permanently after 100 accounts — no exceptions, no extensions.',
     'ltd.spots':' of 100 lifetime spots remaining','ltd.worth':'Worth $828/year','ltd.tags':'ONE-TIME · ALL PLATFORMS · FOREVER','ltd.btn':'Claim Lifetime Deal →',
-    'cta.h1':'Start Your Free Account','cta.h2':'Today','cta.sub':'Join professionals from 105+ countries using Axiom Zones. Free forever. No card required.',
+    'cta.h1':'Start Your Free Account','cta.h2':'Today','cta.sub':'Join professionals from 195+ countries using Axiom Zones. Free forever. No card required.',
     'cta.email':'your@email.com','cta.btn':'Start Free →','cta.note':'No spam · No credit card · Full free tier · Cancel anytime',
     'faq.title1':'Common','faq.title2':'Questions',
     'faq.q1':'Is Axiom Zones really free to start?','faq.a1':'Yes — permanently. Every platform has a free tier that never expires and requires no credit card. The free tiers are genuinely useful, not crippled demos. We believe in earning your subscription through demonstrated value, not trapping you with paywalls.',
@@ -3971,13 +4099,13 @@ var STATIC = {
     'blog.arlink':'عربي','blog.read':'اقرأ ←','blog.allbtn1':'كل المقالات →','blog.allbtn2':'كل المقالات ← المدونة المالية',
     'lc.title':'اللغة والعملة','lc.lang':'🌐 اللغة','lc.curr':'💰 العملة',
     'plats.eyebrow':'منصاتنا · Our Platforms','plats.sub':'كل منصة تحل مشكلة حقيقية — مالية أو روحانية أو تعليمية أو تشغيلية — بأدوات احترافية مبنية للعالم كله',
-    'mq.curr':'200 عملة','mq.lang':'98 لغة','mq.countries':'195 دولة','mq.venture':'استوديو مشاريع عالمي',
+    'mq.curr':'200 عملة','mq.lang':'107 لغة','mq.countries':'195 دولة','mq.venture':'استوديو مشاريع عالمي',
     'sb.nav':'التنقل','sb.home':'🏠 الرئيسية','sb.allplat':'🧩 كل المنصات','sb.pricing':'💳 الأسعار','sb.how':'⚡ كيف تعمل','sb.faq':'❓ الأسئلة الشائعة','sb.startfree':'🚀 ابدأ مجاناً',
     'sb.openplat':'افتح منصة','sb.settings':'⚙️ الإعدادات','sb.dark':'🌙 الوضع الليلي','sb.quickbuy':'💳 شراء سريع','sb.ltd':'🔥 صفقة العمر — $399','sb.pro':'⭐ وصول Pro كامل — $69/شهر',
     'afi.h1':'مؤشر القروض العربي','afi.h2':'— مارس 2024','afi.note2':'* نطاقات تقديرية بناءً على أبحاث السوق العامة، وليست بيانات حية من مؤسسات مالية محدَّدة',
     'ltd.h':'صفقة العمر — لأول 100 عميل فقط','ltd.p':'دفعة واحدة. وصول Pro كامل لكل منصة حالية ومستقبلية. للأبد. من غير رسوم متكررة أبداً. العرض ده بيقفل نهائياً بعد 100 حساب — من غير استثناءات، من غير تمديد.',
     'ltd.spots':' مكان من أصل 100 متبقي','ltd.worth':'بتساوي $828 سنوياً','ltd.tags':'دفعة واحدة · كل المنصات · للأبد','ltd.btn':'احصل على صفقة العمر ←',
-    'cta.h1':'ابدأ حسابك المجاني','cta.h2':'اليوم','cta.sub':'انضم لمحترفين من أكتر من 105 دولة بيستخدموا أكسيوم زونز. مجاني للأبد. من غير بطاقة ائتمان.',
+    'cta.h1':'ابدأ حسابك المجاني','cta.h2':'اليوم','cta.sub':'انضم لمحترفين من أكتر من 195 دولة بيستخدموا أكسيوم زونز. مجاني للأبد. من غير بطاقة ائتمان.',
     'cta.email':'بريدك@الإلكتروني.com','cta.btn':'ابدأ مجاناً ←','cta.note':'من غير سبام · من غير بطاقة ائتمان · باقة مجانية كاملة · ألغِ في أي وقت',
     'faq.title1':'الأسئلة','faq.title2':'الشائعة',
     'faq.q1':'هل أكسيوم زونز مجاني فعلاً للبدء؟','faq.a1':'أيوه — بشكل دائم. كل منصة فيها باقة مجانية مالهاش تاريخ انتهاء ومحتاجة بطاقة ائتمان. الباقات المجانية مفيدة فعلاً، مش نسخة تجريبية منقوصة. إحنا بنؤمن إننا نكسب اشتراكك من خلال قيمة حقيقية، مش من خلال حبسك في جدار دفع.',
@@ -4067,7 +4195,7 @@ var STATIC = {
     'blog.eyebrow':'Derniers articles','blog.h1':'En savoir plus.','blog.h2':'Payer moins.','blog.read':'Lire →','blog.sub':'Des articles financiers réels, sans flatter les banques — en arabe, anglais et français.','blog.t1':'La banque dit 6 %... la vérité est 11,2 %','blog.t2':'Mourabaha contre prêt classique — les chiffres','blog.t3':'Le seuil de rentabilité — la question que 67 % ignorent',
     'blog.tag1':'📊 Prêts','blog.tag2':'☪️ Islamique','blog.tag3':'💼 Entreprise','c.el':'E-mail','c.hql':'Siège','c.hqv':'Mondial — présent dans 195 pays','cat.all':'Tous','cat.biz':'💼 Affaires',
     'cat.edu':'📚 Éducatif','cat.fin':'💰 Financier','cat.isl':'☪️ Islamique','cat.live':'● En direct','cta.btn':'Commencer gratuitement →','cta.email':'votre@email.com','cta.h1':'Créez votre compte gratuit','cta.h2':'Aujourd\'hui',
-    'cta.note':'Sans spam · Sans carte de crédit · Palier gratuit complet · Annulation à tout moment','cta.sub':'Rejoignez des professionnels de plus de 105 pays qui utilisent Axiom Zones. Gratuit pour toujours. Sans carte bancaire.','f.msg':'Message','f.n':'Nom','f.send':'Envoyer le message ✦','f.sub':'Sujet','f.sub1':'Demande de devis','f.sub2':'Partenariat stratégique',
+    'cta.note':'Sans spam · Sans carte de crédit · Palier gratuit complet · Annulation à tout moment','cta.sub':'Rejoignez des professionnels de plus de 195 pays qui utilisent Axiom Zones. Gratuit pour toujours. Sans carte bancaire.','f.msg':'Message','f.n':'Nom','f.send':'Envoyer le message ✦','f.sub':'Sujet','f.sub1':'Demande de devis','f.sub2':'Partenariat stratégique',
     'f.sub3':'Question technique','f.sub4':'Offre caritative','faq.a1':'Oui — définitivement. Chaque plateforme dispose d\'un palier gratuit sans expiration et sans carte bancaire. Ces paliers gratuits sont réellement utiles, pas de simples démos limitées. Nous préférons mériter votre abonnement par la valeur démontrée plutôt que de vous enfermer derrière un mur de paiement.','faq.a2':'Oui. Créez un seul compte Axiom Zones et il vous donne accès à toutes les plateformes auxquelles vous êtes abonné — sur le web, iOS, Android, Windows et macOS. Vos abonnements vous suivent sur tous vos appareils sans effort.','faq.a3':'Nous appliquons une remise de 50 % pour les utilisateurs d\'Égypte, du Maroc, de Jordanie, de Tunisie, d\'Algérie, de Libye, d\'Irak, de Syrie, du Yémen, du Soudan et du Liban. Cela est détecté automatiquement selon votre IP et la devise choisie. L\'objectif est l\'accessibilité — le monde arabe mérite des outils professionnels à des prix locaux justes.','faq.a4':'Non. Tous les calculs s\'exécutent dans votre navigateur. Aucun chiffre n\'est envoyé à nos serveurs. Lorsque vous partagez un lien, les données sont encodées dans l\'URL elle-même — nous ne les voyons jamais. Les données de votre compte (e-mail, statut d\'abonnement) sont stockées avec un chiffrement complet via Supabase.','faq.a5':'L\'offre à vie (399 $, paiement unique) donne un accès Pro complet à toutes les plateformes actuelles et futures, pour toujours. Elle se ferme définitivement après 100 comptes — non par tactique marketing, mais parce que nous ne pouvons soutenir durablement qu\'un nombre limité de comptes à vie. Une fois épuisée, elle disparaît pour de bon.','faq.a6':'Oui. Annulez depuis votre tableau de bord en un clic, sans aucune question. Vous gardez l\'accès jusqu\'à la fin de votre période de facturation, puis vous repassez automatiquement au palier gratuit. Aucun frais caché, aucun e-mail de rétention, aucune manipulation.',
     'faq.a7':'Toutes les plateformes sont déjà prêtes en PWA — installez-les depuis votre navigateur sur n\'importe quel appareil, elles fonctionnent comme des applications natives avec support hors ligne. Des applications dédiées App Store et Play Store sont en développement, prévues pour le T2 2025.','faq.a8':'Oui. Garantie de remboursement de 14 jours sur tous les plans payants, sans aucune question. Si Axiom Zones ne vous apporte pas de valeur claire durant vos deux premières semaines, contactez-nous et nous vous remboursons immédiatement. L\'offre à vie bénéficie aussi d\'une fenêtre de remboursement de 14 jours.','faq.q1':'Axiom Zones est-il vraiment gratuit pour commencer ?','faq.q2':'Un seul compte fonctionne-t-il sur toutes les plateformes ?','faq.q3':'Comment fonctionne la tarification pour le monde arabe ?','faq.q4':'Mes données financières sont-elles stockées ou partagées ?','faq.q5':'Qu\'est-ce que l\'offre à vie — va-t-elle vraiment se fermer ?','faq.q6':'Puis-je annuler mon abonnement à tout moment ?',
     'faq.q7':'Quand les applications mobiles seront-elles lancées ?','faq.q8':'Proposez-vous des remboursements ?','faq.title1':'Questions','faq.title2':'fréquentes','ft.about':'À propos de nous','ft.brand':'Studio de création mondial — nous construisons des plateformes technologiques de classe mondiale qui créent un impact réel dans des secteurs essentiels, pour chaque marché sur terre.','ft.c2':'Entreprise','ft.c3':'Mentions légales',
@@ -4084,7 +4212,7 @@ var STATIC = {
     'pf.3.1':'Illimité — toutes les plateformes','pf.3.2':'Gestionnaire de compte dédié','pf.3.3':'SLA garanti à 99,9 %','pf.3.4':'Formation d\'équipe','pf.3.5':'Fonctionnalités personnalisées','pf.4.1':'Toutes les fonctionnalités Entreprise','pf.4.2':'Remise automatique de 90 %','pf.4.3':'Support prioritaire',
     'pf.4.4':'Certificat de partenaire social','pf.4.5':'Rapports d\'impact','pl.chp':'/ mois (90 % de remise)','pl.cht':'Pour ONG et associations — 90 % de remise','pl.enp':'/ mois, toutes les plateformes','pl.ent':'Toutes les plateformes avec support VIP','pl.frp':'/ 14 jours gratuits','pl.frt':'14 jours complets — sans risque',
     'pl.prp':'/ mois','pl.prt':'Pour les entrepreneurs professionnels','plats.eyebrow':'Nos plateformes','plats.sub':'Chaque plateforme résout un vrai problème — financier, spirituel, éducatif ou opérationnel — avec des outils professionnels conçus pour le monde entier.','plt.buy':'Acheter maintenant','plt.open':'Ouvrir la plateforme →','plt.plans':'Forfaits disponibles','pr.note':'* Prix hors TVA · Annulation à tout moment · Les 200 devises sont prises en charge',
-    'mq.curr':'200 devises','mq.lang':'98 langues','mq.countries':'195 pays','mq.venture':'Studio de création mondial',
+    'mq.curr':'200 devises','mq.lang':'107 langues','mq.countries':'195 pays','mq.venture':'Studio de création mondial',
     'pwa.btn':'Installer','pwa.sub':'Fonctionne hors ligne','pwa.title':'Ajouter à l\'écran d\'accueil','quiz.ofword':'sur','quiz.qword':'Question','quiz.retry':'Réessayer','quiz.share':'Partager mon score','quiz.sub':'10 questions · 60 secondes · découvrez comment vous vous comparez à 94 % des gens',
     'quiz.trykashf':'Essayer Kashf gratuitement →','s.ah':'Construire l\'avenir\\nnumérique mondial','s.ap':'Axiom Zones est un studio de création mondial spécialisé dans les plateformes SaaS de classe mondiale. Nous construisons, lançons et développons — avec une méthodologie éprouvée et une équipe experte.','s.atag':'À propos de nous','s.ch':'Construisons\\nensemble','s.cp':'Notre équipe mondiale est prête à répondre à vos questions et à lancer des partenariats stratégiques durables.','s.ctag':'Contact','s.prh':'Investissez dans\\nvotre avenir',
     's.prtag':'Tarifs','sb.allplat':'🧩 Toutes les plateformes','sb.dark':'🌙 Mode sombre','sb.faq':'❓ FAQ','sb.home':'🏠 Accueil','sb.how':'⚡ Comment ça marche','sb.ltd':'🔥 Offre à vie — 399 $','sb.nav':'Navigation',
@@ -6954,11 +7082,28 @@ var AZ_PLATFORMS_DATA = {
    التحكم (عبر KV) ويدمجها مع القيم الافتراضية بالكود.
    لو تعذّر الوصول للسيرفر، تعمل القيم الافتراضية بأمان كما هي.
 ══════════════════════════════════════════════════════ */
-/* ══ استعادة اللغة المحفوظة من زيارة سابقة ══ */
+/* ══ كشف تلقائي للغة المستخدم من متصفحه/جهازه (ديسكتوب، موبايل، أو PWA) — على نفس نمط azAutoDetectCurr ══
+   يعمل فقط لو الزائر جديد كلياً (مفيش لغة محفوظة له من قبل) — عشان مايتخطاش اختيار المستخدم اليدوي أبداً */
+var AZ_SUPPORTED_LANGS = ['ar','fa','ur','he','ku','tr','en','fr','es','pt','de','it','nl','sv','no','da','fi','is','ca','eu','gl','cy','ga','ru','uk','pl','cs','sk','hu','ro','bg','sr','hr','sl','lt','lv','et','el','sq','mk','bs','ka','hy','az','kk','uz','be','zh','zh-tw','ja','ko','hi','bn','ta','te','mr','gu','pa','ne','si','th','vi','id','ms','tl','my','km','lo','mn','sw','am','yo','ig','ha','zu','af','so','pt-br','qu','gn','sd','ps','dv','rw','sn','st','xh','ny','mg','ay','haw','sm','mi','fj'];
+function azAutoDetectLang(){
+  try{
+    var prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || navigator.userLanguage || 'en'];
+    for(var i=0;i<prefs.length;i++){
+      var raw = (prefs[i]||'').toLowerCase();
+      if(AZ_SUPPORTED_LANGS.indexOf(raw) !== -1){ handleLang(raw); return; }
+      var base = raw.split('-')[0];
+      if(AZ_SUPPORTED_LANGS.indexOf(base) !== -1){ handleLang(base); return; }
+    }
+    /* لا يوجد تطابق — تبقى الإنجليزية الافتراضية كما هي */
+  }catch(e){}
+}
+
+/* ══ استعادة اللغة المحفوظة من زيارة سابقة، أو الكشف التلقائي لأول زيارة ══ */
 (function azRestoreLang(){
   try{
     var saved = localStorage.getItem('az_lang');
     if(saved && saved !== 'en'){ handleLang(saved); }
+    else if(!saved){ azAutoDetectLang(); }
   }catch(e){}
 })();
 
@@ -7160,6 +7305,7 @@ function azRenderFooterPlatforms(){
       var liveEl2 = document.getElementById('stat-live-plats');
       if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
       if(typeof updatePlatformCount === 'function') updatePlatformCount();
+      azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
       azRenderMarquee();
 
       azRenderFooterPlatforms();
