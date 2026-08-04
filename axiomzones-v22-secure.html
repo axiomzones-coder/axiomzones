@@ -1447,7 +1447,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 /* EXPANDABLE PLATFORM CARDS */
 .v5-plt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px;margin-top:36px}
 @media(max-width:760px){.v5-plt-grid{grid-template-columns:1fr}}
-.v5-pcard{background:var(--ink,#0a0d1a);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative}
+.v5-pcard{background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative}
 .v5-pcard:hover{border-color:rgba(255,255,255,.14);box-shadow:0 20px 60px rgba(0,0,0,.4);transform:translateY(-4px)}
 .v5-pcard-top{padding:22px 22px 0;cursor:pointer}
 .v5-pcard-accent{height:3px;background:var(--v5pc,#c9a84c);transition:height .3s}
@@ -1554,7 +1554,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 /* ISLAMIC FINANCE SECTION */
 .v5-islamic-sec{padding:80px 0;background:rgba(34,197,94,.02);border-top:1px solid rgba(255,255,255,.05)}
 .v5-islamic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:28px}
-.v5-islamic-card{background:var(--ink,#0a0d1a);border:1px solid rgba(34,197,94,.12);border-radius:12px;padding:20px;transition:all .3s}
+.v5-islamic-card{background:var(--bg-card);border:1px solid rgba(34,197,94,.12);border-radius:12px;padding:20px;transition:all .3s}
 .v5-islamic-card:hover{border-color:rgba(34,197,94,.25);transform:translateY(-3px)}
 .v5-islamic-card-icon{font-size:1.8rem;margin-bottom:10px}
 .v5-islamic-card-title{font-family:'Cormorant',Georgia,serif;font-size:1.1rem;font-weight:700;color:#22c55e;margin-bottom:6px}
@@ -1562,7 +1562,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 /* FINANCIAL IQ QUIZ */
 .v5-quiz-sec{padding:80px 0;border-top:1px solid rgba(255,255,255,.05)}
-.v5-quiz-box{max-width:680px;margin:0 auto;background:var(--ink,#0a0d1a);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:28px;position:relative;overflow:hidden}
+.v5-quiz-box{max-width:680px;margin:0 auto;background:var(--bg-card);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:28px;position:relative;overflow:hidden}
 .v5-quiz-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c86a)}
 .v5-quiz-q{font-family:'Cormorant',Georgia,serif;font-size:1.3rem;font-weight:700;margin-bottom:18px;min-height:60px}
 .v5-quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
@@ -1587,7 +1587,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
 @media(max-width:800px){.v5-blog-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:500px){.v5-blog-grid{grid-template-columns:1fr}}
-.v5-blog-card{background:var(--ink,#0a0d1a);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.v5-blog-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
 .v5-blog-card:hover{border-color:rgba(201,168,76,.2);transform:translateY(-3px)}
 .v5-blog-cat{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px}
 .v5-blog-title{font-family:'Cormorant',Georgia,serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;line-height:1.3}
@@ -1600,7 +1600,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 /* ARAB FINANCIAL INDEX */
 .v5-afi-sec{padding:60px 0;background:rgba(201,168,76,.02);border-top:1px solid rgba(255,255,255,.05)}
 .v5-afi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:20px}
-.v5-afi-country{background:var(--ink,#0a0d1a);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;text-align:center}
+.v5-afi-country{background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;text-align:center}
 .v5-afi-flag{font-size:1.6rem;margin-bottom:6px}
 .v5-afi-name{font-size:.72rem;color:var(--t2);margin-bottom:6px}
 .v5-afi-rate{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700}
@@ -1628,7 +1628,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
 
 /* ── CATEGORY CARDS ── */
-.cat-section{margin-bottom:18px;border-radius:20px;overflow:hidden;border:1.5px solid rgba(255,255,255,.07);background:linear-gradient(145deg,#0a0d1a,#07070f);transition:all .3s}
+.cat-section{margin-bottom:18px;border-radius:20px;overflow:hidden;border:1.5px solid var(--border);background:var(--bg-card);transition:all .3s}
 .cat-section:hover{border-color:rgba(255,255,255,.12)}
 .cat-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;position:relative;overflow:hidden;transition:background .25s}
 .cat-header:hover{background:rgba(255,255,255,.02)}
