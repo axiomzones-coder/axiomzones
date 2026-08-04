@@ -4146,6 +4146,7 @@ function applyT(lang, T){
   document.body.classList.toggle('ltr', !isRTL);
   azUpdatePronunciation(lang);
   azRenderMarquee();
+  if(document.getElementById('quiz-question') && typeof v5ShowQuizQuestion==='function' && typeof quizCurrent!=='undefined' && quizCurrent < (getQuizData().length)) v5ShowQuizQuestion();
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k = el.dataset.i18n, v = T[k];
     if(v !== undefined) el.textContent = v;
