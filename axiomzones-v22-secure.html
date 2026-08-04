@@ -2581,18 +2581,19 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-1px"><span data-i18n="afi.h1">مؤشر القروض العربي</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="afi.h2">— مارس 2024</em></h2>
         <p style="font-size:.82rem;color:var(--t2);margin-top:6px" data-i18n="afi.sub">متوسط فائدة القروض الشخصية في المنطقة العربية — محدّث شهرياً</p>
         <p style="font-size:.68rem;color:var(--t3);margin-top:4px" data-i18n="afi.note2">* نطاقات تقديرية بناءً على أبحاث السوق العامة، وليست بيانات حية من مؤسسات مالية محدَّدة</p>
+        <p style="font-size:.66rem;color:#22c55e;margin-top:3px" id="afi-updated-text"></p>
       </div>
       <button onclick="v5GoTo('getstarted')" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap" data-i18n="afi.subscribe">اشترك في التقرير الشهري →</button>
     </div>
     <div class="v5-afi-grid">
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇸🇦</div><div class="v5-afi-name">السعودية</div><div class="v5-afi-rate" style="color:#22c55e">6-8%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇦🇪</div><div class="v5-afi-name">الإمارات</div><div class="v5-afi-rate" style="color:#22c55e">7-9%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇰🇼</div><div class="v5-afi-name">الكويت</div><div class="v5-afi-rate" style="color:#22c55e">5-7%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇶🇦</div><div class="v5-afi-name">قطر</div><div class="v5-afi-rate" style="color:#22c55e">6-8%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇪🇬</div><div class="v5-afi-name">مصر</div><div class="v5-afi-rate" style="color:#ef4444">22-28%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇲🇦</div><div class="v5-afi-name">المغرب</div><div class="v5-afi-rate" style="color:#f97316">10-14%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇯🇴</div><div class="v5-afi-name">الأردن</div><div class="v5-afi-rate" style="color:#f97316">11-15%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
-      <div class="v5-afi-country"><div class="v5-afi-flag">🇹🇳</div><div class="v5-afi-name">تونس</div><div class="v5-afi-rate" style="color:#f97316">12-18%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇸🇦</div><div class="v5-afi-name">السعودية</div><div class="v5-afi-rate" style="color:#22c55e" id="afi-rate-SA">6-8%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇦🇪</div><div class="v5-afi-name">الإمارات</div><div class="v5-afi-rate" style="color:#22c55e" id="afi-rate-AE">7-9%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇰🇼</div><div class="v5-afi-name">الكويت</div><div class="v5-afi-rate" style="color:#22c55e" id="afi-rate-KW">5-7%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇶🇦</div><div class="v5-afi-name">قطر</div><div class="v5-afi-rate" style="color:#22c55e" id="afi-rate-QA">6-8%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇪🇬</div><div class="v5-afi-name">مصر</div><div class="v5-afi-rate" style="color:#ef4444" id="afi-rate-EG">22-28%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇲🇦</div><div class="v5-afi-name">المغرب</div><div class="v5-afi-rate" style="color:#f97316" id="afi-rate-MA">10-14%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇯🇴</div><div class="v5-afi-name">الأردن</div><div class="v5-afi-rate" style="color:#f97316" id="afi-rate-JO">11-15%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
+      <div class="v5-afi-country"><div class="v5-afi-flag">🇹🇳</div><div class="v5-afi-name">تونس</div><div class="v5-afi-rate" style="color:#f97316" id="afi-rate-TN">12-18%</div><div class="v5-afi-label" data-i18n="afi.personal">شخصي</div></div>
     </div>
     <div style="margin-top:14px;padding:14px 16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-size:.8rem;color:var(--t2);line-height:1.8">
       📊 <strong style="color:#c9a84c" data-i18n="afi.notelabel">ملاحظة محللينا:</strong> <span data-i18n="afi.notetext">الفائدة المُعلنة من البنوك عادةً أقل من الـ IRR الحقيقي بفارق 3-5%. استخدم Prism أو Kashf للحصول على الرقم الحقيقي لقرضك.</span>
@@ -3433,11 +3434,36 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec" id="ds-settings">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Settings <span style="color:var(--gold)">✦</span></h2>
 
+        <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(34,197,94,.3)">
+          <div class="dct" style="color:#22c55e">📊 Arab Loan Index Rates</div>
+          <p style="font-size:.76rem;color:var(--t2);margin-bottom:14px">حدّث النسب هنا شهرياً من بحثك الفعلي — تظهر فوراً في الموقع لكل الزوار من غير ما تحتاج ترجع لي.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+            <div><label class="fl">🇸🇦 السعودية</label><input class="di" id="afi-in-SA" placeholder="6-8%"/></div>
+            <div><label class="fl">🇦🇪 الإمارات</label><input class="di" id="afi-in-AE" placeholder="7-9%"/></div>
+            <div><label class="fl">🇰🇼 الكويت</label><input class="di" id="afi-in-KW" placeholder="5-7%"/></div>
+            <div><label class="fl">🇶🇦 قطر</label><input class="di" id="afi-in-QA" placeholder="6-8%"/></div>
+            <div><label class="fl">🇪🇬 مصر</label><input class="di" id="afi-in-EG" placeholder="22-28%"/></div>
+            <div><label class="fl">🇲🇦 المغرب</label><input class="di" id="afi-in-MA" placeholder="10-14%"/></div>
+            <div><label class="fl">🇯🇴 الأردن</label><input class="di" id="afi-in-JO" placeholder="11-15%"/></div>
+            <div><label class="fl">🇹🇳 تونس</label><input class="di" id="afi-in-TN" placeholder="12-18%"/></div>
+          </div>
+          <button class="db2" onclick="azSaveAfiRates()">Save Rates</button>
+          <div id="afi-save-msg" style="margin-top:8px;font-size:.76rem"></div>
+        </div>
+
         <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(96,165,250,.3)">
           <div class="dct" style="color:#60a5fa">💾 Backup & Export</div>
           <p style="font-size:.76rem;color:var(--t2);margin-bottom:14px">صدّر نسخة احتياطية كاملة من كل بيانات المنصة (المستخدمين، المديرين، الإعدادات، المنصات المخصصة) كملف JSON تقدر تحفظه بنفسك. كلمات المرور المشفَّرة لا تُصدَّر أبداً لحمايتك حتى لو الملف اتسرّب.</p>
           <button class="db2" onclick="azExportBackup()">⬇️ Export All Data</button>
           <div id="export-msg" style="margin-top:8px;font-size:.78rem"></div>
+        </div>
+
+        <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(96,165,250,.3)">
+          <div class="dct" style="color:#60a5fa">🌍 Arab Loan Index — Data Source</div>
+          <p style="font-size:.76rem;color:var(--t2);margin-bottom:14px">لكل دولة، اختار "يدوي" (تكتب النطاق بنفسك) أو "مرجع خارجي" (يسحب معدل حقيقي من البنك الدولي — معدل إقراض عام، مش قرض شخصي بالتحديد، وقد لا يكون متوفراً لكل الدول).</p>
+          <div id="afi-source-rows" style="display:flex;flex-direction:column;gap:10px"></div>
+          <button class="db2" style="margin-top:12px" onclick="azSaveAfiSources()">Save Data Sources</button>
+          <div id="afi-source-msg" style="margin-top:8px;font-size:.76rem"></div>
         </div>
 
         <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(245,158,11,.3)">
@@ -4613,6 +4639,150 @@ function azApplyCompanyInfo(ci){
   }
 }
 
+/* ── معدلات مؤشر القروض العربي — قابلة للتعديل من الداشبورد، تظهر فوراً في الموقع ── */
+var AFI_COUNTRIES = ['SA','AE','KW','QA','EG','MA','JO','TN'];
+
+async function azSaveAfiRates(){
+  var msg = document.getElementById('afi-save-msg');
+  var rates = {};
+  AFI_COUNTRIES.forEach(function(c){
+    var val = document.getElementById('afi-in-'+c).value.trim();
+    if(val) rates[c] = val;
+  });
+  msg.style.color='var(--t3)'; msg.textContent='Saving...';
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.afiRates = Object.assign({}, config.afiRates, rates);
+    config.afiUpdatedAt = new Date().toISOString();
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color='#4ade80'; msg.textContent='تم حفظ المعدلات بنجاح ✦ — ستظهر فوراً في الموقع';
+      azApplyAfiRates(config.afiRates);
+    } else {
+      msg.style.color='#f87171'; msg.textContent='فشل الحفظ — حاول تاني';
+    }
+  }catch(e){ msg.style.color='#f87171'; msg.textContent='خطأ في الاتصال بالسيرفر'; }
+}
+
+async function azLoadAfiRates(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var rates = (data && data.config && data.config.afiRates) || {};
+    AFI_COUNTRIES.forEach(function(c){
+      var el = document.getElementById('afi-in-'+c);
+      if(el && rates[c]) el.value = rates[c];
+    });
+  }catch(e){}
+}
+
+/* تطبيق المعدلات المحفوظة على بطاقات الدول في الموقع الرئيسي */
+function azApplyAfiRates(rates){
+  if(!rates) return;
+  Object.keys(rates).forEach(function(c){
+    var el = document.getElementById('afi-rate-'+c);
+    if(el) el.textContent = rates[c];
+  });
+}
+function azShowAfiUpdatedDate(iso){
+  var el = document.getElementById('afi-updated-text');
+  if(!el || !iso) return;
+  var d = new Date(iso);
+  el.textContent = '✓ ' + d.toLocaleDateString();
+}
+
+/* ── إدارة مصدر بيانات مؤشر القروض العربي (يدوي / مرجع خارجي من البنك الدولي) ── */
+var AFI_COUNTRIES = [
+  {code:'SA', name:'السعودية', default:'6-8%'}, {code:'AE', name:'الإمارات', default:'7-9%'},
+  {code:'KW', name:'الكويت', default:'5-7%'}, {code:'QA', name:'قطر', default:'6-8%'},
+  {code:'EG', name:'مصر', default:'22-28%'}, {code:'MA', name:'المغرب', default:'10-14%'},
+  {code:'JO', name:'الأردن', default:'11-15%'}, {code:'TN', name:'تونس', default:'12-18%'},
+];
+
+async function azLoadAfiSources(){
+  var box = document.getElementById('afi-source-rows');
+  if(!box) return;
+  var saved = {};
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    saved = (data && data.config && data.config.afiRates) || {};
+  }catch(e){}
+
+  box.innerHTML = AFI_COUNTRIES.map(function(c){
+    var s = saved[c.code] || { mode:'manual', value:c.default };
+    var manualDisplay = s.mode === 'manual' ? 'block' : 'none';
+    return '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px;border:1px solid var(--border);border-radius:8px">'+
+      '<span style="min-width:80px;font-weight:600">'+c.name+' ('+c.code+')</span>'+
+      '<select class="di" style="margin-bottom:0;width:150px" id="afi-mode-'+c.code+'" onchange="document.getElementById(\'afi-val-'+c.code+'\').style.display=this.value===\'manual\'?\'block\':\'none\'">'+
+        '<option value="manual"'+(s.mode==='manual'?' selected':'')+'>📝 يدوي</option>'+
+        '<option value="auto"'+(s.mode==='auto'?' selected':'')+'>🌐 مرجع خارجي (البنك الدولي)</option>'+
+      '</select>'+
+      '<input class="di" style="margin-bottom:0;width:120px;display:'+manualDisplay+'" id="afi-val-'+c.code+'" value="'+(s.value||c.default)+'" placeholder="10-14%"/>'+
+    '</div>';
+  }).join('');
+}
+
+async function azSaveAfiSources(){
+  var msg = document.getElementById('afi-source-msg');
+  var afiRates = {};
+  AFI_COUNTRIES.forEach(function(c){
+    var mode = document.getElementById('afi-mode-'+c.code).value;
+    var value = document.getElementById('afi-val-'+c.code).value.trim();
+    afiRates[c.code] = { mode: mode, value: value || c.default };
+  });
+  msg.style.color='var(--t3)'; msg.textContent='Saving...';
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.afiRates = afiRates;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color='#4ade80'; msg.textContent='تم الحفظ بنجاح ✦';
+    } else {
+      msg.style.color='#f87171'; msg.textContent='فشل الحفظ — حاول تاني';
+    }
+  }catch(e){ msg.style.color='#f87171'; msg.textContent='خطأ في الاتصال بالسيرفر'; }
+}
+
+/* تطبيق مصادر بيانات مؤشر القروض على الموقع العام — يدوي مباشر، أو جلب حقيقي من البنك الدولي */
+async function azApplyAfiRates(afiRates){
+  if(!afiRates) return;
+  for(var code in afiRates){
+    var s = afiRates[code];
+    var el = document.getElementById('afi-rate-' + code);
+    if(!el) continue;
+    if(s.mode === 'manual'){
+      el.textContent = s.value;
+      continue;
+    }
+    // مرجع خارجي — نجيب رقم حقيقي من البنك الدولي، ونرجع للقيمة اليدوية المحفوظة لو غير متوفر
+    try{
+      var res = await fetch('/api/wb-rate?country=' + code);
+      var data = await res.json();
+      if(data && data.ok && data.available){
+        el.textContent = data.rate.toFixed(1) + '%';
+        el.title = 'World Bank general lending rate (' + data.year + ') — not personal-loan-specific';
+      } else {
+        el.textContent = s.value; // غير متوفر من البنك الدولي — نرجع للقيمة اليدوية بصدق
+      }
+    }catch(e){ el.textContent = s.value; }
+  }
+}
+
 /* ── وضع الصيانة العام للموقع ── */
 async function azLoadMaintenanceSettings(){
   try{
@@ -4955,7 +5125,7 @@ function swD(sec,el){
   if(sec === 'platforms') azLoadPlatformToggles();
   if(sec === 'subs') azLoadRealSubscribers();
   if(sec === 'logs') azLoadSystemLogs();
-  if(sec === 'settings'){ azLoadMaintenanceSettings(); azLoadCompanyInfo(); }
+  if(sec === 'settings'){ azLoadMaintenanceSettings(); azLoadCompanyInfo(); azLoadAfiSources(); }
 }
 async function toggleP(key, el){
   var checked = el.checked;
@@ -6909,6 +7079,11 @@ function azRenderFooterPlatforms(){
 
       /* ══ تطبيق بيانات التواصل الحقيقية (اسم الشركة، الدومين، الإيميل) على الصفحة العامة ══ */
       if (data.config.companyInfo) azApplyCompanyInfo(data.config.companyInfo);
+      if (data.config.afiRates) azApplyAfiRates(data.config.afiRates);
+
+      /* ══ تطبيق معدلات مؤشر القروض العربي المحدَّثة يدوياً من الداشبورد ══ */
+      if (data.config.afiRates) azApplyAfiRates(data.config.afiRates);
+      if (data.config.afiUpdatedAt) azShowAfiUpdatedDate(data.config.afiUpdatedAt);
 
       if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
       var overrides = data.config.platforms || {};
