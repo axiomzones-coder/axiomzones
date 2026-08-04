@@ -10,7 +10,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 # Content Security Policy - allows fonts, CDN scripts, Anthropic API, Paddle, Google Analytics
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.paddle.com https://checkout.paddle.com https://js.paddle.com https://fonts.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://checkout.paddle.com https://api.paddle.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com; frame-src https://checkout.paddle.com https://buy.paddle.com; object-src 'none'; base-uri 'self'; form-action 'self';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.paddle.com https://checkout.paddle.com https://js.paddle.com https://fonts.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.anthropic.com https://checkout.paddle.com https://api.paddle.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://cloudflareinsights.com https://static.cloudflareinsights.com; frame-src 'self' https://checkout.paddle.com;
 
 # HTML pages
 /*.html
