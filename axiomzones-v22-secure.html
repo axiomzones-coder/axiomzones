@@ -2432,7 +2432,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <div class="h-vis" aria-hidden="true">
       <div class="h-orb">
         <div class="h-met lft">
-          <div class="mchip uni-chip"><div class="mv" data-count="128">0</div><div class="ml" data-i18n="m.subs">Clients</div></div>
+          <div class="mchip uni-chip"><div class="mv" id="hero-clients-v" data-count="128">0</div><div class="ml" data-i18n="m.subs">Clients</div></div>
           <div class="mchip logi-chip"><div class="mv">94%</div><div class="ml" data-i18n="m.ret">Retention</div></div>
         </div>
         <div class="orb-c">
@@ -7169,8 +7169,10 @@ async function azUserLogout(){
       if(!data || !data.ok) return;
       var plEl = document.getElementById('ab-plats-v');
       var clEl = document.getElementById('ab-clients-v');
+      var heroClEl = document.getElementById('hero-clients-v');
       if(plEl) plEl.textContent = data.totalPlatforms;
       if(clEl) clEl.textContent = data.totalUsers;
+      if(heroClEl){ heroClEl.setAttribute('data-count', data.totalUsers); heroClEl.textContent = data.totalUsers; }
     })
     .catch(function(){ /* تبقى القيم الافتراضية كما هي عند فشل الاتصال */ });
 })();
