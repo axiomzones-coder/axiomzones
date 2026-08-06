@@ -414,6 +414,7 @@ function setLang(l){
   if(typeof calcAll === "function") calcAll();
   /* إعادة تطبيق الأرقام الحقيقية على شريط الإعلان بعد استبدال النصوص بالترجمة الجديدة */
   if(AZ_LAST_ANNOUNCE_COUNTS) azUpdateAnnounceCounts(AZ_LAST_ANNOUNCE_COUNTS.live, AZ_LAST_ANNOUNCE_COUNTS.coming);
+  azApplyLiveContent();
 }
 
 </script>
@@ -2444,14 +2445,14 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
   <div class="h-grid">
     <div>
-      <p class="h-eyebrow" data-i18n="h.eye">✦ World's Premier Digital Venture Studio</p>
+      <p class="h-eyebrow" id="ce-live-eyebrow" data-i18n="h.eye">✦ World's Premier Digital Venture Studio</p>
       <h1 class="h-title">
         <span class="hw"><span class="hwi">AXIOM</span></span>
         <br/>
         <span class="hw"><span class="hwi gold-w">ZONES</span></span>
       </h1>
       <div id="az-pronounce" style="font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:500;letter-spacing:.5px;color:rgba(201,168,76,.78);margin-top:-14px;margin-bottom:26px;opacity:0;animation:fup .8s var(--ease-imp) 2.4s forwards"></div>
-      <p class="h-desc" data-i18n="h.desc">A global ecosystem of advanced technology platforms — built for everyone, everywhere: individuals, businesses, institutions, and governments alike. Supply chains, real estate, talent, finance, and beyond. Imperial scale. Infinite ambition.</p>
+      <p class="h-desc" id="ce-live-desc" data-i18n="h.desc">A global ecosystem of advanced technology platforms — built for everyone, everywhere: individuals, businesses, institutions, and governments alike. Supply chains, real estate, talent, finance, and beyond. Imperial scale. Infinite ambition.</p>
 
       <div id="az-search-wrap" class="az-search-wrap">
         <div class="az-search-box">
@@ -2471,8 +2472,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       </div>
 
       <div class="h-ctas" style="margin-top:28px">
-        <button class="btn-cta" onclick="azV4GoTo('projects')" data-i18n="h.cta1">🚀 Explore Platforms</button>
-        <button class="btn-cta-s" onclick="azV4GoTo('pricing')" data-i18n="h.cta2">View Pricing ↓</button>
+        <button class="btn-cta" id="ce-live-cta1" onclick="azV4GoTo('projects')" data-i18n="h.cta1">🚀 Explore Platforms</button>
+        <button class="btn-cta-s" id="ce-live-cta2" onclick="azV4GoTo('pricing')" data-i18n="h.cta2">View Pricing ↓</button>
       </div>
     </div>
     <div class="h-vis" aria-hidden="true">
@@ -3247,6 +3248,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="notifications" onclick="swD('notifications',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('notifications',this);}"><span>🔔</span><span>Notifications</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
+      <div class="dmi" data-sec="promos" onclick="swD('promos',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('promos',this);}"><span>🎉</span><span>Promotions</span></div>
       <div class="dmi" data-sec="settings" onclick="swD('settings',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('settings',this);}"><span>⚙️</span><span>Settings</span></div>
       <div class="dmi" data-sec="admins" onclick="swD('admins',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('admins',this);}"><span>🛡️</span><span>Admins</span></div>
     </nav>
@@ -3332,13 +3334,31 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
               <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">📟 Tablet</span><span style="color:var(--gold);font-size:.78rem;font-family:'DM Mono',monospace">8%</span></div><div class="pbsm"><div class="pfsm" style="width:8%"></div></div></div>
             </div>
           </div>
+          <div class="dcard">
+            <div class="dct">Plan Distribution <span style="font-size:.65rem;color:var(--t3);font-weight:400">(حقيقي — من المشتركين الفعليين)</span></div>
+            <div id="plan-dist-chart" style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:.78rem;color:var(--t3)">جاري التحميل...</div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- SUBSCRIBERS -->
       <div class="dsec" id="ds-subs">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
           <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300">Subscribers <span style="color:var(--gold)">✦</span></h2>
-          <div style="display:flex;gap:7px"><input class="di" style="width:190px;margin-bottom:0" placeholder="🔍 Search..." type="text"/><button class="db2">+ New</button></div>
+          <div style="display:flex;gap:7px"><input id="subs-search-input" class="di" style="width:190px;margin-bottom:0" placeholder="🔍 Search..." type="text" oninput="azFilterSubscribers(this.value)"/><button class="db2" onclick="azOpenAddSubModal()">+ New</button></div>
+        </div>
+        <div id="add-sub-modal" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+            <input id="new-sub-name" class="di" placeholder="Name" style="margin-bottom:0"/>
+            <input id="new-sub-email" class="di" type="email" placeholder="Email" style="margin-bottom:0"/>
+            <select id="new-sub-plan" class="di" style="margin-bottom:0"><option value="enterprise">Enterprise</option><option value="pro">Professional</option><option value="free">Free Trial</option><option value="charity">Impact</option></select>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="bsub" style="flex:1;padding:8px" onclick="azAddManualSubscriber()">💾 إضافة مشترك</button>
+            <button class="db2" style="padding:8px 16px;background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)" onclick="document.getElementById('add-sub-modal').style.display='none'">إلغاء</button>
+          </div>
+          <div id="new-sub-msg" style="margin-top:8px;font-size:.78rem"></div>
         </div>
         <div class="dcard"><table class="dtbl"><thead><tr><th>#</th><th>Name</th><th>Plan</th><th>Revenue</th><th>Status</th><th>Action</th></tr></thead>
           <tbody id="subs-tbody"><tr><td colspan="6" style="text-align:center;color:var(--t3);padding:20px">Loading...</td></tr></tbody>
@@ -3473,11 +3493,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <table class="dtbl">
             <thead><tr><th><input type="checkbox" style="accent-color:var(--gold)"/></th><th>License Key</th><th>Client</th><th>Plan</th><th>Platforms</th><th>Expiry</th><th>Status</th><th>Action</th></tr></thead>
             <tbody id="lic-tbody">
-              <tr><td><input type="checkbox" style="accent-color:var(--gold)"/></td><td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--t3)">AXZ-ENT-4A2B-9C1D</td><td>Riyadh Trading</td><td><span class="bdg bo">Enterprise</span></td><td>4/4</td><td>Dec 2024</td><td><span class="bdg bg">Active</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem" onclick="editLicense(this)">Edit</button></td></tr>
-              <tr><td><input type="checkbox" style="accent-color:var(--gold)"/></td><td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--t3)">AXZ-PRO-7F3E-2A8B</td><td>Al Fahad Group</td><td><span class="bdg bb">Professional</span></td><td>1/4</td><td>Nov 2024</td><td><span class="bdg bg">Active</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem" onclick="editLicense(this)">Edit</button></td></tr>
-              <tr><td><input type="checkbox" style="accent-color:var(--gold)"/></td><td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--t3)">AXZ-IMP-1B6C-5D9E</td><td>Global Charity Org</td><td><span class="bdg bg">Impact</span></td><td>2/4</td><td>Mar 2025</td><td><span class="bdg bg">Active</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem" onclick="editLicense(this)">Edit</button></td></tr>
-              <tr><td><input type="checkbox" style="accent-color:var(--gold)"/></td><td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--t3)">AXZ-PRO-9A4F-3E7C</td><td>Golden Consultants</td><td><span class="bdg bb">Professional</span></td><td>1/4</td><td>Oct 2024</td><td><span class="bdg br">Expired</span></td><td><button class="db2" style="padding:3px 9px;font-size:.7rem;background:rgba(16,185,129,.15);border:1px solid var(--logi-border);color:var(--logi-bright)">Renew</button></td></tr>
+              <tr><td colspan="7" style="text-align:center;color:var(--t3);padding:20px">Loading...</td></tr>
             </tbody>
+
           </table>
         </div>
         <div class="dcard">
@@ -3502,10 +3520,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dsec" id="ds-notifications">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Notification Center <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
-          <div class="kc"><div class="kl">Unread</div><div class="kv" style="color:#f87171">7</div><div class="kch kd">3 urgent</div></div>
-          <div class="kc"><div class="kl">Emails Sent (today)</div><div class="kv gv">24</div><div class="kch ku">↑ 18%</div></div>
-          <div class="kc"><div class="kl">SMS Sent</div><div class="kv gv">8</div><div class="kch ku">Normal</div></div>
-          <div class="kc"><div class="kl">Webhooks Fired</div><div class="kv gv">142</div><div class="kch ku">↑ 5%</div></div>
+          <div class="kc"><div class="kl">Unread <span style="font-size:.6rem;color:var(--t3)">(تراخيص تنتهي ≤30 يوم)</span></div><div class="kv" id="notif-unread-kv" style="color:#f87171">—</div><div class="kch kd" id="notif-unread-ch">—</div></div>
+          <div class="kc"><div class="kl">Emails Sent (today) <span style="font-size:.6rem;color:var(--t3)">(حقيقي)</span></div><div class="kv gv" id="notif-emails-today">—</div><div class="kch ku">من سجل Broadcast</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">SMS Sent <span style="font-size:.6rem;color:var(--t3)">(Demo — غير مُتتبَّع بعد)</span></div><div class="kv gv">8</div><div class="kch ku">Normal</div></div>
+          <div class="kc" style="opacity:.55"><div class="kl">Webhooks Fired <span style="font-size:.6rem;color:var(--t3)">(Demo — غير مُتتبَّع بعد)</span></div><div class="kv gv">142</div><div class="kch ku">↑ 5%</div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:18px">
           <div class="dcard">
@@ -3549,6 +3567,12 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             <div style="display:flex;gap:8px;margin-top:4px">
               <button class="db2" style="flex:1;padding:10px" onclick="sendBroadcast()">Send Now ✦</button>
               <button class="db2" style="flex:1;padding:10px;background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)">Schedule</button>
+            </div>
+          </div>
+          <div class="dcard" style="margin-top:14px">
+            <div class="dct">Recent Broadcasts</div>
+            <div id="broadcast-log" style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
             </div>
           </div>
         </div>
@@ -3634,6 +3658,47 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
               <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">Storage</span><span style="font-size:.78rem;color:var(--gold);font-family:'DM Mono',monospace">38%</span></div><div class="pbsm"><div class="pfsm" style="width:38%"></div></div></div>
               <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">Bandwidth</span><span style="font-size:.78rem;color:var(--uni-bright);font-family:'DM Mono',monospace">45%</span></div><div class="pbsm"><div class="pfsm uni-fill" style="width:45%"></div></div></div>
             </div>
+          </div>
+        </div>
+      </div>
+      <!-- PROMOTIONS -->
+      <div class="dsec" id="ds-promos">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Promotions & Offers <span style="color:var(--gold)">🎉</span></h2>
+
+        <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(201,168,76,.3)">
+          <div class="dct">➕ Create New Promotion</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div><label class="fl">اسم العرض (داخلي)</label><input class="di" id="pr-name" placeholder="عرض الجمعة البيضاء"/></div>
+            <div><label class="fl">الشعار الظاهر للجمهور</label><input class="di" id="pr-tagline" placeholder="خصم 30% لفترة محدودة!"/></div>
+          </div>
+          <div style="margin-bottom:10px"><label class="fl">الغرض / السبب (ملاحظة داخلية فقط)</label><input class="di" id="pr-reason" placeholder="لماذا هذا العرض؟"/></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div><label class="fl">تاريخ ووقت البداية</label><input class="di" id="pr-start" type="datetime-local"/></div>
+            <div><label class="fl">تاريخ ووقت النهاية</label><input class="di" id="pr-end" type="datetime-local"/></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px">
+            <div><label class="fl">لون الحملة</label><input class="di" id="pr-color" type="color" value="#c9a84c" style="height:42px;padding:4px"/></div>
+            <div><label class="fl">نص الشارة</label><input class="di" id="pr-badge" placeholder="خصم 30%"/></div>
+            <div><label class="fl">المنصات المستهدفة</label>
+              <select class="di" id="pr-target"><option value="all">كل المنصات</option></select>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px;background:rgba(255,255,255,.03);border-radius:8px">
+            <label class="tog"><input type="checkbox" id="pr-discount-enabled" onchange="document.getElementById('pr-discount-wrap').style.display=this.checked?'block':'none'"/><span class="tsl"></span></label>
+            <span style="font-size:.8rem;color:var(--t2)">تطبيق خصم حقيقي فعلي على حاسبة الأسعار (وليس بانر تسويقي فقط)</span>
+          </div>
+          <div id="pr-discount-wrap" style="display:none;margin-bottom:14px">
+            <label class="fl">نسبة الخصم الحقيقية (%)</label>
+            <input class="di" id="pr-discount-percent" type="number" min="1" max="90" value="10"/>
+          </div>
+          <button class="bsub" style="width:auto;padding:10px 22px" onclick="azCreatePromotion()">🎉 إنشاء العرض</button>
+          <div id="pr-create-msg" style="margin-top:10px;font-size:.78rem"></div>
+        </div>
+
+        <div class="dcard">
+          <div class="dct">العروض الحالية والمُجدولة</div>
+          <div id="promos-list" style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
           </div>
         </div>
       </div>
@@ -4006,9 +4071,15 @@ function fmtPrice(usd, c){
 function refreshPrices(){
   var c = CURR;
   var el;
-  el=document.getElementById('pr-pro'); if(el) el.textContent=fmtPrice(BASE_USD.pro,c);
-  el=document.getElementById('pr-ent'); if(el) el.textContent=fmtPrice(BASE_USD.ent,c);
-  el=document.getElementById('pr-cha'); if(el) el.textContent=fmtPrice(BASE_USD.charity,c);
+  var disc = (AZ_ACTIVE_PROMO && AZ_ACTIVE_PROMO.discountEnabled && AZ_ACTIVE_PROMO.targetPlatforms === 'all') ? AZ_ACTIVE_PROMO.discountPercent : 0;
+  function priceWithDiscount(base, c){
+    if(!disc) return fmtPrice(base, c);
+    var discounted = base * (1 - disc/100);
+    return '<span style="text-decoration:line-through;opacity:.5;font-size:.8em;margin-inline-end:6px">'+fmtPrice(base,c)+'</span>'+fmtPrice(discounted,c);
+  }
+  el=document.getElementById('pr-pro'); if(el) el.innerHTML=priceWithDiscount(BASE_USD.pro,c);
+  el=document.getElementById('pr-ent'); if(el) el.innerHTML=priceWithDiscount(BASE_USD.ent,c);
+  el=document.getElementById('pr-cha'); if(el) el.innerHTML=priceWithDiscount(BASE_USD.charity,c);
   el=document.getElementById('u-mrr');  if(el) el.textContent=fmtPrice(5040,c);
   // Dashboard — MRR وARPU حقيقيان لو توفرت بيانات AZ_REAL_STATS، وإلا صفر أمين (لا أرقام وهمية)
   var realMrr = (AZ_REAL_STATS ? AZ_REAL_STATS.mrr : 0);
@@ -5036,6 +5107,8 @@ async function azSaveMaintenance(){
 }
 var PLAN_BADGE = { free:'bb', pro:'bo', ent:'bo', charity:'bg' };
 var PLAN_LABEL = { free:'Free', pro:'Pro', ent:'Enterprise', charity:'Impact' };
+var AZ_SUBS_CACHE = [];
+
 async function azLoadRealSubscribers(){
   var tbody = document.getElementById('subs-tbody');
   if(!tbody) return;
@@ -5047,24 +5120,329 @@ async function azLoadRealSubscribers(){
       return;
     }
     var users = data.users || [];
-    if(!users.length){
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:20px">No subscribers yet</td></tr>';
-      return;
-    }
-    tbody.innerHTML = users.map(function(u, i){
-      var badge = PLAN_BADGE[u.plan] || 'bb';
-      var label = PLAN_LABEL[u.plan] || u.plan;
-      var num = String(i+1).padStart(3,'0');
-      return '<tr><td style="font-family:\'DM Mono\',monospace;color:var(--t3)">'+num+'</td>'+
-        '<td>'+(u.name||u.email)+'<div style="font-size:.68rem;color:var(--t3)">'+u.email+'</div></td>'+
-        '<td><span class="bdg '+badge+'">'+label+'</span></td>'+
-        '<td>$'+(u.revenue||0)+'/mo</td>'+
-        '<td><span class="bdg bg">Active</span></td>'+
-        '<td><button class="db2" style="padding:3px 9px;font-size:.7rem" disabled title="Coming soon">Manage</button></td></tr>';
-    }).join('');
+
+    /* دمج المشتركين المُضافين يدوياً من الداشبورد (config.manualSubscribers) */
+    try{
+      var cfgRes = await fetch('/api/config-get');
+      var cfgData = await cfgRes.json();
+      var manual = (cfgData && cfgData.config && cfgData.config.manualSubscribers) || [];
+      users = users.concat(manual);
+    }catch(e){ /* تجاهل لو فشل جلب اليدويين، تبقى القائمة الحقيقية فقط */ }
+
+    AZ_SUBS_CACHE = users;
+    azRenderSubscribers(users);
+    azRenderPlanDistribution();
   }catch(e){
     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#f87171;padding:20px">Connection error</td></tr>';
   }
+}
+
+function azRenderSubscribers(users){
+  var tbody = document.getElementById('subs-tbody');
+  if(!tbody) return;
+  if(!users.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:20px">No subscribers yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = users.map(function(u, i){
+    var badge = PLAN_BADGE[u.plan] || 'bb';
+    var label = PLAN_LABEL[u.plan] || u.plan;
+    var num = String(i+1).padStart(3,'0');
+    return '<tr><td style="font-family:\'DM Mono\',monospace;color:var(--t3)">'+num+'</td>'+
+      '<td>'+(u.name||u.email)+'<div style="font-size:.68rem;color:var(--t3)">'+u.email+'</div></td>'+
+      '<td><span class="bdg '+badge+'">'+label+'</span></td>'+
+      '<td>$'+(u.revenue||0)+'/mo</td>'+
+      '<td><span class="bdg bg">Active</span></td>'+
+      '<td><button class="db2" style="padding:3px 9px;font-size:.7rem" disabled title="Coming soon">Manage</button></td></tr>';
+  }).join('');
+}
+
+/* ══════════════════════════════════════
+   FULL BACKUP EXPORT — تمت إزالة نسخة مكررة هنا بعد اكتشاف
+   أن azExportBackup() الحقيقية موجودة أصلاً (تستخدم /api/owner-export)
+══════════════════════════════════════ */
+/* ══════════════════════════════════════
+   PROMOTIONS SYSTEM — نظام العروض والتخفيضات
+══════════════════════════════════════ */
+var AZ_PROMOS_CACHE = [];
+
+function azPromoStatus(p){
+  var now = new Date();
+  if(new Date(p.endsAt) < now) return 'ended';
+  if(new Date(p.startsAt) > now) return 'scheduled';
+  return 'active';
+}
+
+async function azCreatePromotion(){
+  var name = document.getElementById('pr-name').value.trim();
+  var tagline = document.getElementById('pr-tagline').value.trim();
+  var reason = document.getElementById('pr-reason').value.trim();
+  var start = document.getElementById('pr-start').value;
+  var end = document.getElementById('pr-end').value;
+  var color = document.getElementById('pr-color').value;
+  var badge = document.getElementById('pr-badge').value.trim();
+  var target = document.getElementById('pr-target').value;
+  var discountEnabled = document.getElementById('pr-discount-enabled').checked;
+  var discountPercent = discountEnabled ? (parseInt(document.getElementById('pr-discount-percent').value, 10) || 0) : 0;
+  var msg = document.getElementById('pr-create-msg');
+
+  if(!name || !start || !end){ msg.style.color='#f87171'; msg.textContent='⚠️ الاسم وتاريخ البداية والنهاية مطلوبين'; return; }
+  if(new Date(end) <= new Date(start)){ msg.style.color='#f87171'; msg.textContent='⚠️ تاريخ النهاية يجب أن يكون بعد البداية'; return; }
+
+  var promo = {
+    id: 'promo_' + Date.now(),
+    name: name, publicTagline: tagline || name, reason: reason,
+    startsAt: new Date(start).toISOString(), endsAt: new Date(end).toISOString(),
+    color: color, badgeText: badge || 'عرض خاص', targetPlatforms: target,
+    discountEnabled: discountEnabled, discountPercent: discountPercent,
+    createdAt: new Date().toISOString()
+  };
+
+  msg.style.color='var(--t3)'; msg.textContent='جاري الحفظ...';
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.promotions = config.promotions || [];
+    config.promotions.push(promo);
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color='#4ade80'; msg.textContent='✅ تم إنشاء العرض فعلياً';
+      ['pr-name','pr-tagline','pr-reason','pr-start','pr-end','pr-badge'].forEach(function(id){
+        var el = document.getElementById(id); if(el) el.value = '';
+      });
+      document.getElementById('pr-discount-enabled').checked = false;
+      document.getElementById('pr-discount-wrap').style.display = 'none';
+      azLoadPromotions();
+    } else {
+      msg.style.color='#f87171'; msg.textContent='فشل الحفظ';
+    }
+  }catch(e){
+    msg.style.color='#f87171'; msg.textContent='فشل الاتصال بالخادم';
+  }
+}
+
+async function azLoadPromotions(){
+  var listEl = document.getElementById('promos-list');
+  var targetSel = document.getElementById('pr-target');
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_PROMOS_CACHE = config.promotions || [];
+
+    /* تعبئة قائمة المنصات المستهدفة من AZ_PLATFORMS_DATA الحقيقية */
+    if(targetSel && targetSel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+      Object.keys(AZ_PLATFORMS_DATA).forEach(function(k){
+        var opt = document.createElement('option');
+        opt.value = k; opt.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+        targetSel.appendChild(opt);
+      });
+    }
+
+    if(!listEl) return;
+    if(!AZ_PROMOS_CACHE.length){
+      listEl.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد عروض بعد</div>';
+      return;
+    }
+    listEl.innerHTML = AZ_PROMOS_CACHE.map(function(p, idx){
+      var st = azPromoStatus(p);
+      var stBadge = st === 'active' ? '<span class="bdg bg">نشط الآن</span>' : (st === 'scheduled' ? '<span class="bdg bb">مُجدول</span>' : '<span class="bdg br">منتهي</span>');
+      var startLabel = new Date(p.startsAt).toLocaleString('ar-EG', {dateStyle:'medium', timeStyle:'short'});
+      var endLabel = new Date(p.endsAt).toLocaleString('ar-EG', {dateStyle:'medium', timeStyle:'short'});
+      return '<div style="border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px">' +
+        '<div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:14px;height:14px;border-radius:4px;background:'+p.color+';display:inline-block"></span><strong style="font-size:.85rem">'+p.name+'</strong>'+stBadge+'</div>' +
+          '<div style="font-size:.72rem;color:var(--t3)">'+startLabel+' → '+endLabel+'</div>' +
+          (p.discountEnabled ? '<div style="font-size:.72rem;color:#4ade80">💰 خصم حقيقي مُفعّل: '+p.discountPercent+'%</div>' : '<div style="font-size:.72rem;color:var(--t3)">📢 بانر تسويقي فقط (بدون خصم حقيقي)</div>') +
+        '</div>' +
+        '<button class="db2" style="padding:4px 10px;font-size:.7rem;color:#f87171" onclick="azDeletePromotion('+idx+')">🗑️ حذف</button>' +
+      '</div>';
+    }).join('');
+  }catch(e){
+    if(listEl) listEl.innerHTML = '<div style="font-size:.78rem;color:#f87171">فشل تحميل العروض</div>';
+  }
+}
+
+async function azDeletePromotion(idx){
+  if(!confirm('حذف هذا العرض نهائياً؟')) return;
+  AZ_PROMOS_CACHE.splice(idx, 1);
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.promotions = AZ_PROMOS_CACHE;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){ toast('✅ تم حذف العرض', 'success'); azLoadPromotions(); }
+    else { toast('⚠️ فشل الحذف', 'error'); }
+  }catch(e){ toast('⚠️ فشل الاتصال', 'error'); }
+}
+
+/* ══ تطبيق العرض النشط على الموقع الحي — للزوار العاديين ══ */
+var AZ_ACTIVE_PROMO = null;
+
+function azApplyActivePromo(promos){
+  var now = new Date();
+  var active = (promos || []).find(function(p){
+    return new Date(p.startsAt) <= now && new Date(p.endsAt) >= now;
+  });
+  AZ_ACTIVE_PROMO = active || null;
+  if(typeof refreshPrices === 'function') refreshPrices();
+
+  var existingBanner = document.getElementById('az-promo-banner');
+  if(existingBanner) existingBanner.remove();
+  document.documentElement.style.removeProperty('--gold');
+
+  if(!active) return;
+
+  /* ١) تبديل اللون الأساسي في كل الموقع */
+  document.documentElement.style.setProperty('--gold', active.color);
+
+  /* ٢) بانر عداد تنازلي فوق الموقع */
+  var banner = document.createElement('div');
+  banner.id = 'az-promo-banner';
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9998;background:'+active.color+';color:#0a0a0f;padding:8px 16px;text-align:center;font-family:"DM Mono",monospace;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap';
+  banner.innerHTML = '<span>🎉 '+active.publicTagline+'</span><span id="az-promo-countdown" style="opacity:.85"></span>';
+  document.body.insertBefore(banner, document.body.firstChild);
+
+  function updateCountdown(){
+    var el = document.getElementById('az-promo-countdown');
+    if(!el){ clearInterval(iv); return; }
+    var diff = new Date(active.endsAt) - new Date();
+    if(diff <= 0){ location.reload(); return; }
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins = Math.floor((diff % 3600000) / 60000);
+    el.textContent = '· ينتهي بعد ' + (days > 0 ? days+'ي ' : '') + hours+'س '+mins+'د';
+  }
+  updateCountdown();
+  var iv = setInterval(updateCountdown, 60000);
+}
+
+(function azLoadPublicPromotions(){
+  fetch('/api/config-get')
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(data){
+      if(!data || !data.config) return;
+      azApplyActivePromo(data.config.promotions || []);
+    })
+    .catch(function(){});
+})();
+
+function azRenderNotifKPIs(){
+  var unreadEl = document.getElementById('notif-unread-kv');
+  var unreadChEl = document.getElementById('notif-unread-ch');
+  var emailsEl = document.getElementById('notif-emails-today');
+  if(!unreadEl && !emailsEl) return;
+
+  /* Unread = تراخيص نشطة تنتهي خلال 30 يوم قادمة */
+  var now = new Date();
+  var in30 = new Date(now.getTime() + 30*24*60*60*1000);
+  var expiringSoon = (AZ_LICENSES_CACHE || []).filter(function(lic){
+    var st = azLicenseStatus(lic);
+    return st === 'active' && new Date(lic.expiresAt) <= in30;
+  });
+  if(unreadEl) unreadEl.textContent = expiringSoon.length;
+  if(unreadChEl) unreadChEl.textContent = expiringSoon.length ? expiringSoon.length+' ترخيص يحتاج تجديد' : 'لا شيء عاجل';
+
+  /* Emails Sent (today) = من سجل config.broadcasts الحقيقي */
+  fetch('/api/config-get').then(function(r){ return r.json(); }).then(function(data){
+    var logs = (data && data.config && data.config.broadcasts) || [];
+    var today = new Date().toDateString();
+    var count = logs.filter(function(b){
+      return b.channel && b.channel.indexOf('Email') !== -1 && new Date(b.sentAt).toDateString() === today;
+    }).length;
+    if(emailsEl) emailsEl.textContent = count;
+  }).catch(function(){ if(emailsEl) emailsEl.textContent = '0'; });
+}
+
+function azRenderPlanDistribution(){
+  var el = document.getElementById('plan-dist-chart');
+  if(!el) return;
+  var users = AZ_SUBS_CACHE || [];
+  if(!users.length){
+    el.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد بيانات كافية بعد</div>';
+    return;
+  }
+  var counts = {};
+  users.forEach(function(u){
+    var p = u.plan || 'unknown';
+    counts[p] = (counts[p] || 0) + 1;
+  });
+  var total = users.length;
+  var colors = { enterprise:'#c9a84c', ent:'#c9a84c', pro:'#38bdf8', professional:'#38bdf8', free:'#a3a3a3', charity:'#22c55e', impact:'#22c55e', unknown:'#6b7280' };
+  var icons = { enterprise:'🏆', ent:'🏆', pro:'💼', professional:'💼', free:'🆓', charity:'💚', impact:'💚', unknown:'❔' };
+
+  el.innerHTML = Object.keys(counts).map(function(plan){
+    var pct = Math.round((counts[plan] / total) * 100);
+    var label = PLAN_LABEL[plan] || plan;
+    var color = colors[plan.toLowerCase()] || '#6b7280';
+    var icon = icons[plan.toLowerCase()] || '❔';
+    return '<div><div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
+      '<span style="font-size:.78rem;color:var(--t2)">'+icon+' '+label+'</span>' +
+      '<span style="color:'+color+';font-size:.78rem;font-family:\'DM Mono\',monospace">'+pct+'% ('+counts[plan]+')</span></div>' +
+      '<div class="pbsm"><div class="pfsm" style="width:'+pct+'%;background:'+color+'"></div></div></div>';
+  }).join('');
+}
+
+function azFilterSubscribers(query){
+  var q = (query || '').trim().toLowerCase();
+  if(!q){ azRenderSubscribers(AZ_SUBS_CACHE); return; }
+  var filtered = AZ_SUBS_CACHE.filter(function(u){
+    return ((u.name||'').toLowerCase().indexOf(q) !== -1) || ((u.email||'').toLowerCase().indexOf(q) !== -1);
+  });
+  azRenderSubscribers(filtered);
+}
+
+function azOpenAddSubModal(){
+  var modal = document.getElementById('add-sub-modal');
+  if(modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+}
+
+async function azAddManualSubscriber(){
+  var name = document.getElementById('new-sub-name').value.trim();
+  var email = document.getElementById('new-sub-email').value.trim();
+  var plan = document.getElementById('new-sub-plan').value;
+  var msg = document.getElementById('new-sub-msg');
+  if(!name || !email || !email.includes('@')){ msg.style.color='#f87171'; msg.textContent='الاسم والإيميل الصحيح مطلوبان'; return; }
+  msg.style.color='var(--t3)'; msg.textContent='جاري الحفظ...';
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.manualSubscribers = config.manualSubscribers || [];
+    config.manualSubscribers.push({ name: name, email: email, plan: plan, revenue: 0, manual: true, addedAt: new Date().toISOString() });
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color='#4ade80'; msg.textContent='✅ تم إضافة المشترك فعلياً';
+      document.getElementById('new-sub-name').value = '';
+      document.getElementById('new-sub-email').value = '';
+      azLoadRealSubscribers();
+      setTimeout(function(){ document.getElementById('add-sub-modal').style.display='none'; msg.textContent=''; }, 1500);
+    } else {
+      msg.style.color='#f87171'; msg.textContent='فشل الحفظ';
+    }
+  }catch(e){
+    msg.style.color='#f87171'; msg.textContent='فشل الاتصال بالخادم';
+  }
+  /* ⚠️ ملاحظة صادقة: هذا يضيف سجل مشترك "يدوي" لأغراض التتبع والعرض فقط —
+     لا يُنشئ حساب مستخدم حقيقي بصلاحيات دخول فعلية في نظام المصادقة */
 }
 
 /* ── تحميل سجل الأحداث الحقيقي (دخول مالك، تعديل إعدادات، إدارة مديرين) ── */
@@ -5294,6 +5672,10 @@ function openDashUnlocked(){
   azLoadRealStats();
   azLoadRealAnalytics();
   azLoadRecentActivity();
+  azLoadLicenses();
+  azLoadContentEditor();
+  azLoadBroadcastLog();
+  azLoadRealSubscribers();
 }
 
 async function azLoadRecentActivity(){
@@ -5333,6 +5715,7 @@ function swD(sec,el){
   if(sec === 'subs') azLoadRealSubscribers();
   if(sec === 'logs') azLoadSystemLogs();
   if(sec === 'settings'){ azLoadMaintenanceSettings(); azLoadCompanyInfo(); azLoadAfiSources(); }
+  if(sec === 'promos') azLoadPromotions();
 }
 async function toggleP(key, el){
   var checked = el.checked;
@@ -5539,30 +5922,224 @@ function closeMobMenu(){
   document.getElementById('mob-btn').setAttribute('aria-expanded','false');
   document.body.style.overflow = '';
 }
-function generateKey(){
-  var plan = document.getElementById('lk-plan') ? document.getElementById('lk-plan').value.substring(0,3).toUpperCase() : 'ENT';
-  var key = 'AXZ-'+plan+'-'+Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();
+async function generateKey(){
+  var client = document.getElementById('lk-client') ? document.getElementById('lk-client').value.trim() : '';
+  var planSel = document.getElementById('lk-plan');
+  var plan = planSel ? planSel.value : 'Enterprise';
+  var plat = document.getElementById('lk-plat') ? document.getElementById('lk-plat').value : 'All Platforms';
+  var expMonths = document.getElementById('lk-exp') ? parseInt(document.getElementById('lk-exp').value, 10) || 12 : 12;
+  var maxUsers = document.getElementById('lk-users') ? parseInt(document.getElementById('lk-users').value, 10) || 1 : 1;
+
+  if(!client){ toast('⚠️ اسم العميل مطلوب', 'error'); return; }
+
+  var planCode = plan.substring(0,3).toUpperCase();
+  var key = 'AXZ-'+planCode+'-'+Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();
+  var createdAt = new Date();
+  var expiresAt = new Date(createdAt.getTime());
+  expiresAt.setMonth(expiresAt.getMonth() + expMonths);
+
+  var licenseRecord = {
+    key: key, client: client, plan: plan, platform: plat,
+    maxUsers: maxUsers, createdAt: createdAt.toISOString(), expiresAt: expiresAt.toISOString(),
+    status: 'active'
+  };
+
   var resultEl = document.getElementById('lk-result');
   var keyEl = document.getElementById('lk-value');
   if(resultEl && keyEl){ keyEl.textContent = key; resultEl.style.display='block'; }
-  toast('License key generated ✦');
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.licenses = config.licenses || [];
+    config.licenses.push(licenseRecord);
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast('✅ تم إنشاء وحفظ الترخيص فعلياً', 'success');
+      if(document.getElementById('lk-client')) document.getElementById('lk-client').value = '';
+      azLoadLicenses();
+    } else {
+      toast('⚠️ الكود ظاهر لكن فشل الحفظ — انسخه يدوياً', 'error');
+    }
+  }catch(e){
+    toast('⚠️ الكود ظاهر لكن فشل الاتصال — انسخه يدوياً', 'error');
+  }
 }
 function copyKey(){
   var k = document.getElementById('lk-value');
   if(k){ navigator.clipboard && navigator.clipboard.writeText(k.textContent); toast('Key copied to clipboard ✦'); }
 }
-function editLicense(btn){ toast('License editor — feature in development'); }
-function revokeSelected(){ toast('Selected licenses revoked'); }
+/* ══ LICENSE MANAGER — نظام حقيقي مربوط بـ config.licenses ══ */
+var AZ_LICENSES_CACHE = [];
+
+function azPlanBadgeClass(plan){
+  if(plan === 'Enterprise') return 'bo';
+  if(plan === 'Professional') return 'bb';
+  if(plan === 'Impact') return 'bg';
+  return 'bb';
+}
+
+function azLicenseStatus(lic){
+  if(lic.status === 'revoked') return 'revoked';
+  if(new Date(lic.expiresAt) < new Date()) return 'expired';
+  return 'active';
+}
+
+function azRenderLicenses(){
+  var tbody = document.getElementById('lic-tbody');
+  if(!tbody) return;
+  azRenderNotifKPIs();
+  if(!AZ_LICENSES_CACHE.length){
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--t3);padding:20px">لا توجد تراخيص بعد — أنشئ أول ترخيص من النموذج تحت</td></tr>';
+    return;
+  }
+  tbody.innerHTML = AZ_LICENSES_CACHE.map(function(lic, idx){
+    var status = azLicenseStatus(lic);
+    var statusBadge = status === 'active' ? '<span class="bdg bg">Active</span>' : (status === 'expired' ? '<span class="bdg br">Expired</span>' : '<span class="bdg br">Revoked</span>');
+    var expDate = new Date(lic.expiresAt);
+    var expLabel = expDate.toLocaleDateString('en-US', {month:'short', year:'numeric'});
+    var actionBtn = status === 'revoked'
+      ? '<button class="db2" style="padding:3px 9px;font-size:.7rem;opacity:.5" disabled>Revoked</button>'
+      : '<button class="db2" style="padding:3px 9px;font-size:.7rem" onclick="editLicense('+idx+')">Edit</button>';
+    return '<tr><td><input type="checkbox" class="lic-check" data-idx="'+idx+'" style="accent-color:var(--gold)"/></td>' +
+      '<td style="font-family:\'DM Mono\',monospace;font-size:.7rem;color:var(--t3)">'+lic.key+'</td>' +
+      '<td>'+lic.client+'</td>' +
+      '<td><span class="bdg '+azPlanBadgeClass(lic.plan)+'">'+lic.plan+'</span></td>' +
+      '<td>'+(lic.maxUsers||1)+'</td>' +
+      '<td>'+expLabel+'</td>' +
+      '<td>'+statusBadge+'</td>' +
+      '<td>'+actionBtn+'</td></tr>';
+  }).join('');
+}
+
+async function azLoadLicenses(){
+  var tbody = document.getElementById('lic-tbody');
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_LICENSES_CACHE = config.licenses || [];
+    azRenderLicenses();
+  }catch(e){
+    if(tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#f87171;padding:20px">فشل تحميل التراخيص</td></tr>';
+  }
+}
+
+function editLicense(idx){
+  var lic = AZ_LICENSES_CACHE[idx];
+  if(!lic){ toast('⚠️ ترخيص غير موجود', 'error'); return; }
+  var newSeats = prompt('عدد المستخدمين الجديد لـ "'+lic.client+'":', lic.maxUsers || 1);
+  if(newSeats === null) return;
+  var n = parseInt(newSeats, 10);
+  if(isNaN(n) || n < 1){ toast('⚠️ رقم غير صالح', 'error'); return; }
+  lic.maxUsers = n;
+  azSaveLicenses('✅ تم تحديث الترخيص');
+}
+
+async function revokeSelected(){
+  var checks = document.querySelectorAll('.lic-check:checked');
+  if(!checks.length){ toast('⚠️ اختر ترخيصاً واحداً على الأقل', 'error'); return; }
+  if(!confirm('إلغاء '+checks.length+' ترخيص/تراخيص محددة؟')) return;
+  checks.forEach(function(chk){
+    var idx = parseInt(chk.getAttribute('data-idx'), 10);
+    if(AZ_LICENSES_CACHE[idx]) AZ_LICENSES_CACHE[idx].status = 'revoked';
+  });
+  azSaveLicenses('✅ تم إلغاء التراخيص المحددة فعلياً');
+}
+
+async function azSaveLicenses(successMsg){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.licenses = AZ_LICENSES_CACHE;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast(successMsg, 'success');
+      azRenderLicenses();
+    } else {
+      toast('⚠️ فشل الحفظ', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال بالخادم', 'error');
+  }
+}
 
 /* ══════════════════════════════════════
    NOTIFICATIONS
 ══════════════════════════════════════ */
-function sendBroadcast(){
-  var sub = document.getElementById('notif-sub') ? document.getElementById('notif-sub').value : '';
-  var target = document.getElementById('notif-target') ? document.getElementById('notif-target').value : 'All';
-  if(!sub){ toast('Enter a subject line'); return; }
-  toast('📢 Broadcast sent to: '+target+' ✦');
-  if(document.getElementById('notif-msg')) document.getElementById('notif-msg').value='';
+/* ══ BROADCAST — نظام حقيقي مربوط بـ config.broadcasts ══ */
+async function sendBroadcast(){
+  var sub = document.getElementById('notif-sub') ? document.getElementById('notif-sub').value.trim() : '';
+  var msg = document.getElementById('notif-msg') ? document.getElementById('notif-msg').value.trim() : '';
+  var target = document.getElementById('notif-target') ? document.getElementById('notif-target').value : 'All Subscribers';
+  var channel = document.getElementById('notif-channel') ? document.getElementById('notif-channel').value : 'Email';
+  if(!sub){ toast('⚠️ عنوان الرسالة مطلوب', 'error'); return; }
+
+  var record = { subject: sub, message: msg, target: target, channel: channel, sentAt: new Date().toISOString() };
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.broadcasts = config.broadcasts || [];
+    config.broadcasts.unshift(record);
+    config.broadcasts = config.broadcasts.slice(0, 50); /* الاحتفاظ بآخر 50 فقط */
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast('📢 تم تسجيل البرودكاست فعلياً — الجمهور: '+target, 'success');
+      if(document.getElementById('notif-sub')) document.getElementById('notif-sub').value = '';
+      if(document.getElementById('notif-msg')) document.getElementById('notif-msg').value = '';
+      azLoadBroadcastLog();
+    } else {
+      toast('⚠️ فشل حفظ البرودكاست', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال بالخادم', 'error');
+  }
+  /* ⚠️ ملاحظة صادقة: هذا يسجّل البرودكاست فعلياً في قاعدة البيانات ويعرضه في السجل،
+     لكن لا يرسل إيميل/SMS حقيقي فعلياً — الإرسال الفعلي يحتاج ربط خدمة بريد
+     (مثل Cloudflare Email Workers أو SendGrid) في ملفات الـWorker الخلفية، خارج نطاق هذا الملف */
+}
+
+async function azLoadBroadcastLog(){
+  var el = document.getElementById('broadcast-log');
+  if(!el) return;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    var logs = config.broadcasts || [];
+    if(!logs.length){
+      el.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد رسائل مُرسلة بعد</div>';
+      return;
+    }
+    el.innerHTML = logs.slice(0, 8).map(function(b){
+      var d = new Date(b.sentAt);
+      return '<div style="border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:2px">' +
+        '<div style="font-size:.82rem;font-weight:600">'+b.subject+'</div>' +
+        '<div style="font-size:.7rem;color:var(--t3)">'+b.target+' · '+b.channel+' · '+d.toLocaleString()+'</div>' +
+      '</div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML = '<div style="font-size:.78rem;color:#f87171">فشل تحميل السجل</div>';
+  }
 }
 
 /* ══════════════════════════════════════
@@ -5577,21 +6154,104 @@ var pageContents = {
   footer:  ['Brand Description','Column 1 Title','Column 2 Title','Column 3 Title','Copyright Text'],
   legal:   ['Privacy Policy Text','Terms & Conditions','Disclaimer','Refund Policy']
 };
+/* ══ CONTENT EDITOR — نظام حقيقي مربوط بـ config.content ══ */
+var AZ_CONTENT_CACHE = {};
+var AZ_CE_CURRENT_PAGE = 'home';
+
+function azFieldKey(label){
+  return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
 function selectPage(page, el){
   document.querySelectorAll('#ds-content .dmi').forEach(function(d){ d.classList.remove('on'); });
   el.classList.add('on');
+  AZ_CE_CURRENT_PAGE = page;
   var titleEl = document.getElementById('ce-page-title');
   var fieldsEl = document.getElementById('ce-fields');
   if(titleEl) titleEl.textContent = page.charAt(0).toUpperCase()+page.slice(1)+' Page — Content';
   if(fieldsEl && pageContents[page]){
+    var saved = (AZ_CONTENT_CACHE[page] || {});
     fieldsEl.innerHTML = pageContents[page].map(function(f){
       var isLong = f.toLowerCase().includes('desc') || f.toLowerCase().includes('text') || f.toLowerCase().includes('para');
-      return '<div><label class="fl">'+f+'</label>'+(isLong?'<textarea class="di" rows="2" placeholder="'+f+'..."></textarea>':'<input class="di" type="text" placeholder="'+f+'"/>')+'</div>';
+      var fk = azFieldKey(f);
+      var val = saved[fk] || '';
+      var esc = String(val).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      var fieldId = 'ce-f-'+page+'-'+fk;
+      return '<div><label class="fl">'+f+'</label>'+(isLong?'<textarea class="di" rows="2" id="'+fieldId+'" placeholder="'+f+'...">'+esc+'</textarea>':'<input class="di" type="text" id="'+fieldId+'" placeholder="'+f+'" value="'+esc+'"/>')+'</div>';
     }).join('');
   }
 }
-function saveContent(){ toast('Content saved successfully ✦'); }
-function previewContent(){ toast('Opening preview...'); }
+
+async function azLoadContentEditor(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_CONTENT_CACHE = config.content || {};
+    var activeTab = document.querySelector('#ds-content .dmi.on');
+    if(activeTab) selectPage(AZ_CE_CURRENT_PAGE, activeTab);
+    azApplyLiveContent();
+  }catch(e){ /* تبقى الحقول فاضية لو فشل الاتصال */ }
+}
+
+async function saveContent(){
+  var page = AZ_CE_CURRENT_PAGE;
+  var fields = pageContents[page] || [];
+  var pageData = {};
+  fields.forEach(function(f){
+    var fk = azFieldKey(f);
+    var el = document.getElementById('ce-f-'+page+'-'+fk);
+    if(el) pageData[fk] = el.value;
+  });
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.content = config.content || {};
+    config.content[page] = pageData;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      AZ_CONTENT_CACHE[page] = pageData;
+      toast('✅ تم حفظ المحتوى فعلياً على الخادم', 'success');
+      if(page === 'home') azApplyLiveContent();
+    } else {
+      toast('⚠️ فشل الحفظ — حاول مرة أخرى', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال بالخادم — لم يُحفظ المحتوى', 'error');
+  }
+}
+
+function azApplyLiveContent(){
+  var home = (AZ_CONTENT_CACHE || {}).home;
+  if(!home) return;
+  var map = {
+    hero_eyebrow_text: 'ce-live-eyebrow',
+    hero_description: 'ce-live-desc',
+    cta_button_1: 'ce-live-cta1',
+    cta_button_2: 'ce-live-cta2'
+  };
+  Object.keys(map).forEach(function(key){
+    var val = home[key];
+    if(val){
+      var el = document.getElementById(map[key]);
+      if(el) el.textContent = val;
+    }
+  });
+  /* "Hero Main Title" وحقول SEO تُحفظ فعلياً لكن لا تُطبَّق مباشرة على DOM —
+     العنوان الرئيسي مبني من عناصر متحركة (span) يخطر تغييرها بصرياً */
+}
+
+function previewContent(){
+  window.open(window.location.origin + window.location.pathname, '_blank');
+  toast('تم فتح الموقع الحي في تبويب جديد', 'success');
+}
 
 /* ══════════════════════════════════════
    SYSTEM LOGS
@@ -7259,6 +7919,17 @@ async function azUserLogout(){
 })();
 
 /* ══ جلب أرقام حقيقية عامة (منصات + عملاء) لقسم About Us — بدون تسجيل دخول ══ */
+(function azApplyPublicContent(){
+  fetch('/api/config-get')
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(data){
+      if(!data || !data.config) return;
+      AZ_CONTENT_CACHE = data.config.content || {};
+      azApplyLiveContent();
+    })
+    .catch(function(){ /* تبقى النصوص الافتراضية كما هي */ });
+})();
+
 (function azLoadPublicStats(){
   fetch('/api/public-stats')
     .then(function(res){ return res.ok ? res.json() : null; })
