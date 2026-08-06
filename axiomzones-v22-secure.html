@@ -586,7 +586,8 @@ body.ch #cur-r{width:56px;height:56px;border-color:var(--gold)}
 /* HERO */
 #hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:120px 44px 80px}
 .geo-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-.geo-bg svg{width:100%;height:100%;opacity:.035}
+.geo-bg svg{width:100%;height:100%;opacity:0;transition:opacity 0.8s ease}
+.geo-bg svg.loaded{opacity:.035}
 .h-grid{position:relative;z-index:2;width:100%;max-width:1380px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .h-eyebrow{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px;opacity:0;animation:fup .8s var(--ease-imp) 2s forwards}
 .h-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
@@ -1687,6 +1688,51 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .vt-btn.on{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.08);color:#c9a84c}
 
 @keyframes expandDown{from{opacity:0;max-height:0}to{opacity:1;max-height:2000px}}
+
+/* ══ إخفاء المؤشر المخصص على الموبايل والتابلت ══ */
+@media (hover: none) {
+  #cur-d, #cur-r {
+    display: none !important;
+  }
+}
+
+/* ══ SKELETON LOADER ══ */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.skeleton-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.skeleton-card .s-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 12px;
+}
+.skeleton-card .s-line {
+  height: 14px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 8px;
+}
+.skeleton-card .s-line.short {
+  width: 60%;
+}
+.skeleton-card .s-line.tall {
+  height: 60px;
+  margin-bottom: 12px;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
 
 </style>
 
@@ -2883,6 +2929,38 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <blockquote class="test4-quote" data-i18n="soc.q3">"Master 365 replaced 3 separate tools we were paying $400/month for. My 12-rep team across 6 branches is now managed from one screen."</blockquote>
         <div class="test4-auth"><div class="test4-av" aria-hidden="true">🇪🇬</div><div><div class="test4-name">Mohamed Hassan</div><div class="test4-role" data-i18n="soc.r3">Sales Director · Cairo</div></div></div>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BLOG SECTION — v26 ══ -->
+<section id="blog" style="padding:80px 0;border-top:1px solid rgba(255,255,255,.05)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 28px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;display:flex;align-items:center;gap:8px">
+          <span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>📝 المدونة المالية
+        </div>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">آخر <em style="font-weight:300;font-style:italic;color:var(--t2)">المقالات</em></h2>
+      </div>
+      <button onclick="document.getElementById('blog-editor').style.display='block'" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer">+ مقال جديد</button>
+    </div>
+    <div id="blog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px"></div>
+    <div id="blog-editor" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:20px">
+      <h3 style="font-family:'Cormorant',serif;font-size:1.4rem;margin-bottom:12px">✏️ تحرير المقال</h3>
+      <input id="blog-title" class="di" placeholder="عنوان المقال" style="margin-bottom:10px;width:100%">
+      <select id="blog-cat" class="di" style="margin-bottom:10px;width:100%">
+        <option value="مالية">💰 مالية</option>
+        <option value="إسلامية">☪️ إسلامية</option>
+        <option value="أعمال">💼 أعمال</option>
+        <option value="تعليمية">📚 تعليمية</option>
+      </select>
+      <textarea id="blog-content" class="di" rows="6" placeholder="محتوى المقال..." style="margin-bottom:10px;width:100%"></textarea>
+      <div style="display:flex;gap:10px">
+        <button class="bsub" style="flex:1;padding:10px" onclick="saveBlogPost()">💾 نشر المقال</button>
+        <button class="db2" style="background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border);padding:10px 20px" onclick="document.getElementById('blog-editor').style.display='none'">إلغاء</button>
+      </div>
+      <div id="blog-msg" style="margin-top:10px;font-size:.78rem"></div>
     </div>
   </div>
 </section>
@@ -5358,9 +5436,28 @@ function sub(plan){
 /* ══════════════════════════════════════
    TOAST
 ══════════════════════════════════════ */
-function toast(msg){
+function toast(msg, type){
   var el=document.getElementById('toast-el');
-  document.getElementById('toast-txt').textContent=msg;
+  var txt=document.getElementById('toast-txt');
+  if (!el || !txt) return;
+
+  txt.textContent = msg;
+  el.className = 'toast';
+
+  if (type === 'success') {
+    el.style.borderColor = '#22c55e';
+    el.style.background = 'rgba(34, 197, 94, 0.12)';
+  } else if (type === 'error') {
+    el.style.borderColor = '#ef4444';
+    el.style.background = 'rgba(239, 68, 68, 0.12)';
+  } else if (type === 'warning') {
+    el.style.borderColor = '#f59e0b';
+    el.style.background = 'rgba(245, 158, 11, 0.12)';
+  } else {
+    el.style.borderColor = 'rgba(201,168,76,0.35)';
+    el.style.background = 'var(--bg-card)';
+  }
+
   el.classList.add('show');
   clearTimeout(el._t);
   el._t=setTimeout(function(){el.classList.remove('show');},3600);
@@ -7488,56 +7585,66 @@ var currentPlatformKey = null;
 function azRenderPlatformCards() {
   var grid = document.getElementById('az-platforms-grid');
   if (!grid) return;
-  grid.innerHTML = '';
 
-  /* Order: live first, then coming soon — grouped by category */
-  var ORDER = [
-    /* مالية */
-    'kashf','prism','mizan','dar','aqar',
-    /* أعمال */
-    'uniuber','mazzaj','master','prosuite','breakeven',
-    /* إسلامية */
-    'subhan','dhikr','shifa','tajweed','qiraat',
-    /* تعليمية / ثقافية */
-    'maqam','mental','diwan',
-    /* ذكاء / قرار */
-    'qarar','clinic','kyanat','tripedia','analyzer','mixmaestro','qarar'
-  ];
+  /* عرض Skeleton أولاً لتجربة تحميل أفضل */
+  grid.innerHTML = '<div class="skeleton-grid">' +
+    Array(6).fill(0).map(function() {
+      return '<div class="skeleton-card"><div class="s-icon"></div><div class="s-line"></div><div class="s-line short"></div><div class="s-line tall"></div></div>';
+    }).join('') +
+  '</div>';
 
-  /* Deduplicate and show all known platforms */
-  var seen = {};
-  var ordered = [];
-  ORDER.forEach(function(k) {
-    if (!seen[k] && AZ_PLATFORMS_DATA[k]) {
-      seen[k] = true;
-      ordered.push(k);
-    }
-  });
-  /* Add any not in ORDER */
-  Object.keys(AZ_PLATFORMS_DATA).forEach(function(k) {
-    if (!seen[k]) {
-      seen[k] = true;
-      ordered.push(k);
-    }
-  });
+  setTimeout(function(){
+    grid.innerHTML = '';
 
-  /* Sort: live first */
-  ordered.sort(function(a, b) {
-    var la = AZ_PLATFORMS_DATA[a].status === 'live' ? 0 : 1;
-    var lb = AZ_PLATFORMS_DATA[b].status === 'live' ? 0 : 1;
-    return la - lb;
-  });
+    /* Order: live first, then coming soon — grouped by category */
+    var ORDER = [
+      /* مالية */
+      'kashf','prism','mizan','dar','aqar',
+      /* أعمال */
+      'uniuber','mazzaj','master','prosuite','breakeven',
+      /* إسلامية */
+      'subhan','dhikr','shifa','tajweed','qiraat',
+      /* تعليمية / ثقافية */
+      'maqam','mental','diwan',
+      /* ذكاء / قرار */
+      'qarar','clinic','kyanat','tripedia','analyzer','mixmaestro','qarar'
+    ];
 
-  ordered.forEach(function(key) {
-    var plt = AZ_PLATFORMS_DATA[key];
-    if (!plt) return;
-    var card = buildPlatformCard(key, plt);
-    grid.appendChild(card);
-  });
+    /* Deduplicate and show all known platforms */
+    var seen = {};
+    var ordered = [];
+    ORDER.forEach(function(k) {
+      if (!seen[k] && AZ_PLATFORMS_DATA[k]) {
+        seen[k] = true;
+        ordered.push(k);
+      }
+    });
+    /* Add any not in ORDER */
+    Object.keys(AZ_PLATFORMS_DATA).forEach(function(k) {
+      if (!seen[k]) {
+        seen[k] = true;
+        ordered.push(k);
+      }
+    });
 
-  /* Show add button for admin */
-  var addCta = document.getElementById('az-add-platform-cta');
-  if (addCta && window.AZ_ADMIN_ACTIVE) addCta.style.display = 'block';
+    /* Sort: live first */
+    ordered.sort(function(a, b) {
+      var la = AZ_PLATFORMS_DATA[a].status === 'live' ? 0 : 1;
+      var lb = AZ_PLATFORMS_DATA[b].status === 'live' ? 0 : 1;
+      return la - lb;
+    });
+
+    ordered.forEach(function(key) {
+      var plt = AZ_PLATFORMS_DATA[key];
+      if (!plt) return;
+      var card = buildPlatformCard(key, plt);
+      grid.appendChild(card);
+    });
+
+    /* Show add button for admin */
+    var addCta = document.getElementById('az-add-platform-cta');
+    if (addCta && window.AZ_ADMIN_ACTIVE) addCta.style.display = 'block';
+  }, 300);
 }
 
 function buildPlatformCard(key, plt) {
@@ -7884,6 +7991,7 @@ document.addEventListener('keydown', function(e) {
 
 window.addEventListener('load', function() {
   azRenderPlatformCards();
+  setTimeout(showSmartGreeting, 500);
 }, { once: true });
 
 /* ── Add new platform from Admin (exposed globally) ── */
@@ -7891,6 +7999,103 @@ window.azAddPlatformCard = function(key, data) {
   AZ_PLATFORMS_DATA[key] = data;
   azRenderPlatformCards();
 };
+
+/* ══ BLOG SYSTEM — v26 ══ */
+var BLOG_POSTS = JSON.parse(localStorage.getItem('az_blog_posts') || '[]');
+
+function renderBlog() {
+  var grid = document.getElementById('blog-grid');
+  if (!grid) return;
+  if (BLOG_POSTS.length === 0) {
+    grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--t3);font-size:.9rem;border:1px dashed var(--border);border-radius:12px">\U0001F4DD لا توجد مقالات بعد — انقر "+ مقال جديد" لكتابة أول مقال</div>';
+    return;
+  }
+  grid.innerHTML = BLOG_POSTS.slice().reverse().map(function(post, idx) {
+    var realIdx = BLOG_POSTS.length - 1 - idx;
+    return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .3s" onmouseover="this.style.borderColor=\'rgba(201,168,76,.3)\';this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.borderColor=\'\';this.style.transform=\'\'">' +
+      '<div style="font-family:\'DM Mono\',monospace;font-size:.6rem;letter-spacing:1px;color:#c9a84c;margin-bottom:6px">' + (post.cat || 'عام') + '</div>' +
+      '<h3 style="font-family:\'Cormorant\',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px">' + (post.title || 'بدون عنوان') + '</h3>' +
+      '<p style="font-size:.8rem;color:var(--t2);line-height:1.8;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">' + (post.content || '').substring(0, 200) + '...</p>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">' +
+        '<span style="font-size:.65rem;color:var(--t3);font-family:\'DM Mono\',monospace">' + (post.date || new Date().toLocaleDateString()) + '</span>' +
+        '<div style="display:flex;gap:6px">' +
+          '<button onclick="deleteBlogPost(' + realIdx + ')" style="background:none;border:none;color:#ef4444;font-size:.7rem;cursor:pointer">\U0001F5D1\uFE0F</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function saveBlogPost() {
+  var title = document.getElementById('blog-title').value.trim();
+  var content = document.getElementById('blog-content').value.trim();
+  var cat = document.getElementById('blog-cat').value;
+  var msg = document.getElementById('blog-msg');
+  if (!title || !content) { msg.style.color = '#ef4444'; msg.textContent = '\u26A0\uFE0F العنوان والمحتوى مطلوبان'; return; }
+  BLOG_POSTS.push({ title: title, content: content, cat: cat, date: new Date().toLocaleDateString() });
+  localStorage.setItem('az_blog_posts', JSON.stringify(BLOG_POSTS));
+  document.getElementById('blog-title').value = '';
+  document.getElementById('blog-content').value = '';
+  msg.style.color = '#22c55e'; msg.textContent = '\u2705 تم نشر المقال بنجاح!';
+  renderBlog();
+  setTimeout(function() { document.getElementById('blog-editor').style.display = 'none'; msg.textContent = ''; }, 2000);
+}
+
+function deleteBlogPost(idx) {
+  if (!confirm('حذف هذا المقال؟')) return;
+  BLOG_POSTS.splice(idx, 1);
+  localStorage.setItem('az_blog_posts', JSON.stringify(BLOG_POSTS));
+  renderBlog();
+}
+
+window.addEventListener('load', function() { renderBlog(); });
+
+/* ══ SMART GREETING — v26 ══ */
+function showSmartGreeting() {
+  var hour = new Date().getHours();
+  var greeting = '';
+  var emoji = '';
+  if (hour >= 5 && hour < 12) { greeting = 'صباح الخير'; emoji = '\U0001F305'; }
+  else if (hour >= 12 && hour < 17) { greeting = 'يوم مبارك'; emoji = '\u2600\uFE0F'; }
+  else if (hour >= 17 && hour < 21) { greeting = 'مساء الخير'; emoji = '\U0001F307'; }
+  else { greeting = 'مساء الورد'; emoji = '\U0001F319'; }
+
+  var name = '';
+  try { var s = JSON.parse(localStorage.getItem('az_session') || '{}'); name = s.name || ''; } catch(e) {}
+  var msg = emoji + ' ' + greeting + (name ? '، ' + name : '') + ' — أهلًا بك في أكسيوم زونز';
+
+  var target = document.querySelector('.az-search-wrap');
+  if (target) {
+    var el = document.createElement('div');
+    el.id = 'greeting-msg';
+    el.style.cssText = 'font-family:"Cormorant",serif;font-size:1.1rem;color:var(--gold);margin-bottom:12px;opacity:0;animation:fup .6s ease 2.8s forwards';
+    el.textContent = msg;
+    target.parentNode.insertBefore(el, target);
+  }
+}
+
+/* ══ KEYBOARD SHORTCUTS — v26 ══ */
+document.addEventListener('keydown', function(e) {
+  if (e.altKey && e.key === '1') { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+  if (e.altKey && e.key === '2') { e.preventDefault(); azV4GoTo('platforms'); }
+  if (e.altKey && e.key === '3') { e.preventDefault(); azV4GoTo('pricing'); }
+  if (e.altKey && e.key === '4') { e.preventDefault(); azV4GoTo('contact'); }
+  if (e.altKey && e.key === '5') { e.preventDefault(); azV4GoTo('blog'); }
+  if (e.altKey && e.key === 'l') { e.preventDefault();
+    var next = { 'ar':'en', 'en':'fr', 'fr':'ar' };
+    var current = document.documentElement.lang || 'ar';
+    handleLang(next[current] || 'en');
+  }
+  if (e.altKey && e.key === 'd') { e.preventDefault(); azV4Theme(); }
+});
+
+/* تفعيل التحميل البطيء للخلفية */
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var svg = document.querySelector('.geo-bg svg');
+    if (svg) svg.classList.add('loaded');
+  }, 600);
+});
 
 </script>
 
