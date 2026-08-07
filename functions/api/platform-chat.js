@@ -28,7 +28,12 @@ export async function onRequestPost(context) {
   }
 
   const question = String((body && body.question) || '').slice(0, 500); // حد أقصى للطول يمنع إساءة استخدام النيورونات
-  const system = String((body && body.system) || 'Answer under 80 words.');
+  const platform = String((body && body.platform) || 'general').slice(0, 40);
+  // ⚠️ تم تثبيت system من جهة السيرفر بدل قبوله من الزائر مباشرة — يمنع محاولات
+  // إعادة توجيه الشات ليقول كلام غير مرتبط بالمنصة أو غير مناسب باسم أكسيوم زونز
+  const system = 'You are the official assistant for the Axiom Zones platform "' + platform + '". ' +
+    'Answer only questions related to this platform and its features, in a professional, concise tone, under 80 words. ' +
+    'If asked something unrelated or inappropriate, politely redirect to the platform topic.';
 
   if (!question) {
     return new Response(JSON.stringify({ ok: false, error: 'missing_question' }), { status: 400, headers });
