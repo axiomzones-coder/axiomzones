@@ -2883,7 +2883,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <h2 class="sh" data-i18n="s.ch">Let's Build<br/><em style="color:var(--gold-p);font-style:italic">Together</em></h2>
         <p class="ssub" data-i18n="s.cp">Our global team is ready to answer your questions and launch lasting strategic partnerships.</p>
         <div class="clnks">
-          <a href="mailto:info@axiomzones.com" class="clnk" id="contact-email-link"><div class="cli" aria-hidden="true">📧</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.el">Email</div><span id="contact-email-text">info@axiomzones.com</span></div></a>
+          <a href="mailto:contact@axiomzones.com" class="clnk" id="contact-email-link"><div class="cli" aria-hidden="true">📧</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.el">Email</div><span id="contact-email-text">contact@axiomzones.com</span></div></a>
           <a href="https://wa.me/1" class="clnk" id="contact-whatsapp-link"><div class="cli" aria-hidden="true">✆</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">WhatsApp</div><span id="contact-whatsapp-text">Available globally</span></div></a>
           <a href="https://linkedin.com/company/axiomzones" class="clnk" rel="noopener"><div class="cli" aria-hidden="true">in</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace">LinkedIn</div>Axiom Zones</div></a>
           <div class="clnk" style="cursor:default"><div class="cli" aria-hidden="true">🌐</div><div><div style="font-size:.72rem;color:var(--t3);margin-bottom:2px;font-family:'DM Mono',monospace" data-i18n="c.hql">Headquarters</div><span data-i18n="c.hqv">Global — Serving 195 Countries</span></div></div>
@@ -2905,6 +2905,49 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <button class="bsub" onclick="submitForm()" data-i18n="f.send">Send Message ✦</button>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SUPPORT — نظام دعم حقيقي ══ -->
+<section id="support" class="sec" aria-label="Support" style="border-top:1px solid rgba(255,255,255,.05)">
+  <div style="max-width:640px;margin:0 auto;padding:0 28px">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px">🎧 مركز الدعم</div>
+      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700">احتاج <em style="font-weight:300;font-style:italic;color:var(--t2)">مساعدة؟</em></h2>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-bottom:20px;justify-content:center;flex-wrap:wrap">
+      <button class="db2" id="sup-tab-new" onclick="azSupSwitchTab('new')" style="padding:9px 18px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#c9a84c">📩 تذكرة جديدة</button>
+      <button class="db2" id="sup-tab-check" onclick="azSupSwitchTab('check')" style="padding:9px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--t2)">🔍 تتبّع تذكرة</button>
+      <a id="sup-whatsapp-link" href="#" target="_blank" style="display:none;padding:9px 18px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#22c55e;border-radius:8px;text-decoration:none;font-size:.85rem;font-family:'Syne',sans-serif">💬 واتساب فوري (عاجل)</a>
+    </div>
+
+    <!-- نموذج تذكرة جديدة -->
+    <div id="sup-panel-new" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <input class="di" id="sup-name" placeholder="اسمك"/>
+        <input class="di" id="sup-email" type="email" placeholder="إيميلك"/>
+      </div>
+      <select class="di" id="sup-category" style="margin-bottom:10px">
+        <option value="general">💬 استفسار عام</option>
+        <option value="technical">🛠️ مشكلة تقنية في استخدام أداة</option>
+        <option value="financial">💰 مشكلة في الدفع أو الاشتراك</option>
+      </select>
+      <input class="di" id="sup-subject" placeholder="عنوان المشكلة (سطر واحد)" style="margin-bottom:10px"/>
+      <textarea class="di" id="sup-message" rows="4" placeholder="اشرح المشكلة بالتفصيل..." style="margin-bottom:14px"></textarea>
+      <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSupmitTicket()">إرسال التذكرة</button>
+      <div id="sup-submit-msg" style="margin-top:10px;font-size:.82rem"></div>
+    </div>
+
+    <!-- تتبّع تذكرة -->
+    <div id="sup-panel-check" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <input class="di" id="sup-check-id" placeholder="رقم التذكرة (SUP-XXXX-XXXX)" style="margin-bottom:0"/>
+        <input class="di" id="sup-check-email" type="email" placeholder="إيميلك" style="margin-bottom:0"/>
+      </div>
+      <button class="bsub" style="width:auto;padding:10px 24px" onclick="azCheckTicketStatus()">تحقق من الحالة</button>
+      <div id="sup-check-result" style="margin-top:16px"></div>
     </div>
   </div>
 </section>
@@ -3141,7 +3184,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div>
         <div class="flogo"><span class="flg">AXIOM</span> <span style="color:var(--t3)">ZONES</span></div>
         <p class="fbrand" data-i18n="ft.brand">Global digital venture studio — building world-class technology platforms that create real impact across vital industries, for every market on earth.</p>
-        <div style="margin-top:14px;font-size:.72rem;color:var(--t3);font-family:'DM Mono',monospace">🌐 <span id="footer-domain-text">axiomzones.com</span> &nbsp;·&nbsp; 📧 <span id="footer-email-text">info@axiomzones.com</span></div>
+        <div style="margin-top:14px;font-size:.72rem;color:var(--t3);font-family:'DM Mono',monospace">🌐 <span id="footer-domain-text">axiomzones.com</span> &nbsp;·&nbsp; 📧 <span id="footer-email-text">contact@axiomzones.com</span></div>
       </div>
       <div class="fcol"><div class="fct">Platforms</div>
 <div id="footer-platforms-list" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:2px"><a onclick="azV4Toast('Loading...')">🔮 Prism Suite</a><a onclick="azV4Toast('Loading...')">👁️ Kashf</a><a onclick="azV4Toast('Loading...')">👔 UniUber</a><a onclick="azV4Toast('Loading...')">⚖️ Mizan Pro</a></div>
@@ -3247,6 +3290,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="marketing" onclick="swD('marketing',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('marketing',this);}"><span>📢</span><span>Marketing</span></div>
       <div class="dmi" data-sec="licenses" onclick="swD('licenses',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('licenses',this);}"><span>🔑</span><span>Licenses</span></div>
       <div class="dmi" data-sec="notifications" onclick="swD('notifications',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('notifications',this);}"><span>🔔</span><span>Notifications</span></div>
+      <div class="dmi" data-sec="support" onclick="swD('support',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('support',this);}"><span>🎧</span><span>Support</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
       <div class="dmi" data-sec="promos" onclick="swD('promos',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('promos',this);}"><span>🎉</span><span>Promotions</span></div>
@@ -3285,6 +3329,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
       <div class="dsec on" id="ds-overview">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Imperial Dashboard <span style="color:var(--gold)">✦</span></h2>
+        <div id="system-health-banner" style="display:none;margin-bottom:18px;padding:14px 18px;border-radius:12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);font-size:.84rem;color:#f59e0b"></div>
         <div class="kgrid">
           <div class="kc"><div class="kl">Subscribers</div><div class="kv gv" id="d-subs">—</div><div class="kch" id="d-subs-ch" style="color:var(--t3)">—</div></div>
           <div class="kc"><div class="kl">MRR</div><div class="kv gv" id="d-mrr">—</div><div class="kch ku">↑ 8.3%</div></div>
@@ -3350,10 +3395,11 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div style="display:flex;gap:7px"><input id="subs-search-input" class="di" style="width:190px;margin-bottom:0" placeholder="🔍 Search..." type="text" oninput="azFilterSubscribers(this.value)"/><button class="db2" onclick="azOpenAddSubModal()">+ New</button></div>
         </div>
         <div id="add-sub-modal" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
             <input id="new-sub-name" class="di" placeholder="Name" style="margin-bottom:0"/>
             <input id="new-sub-email" class="di" type="email" placeholder="Email" style="margin-bottom:0"/>
             <select id="new-sub-plan" class="di" style="margin-bottom:0"><option value="enterprise">Enterprise</option><option value="pro">Professional</option><option value="free">Free Trial</option><option value="charity">Impact</option></select>
+            <select id="new-sub-platform" class="di" style="margin-bottom:0"><option value="all">كل المنصات</option></select>
           </div>
           <div style="display:flex;gap:8px">
             <button class="bsub" style="flex:1;padding:8px" onclick="azAddManualSubscriber()">💾 إضافة مشترك</button>
@@ -3456,8 +3502,11 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div class="kc" style="opacity:.55"><div class="kl">LTV</div><div class="kv gv" id="d-ltv">—</div><div class="kch" style="color:var(--t3)">Demo — يحتاج تتبّع churn</div></div>
           <div class="kc" style="opacity:.55"><div class="kl">CAC</div><div class="kv" style="color:#60a5fa" id="d-cac">—</div><div class="kch" style="color:var(--t3)">Demo — يحتاج بيانات تسويق</div></div>
         </div>
-        <div class="dcard" style="opacity:.55"><div class="dct">Revenue by Platform <span style="font-size:.6rem;color:var(--t3);font-weight:400">(Demo — يحتاج نظام دفع حقيقي)</span></div>
-          <div style="font-size:.78rem;color:var(--t3);padding:20px 0;text-align:center">غير متاح بعد — يحتاج ربط نظام دفع فعلي (Dodo Payments) لتتبّع أي إيراد حقيقي لكل منصة</div>
+        <div class="dcard"><div class="dct">Revenue by Platform <span style="font-size:.6rem;color:var(--t3);font-weight:400">(حقيقي — محسوب من التراخيص الصادرة فعلياً)</span></div>
+          <div id="revenue-by-platform" style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
+          </div>
+          <p style="font-size:.68rem;color:var(--t3);margin-top:10px">محسوب من التراخيص الصادرة + المشتركين اليدويين المرتبطين بمنصة. تراخيص/مشتركين "كل المنصات" يُوزَّعون بالتساوي تقديرياً على المنصات المباشرة حالياً. لا يشمل بعد المشتركين عبر التسجيل الذاتي المباشر (AZ_USERS_KV) غير المرتبطين بترخيص أو منصة محددة.</p>
         </div>
       </div>
       <!-- MARKETING -->
@@ -3479,9 +3528,9 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">License Manager <span style="color:var(--gold)">✦</span></h2>
         <div class="kgrid">
           <div class="kc"><div class="kl">Active Licenses</div><div class="kv gv" id="d-lic">—</div><div class="kch" id="d-lic-ch" style="color:var(--t3)">—</div></div>
-          <div class="kc"><div class="kl">Expiring (30d)</div><div class="kv" style="color:#f59e0b">14</div><div class="kch kd">⚠ Needs attention</div></div>
-          <div class="kc"><div class="kl">Suspended</div><div class="kv" style="color:#f87171">3</div><div class="kch kd">Non-payment</div></div>
-          <div class="kc"><div class="kl">Charity (Impact)</div><div class="kv gv">6</div><div class="kch ku">↑ 2 new</div></div>
+          <div class="kc"><div class="kl">Expiring (30d)</div><div class="kv" style="color:#f59e0b" id="d-lic-expiring">—</div><div class="kch kd">⚠ Needs attention</div></div>
+          <div class="kc"><div class="kl">Suspended</div><div class="kv" style="color:#f87171" id="d-lic-suspended">—</div><div class="kch kd">Revoked</div></div>
+          <div class="kc"><div class="kl">Charity (Impact)</div><div class="kv gv" id="d-lic-charity">—</div><div class="kch ku">من التراخيص الحقيقية</div></div>
         </div>
         <div class="dcard">
           <div class="dct" style="display:flex;justify-content:space-between;align-items:center">
@@ -3576,6 +3625,12 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
               <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
             </div>
           </div>
+          <div class="dcard" style="margin-top:14px;border:1px solid rgba(56,189,248,.25)">
+            <div class="dct">📬 Inbox — Contact & Subscribe Interest <span id="leads-unread-count" style="color:#38bdf8"></span></div>
+            <div id="contact-leads-log" style="display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto">
+              <div style="font-size:.78rem;color:var(--t3)">Loading...</div>
+            </div>
+          </div>
         </div>
         <div class="dcard">
           <div class="dct">Notification Rules</div>
@@ -3660,6 +3715,29 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
               <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:.78rem;color:var(--t2)">Bandwidth</span><span style="font-size:.78rem;color:var(--uni-bright);font-family:'DM Mono',monospace">45%</span></div><div class="pbsm"><div class="pfsm uni-fill" style="width:45%"></div></div></div>
             </div>
           </div>
+        </div>
+      </div>
+      <!-- SUPPORT TICKETS -->
+      <div class="dsec" id="ds-support">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Support Tickets <span style="color:var(--gold)">🎧</span></h2>
+
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+          <select class="di" id="sup-filter-category" style="margin-bottom:0;width:auto" onchange="azRenderSupportTickets()">
+            <option value="all">كل الفئات</option>
+            <option value="financial">💰 مالية</option>
+            <option value="technical">🛠️ تقنية</option>
+            <option value="general">💬 عامة</option>
+          </select>
+          <select class="di" id="sup-filter-status" style="margin-bottom:0;width:auto" onchange="azRenderSupportTickets()">
+            <option value="all">كل الحالات</option>
+            <option value="open">🟡 مفتوحة</option>
+            <option value="answered">🟢 تم الرد</option>
+            <option value="closed">⚪ مُغلقة</option>
+          </select>
+        </div>
+
+        <div id="support-tickets-list" style="display:flex;flex-direction:column;gap:10px">
+          <div style="color:var(--t3);font-size:.8rem">Loading...</div>
         </div>
       </div>
       <!-- PROMOTIONS -->
@@ -4911,7 +4989,7 @@ async function azLoadCompanyInfo(){
     var waBox = document.getElementById('ci-whatsapp-list');
     if(emailsBox){
       emailsBox.innerHTML = '';
-      var emails = (ci && ci.emails && ci.emails.length) ? ci.emails : ['info@axiomzones.com'];
+      var emails = (ci && ci.emails && ci.emails.length) ? ci.emails : ['contact@axiomzones.com'];
       emails.forEach(function(e){ azAddContactRow('ci-emails-list','email@company.com', e); });
     }
     if(waBox){
@@ -5371,6 +5449,276 @@ function azApplyActivePromo(promos){
     .catch(function(){});
 })();
 
+/* ══ SUPPORT TICKETS DASHBOARD — نظام حقيقي كامل ══ */
+var AZ_TICKETS_CACHE = [];
+
+var AZ_CANNED_REPLIES = {
+  cancel: 'تم استلام طلبك لإلغاء الاشتراك. سنقوم بإيقاف التجديد التلقائي فوراً، وستظل المنصة متاحة لك حتى نهاية الفترة المدفوعة الحالية.',
+  refund: 'نعتذر عن التجربة. طبقاً لسياستنا، يمكن استرداد المبلغ كاملاً خلال 14 يوماً من أول دفعة إذا لم تُستخدم الميزات المدفوعة بشكل جوهري. سنقوم بمعالجة طلبك خلال 3-5 أيام عمل.',
+  howto: 'يسعدنا مساعدتك! خطوات الاستخدام موجودة بالتفصيل في صفحة المنصة نفسها. لو احتجت شرحاً أكثر تفصيلاً لخطوة معينة، وضّح لنا أي جزء بالضبط وسنرسل لك دليلاً مصوراً.',
+  delay: 'نعتذر عن التأخير في الرد. نحن نراجع طلبك الآن وسنوافيك بالتفاصيل الكاملة في أقرب وقت ممكن.',
+};
+
+function azInsertCannedReply(key){
+  var textarea = document.getElementById('tk-reply-text');
+  if(textarea) textarea.value = AZ_CANNED_REPLIES[key] || '';
+}
+
+async function azLoadSupportTickets(){
+  var el = document.getElementById('support-tickets-list');
+  if(!el) return;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_TICKETS_CACHE = config.supportTickets || [];
+    azRenderSystemHealth();
+    azRenderSupportTickets();
+  }catch(e){
+    el.innerHTML = '<div style="color:#f87171;font-size:.8rem">فشل تحميل التذاكر</div>';
+  }
+}
+
+function azRenderSupportTickets(){
+  var el = document.getElementById('support-tickets-list');
+  if(!el) return;
+  var catFilter = document.getElementById('sup-filter-category').value;
+  var statusFilter = document.getElementById('sup-filter-status').value;
+
+  var filtered = AZ_TICKETS_CACHE.filter(function(t){
+    if(catFilter !== 'all' && t.category !== catFilter) return false;
+    if(statusFilter !== 'all' && t.status !== statusFilter) return false;
+    return true;
+  });
+
+  /* التذاكر العاجلة (مالية) أولاً دائماً */
+  filtered.sort(function(a,b){
+    if(a.priority === 'urgent' && b.priority !== 'urgent') return -1;
+    if(a.priority !== 'urgent' && b.priority === 'urgent') return 1;
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
+  if(!filtered.length){
+    el.innerHTML = '<div style="color:var(--t3);font-size:.8rem">لا توجد تذاكر مطابقة</div>';
+    return;
+  }
+
+  var catIcons = { financial:'💰', technical:'🛠️', general:'💬' };
+  var statusLabels = { open:'🟡 مفتوحة', answered:'🟢 تم الرد', closed:'⚪ مُغلقة' };
+
+  el.innerHTML = filtered.map(function(t){
+    var idx = AZ_TICKETS_CACHE.indexOf(t);
+    var urgentBadge = t.priority === 'urgent' ? '<span class="bdg br" style="margin-inline-start:6px">عاجل</span>' : '';
+    var repliesHtml = (t.replies||[]).map(function(r){
+      return '<div style="margin-top:6px;padding:8px;background:rgba(255,255,255,.03);border-radius:8px;font-size:.78rem"><strong>'+(r.from==='owner'?'🏛️ أنت':t.name)+':</strong> '+r.message+'</div>';
+    }).join('');
+    var contextBits = [];
+    if(t.platform) contextBits.push('منصة: '+t.platform);
+    if(t.plan){
+      var planUsd = MANUAL_PLAN_TO_USD[t.plan] || 0;
+      contextBits.push('خطة: '+t.plan+(planUsd ? ' ('+fmtPrice(planUsd, CURR)+'/mo)' : ''));
+    }
+    if(t.country) contextBits.push(t.country);
+    return '<div class="dcard" style="'+(t.status==='closed'?'opacity:.6':'')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px">'+
+        '<div><strong>'+(catIcons[t.category]||'💬')+' '+t.subject+'</strong>'+urgentBadge+'</div>'+
+        '<span style="font-size:.72rem;color:var(--t3);white-space:nowrap">'+t.id+'</span>'+
+      '</div>'+
+      '<div style="font-size:.72rem;color:var(--t3);margin-bottom:8px">'+t.name+' ('+t.email+') · '+statusLabels[t.status]+(contextBits.length?' · '+contextBits.join(' · '):'')+' · '+new Date(t.createdAt).toLocaleString()+'</div>'+
+      '<div style="font-size:.82rem;color:var(--t2)">'+t.message+'</div>'+
+      repliesHtml +
+      (t.status !== 'closed' ? (
+        '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+
+          '<div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">'+
+            '<button class="db2" style="padding:3px 9px;font-size:.68rem" onclick="azInsertCannedReply(\'cancel\')">رد: إلغاء</button>'+
+            '<button class="db2" style="padding:3px 9px;font-size:.68rem" onclick="azInsertCannedReply(\'refund\')">رد: استرجاع</button>'+
+            '<button class="db2" style="padding:3px 9px;font-size:.68rem" onclick="azInsertCannedReply(\'howto\')">رد: شرح استخدام</button>'+
+            '<button class="db2" style="padding:3px 9px;font-size:.68rem" onclick="azInsertCannedReply(\'delay\')">رد: تأخير</button>'+
+          '</div>'+
+          '<textarea class="di" id="tk-reply-text-'+idx+'" rows="2" placeholder="اكتب ردك..." style="margin-bottom:6px"></textarea>'+
+          '<div style="display:flex;gap:6px">'+
+            '<button class="bsub" style="padding:6px 14px;font-size:.78rem" onclick="azReplyToTicket('+idx+')">إرسال الرد</button>'+
+            '<button class="db2" style="padding:6px 14px;font-size:.78rem" onclick="azCloseTicket('+idx+')">إغلاق التذكرة</button>'+
+          '</div>'+
+        '</div>'
+      ) : '') +
+    '</div>';
+  }).join('');
+
+  /* ربط الردود الجاهزة بالـtextarea الصحيح لكل تذكرة (idx ديناميكي) */
+  window.azInsertCannedReply = function(key){
+    var active = document.activeElement;
+    var textareas = document.querySelectorAll('[id^="tk-reply-text-"]');
+    /* أبسط حل: نملأ آخر textarea تم التركيز عليه، أو أول واحد ظاهر لو مفيش تركيز */
+    var target = (active && active.tagName === 'TEXTAREA') ? active : textareas[0];
+    if(target) target.value = AZ_CANNED_REPLIES[key] || '';
+  };
+}
+
+async function azReplyToTicket(idx){
+  var textarea = document.getElementById('tk-reply-text-'+idx);
+  var message = textarea ? textarea.value.trim() : '';
+  if(!message){ toast('⚠️ اكتب الرد أولاً', 'error'); return; }
+
+  var ticket = AZ_TICKETS_CACHE[idx];
+  if(!ticket){ toast('⚠️ تذكرة غير موجودة', 'error'); return; }
+  ticket.replies = ticket.replies || [];
+  ticket.replies.push({ from:'owner', message: message, at: new Date().toISOString() });
+  ticket.status = 'answered';
+
+  await azSaveTickets('✅ تم إرسال الرد وحُفظ في التذكرة');
+}
+
+async function azCloseTicket(idx){
+  var ticket = AZ_TICKETS_CACHE[idx];
+  if(!ticket) return;
+  ticket.status = 'closed';
+  await azSaveTickets('✅ تم إغلاق التذكرة');
+}
+
+async function azSaveTickets(successMsg){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.supportTickets = AZ_TICKETS_CACHE;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast(successMsg, 'success');
+      azRenderSupportTickets();
+    } else {
+      toast('⚠️ فشل الحفظ', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال بالخادم', 'error');
+  }
+}
+
+/* ══ REVENUE BY PLATFORM — حساب حقيقي من config.licenses ══ */
+var LICENSE_PLAN_TO_USD = { 'Enterprise': BASE_USD.ent, 'Professional': BASE_USD.pro, 'Impact': BASE_USD.charity, 'Free Trial': 0 };
+var MANUAL_PLAN_TO_USD = { enterprise: BASE_USD.ent, ent: BASE_USD.ent, pro: BASE_USD.pro, charity: BASE_USD.charity, free: 0 };
+
+function azRenderRevenueByPlatform(){
+  var el = document.getElementById('revenue-by-platform');
+  if(!el) return;
+
+  var activeLicenses = AZ_LICENSES_CACHE.filter(function(l){ return azLicenseStatus(l) === 'active'; });
+  var manualSubs = (AZ_SUBS_CACHE || []).filter(function(u){ return u.manual === true && u.platform; });
+  var livePlatformKeys = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; });
+
+  if(!livePlatformKeys.length){
+    el.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد منصات مباشرة حالياً</div>';
+    return;
+  }
+
+  var revenueByKey = {};
+  livePlatformKeys.forEach(function(k){ revenueByKey[k] = 0; });
+
+  activeLicenses.forEach(function(lic){
+    var monthlyUsd = LICENSE_PLAN_TO_USD[lic.plan] || 0;
+    if(!monthlyUsd) return;
+    if(lic.platform === 'All Platforms'){
+      var share = monthlyUsd / livePlatformKeys.length;
+      livePlatformKeys.forEach(function(k){ revenueByKey[k] += share; });
+    } else {
+      /* محاولة مطابقة اسم المنصة في الترخيص (نصي: "UniUber Only") بمفتاح AZ_PLATFORMS_DATA */
+      var matched = livePlatformKeys.find(function(k){
+        return lic.platform && lic.platform.toLowerCase().indexOf(k.toLowerCase()) !== -1;
+      });
+      if(matched) revenueByKey[matched] += monthlyUsd;
+    }
+  });
+
+  /* دمج المشتركين اليدويين المرتبطين بمنصة محددة — توحيد المصدر بدل تقدير منفصل */
+  manualSubs.forEach(function(sub){
+    var monthlyUsd = MANUAL_PLAN_TO_USD[sub.plan] || 0;
+    if(!monthlyUsd) return;
+    if(sub.platform === 'all'){
+      var share = monthlyUsd / livePlatformKeys.length;
+      livePlatformKeys.forEach(function(k){ revenueByKey[k] += share; });
+    } else if(revenueByKey.hasOwnProperty(sub.platform)){
+      revenueByKey[sub.platform] += monthlyUsd;
+    }
+  });
+
+  var total = Object.values(revenueByKey).reduce(function(a,b){ return a+b; }, 0);
+  var c = CURR;
+
+  if(total === 0){
+    el.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا يوجد إيراد من تراخيص نشطة حالياً</div>';
+    return;
+  }
+
+  var sorted = livePlatformKeys.slice().sort(function(a,b){ return revenueByKey[b] - revenueByKey[a]; });
+  el.innerHTML = sorted.map(function(k){
+    var val = revenueByKey[k];
+    var pct = total > 0 ? Math.round((val/total)*100) : 0;
+    var p = AZ_PLATFORMS_DATA[k];
+    return '<div><div style="display:flex;justify-content:space-between;margin-bottom:3px">'+
+      '<span style="font-size:.78rem;color:var(--t2)">'+(p.icon||'🔷')+' '+(p.name_en||k)+'</span>'+
+      '<span style="color:var(--gold);font-size:.78rem;font-family:\'DM Mono\',monospace">'+fmtPrice(val,c)+'/mo ('+pct+'%)</span></div>'+
+      '<div class="pbsm"><div class="pfsm" style="width:'+pct+'%"></div></div></div>';
+  }).join('');
+}
+
+function azRenderLicenseKPIs(){
+  var expiringEl = document.getElementById('d-lic-expiring');
+  var suspendedEl = document.getElementById('d-lic-suspended');
+  var charityEl = document.getElementById('d-lic-charity');
+  if(!expiringEl && !suspendedEl && !charityEl) return;
+
+  var now = new Date();
+  var in30 = new Date(now.getTime() + 30*24*60*60*1000);
+
+  var expiringCount = AZ_LICENSES_CACHE.filter(function(l){
+    return azLicenseStatus(l) === 'active' && new Date(l.expiresAt) <= in30;
+  }).length;
+  var suspendedCount = AZ_LICENSES_CACHE.filter(function(l){ return l.status === 'revoked'; }).length;
+  var charityCount = AZ_LICENSES_CACHE.filter(function(l){
+    return l.plan === 'Impact' && azLicenseStatus(l) === 'active';
+  }).length;
+
+  if(expiringEl) expiringEl.textContent = expiringCount;
+  if(suspendedEl) suspendedEl.textContent = suspendedCount;
+  if(charityEl) charityEl.textContent = charityCount;
+}
+
+/* ══ SYSTEM HEALTH — بانر استباقي يجمع كل الإشارات الحقيقية الموجودة فعلاً (لا بيانات مُختلَقة) ══ */
+function azRenderSystemHealth(){
+  var el = document.getElementById('system-health-banner');
+  if(!el) return;
+
+  var alerts = [];
+
+  var now = new Date();
+  var in7 = new Date(now.getTime() + 7*24*60*60*1000);
+  var expiringSoon = (AZ_LICENSES_CACHE || []).filter(function(lic){
+    return azLicenseStatus(lic) === 'active' && new Date(lic.expiresAt) <= in7;
+  }).length;
+  if(expiringSoon > 0) alerts.push('🔑 '+expiringSoon+' ترخيص ينتهي خلال 7 أيام');
+
+  var urgentTickets = (AZ_TICKETS_CACHE || []).filter(function(t){
+    return t.status === 'open' && t.priority === 'urgent';
+  }).length;
+  if(urgentTickets > 0) alerts.push('🎧 '+urgentTickets+' تذكرة دعم مالية عاجلة مفتوحة');
+
+  var unreadLeads = 0;
+  try{ unreadLeads = (window.__azLastLeadsCount || 0); }catch(e){}
+  if(unreadLeads > 0) alerts.push('📬 '+unreadLeads+' رسالة/رغبة اشتراك جديدة لم تُقرأ');
+
+  if(!alerts.length){
+    el.style.display = 'none';
+    return;
+  }
+  el.style.display = 'block';
+  el.innerHTML = '⚠️ <strong>يحتاج انتباهك:</strong> ' + alerts.join(' · ');
+}
+
 function azRenderNotifKPIs(){
   var unreadEl = document.getElementById('notif-unread-kv');
   var unreadChEl = document.getElementById('notif-unread-ch');
@@ -5439,12 +5787,21 @@ function azFilterSubscribers(query){
 function azOpenAddSubModal(){
   var modal = document.getElementById('add-sub-modal');
   if(modal) modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+  var platSel = document.getElementById('new-sub-platform');
+  if(platSel && platSel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+    Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).forEach(function(k){
+      var opt = document.createElement('option');
+      opt.value = k; opt.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+      platSel.appendChild(opt);
+    });
+  }
 }
 
 async function azAddManualSubscriber(){
   var name = document.getElementById('new-sub-name').value.trim();
   var email = document.getElementById('new-sub-email').value.trim();
   var plan = document.getElementById('new-sub-plan').value;
+  var platform = document.getElementById('new-sub-platform').value;
   var msg = document.getElementById('new-sub-msg');
   if(!name || !email || !email.includes('@')){ msg.style.color='#f87171'; msg.textContent='الاسم والإيميل الصحيح مطلوبان'; return; }
   msg.style.color='var(--t3)'; msg.textContent='جاري الحفظ...';
@@ -5454,7 +5811,7 @@ async function azAddManualSubscriber(){
     var data = await res.json();
     var config = (data && data.config) || {};
     config.manualSubscribers = config.manualSubscribers || [];
-    config.manualSubscribers.push({ name: name, email: email, plan: plan, revenue: 0, manual: true, addedAt: new Date().toISOString() });
+    config.manualSubscribers.push({ name: name, email: email, plan: plan, platform: platform, revenue: 0, manual: true, addedAt: new Date().toISOString() });
     var saveRes = await fetch('/api/config-set', {
       method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ config: config })
@@ -5707,6 +6064,8 @@ function openDashUnlocked(){
   azLoadLicenses();
   azLoadContentEditor();
   azLoadBroadcastLog();
+  azLoadContactLeads();
+  azLoadSupportTickets();
   azLoadRealSubscribers();
 }
 
@@ -5748,7 +6107,51 @@ function swD(sec,el){
   if(sec === 'logs') azLoadSystemLogs();
   if(sec === 'settings'){ azLoadMaintenanceSettings(); azLoadCompanyInfo(); azLoadAfiSources(); }
   if(sec === 'promos') azLoadPromotions();
+  if(sec === 'support') azLoadSupportTickets();
 }
+/* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
+async function azSavePlatformField(key, field, value, logDetail){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    if(!config.platforms) config.platforms = {};
+    if(!config.platforms[key]) config.platforms[key] = {};
+    config.platforms[key][field] = value;
+
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: logDetail || ('Changed '+field+' for platform "'+key+'" to '+value) })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    return !!(saveRes.ok && saveData && saveData.ok);
+  }catch(e){ return false; }
+}
+
+async function azToggleSubPlatformDisabled(key, el){
+  el.disabled = true;
+  var ok = await azSavePlatformField(key, 'subPlatformDisabled', el.checked);
+  if(ok){ toast(el.checked ? '🚫 المنصة الفرعية ' + key + ' معطّلة الآن' : '✅ المنصة الفرعية ' + key + ' فعّالة تاني'); }
+  else { el.checked = !el.checked; toast('فشل الحفظ — حاول تاني'); }
+  el.disabled = false;
+}
+
+function azToggleBadgeMode(key, mode){
+  var inputEl = document.getElementById('badge-input-' + key);
+  if(inputEl) inputEl.style.display = (mode === 'custom') ? 'block' : 'none';
+  if(mode === 'auto') azSavePlatformField(key, 'cardBadgeText', '').then(function(ok){
+    if(ok) toast('رجع النص التلقائي لـ' + key);
+  });
+}
+
+async function azSaveBadgeText(key, el){
+  var val = el.value.trim();
+  var ok = await azSavePlatformField(key, 'cardBadgeText', val);
+  if(ok) toast('✅ تم حفظ نص البطاقة لـ' + key);
+  else toast('فشل الحفظ — حاول تاني');
+}
+
 async function toggleP(key, el){
   var checked = el.checked;
   el.disabled = true;
@@ -5805,18 +6208,155 @@ async function azLoadPlatformToggles(){
   var platforms = config.platforms || {};
 
   var keys = Object.keys(AZ_PLATFORMS_DATA);
-  grid.innerHTML = keys.map(function(key){
+  var bulkBar = '<div id="platform-bulk-bar" style="display:none;margin-bottom:14px;padding:10px 14px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">'+
+    '<span style="font-size:.8rem;color:var(--t2)"><span id="bulk-count">0</span> منصة مختارة</span>'+
+    '<button class="db2" style="padding:5px 12px;font-size:.75rem" onclick="azBulkApply(\'visible\')">👁️ إظهار الكل</button>'+
+    '<button class="db2" style="padding:5px 12px;font-size:.75rem" onclick="azBulkApply(\'hidden\')">🙈 إخفاء الكل</button>'+
+    '<button class="db2" style="padding:5px 12px;font-size:.75rem;color:var(--t3)" onclick="azBulkClear()">إلغاء التحديد</button>'+
+  '</div>';
+
+  grid.innerHTML = bulkBar + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">' + keys.map(function(key){
     var p = AZ_PLATFORMS_DATA[key];
-    var saved = platforms[key];
-    var isActive = (saved && typeof saved.active === 'boolean') ? saved.active : (p.status === 'live');
+    var saved = platforms[key] || {};
+    var isActive = (typeof saved.active === 'boolean') ? saved.active : (p.status === 'live');
     var checkedAttr = isActive ? 'checked' : '';
-    return '<div class="dcard" style="padding:16px">'+
-      '<div style="font-size:1.2rem;margin-bottom:6px">'+(p.icon||'🔷')+'</div>'+
+    /* توافق قديم: hiddenFromHub=true بدون visibility تُعامَل كـ'hidden' */
+    var visibility = saved.visibility || (saved.hiddenFromHub === true ? 'hidden' : 'visible');
+    var isSubDisabled = saved.subPlatformDisabled === true;
+    var badgeText = saved.cardBadgeText || '';
+    var badgeMode = badgeText ? 'custom' : 'auto';
+    var scheduled = saved.scheduledVisibility || null;
+    var scheduledInfo = scheduled ? ('<div style="font-size:.66rem;color:#38bdf8;margin-top:4px">⏰ سيتحول إلى "'+(scheduled.mode==='visible'?'ظاهرة':scheduled.mode==='hidden'?'مخفية':'قائمة انتظار')+'" في '+new Date(scheduled.at).toLocaleString('ar-EG',{dateStyle:'short',timeStyle:'short'})+'</div>') : '';
+
+    return '<div class="dcard" style="padding:16px" data-plat-key="'+key+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div style="font-size:1.2rem;margin-bottom:6px">'+(p.icon||'🔷')+'</div>'+
+        '<input type="checkbox" class="plat-bulk-check" data-key="'+key+'" onchange="azBulkUpdateCount()" style="accent-color:var(--gold);width:16px;height:16px"/>'+
+      '</div>'+
       '<div style="font-weight:700;margin-bottom:2px">'+(p.name_en||key)+'</div>'+
-      '<div style="font-size:.72rem;color:var(--t2);margin-bottom:12px;font-family:\'DM Mono\',monospace">'+key+'.axiomzones.com</div>'+
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">'+
+        '<span style="font-size:.72rem;color:var(--t2);font-family:\'DM Mono\',monospace">'+key+'.axiomzones.com</span>'+
+        '<button onclick="azCopyPlatformLink(\''+key+'\')" title="نسخ الرابط" style="background:none;border:none;cursor:pointer;font-size:.75rem;padding:0">📋</button>'+
+      '</div>'+
       '<div class="twrap"><span style="font-size:.8rem;color:'+(isActive?'#4ade80':'#f87171')+'" id="plat-status-'+key+'">'+(isActive?'Active':'Inactive')+'</span><label class="tog"><input type="checkbox" '+checkedAttr+' onchange="toggleP(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
+      '<div style="margin-top:8px">'+
+        '<label class="fl" style="font-size:.68rem">👁️ حالة العرض بالرئيسية</label>'+
+        '<select class="di" style="font-size:.75rem;margin-bottom:0" onchange="azSetPlatformVisibility(\''+key+'\',this.value)">'+
+          '<option value="visible" '+(visibility==='visible'?'selected':'')+'>✅ ظاهرة عادي</option>'+
+          '<option value="hidden" '+(visibility==='hidden'?'selected':'')+'>🙈 مخفية تماماً</option>'+
+          '<option value="waitlist" '+(visibility==='waitlist'?'selected':'')+'>⏳ قريباً — قائمة انتظار</option>'+
+        '</select>'+
+      '</div>'+
+      '<div class="twrap" style="margin-top:8px"><span style="font-size:.72rem;color:var(--t2)">🔍 السماح بفهرسة جوجل (SEO)</span><label class="tog"><input type="checkbox" '+(saved.seoNoindex===true?'':'checked')+' onchange="azToggleSeoIndexing(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
+      '<div class="twrap" style="margin-top:8px"><span style="font-size:.72rem;color:var(--t2)">🚫 تعطيل المنصة الفرعية</span><label class="tog"><input type="checkbox" '+(isSubDisabled?'checked':'')+' onchange="azToggleSubPlatformDisabled(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
+      '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">'+
+        '<button class="db2" style="width:100%;padding:5px;font-size:.7rem" onclick="azOpenScheduleBox(\''+key+'\')">⏰ جدولة تغيير تلقائي</button>'+
+        '<div id="schedule-box-'+key+'" style="display:none;margin-top:6px">'+
+          '<input class="di" type="datetime-local" id="schedule-at-'+key+'" style="font-size:.72rem;margin-bottom:4px"/>'+
+          '<select class="di" id="schedule-mode-'+key+'" style="font-size:.72rem;margin-bottom:4px">'+
+            '<option value="visible">إلى: ظاهرة</option>'+
+            '<option value="hidden">إلى: مخفية</option>'+
+            '<option value="waitlist">إلى: قائمة انتظار</option>'+
+          '</select>'+
+          '<button class="bsub" style="width:100%;padding:5px;font-size:.72rem" onclick="azSaveSchedule(\''+key+'\')">حفظ الجدولة</button>'+
+        '</div>'+
+        scheduledInfo +
+      '</div>'+
+      '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+
+        '<label class="fl" style="font-size:.68rem">نص شارة البطاقة</label>'+
+        '<select class="di" style="font-size:.75rem;margin-bottom:6px" onchange="azToggleBadgeMode(\''+key+'\',this.value)">'+
+          '<option value="auto" '+(badgeMode==='auto'?'selected':'')+'>تلقائي (مباشر/قريباً)</option>'+
+          '<option value="custom" '+(badgeMode==='custom'?'selected':'')+'>نص مخصص</option>'+
+        '</select>'+
+        '<input class="di" id="badge-input-'+key+'" placeholder="مثال: 🔥 عرض خاص" value="'+badgeText.replace(/"/g,'&quot;')+'" style="font-size:.75rem;display:'+(badgeMode==='custom'?'block':'none')+'" onblur="azSaveBadgeText(\''+key+'\',this)"/>'+
+      '</div>'+
     '</div>';
-  }).join('');
+  }).join('') + '</div>';
+}
+
+/* ══ الحالات الثلاث للعرض (استبدال azToggleHiddenFromHub القديمة) ══ */
+/* ══ فهرسة جوجل — قرار مستقل تماماً عن حالة العرض (بناءً على طلب محمد الصريح) ══ */
+async function azToggleSeoIndexing(key, el){
+  el.disabled = true;
+  var allowIndexing = el.checked; /* الزرار شغّال = مسموح بالفهرسة */
+  var ok = await azSavePlatformField(key, 'seoNoindex', !allowIndexing, 'Set SEO indexing for "'+key+'" to '+(allowIndexing?'allowed':'blocked (noindex)'));
+  if(ok){ toast(allowIndexing ? '🔍 '+key+' مسموح بفهرستها في جوجل' : '🚫 '+key+' ممنوعة من الفهرسة (noindex)', 'success'); }
+  else { el.checked = !el.checked; toast('فشل الحفظ — حاول تاني', 'error'); }
+  el.disabled = false;
+}
+
+async function azSetPlatformVisibility(key, mode){
+  var labels = { visible:'ظاهرة', hidden:'مخفية', waitlist:'قائمة انتظار' };
+  var ok = await azSavePlatformField(key, 'visibility', mode, 'Set visibility of "'+key+'" to '+mode);
+  if(ok) toast('✅ '+key+' أصبحت "'+labels[mode]+'"', 'success');
+  else toast('فشل الحفظ — حاول تاني', 'error');
+}
+
+/* ══ نسخ الرابط المباشر ══ */
+function azCopyPlatformLink(key){
+  var url = 'https://'+key+'.axiomzones.com';
+  navigator.clipboard && navigator.clipboard.writeText(url);
+  toast('📋 تم نسخ الرابط: '+url, 'success');
+}
+
+/* ══ الجدولة التلقائية ══ */
+function azOpenScheduleBox(key){
+  var box = document.getElementById('schedule-box-'+key);
+  if(box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+async function azSaveSchedule(key){
+  var at = document.getElementById('schedule-at-'+key).value;
+  var mode = document.getElementById('schedule-mode-'+key).value;
+  if(!at){ toast('⚠️ حدد تاريخ ووقت أولاً', 'error'); return; }
+  var schedule = { mode: mode, at: new Date(at).toISOString() };
+  var ok = await azSavePlatformField(key, 'scheduledVisibility', schedule, 'Scheduled "'+key+'" to become '+mode+' at '+schedule.at);
+  if(ok){ toast('⏰ تم حفظ الجدولة', 'success'); azLoadPlatformToggles(); }
+  else toast('فشل الحفظ', 'error');
+}
+
+/* ══ الاختيار الجماعي (Bulk Actions) ══ */
+function azBulkUpdateCount(){
+  var checked = document.querySelectorAll('.plat-bulk-check:checked');
+  var bar = document.getElementById('platform-bulk-bar');
+  var countEl = document.getElementById('bulk-count');
+  if(countEl) countEl.textContent = checked.length;
+  if(bar) bar.style.display = checked.length > 0 ? 'flex' : 'none';
+}
+
+function azBulkClear(){
+  document.querySelectorAll('.plat-bulk-check').forEach(function(c){ c.checked = false; });
+  azBulkUpdateCount();
+}
+
+async function azBulkApply(mode){
+  var checked = Array.from(document.querySelectorAll('.plat-bulk-check:checked')).map(function(c){ return c.getAttribute('data-key'); });
+  if(!checked.length) return;
+  toast('جاري تطبيق التغيير على '+checked.length+' منصة...');
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    if(!config.platforms) config.platforms = {};
+    checked.forEach(function(key){
+      if(!config.platforms[key]) config.platforms[key] = {};
+      config.platforms[key].visibility = mode;
+    });
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Bulk visibility change to "'+mode+'" for: '+checked.join(', ') })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast('✅ تم تحديث '+checked.length+' منصة', 'success');
+      azLoadPlatformToggles();
+    } else {
+      toast('⚠️ فشل الحفظ الجماعي', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال', 'error');
+  }
 }
 
 /* ══════════════════════════════════════
@@ -5834,18 +6374,67 @@ function updatePrices(){
 /* ══════════════════════════════════════
    CONTACT + SUBSCRIBE
 ══════════════════════════════════════ */
-function submitForm(){
-  var n=document.getElementById('fn').value;
-  var e=document.getElementById('fe').value;
+async function submitForm(){
+  var n=document.getElementById('fn').value.trim();
+  var e=document.getElementById('fe').value.trim();
+  var m=document.getElementById('fm').value.trim();
   if(!n||!e){toast('Please fill required fields');return;}
-  toast('Thank you '+n+'! Message sent ✦');
-  document.getElementById('fn').value='';
-  document.getElementById('fe').value='';
-  document.getElementById('fm').value='';
+  var btn = document.querySelector('button[onclick="submitForm()"]');
+  if(btn) btn.disabled = true;
+  try{
+    var res = await fetch('/api/contact-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ kind:'contact', name:n, email:e, message:m })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      toast('✅ Thank you '+n+'! Your message has been sent — we\'ll reply soon.');
+      document.getElementById('fn').value='';
+      document.getElementById('fe').value='';
+      document.getElementById('fm').value='';
+    } else if(res.status === 429){
+      toast('⚠️ Too many messages sent — try again later');
+    } else {
+      toast('⚠️ Failed to send — please try again');
+    }
+  }catch(err){
+    toast('⚠️ Connection error — please try again');
+  }
+  if(btn) btn.disabled = false;
 }
-function sub(plan){
+async function sub(plan){
   var n={free:'Free Trial',pro:'Professional',ent:'Enterprise',charity:'Impact Charity'};
-  toast('Selected: '+(n[plan]||plan)+' Plan ✦');
+  var planLabel = n[plan]||plan;
+
+  /* تحقق من وجود حساب حقيقي مسجّل دخوله */
+  var userEmail = null, userName = null;
+  try{
+    var uRes = await fetch('/api/user-verify', { credentials:'include' });
+    var uData = await uRes.json();
+    if(uData && uData.valid && uData.user){ userEmail = uData.user.email; userName = uData.user.name; }
+  }catch(e){}
+
+  if(!userEmail){
+    toast('🔐 سجّل دخولك أو أنشئ حساباً أولاً للاشتراك في '+planLabel);
+    openLogin();
+    return;
+  }
+
+  /* الدفع الفعلي قيد التفعيل (بوابات الدفع تحت المراجعة) — نسجّل الرغبة الحقيقية بدل رسالة وهمية */
+  try{
+    var res = await fetch('/api/contact-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ kind:'subscribe_interest', name:userName||userEmail, email:userEmail, plan:planLabel })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      toast('✅ تم تسجيل رغبتك في خطة '+planLabel+' — هنتواصل معاك فور تفعيل الدفع المباشر');
+    } else {
+      toast('⚠️ حصل خطأ، حاول تاني أو تواصل معنا مباشرة على contact@axiomzones.com');
+    }
+  }catch(err){
+    toast('⚠️ خطأ في الاتصال — حاول تاني');
+  }
 }
 
 /* ══════════════════════════════════════
@@ -6027,6 +6616,9 @@ function azRenderLicenses(){
   var tbody = document.getElementById('lic-tbody');
   if(!tbody) return;
   azRenderNotifKPIs();
+  azRenderLicenseKPIs();
+  azRenderRevenueByPlatform();
+  azRenderSystemHealth();
   if(!AZ_LICENSES_CACHE.length){
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--t3);padding:20px">لا توجد تراخيص بعد — أنشئ أول ترخيص من النموذج تحت</td></tr>';
     return;
@@ -6148,6 +6740,57 @@ async function sendBroadcast(){
   /* ⚠️ ملاحظة صادقة: هذا يسجّل البرودكاست فعلياً في قاعدة البيانات ويعرضه في السجل،
      لكن لا يرسل إيميل/SMS حقيقي فعلياً — الإرسال الفعلي يحتاج ربط خدمة بريد
      (مثل Cloudflare Email Workers أو SendGrid) في ملفات الـWorker الخلفية، خارج نطاق هذا الملف */
+}
+
+/* ══ INBOX — رسائل التواصل + رغبات الاشتراك الحقيقية من config.contactLeads ══ */
+async function azLoadContactLeads(){
+  var el = document.getElementById('contact-leads-log');
+  var countEl = document.getElementById('leads-unread-count');
+  if(!el) return;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    var leads = config.contactLeads || [];
+    var unread = leads.filter(function(l){ return !l.read; }).length;
+    window.__azLastLeadsCount = unread;
+    azRenderSystemHealth();
+    if(countEl) countEl.textContent = unread ? '('+unread+' جديد)' : '';
+    if(!leads.length){
+      el.innerHTML = '<div style="font-size:.78rem;color:var(--t3)">لا توجد رسائل بعد</div>';
+      return;
+    }
+    el.innerHTML = leads.slice(0, 30).map(function(l, idx){
+      var d = new Date(l.createdAt);
+      var kindLabel = l.kind === 'subscribe_interest' ? ('💰 رغبة اشتراك — '+l.plan) : (l.kind === 'waitlist' ? ('⏳ قائمة انتظار — '+l.plan) : '✉️ رسالة تواصل');
+      return '<div style="border-bottom:1px solid var(--border);padding-bottom:8px;'+(l.read?'opacity:.55':'')+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center">'+
+          '<strong style="font-size:.82rem">'+l.name+'</strong>'+
+          (l.read ? '' : '<button onclick="azMarkLeadRead('+idx+')" style="background:none;border:none;color:#38bdf8;font-size:.68rem;cursor:pointer">تعليم كمقروء</button>') +
+        '</div>'+
+        '<div style="font-size:.7rem;color:var(--t3)">'+l.email+' · '+kindLabel+' · '+d.toLocaleString()+'</div>'+
+        (l.message ? '<div style="font-size:.78rem;color:var(--t2);margin-top:4px">'+l.message+'</div>' : '') +
+      '</div>';
+    }).join('');
+  }catch(e){
+    el.innerHTML = '<div style="font-size:.78rem;color:#f87171">فشل تحميل الرسائل</div>';
+  }
+}
+
+async function azMarkLeadRead(idx){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    if(config.contactLeads && config.contactLeads[idx]) config.contactLeads[idx].read = true;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok) azLoadContactLeads();
+  }catch(e){}
 }
 
 async function azLoadBroadcastLog(){
@@ -6709,7 +7352,7 @@ function buildCategorySection(cat) {
   var featRow = document.createElement('div');
   featRow.className = 'cat-featured';
 
-  var featKeys = (cat.featured || []).filter(function(k) { return AZ_PLATFORMS_DATA[k]; }).slice(0, 3);
+  var featKeys = (cat.featured || []).filter(function(k) { return AZ_PLATFORMS_DATA[k] && AZ_PLATFORMS_DATA[k].hiddenFromHub !== true; }).slice(0, 3);
   featKeys.forEach(function(key) {
     var plt = AZ_PLATFORMS_DATA[key];
     if (!plt) return;
@@ -6757,6 +7400,7 @@ function buildCategorySection(cat) {
     var plt = AZ_PLATFORMS_DATA[key];
     if (!plt) return;
     var card = buildPlatformCard(key, plt);
+    if (!card) return; /* مخفية من العرض الرئيسي */
     card.style.animationDelay = '0s';
     allGrid.appendChild(card);
   });
@@ -7951,6 +8595,116 @@ async function azUserLogout(){
 })();
 
 /* ══ جلب أرقام حقيقية عامة (منصات + عملاء) لقسم About Us — بدون تسجيل دخول ══ */
+/* ══ كشف ?login=1 في الرابط — يفتح نافذة تسجيل الدخول تلقائياً (تُستخدم من روابط الإحالة القادمة من المنصات الفرعية) ══ */
+(function azCheckLoginParam(){
+  try{
+    var params = new URLSearchParams(window.location.search);
+    if(params.get('login') === '1'){
+      setTimeout(function(){ if(typeof openLogin === 'function') openLogin(); }, 400);
+    }
+  }catch(e){}
+})();
+
+/* ══ SUPPORT SYSTEM — نظام دعم حقيقي كامل ══ */
+function azSupSwitchTab(tab){
+  var newPanel = document.getElementById('sup-panel-new');
+  var checkPanel = document.getElementById('sup-panel-check');
+  var newTab = document.getElementById('sup-tab-new');
+  var checkTab = document.getElementById('sup-tab-check');
+  if(tab === 'new'){
+    newPanel.style.display = 'block'; checkPanel.style.display = 'none';
+    newTab.style.background = 'rgba(201,168,76,.12)'; newTab.style.borderColor = 'rgba(201,168,76,.3)'; newTab.style.color = '#c9a84c';
+    checkTab.style.background = 'rgba(255,255,255,.04)'; checkTab.style.borderColor = 'var(--border)'; checkTab.style.color = 'var(--t2)';
+  } else {
+    newPanel.style.display = 'none'; checkPanel.style.display = 'block';
+    checkTab.style.background = 'rgba(201,168,76,.12)'; checkTab.style.borderColor = 'rgba(201,168,76,.3)'; checkTab.style.color = '#c9a84c';
+    newTab.style.background = 'rgba(255,255,255,.04)'; newTab.style.borderColor = 'var(--border)'; newTab.style.color = 'var(--t2)';
+  }
+}
+
+/* سياق المنصة التلقائي — لو الزائر جاي من رابط دعم منصة فرعية (?support_platform=kashf) */
+var AZ_SUPPORT_PLATFORM_CTX = null;
+(function azReadSupportContext(){
+  try{
+    var params = new URLSearchParams(window.location.search);
+    var p = params.get('support_platform');
+    if(p) AZ_SUPPORT_PLATFORM_CTX = p;
+  }catch(e){}
+})();
+
+async function azSupmitTicket(){
+  var name = document.getElementById('sup-name').value.trim();
+  var email = document.getElementById('sup-email').value.trim();
+  var category = document.getElementById('sup-category').value;
+  var subject = document.getElementById('sup-subject').value.trim();
+  var message = document.getElementById('sup-message').value.trim();
+  var msg = document.getElementById('sup-submit-msg');
+
+  if(!name || !email || !email.includes('@') || !message){
+    msg.style.color = '#f87171'; msg.textContent = '⚠️ الاسم والإيميل الصحيح والرسالة مطلوبين'; return;
+  }
+  msg.style.color = 'var(--t3)'; msg.textContent = 'جاري الإرسال...';
+
+  try{
+    var res = await fetch('/api/support-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, category, subject, message, platform: AZ_SUPPORT_PLATFORM_CTX })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      msg.style.color = '#4ade80';
+      msg.innerHTML = '✅ تم إنشاء تذكرتك — رقمها: <strong style="font-family:\'DM Mono\',monospace">'+data.ticketId+'</strong><br>احتفظ برقم التذكرة ده لتتابع حالتها من تاب "تتبّع تذكرة"';
+      document.getElementById('sup-name').value='';
+      document.getElementById('sup-email').value='';
+      document.getElementById('sup-subject').value='';
+      document.getElementById('sup-message').value='';
+    } else if(res.status === 429){
+      msg.style.color = '#f87171'; msg.textContent = '⚠️ عدد كبير من الطلبات — حاول بعد ساعة';
+    } else {
+      msg.style.color = '#f87171'; msg.textContent = '⚠️ فشل الإرسال — حاول تاني أو تواصل معنا مباشرة';
+    }
+  }catch(e){
+    msg.style.color = '#f87171'; msg.textContent = '⚠️ خطأ في الاتصال بالخادم';
+  }
+}
+
+async function azCheckTicketStatus(){
+  var id = document.getElementById('sup-check-id').value.trim().toUpperCase();
+  var email = document.getElementById('sup-check-email').value.trim().toLowerCase();
+  var resultEl = document.getElementById('sup-check-result');
+  if(!id || !email){ resultEl.innerHTML = '<div style="color:#f87171;font-size:.82rem">⚠️ رقم التذكرة والإيميل مطلوبين</div>'; return; }
+  resultEl.innerHTML = '<div style="color:var(--t3);font-size:.82rem">جاري البحث...</div>';
+
+  try{
+    var res = await fetch('/api/support-status?id='+encodeURIComponent(id)+'&email='+encodeURIComponent(email));
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      var t = data.ticket;
+      var statusLabel = t.status === 'open' ? '🟡 مفتوحة' : (t.status === 'answered' ? '🟢 تم الرد' : '⚪ مُغلقة');
+      var repliesHtml = (t.replies||[]).map(function(r){
+        return '<div style="margin-top:8px;padding:10px;background:rgba(255,255,255,.03);border-radius:8px;font-size:.82rem"><strong>'+(r.from==='owner'?'🏛️ الدعم':'أنت')+':</strong> '+r.message+'</div>';
+      }).join('');
+      resultEl.innerHTML = '<div style="border:1px solid var(--border);border-radius:10px;padding:14px">'+
+        '<div style="font-weight:700;margin-bottom:4px">'+t.subject+'</div>'+
+        '<div style="font-size:.78rem;color:var(--t3)">الحالة: '+statusLabel+' · '+new Date(t.createdAt).toLocaleDateString()+'</div>'+
+        repliesHtml +
+      '</div>';
+    } else {
+      resultEl.innerHTML = '<div style="color:#f87171;font-size:.82rem">⚠️ لم يتم العثور على تذكرة بهذا الرقم والإيميل</div>';
+    }
+  }catch(e){
+    resultEl.innerHTML = '<div style="color:#f87171;font-size:.82rem">⚠️ خطأ في الاتصال بالخادم</div>';
+  }
+}
+
+/* رابط واتساب ديناميكي من companyInfo الحقيقي (بدل رقم ثابت) */
+function azApplySupportWhatsapp(ci){
+  var link = document.getElementById('sup-whatsapp-link');
+  if(!link || !ci || !ci.whatsapps || !ci.whatsapps.length) return;
+  var num = ci.whatsapps[0].replace(/[^0-9]/g, '');
+  link.href = 'https://wa.me/' + num + '?text=' + encodeURIComponent('مرحباً، أحتاج دعماً بخصوص Axiom Zones');
+  link.style.display = 'inline-block';
+}
 (function azApplyPublicContent(){
   fetch('/api/config-get')
     .then(function(res){ return res.ok ? res.json() : null; })
@@ -7958,6 +8712,7 @@ async function azUserLogout(){
       if(!data || !data.config) return;
       AZ_CONTENT_CACHE = data.config.content || {};
       azApplyLiveContent();
+      azApplySupportWhatsapp(data.config.companyInfo);
     })
     .catch(function(){ /* تبقى النصوص الافتراضية كما هي */ });
 })();
@@ -8044,6 +8799,11 @@ function azRenderFooterPlatforms(){
         }
         if (o.name_ar) AZ_PLATFORMS_DATA[key].name_ar = o.name_ar;
         if (o.name_en) AZ_PLATFORMS_DATA[key].name_en = o.name_en;
+        /* ⚠️ حقول التحكم بالعرض — كانت مفقودة من هذه الحلقة، ما جعل الإخفاء/الشارة المخصصة بلا أي تأثير فعلي رغم حفظها بنجاح */
+        AZ_PLATFORMS_DATA[key].visibility = o.visibility || (o.hiddenFromHub === true ? 'hidden' : 'visible');
+        AZ_PLATFORMS_DATA[key].subPlatformDisabled = o.subPlatformDisabled === true;
+        if (o.cardBadgeText) AZ_PLATFORMS_DATA[key].cardBadgeText = o.cardBadgeText;
+        if (o.scheduledVisibility) AZ_PLATFORMS_DATA[key].scheduledVisibility = o.scheduledVisibility;
       });
 
       /* ══ دمج التصنيفات المخصصة الجديدة (Add New Category) — لازم قبل دمج المنصات لأنها تعتمد عليها ══ */
@@ -8393,6 +9153,7 @@ function azRenderPlatformCards() {
       var plt = AZ_PLATFORMS_DATA[key];
       if (!plt) return;
       var card = buildPlatformCard(key, plt);
+      if (!card) return; /* مخفية من العرض الرئيسي */
       grid.appendChild(card);
     });
 
@@ -8402,7 +9163,60 @@ function azRenderPlatformCards() {
   }, 300);
 }
 
+/* ══ بطاقة "قريباً — قائمة انتظار" — تجمع اهتمام حقيقي بدل الاختفاء التام ══ */
+function buildWaitlistCard(key, plt) {
+  var card = document.createElement('div');
+  card.className = 'plat-card';
+  card.style.cssText = 'background:var(--bg-card);border:1px dashed rgba(201,168,76,.35);border-radius:16px;padding:20px;position:relative;overflow:hidden';
+  card.innerHTML =
+    '<div style="font-size:1.8rem;margin-bottom:10px;opacity:.7">'+(plt.icon||'🔷')+'</div>'+
+    '<div style="font-weight:700;font-size:1rem;margin-bottom:4px;color:var(--t2)">'+(plt.name_ar||plt.name_en||key)+'</div>'+
+    '<div style="font-family:\'DM Mono\',monospace;font-size:.68rem;color:#38bdf8;letter-spacing:1px;margin-bottom:12px">⏳ قريباً</div>'+
+    '<p style="font-size:.78rem;color:var(--t3);margin-bottom:14px">سجّل اهتمامك وهنبلّغك أول ما تكون متاحة</p>'+
+    '<div id="waitlist-form-'+key+'">'+
+      '<input class="di" id="waitlist-email-'+key+'" type="email" placeholder="إيميلك" style="font-size:.8rem;margin-bottom:8px"/>'+
+      '<button class="bsub" style="width:100%;padding:8px;font-size:.8rem" onclick="azJoinWaitlist(\''+key+'\')">أبلغني عند الإطلاق</button>'+
+    '</div>'+
+    '<div id="waitlist-success-'+key+'" style="display:none;font-size:.8rem;color:#4ade80">✅ تم — هنبلّغك فور الإطلاق</div>';
+  return card;
+}
+
+async function azJoinWaitlist(key){
+  var emailInput = document.getElementById('waitlist-email-'+key);
+  var email = emailInput ? emailInput.value.trim() : '';
+  if(!email || !email.includes('@')){ toast('⚠️ إيميل صحيح مطلوب', 'error'); return; }
+  try{
+    var res = await fetch('/api/contact-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ kind:'waitlist', name: email.split('@')[0], email: email, plan: key })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      document.getElementById('waitlist-form-'+key).style.display = 'none';
+      document.getElementById('waitlist-success-'+key).style.display = 'block';
+    } else {
+      toast('⚠️ فشل التسجيل — حاول تاني', 'error');
+    }
+  }catch(e){
+    toast('⚠️ خطأ في الاتصال', 'error');
+  }
+}
+
 function buildPlatformCard(key, plt) {
+  /* ══ حساب حالة العرض الفعلية — تأخذ في الاعتبار الجدولة التلقائية أولاً (لو وقتها حان، تتفوّق على القيمة المحفوظة) ══ */
+  var effectiveVisibility = plt.visibility || 'visible';
+  if(plt.scheduledVisibility && plt.scheduledVisibility.at){
+    if(new Date(plt.scheduledVisibility.at) <= new Date()){
+      effectiveVisibility = plt.scheduledVisibility.mode;
+    }
+  }
+
+  if (effectiveVisibility === 'hidden') return null;
+
+  if (effectiveVisibility === 'waitlist') {
+    return buildWaitlistCard(key, plt);
+  }
+
   var isLive = plt.status === 'live';
   var cats = {
     kashf:'financial',prism:'financial','prism-lens':'financial','prism-compare':'financial','prism-payoff':'financial',
@@ -8455,7 +9269,7 @@ function buildPlatformCard(key, plt) {
   statusBadge.style.cssText = 'font-family:"DM Mono",monospace;font-size:.52rem;letter-spacing:1px;padding:2px 8px;border-radius:10px;text-transform:uppercase;' +
     (isLive ? 'background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#22c55e' :
                'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#5a5878');
-  statusBadge.innerHTML = isLive ? '● مباشر' : '◯ قريباً';
+  statusBadge.innerHTML = plt.cardBadgeText ? plt.cardBadgeText : (isLive ? '● مباشر' : '◯ قريباً');
   
   var catBadge = document.createElement('span');
   catBadge.style.cssText = 'font-family:"DM Mono",monospace;font-size:.5rem;letter-spacing:.5px;padding:2px 7px;border-radius:10px;background:' + plt.color + '12;border:1px solid ' + plt.color + '20;color:' + plt.color;
