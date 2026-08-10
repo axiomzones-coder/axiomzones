@@ -4017,7 +4017,7 @@ document.querySelectorAll('a,button,[role="button"]').forEach(function(el){
 ══════════════════════════════════════ */
 window.addEventListener('load', function(){
   setTimeout(function(){
-    document.getElementById('loader').classList.add('done');
+    document.getElementById('loader')?.classList.add('done');
     initReveal();
   }, 1900);
 });
@@ -9704,6 +9704,23 @@ window.addEventListener('load', function() {
   <div class="az-eco-icon">🏛️</div>
   <div class="az-eco-label">المنظومة</div>
 </div>
+// دالة دخول المالك الآمنة
+function azMaintLogin() {
+    // جلب الكود المكتوب في الخانة الأولى
+    const inputs = document.querySelectorAll('input');
+    const enteredCode = inputs[0] ? inputs[0].value.trim() : '';
+    
+    // كود المالك الخاص بك
+    const CORRECT_OWNER_CODE = "AZ-BBA10418B329-Vault";
 
+    if (enteredCode === CORRECT_OWNER_CODE) {
+        localStorage.setItem('az_owner_bypass', 'true');
+        localStorage.setItem('isOwnerLoggedIn', 'true');
+        alert("تم التحقق بنجاح! جاري تحويل المالك...");
+        window.location.href = '/';
+    } else {
+        alert("كود المالك غير صحيح، يرجى التأكد من الرمز!");
+    }
+}
 </body>
 </html>
