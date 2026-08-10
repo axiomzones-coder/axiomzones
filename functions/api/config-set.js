@@ -1,6 +1,6 @@
 // functions/api/config-set.js
 // POST /api/config-set — حفظ تكوين المنصات في KV — محمي بجلسة المالك فقط
-// Body: { config: {...} }  (نفس بنية AZ_MASTER كما هي في admin.html)
+// Body: { config: {...}, logDetail?: string }  (logDetail اختياري — نص دقيق لسجل التدقيق بدل الرسالة العامة)
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -51,7 +51,10 @@ export async function onRequestPost(context) {
   }
   // سجل تدقيق بسيط لمعرفة آخر من عدَّل الإعدادات (مالك أو مدير مُحدَّد بالإيميل)
   try { await env.AZ_CONFIG_KV.put('az_master_config_last_editor', JSON.stringify({ actor: actor, at: new Date().toISOString() })); } catch (e) {}
-  await writeLog(env, 'config', actor, 'Updated platform/pricing configuration');
+
+  // ── نص سجل دقيق اختياري (logDetail) — لو الواجهة أرسلته نستخدمه، وإلا نرجع للنص العام كما كان دائماً (لا كسر لأي استدعاء قديم) ──
+  const logDetail = (body.logDetail && typeof body.logDetail === 'string') ? body.logDetail.slice(0, 200) : 'Updated platform/pricing configuration';
+  await writeLog(env, 'config', actor, logDetail);
 
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
 }
