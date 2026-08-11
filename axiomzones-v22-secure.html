@@ -4017,7 +4017,7 @@ document.querySelectorAll('a,button,[role="button"]').forEach(function(el){
 ══════════════════════════════════════ */
 window.addEventListener('load', function(){
   setTimeout(function(){
-    document.getElementById('loader')?.classList.add('done');
+    document.getElementById('loader').classList.add('done');
     initReveal();
   }, 1900);
 });
@@ -8928,6 +8928,40 @@ function azShowMaintenanceBanner(){
 /* ══ صفحة صيانة مستقلة بمدخل تسجيل دخول حقيقي — لا تعتمد على أي عنصر DOM قديم
    (كانت المشكلة سابقاً: استبدال الصفحة بالكامل يمحو نافذة تسجيل الدخول الأصلية،
    فلو انتهت جلسة المالك أثناء تفعيل الصيانة، ما كان فيه أي طريقة يرجع يدخل بيها) ══ */
+/* ══ دالة دخول المالك/المدير من صفحة الصيانة — معرَّفة هنا في الكود الأساسي (لا داخل نص الصفحة البديلة)
+   لأن المتصفحات لا تُنفّذ أي وسم سكريبت يُدرَج عبر innerHTML مباشرة (قيد أمني أساسي في كل المتصفحات) —
+   الدالة تبقى موجودة في الذاكرة وقابلة للاستدعاء حتى بعد استبدال document.documentElement.innerHTML بالكامل ══ */
+async function azMaintLogin(){
+  var codeEl = document.getElementById('maint-owner-code');
+  var emailEl = document.getElementById('maint-admin-email');
+  var passEl = document.getElementById('maint-admin-pass');
+  var msg = document.getElementById('maint-login-msg');
+  if(!msg) return;
+  var code = codeEl ? codeEl.value.trim() : '';
+  var email = emailEl ? emailEl.value.trim() : '';
+  var pass = passEl ? passEl.value : '';
+  msg.style.color = '#a8a8c0'; msg.textContent = 'جاري التحقق...';
+  try{
+    if(code){
+      var res = await fetch('/api/owner-login', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body: JSON.stringify({code: code})});
+      if(res.status === 429){ msg.style.color = '#f59e0b'; msg.textContent = '⏳ محاولات كتير جداً — الحساب مقفول مؤقتاً 15 دقيقة لحمايتك، حاول تاني بعدها'; return; }
+      var data = await res.json().catch(function(){ return null; });
+      if(res.ok && data && data.ok){ msg.style.color = '#4ade80'; msg.textContent = 'تم الدخول، جاري التحميل...'; setTimeout(function(){ location.reload(); }, 600); return; }
+      msg.style.color = '#f87171'; msg.textContent = 'كود غير صحيح'; return;
+    }
+    if(email && pass){
+      var res2 = await fetch('/api/admin-login', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body: JSON.stringify({email: email, password: pass})});
+      if(res2.status === 429){ msg.style.color = '#f59e0b'; msg.textContent = '⏳ محاولات كتير جداً — الحساب مقفول مؤقتاً 15 دقيقة لحمايتك، حاول تاني بعدها'; return; }
+      var data2 = await res2.json().catch(function(){ return null; });
+      if(res2.ok && data2 && data2.ok){ msg.style.color = '#4ade80'; msg.textContent = 'تم الدخول، جاري التحميل...'; setTimeout(function(){ location.reload(); }, 600); return; }
+      msg.style.color = '#f87171'; msg.textContent = 'بيانات دخول غير صحيحة'; return;
+    }
+    msg.style.color = '#f87171'; msg.textContent = 'أدخل كود المالك أو بيانات المدير';
+  }catch(e){
+    msg.style.color = '#f87171'; msg.textContent = 'خطأ في الاتصال بالخادم';
+  }
+}
+
 function azRenderMaintenancePage(maint){
   document.documentElement.innerHTML = '<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Axiom Zones — Under Maintenance</title>'+
     '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#060912;color:#F2EEE8;font-family:Tajawal,sans-serif;text-align:center;padding:30px}'+
@@ -8949,30 +8983,6 @@ function azRenderMaintenancePage(maint){
       '<div class="maint-msg" id="maint-login-msg"></div>'+
     '</div>'+
     '</div>'+
-    '<script>'+
-    'async function azMaintLogin(){'+
-      'var code = document.getElementById("maint-owner-code").value.trim();'+
-      'var email = document.getElementById("maint-admin-email").value.trim();'+
-      'var pass = document.getElementById("maint-admin-pass").value;'+
-      'var msg = document.getElementById("maint-login-msg");'+
-      'msg.style.color = "#a8a8c0"; msg.textContent = "جاري التحقق...";'+
-      'try{'+
-        'if(code){'+
-          'var res = await fetch("/api/owner-login", {method:"POST", headers:{"Content-Type":"application/json"}, credentials:"include", body: JSON.stringify({code: code})});'+
-          'var data = await res.json().catch(function(){return null;});'+
-          'if(res.ok && data && data.ok){ msg.style.color = "#4ade80"; msg.textContent = "تم الدخول، جاري التحميل..."; setTimeout(function(){ location.reload(); }, 600); return; }'+
-          'msg.style.color = "#f87171"; msg.textContent = "كود غير صحيح"; return;'+
-        '}'+
-        'if(email && pass){'+
-          'var res2 = await fetch("/api/admin-login", {method:"POST", headers:{"Content-Type":"application/json"}, credentials:"include", body: JSON.stringify({email: email, password: pass})});'+
-          'var data2 = await res2.json().catch(function(){return null;});'+
-          'if(res2.ok && data2 && data2.ok){ msg.style.color = "#4ade80"; msg.textContent = "تم الدخول، جاري التحميل..."; setTimeout(function(){ location.reload(); }, 600); return; }'+
-          'msg.style.color = "#f87171"; msg.textContent = "بيانات دخول غير صحيحة"; return;'+
-        '}'+
-        'msg.style.color = "#f87171"; msg.textContent = "أدخل كود المالك أو بيانات المدير";'+
-      '}catch(e){ msg.style.color = "#f87171"; msg.textContent = "خطأ في الاتصال بالخادم"; }'+
-    '}'+
-    '</scr'+'ipt>'+
     '</body>';
 }
 
@@ -9704,23 +9714,6 @@ window.addEventListener('load', function() {
   <div class="az-eco-icon">🏛️</div>
   <div class="az-eco-label">المنظومة</div>
 </div>
-// دالة دخول المالك الآمنة
-function azMaintLogin() {
-    // جلب الكود المكتوب في الخانة الأولى
-    const inputs = document.querySelectorAll('input');
-    const enteredCode = inputs[0] ? inputs[0].value.trim() : '';
-    
-    // كود المالك الخاص بك
-    const CORRECT_OWNER_CODE = "AZ-BBA10418B329-Vault";
 
-    if (enteredCode === CORRECT_OWNER_CODE) {
-        localStorage.setItem('az_owner_bypass', 'true');
-        localStorage.setItem('isOwnerLoggedIn', 'true');
-        alert("تم التحقق بنجاح! جاري تحويل المالك...");
-        window.location.href = '/';
-    } else {
-        alert("كود المالك غير صحيح، يرجى التأكد من الرمز!");
-    }
-}
 </body>
 </html>
