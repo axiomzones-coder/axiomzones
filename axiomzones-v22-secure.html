@@ -1149,7 +1149,11 @@ footer{border-top:1px solid var(--border);padding:64px 44px 28px;position:relati
 #dash.open{display:block}
 .dn{background:rgba(3,3,10,.96);border-bottom:1px solid var(--border);padding:13px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(40px)}
 [data-theme="light"] .dn{background:rgba(237,233,222,.96)}
-.dsb{width:216px;min-height:calc(100vh - 54px);background:rgba(7,7,26,.75);border-inline-end:1px solid var(--border);padding:14px 0;position:fixed;top:54px;overflow-y:auto}
+.dsb{width:216px;min-height:calc(100vh - 54px);background:rgba(7,7,26,.75);border-inline-end:1px solid var(--border);padding:14px 0;position:fixed;top:54px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.4) transparent}
+.dsb::-webkit-scrollbar{width:6px}
+.dsb::-webkit-scrollbar-track{background:transparent}
+.dsb::-webkit-scrollbar-thumb{background:rgba(201,168,76,.4);border-radius:3px}
+.dsb::-webkit-scrollbar-thumb:hover{background:rgba(201,168,76,.6)}
 [data-theme="light"] .dsb{background:rgba(232,227,213,.85)}
 body:not(.ltr) .dsb{right:0}
 body.ltr .dsb{left:0}
@@ -8960,7 +8964,7 @@ function azShowMaintenanceBanner(){
     var mobnav = document.getElementById('az-mobnav');
     if(mobnav) mobnav.style.marginTop = h + 'px';
     document.querySelectorAll('.dn').forEach(function(dn){ dn.style.top = h + 'px'; });
-    document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.style.top = (h + 54) + 'px'; });
+    document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.style.top = (h + 54) + 'px'; dsb.style.height = 'calc(100vh - ' + (h + 54) + 'px)'; dsb.style.minHeight = '0'; });
     var dash = document.getElementById('dash');
     if(dash) dash.style.paddingTop = h + 'px';
     var eco = document.querySelector('.az-ecosystem-badge');
@@ -8974,7 +8978,7 @@ function azReapplyMaintenanceOffset(){
   if(!b) return;
   var h = b.offsetHeight || 40;
   document.querySelectorAll('.dn').forEach(function(dn){ dn.style.top = h + 'px'; });
-  document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.style.top = (h + 54) + 'px'; });
+  document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.style.top = (h + 54) + 'px'; dsb.style.height = 'calc(100vh - ' + (h + 54) + 'px)'; dsb.style.minHeight = '0'; });
   var dash = document.getElementById('dash');
   if(dash) dash.style.paddingTop = h + 'px';
   var eco = document.querySelector('.az-ecosystem-badge');
