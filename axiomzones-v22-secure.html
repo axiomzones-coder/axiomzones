@@ -2748,7 +2748,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 </section>
 
 <!-- ══ ARAB FINANCIAL INDEX ══ -->
-<section id="afi" class="v5-afi-sec" aria-label="Arab Financial Index">
+<section id="afi" class="v5-afi-sec" aria-label="Arab Financial Index" style="display:none">
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px">
       <div>
@@ -3786,6 +3786,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
         <div class="dcard" style="margin-bottom:18px;border:1px solid rgba(34,197,94,.3)">
           <div class="dct" style="color:#22c55e">📊 Arab Loan Index Rates</div>
+          <div class="twrap" style="margin-bottom:14px;padding:10px;background:rgba(255,255,255,.03);border-radius:8px"><span style="font-size:.8rem;color:var(--t2)">👁️ عرض هذا القسم في الصفحة الرئيسية</span><label class="tog"><input type="checkbox" id="afi-visible-toggle" checked onchange="azToggleAfiVisibility(this)"/><span class="tsl"></span></label></div>
           <p style="font-size:.76rem;color:var(--t2);margin-bottom:14px">حدّث النسب هنا شهرياً من بحثك الفعلي — تظهر فوراً في الموقع لكل الزوار من غير ما تحتاج ترجع لي.</p>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px">
             <div><label class="fl">🇸🇦 السعودية</label><input class="di" id="afi-in-SA" placeholder="6-8%"/></div>
@@ -5718,6 +5719,38 @@ function azRenderSystemHealth(){
   }
   el.style.display = 'block';
   el.innerHTML = '⚠️ <strong>يحتاج انتباهك:</strong> ' + alerts.join(' · ');
+}
+
+async function azToggleAfiVisibility(el){
+  el.disabled = true;
+  var visible = el.checked;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.afiVisible = visible;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Set Arab Loan Index section visibility to '+visible })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast(visible ? '✅ القسم ظاهر في الرئيسية الآن' : '🙈 القسم مخفي من الرئيسية الآن', 'success');
+    } else {
+      el.checked = !el.checked; toast('فشل الحفظ — حاول تاني', 'error');
+    }
+  }catch(e){
+    el.checked = !el.checked; toast('فشل الاتصال بالخادم', 'error');
+  }
+  el.disabled = false;
+}
+
+function azApplyAfiVisibility(visible){
+  var section = document.getElementById('afi');
+  if(section) section.style.display = (visible === false) ? 'none' : 'block';
+  var toggle = document.getElementById('afi-visible-toggle');
+  if(toggle) toggle.checked = (visible !== false);
 }
 
 function azRenderNotifKPIs(){
@@ -8787,6 +8820,7 @@ function azRenderFooterPlatforms(){
       /* ══ تطبيق معدلات مؤشر القروض العربي المحدَّثة يدوياً من الداشبورد ══ */
       if (data.config.afiRates) azApplyAfiRates(data.config.afiRates);
       if (data.config.afiUpdatedAt) azShowAfiUpdatedDate(data.config.afiUpdatedAt);
+      azApplyAfiVisibility(data.config.afiVisible);
 
       if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
       var overrides = data.config.platforms || {};
@@ -8920,12 +8954,17 @@ function azShowMaintenanceBanner(){
     var h = b.offsetHeight || 40;
     var nav = document.getElementById('nav');
     if(nav) nav.style.top = h + 'px';
+    var tbar = document.getElementById('tbar');
+    if(tbar) tbar.style.top = (h + 66) + 'px';
     document.body.style.paddingTop = h + 'px';
     var mobnav = document.getElementById('az-mobnav');
     if(mobnav) mobnav.style.marginTop = h + 'px';
     document.querySelectorAll('.dn').forEach(function(dn){ dn.style.top = h + 'px'; });
+    document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.style.top = (h + 54) + 'px'; });
     var dash = document.getElementById('dash');
     if(dash) dash.style.paddingTop = h + 'px';
+    var eco = document.querySelector('.az-ecosystem-badge');
+    if(eco) eco.style.top = (16 + h) + 'px';
   });
 }
 
@@ -8935,8 +8974,11 @@ function azReapplyMaintenanceOffset(){
   if(!b) return;
   var h = b.offsetHeight || 40;
   document.querySelectorAll('.dn').forEach(function(dn){ dn.style.top = h + 'px'; });
+  document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.style.top = (h + 54) + 'px'; });
   var dash = document.getElementById('dash');
   if(dash) dash.style.paddingTop = h + 'px';
+  var eco = document.querySelector('.az-ecosystem-badge');
+  if(eco) eco.style.top = (16 + h) + 'px';
 }
 
 /* ══ صفحة صيانة مستقلة بمدخل تسجيل دخول حقيقي — لا تعتمد على أي عنصر DOM قديم
