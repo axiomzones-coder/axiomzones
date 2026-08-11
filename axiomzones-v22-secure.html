@@ -4638,6 +4638,7 @@ async function openLogin(){
       var od = await ownerRes.json();
       if(od && od.valid){
         AZ_CURRENT_ROLE = 'owner';
+        var rl = document.getElementById('dash-role-label'); if(rl) rl.textContent = 'OWNER DASHBOARD';
         document.getElementById('dash').classList.add('open');
         document.body.style.overflow='hidden';
         openDashUnlocked();
@@ -6047,11 +6048,9 @@ function azResetAdminNavFilter(){
 }
 
 async function openDash(){
-  if(azOwnerLocked()){ toast('محاولات كثيرة — حاول لاحقاً'); return; }
-  var code=prompt('🔐 Owner Access Code:');
-  if(code===null) return;
-  if(await azCheckOwnerCode(code)){ AZ_CURRENT_ROLE='owner'; var rl=document.getElementById('dash-role-label'); if(rl) rl.textContent='OWNER DASHBOARD'; openDashUnlocked(); }
-  else { toast('Incorrect code'); }
+  /* ⚠️ كانت هذه الدالة تعمل prompt() مباشر دائماً بلا أي تحقق من الجلسة الموجودة —
+     الآن تستخدم نفس منطق openLogin() (تحقق تلقائي من owner-verify/admin-verify أولاً) */
+  await openLogin();
 }
 function openDashUnlocked(){
   document.getElementById('dash').classList.add('open');
@@ -6067,6 +6066,7 @@ function openDashUnlocked(){
   azLoadContactLeads();
   azLoadSupportTickets();
   azLoadRealSubscribers();
+  azReapplyMaintenanceOffset();
 }
 
 async function azLoadRecentActivity(){
@@ -8914,7 +8914,8 @@ function azShowMaintenanceBanner(){
   b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#f59e0b;color:#000;text-align:center;padding:8px;font-family:Tajawal,sans-serif;font-size:.82rem;font-weight:700';
   b.textContent = '🔧 وضع الصيانة مفعّل — الزوار العاديون يشوفون صفحة صيانة، إنت شايف الموقع الحقيقي كمالك/مدير';
   document.body.prepend(b);
-  /* إزاحة شريط التنقل الثابت (#nav) لتحت الإشعار مباشرة بدل التراكب فوقه */
+  /* إزاحة شريط التنقل الثابت (#nav) وشريط رأس الداشبورد (.dn) لتحت الإشعار مباشرة بدل التراكب فوقهم —
+     .dn عنصر منفصل تماماً عن #nav (يظهر فقط داخل لوحة التحكم)، وكان مفقوداً من الإصلاح السابق */
   requestAnimationFrame(function(){
     var h = b.offsetHeight || 40;
     var nav = document.getElementById('nav');
@@ -8922,7 +8923,20 @@ function azShowMaintenanceBanner(){
     document.body.style.paddingTop = h + 'px';
     var mobnav = document.getElementById('az-mobnav');
     if(mobnav) mobnav.style.marginTop = h + 'px';
+    document.querySelectorAll('.dn').forEach(function(dn){ dn.style.top = h + 'px'; });
+    var dash = document.getElementById('dash');
+    if(dash) dash.style.paddingTop = h + 'px';
   });
+}
+
+/* إعادة الإزاحة كل مرة يُفتح فيها الداشبورد — لو الإشعار موجود أصلاً وقت الفتح (مثلاً لو المستخدم فتح الداشبورد بعد تحميل الصفحة بلحظات) */
+function azReapplyMaintenanceOffset(){
+  var b = document.getElementById('az-maint-banner');
+  if(!b) return;
+  var h = b.offsetHeight || 40;
+  document.querySelectorAll('.dn').forEach(function(dn){ dn.style.top = h + 'px'; });
+  var dash = document.getElementById('dash');
+  if(dash) dash.style.paddingTop = h + 'px';
 }
 
 /* ══ صفحة صيانة مستقلة بمدخل تسجيل دخول حقيقي — لا تعتمد على أي عنصر DOM قديم
