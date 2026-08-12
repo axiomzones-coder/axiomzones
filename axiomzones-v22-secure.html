@@ -1642,7 +1642,12 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 .v5-version{position:fixed;bottom:80px;left:14px;z-index:500;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:2px;padding:3px 8px;border-radius:4px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;opacity:.7}
 
 
-.az-cat-btn{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:#5a5878;font-family:'DM Mono',monospace;font-size:.6rem;cursor:pointer;transition:all .22s;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+.az-cat-btn{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:#5a5878;font-family:'DM Mono',monospace;font-size:.6rem;cursor:pointer;transition:all .22s;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+#az-cat-filters::-webkit-scrollbar{height:5px}
+#az-cat-filters::-webkit-scrollbar-track{background:transparent}
+#az-cat-filters::-webkit-scrollbar-thumb{background:rgba(201,168,76,.4);border-radius:3px}
+#az-cat-filters::-webkit-scrollbar-thumb:hover{background:rgba(201,168,76,.6)}
+.az-cat-scroll-wrap{-webkit-mask-image:linear-gradient(to right,transparent,black 16px,black calc(100% - 16px),transparent);mask-image:linear-gradient(to right,transparent,black 16px,black calc(100% - 16px),transparent)}
 .az-cat-btn:hover{border-color:rgba(201,168,76,.3);color:#c9a84c}
 .az-cat-btn.on{border-color:#c9a84c;background:rgba(201,168,76,.12);color:#c9a84c}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
@@ -2576,13 +2581,16 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       style="width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);color:var(--t1);padding:9px 38px 9px 14px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.84rem;outline:none;transition:border-color .22s"/>
     <span style="position:absolute;top:50%;transform:translateY(-50%);right:12px;opacity:.4;font-size:.9rem">🔍</span>
   </div>
-  <div id="az-cat-filters" style="display:flex;gap:6px;flex-wrap:wrap">
-    <button class="az-cat-btn on" onclick="setCat('all',this)" data-i18n="cat.all">الكل</button>
-    <button class="az-cat-btn" onclick="setCat('financial',this)" data-i18n="cat.fin">💰 مالية</button>
+  <div class="az-cat-scroll-wrap" style="position:relative;flex-shrink:0;max-width:100%">
+    <div id="az-cat-filters" style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.4) transparent;padding-bottom:8px">
+      <button class="az-cat-btn on" onclick="setCat('all',this)" data-i18n="cat.all">الكل</button>
+      <button class="az-cat-btn" onclick="setCat('financial',this)" data-i18n="cat.fin">💰 مالية</button>
     <button class="az-cat-btn" onclick="setCat('islamic',this)" data-i18n="cat.isl">☪️ إسلامية</button>
     <button class="az-cat-btn" onclick="setCat('educational',this)" data-i18n="cat.edu">📚 تعليمية</button>
     <button class="az-cat-btn" onclick="setCat('business',this)" data-i18n="cat.biz">💼 أعمال</button>
+    <button class="az-cat-btn" onclick="setCat('global',this)" data-i18n="cat.glb">🌍 عالمية</button>
     <button class="az-cat-btn" onclick="setCat('live',this)" data-i18n="cat.live">● مباشرة</button>
+    </div>
   </div>
 </div>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><span style="font-family:'DM Mono',monospace;font-size:.65rem;color:#5a5878;" id="az-plt-count"></span><span style="font-family:'DM Mono',monospace;font-size:.65rem;color:#5a5878;">منصاتنا · <span id="az-live-count" style="color:#22c55e">8</span> مباشرة · <span id="az-total-count" style="color:#c9a84c">30</span> إجمالاً</span></div>
@@ -3445,6 +3453,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
                   <option value="islamic">☪️ Islamic</option>
                   <option value="educational">📚 Educational</option>
                   <option value="business">💼 Business</option>
+                  <option value="global">🌍 Global</option>
                 </select>
               </div>
             </div>
@@ -4202,7 +4211,7 @@ var STATIC = {
     'stat.live':'Live Now','stat.lang':'Languages Supported','stat.curr':'Currencies Supported','stat.free':'Free to Try',
     'pwa.title':'Add to Home Screen','pwa.sub':'Works offline','pwa.btn':'Install',
     'usr.dash':'My Dashboard','usr.logout':'Logout',
-    'view.label':'VIEW MODE','cat.all':'All','cat.fin':'💰 Financial','cat.isl':'☪️ Islamic','cat.edu':'📚 Educational','cat.biz':'💼 Business','cat.live':'● Live',
+    'view.label':'VIEW MODE','cat.all':'All','cat.fin':'💰 Financial','cat.isl':'☪️ Islamic','cat.edu':'📚 Educational','cat.biz':'💼 Business','cat.glb':'🌍 Global','cat.live':'● Live',
     'ft.staff':'Staff','staff.t':'STAFF ACCESS','staff.s':'Admin credentials only',
     'plt.plans':'Available Plans','plt.open':'Open Platform →','plt.buy':'Buy Now',
     'isl.sub':'All our financial platforms support a full Islamic mode — Murabaha, Ijara, and diminishing Musharaka analysis with halal alternatives comparison.',
@@ -4308,7 +4317,7 @@ var STATIC = {
     'stat.live':'مباشرة الآن','stat.lang':'لغة مدعومة','stat.curr':'عملة مدعومة','stat.free':'مجاني للتجربة',
     'pwa.title':'أضف للشاشة الرئيسية','pwa.sub':'يعمل بدون إنترنت','pwa.btn':'تثبيت',
     'usr.dash':'داشبوردي','usr.logout':'تسجيل الخروج',
-    'view.label':'طريقة العرض','cat.all':'الكل','cat.fin':'💰 مالية','cat.isl':'☪️ إسلامية','cat.edu':'📚 تعليمية','cat.biz':'💼 أعمال','cat.live':'● مباشرة',
+    'view.label':'طريقة العرض','cat.all':'الكل','cat.fin':'💰 مالية','cat.isl':'☪️ إسلامية','cat.edu':'📚 تعليمية','cat.biz':'💼 أعمال','cat.glb':'🌍 عالمية','cat.live':'● مباشرة',
     'ft.staff':'الموظفين','staff.t':'دخول الموظفين','staff.s':'بيانات المديرين فقط',
     'plt.plans':'الخطط المتاحة','plt.open':'افتح المنصة ←','plt.buy':'اشترِ الآن',
     'isl.sub':'جميع منصاتنا المالية تدعم وضع إسلامي كامل — تحليل المرابحة والإجارة والمشاركة المتناقصة مع مقارنة بالبدائل الحلال.',
@@ -4426,7 +4435,7 @@ var STATIC = {
     'afi.sub':'Taux d\'intérêt moyen des prêts personnels dans la région arabe — mis à jour chaque mois','afi.subscribe':'S\'abonner au rapport mensuel →','alert.btn':'Activer l\'alerte →','alert.email':'Votre e-mail','alert.note':'Gratuit · Aucune carte requise · Annulation à tout moment','alert.rate':'Votre taux actuel %','alert.sub':'Indiquez le taux de votre prêt actuel — nous vous alertons instantanément lorsque les taux du marché descendent sous ce chiffre, synonyme d\'une opportunité de refinancement et d\'économies réelles.','alert.subs':'Abonné aux alertes',
     'alert.title':'M\'alerter en cas de baisse des taux','announce.txt':'Plateforme Axiom Zones — 8 plateformes actives dès maintenant · 30 plateformes à venir · axiomzones.com','blog.allbtn1':'Tous les articles →','blog.allbtn2':'Tous les articles ← Blog financier','blog.arlink':'AR','blog.d1':'Comment les banques enjolivent leurs prêts pour paraître moins chers — et comment révéler le vrai TRI avec Kashf.','blog.d2':'Une comparaison chiffrée complète — lequel est vraiment le moins cher ? La réponse surprend beaucoup de gens.','blog.d3':'L\'équation simple qui sauve votre entreprise — calculez-la gratuitement avec Mizan Pro.',
     'blog.eyebrow':'Derniers articles','blog.h1':'En savoir plus.','blog.h2':'Payer moins.','blog.read':'Lire →','blog.sub':'Des articles financiers réels, sans flatter les banques — en arabe, anglais et français.','blog.t1':'La banque dit 6 %... la vérité est 11,2 %','blog.t2':'Mourabaha contre prêt classique — les chiffres','blog.t3':'Le seuil de rentabilité — la question que 67 % ignorent',
-    'blog.tag1':'📊 Prêts','blog.tag2':'☪️ Islamique','blog.tag3':'💼 Entreprise','c.el':'E-mail','c.hql':'Siège','c.hqv':'Mondial — présent dans 195 pays','cat.all':'Tous','cat.biz':'💼 Affaires',
+    'blog.tag1':'📊 Prêts','blog.tag2':'☪️ Islamique','blog.tag3':'💼 Entreprise','c.el':'E-mail','c.hql':'Siège','c.hqv':'Mondial — présent dans 195 pays','cat.all':'Tous','cat.biz':'💼 Affaires','cat.glb':'🌍 Mondial',
     'cat.edu':'📚 Éducatif','cat.fin':'💰 Financier','cat.isl':'☪️ Islamique','cat.live':'● En direct','cta.btn':'Commencer gratuitement →','cta.email':'votre@email.com','cta.h1':'Créez votre compte gratuit','cta.h2':'Aujourd\'hui',
     'cta.note':'Sans spam · Sans carte de crédit · Palier gratuit complet · Annulation à tout moment','cta.sub':'Rejoignez des professionnels de plus de 195 pays qui utilisent Axiom Zones. Gratuit pour toujours. Sans carte bancaire.','f.msg':'Message','f.n':'Nom','f.send':'Envoyer le message ✦','f.sub':'Sujet','f.sub1':'Demande de devis','f.sub2':'Partenariat stratégique',
     'f.sub3':'Question technique','f.sub4':'Offre caritative','faq.a1':'Oui — définitivement. Chaque plateforme dispose d\'un palier gratuit sans expiration et sans carte bancaire. Ces paliers gratuits sont réellement utiles, pas de simples démos limitées. Nous préférons mériter votre abonnement par la valeur démontrée plutôt que de vous enfermer derrière un mur de paiement.','faq.a2':'Oui. Créez un seul compte Axiom Zones et il vous donne accès à toutes les plateformes auxquelles vous êtes abonné — sur le web, iOS, Android, Windows et macOS. Vos abonnements vous suivent sur tous vos appareils sans effort.','faq.a3':'Nous appliquons une remise de 50 % pour les utilisateurs d\'Égypte, du Maroc, de Jordanie, de Tunisie, d\'Algérie, de Libye, d\'Irak, de Syrie, du Yémen, du Soudan et du Liban. Cela est détecté automatiquement selon votre IP et la devise choisie. L\'objectif est l\'accessibilité — le monde arabe mérite des outils professionnels à des prix locaux justes.','faq.a4':'Non. Tous les calculs s\'exécutent dans votre navigateur. Aucun chiffre n\'est envoyé à nos serveurs. Lorsque vous partagez un lien, les données sont encodées dans l\'URL elle-même — nous ne les voyons jamais. Les données de votre compte (e-mail, statut d\'abonnement) sont stockées avec un chiffrement complet via Supabase.','faq.a5':'L\'offre à vie (399 $, paiement unique) donne un accès Pro complet à toutes les plateformes actuelles et futures, pour toujours. Elle se ferme définitivement après 100 comptes — non par tactique marketing, mais parce que nous ne pouvons soutenir durablement qu\'un nombre limité de comptes à vie. Une fois épuisée, elle disparaît pour de bon.','faq.a6':'Oui. Annulez depuis votre tableau de bord en un clic, sans aucune question. Vous gardez l\'accès jusqu\'à la fin de votre période de facturation, puis vous repassez automatiquement au palier gratuit. Aucun frais caché, aucun e-mail de rétention, aucune manipulation.',
