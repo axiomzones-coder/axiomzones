@@ -6254,14 +6254,14 @@ async function azLoadPlatformToggles(){
   var platforms = config.platforms || {};
 
   var keys = Object.keys(AZ_PLATFORMS_DATA);
-  var bulkBar = '<div id="platform-bulk-bar" style="display:none;margin-bottom:14px;padding:10px 14px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">'+
+  var bulkBar = '<div id="platform-bulk-bar" style="display:none;grid-column:1 / -1;margin-bottom:14px;padding:10px 14px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:10px;align-items:center;gap:10px;flex-wrap:wrap">'+
     '<span style="font-size:.8rem;color:var(--t2)"><span id="bulk-count">0</span> منصة مختارة</span>'+
     '<button class="db2" style="padding:5px 12px;font-size:.75rem" onclick="azBulkApply(\'visible\')">👁️ إظهار الكل</button>'+
     '<button class="db2" style="padding:5px 12px;font-size:.75rem" onclick="azBulkApply(\'hidden\')">🙈 إخفاء الكل</button>'+
     '<button class="db2" style="padding:5px 12px;font-size:.75rem;color:var(--t3)" onclick="azBulkClear()">إلغاء التحديد</button>'+
   '</div>';
 
-  grid.innerHTML = bulkBar + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">' + keys.map(function(key){
+  grid.innerHTML = bulkBar + keys.map(function(key){
     var p = AZ_PLATFORMS_DATA[key];
     var saved = platforms[key] || {};
     var isActive = (typeof saved.active === 'boolean') ? saved.active : (p.status === 'live');
@@ -6317,7 +6317,7 @@ async function azLoadPlatformToggles(){
         '<input class="di" id="badge-input-'+key+'" placeholder="مثال: 🔥 عرض خاص" value="'+badgeText.replace(/"/g,'&quot;')+'" style="font-size:.75rem;display:'+(badgeMode==='custom'?'block':'none')+'" onblur="azSaveBadgeText(\''+key+'\',this)"/>'+
       '</div>'+
     '</div>';
-  }).join('') + '</div>';
+  }).join('');
 }
 
 /* ══ الحالات الثلاث للعرض (استبدال azToggleHiddenFromHub القديمة) ══ */
