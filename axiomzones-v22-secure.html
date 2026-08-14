@@ -2811,17 +2811,18 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   </div>
 </section>
 
-<!-- ══ BLOG PREVIEW ══ -->
-<section id="blog" style="padding:80px 0;border-top:1px solid rgba(255,255,255,.05)" aria-label="Blog">
+<!-- ══ ARTICLES SECTION — نظام حقيقي موحَّد يستبدل نظامي المدونة القديمين (localStorage معزول) ══ -->
+<section id="articles" style="padding:80px 0;border-top:1px solid rgba(255,255,255,.05)" aria-label="Articles">
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>Financial Knowledge</div>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">اعرف أكثر. <em style="font-weight:300;font-style:italic;color:var(--t2)">ادفع أقل.</em></h2>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>📝 المدونة</div>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">آخر <em style="font-weight:300;font-style:italic;color:var(--t2)">المقالات</em></h2>
       </div>
-      <button onclick="v5GoTo('getstarted')" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap" data-i18n="blog.allbtn1">كل المقالات →</button>
     </div>
-    <div class="v5-blog-grid" id="v5-blog-grid"></div>
+    <div id="articles-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+      <div style="color:var(--t3);font-size:.85rem;grid-column:1/-1;text-align:center;padding:20px">جاري التحميل...</div>
+    </div>
   </div>
 </section>
 
@@ -2985,38 +2986,6 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         <blockquote class="test4-quote" data-i18n="soc.q3">"Master 365 replaced 3 separate tools we were paying $400/month for. My 12-rep team across 6 branches is now managed from one screen."</blockquote>
         <div class="test4-auth"><div class="test4-av" aria-hidden="true">🇪🇬</div><div><div class="test4-name">Mohamed Hassan</div><div class="test4-role" data-i18n="soc.r3">Sales Director · Cairo</div></div></div>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- ══ BLOG SECTION — v26 ══ -->
-<section id="blog" style="padding:80px 0;border-top:1px solid rgba(255,255,255,.05)">
-  <div style="max-width:1200px;margin:0 auto;padding:0 28px">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
-      <div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;display:flex;align-items:center;gap:8px">
-          <span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>📝 المدونة المالية
-        </div>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">آخر <em style="font-weight:300;font-style:italic;color:var(--t2)">المقالات</em></h2>
-      </div>
-      <button onclick="document.getElementById('blog-editor').style.display='block'" style="padding:10px 20px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:#c9a84c;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer">+ مقال جديد</button>
-    </div>
-    <div id="blog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px"></div>
-    <div id="blog-editor" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:20px">
-      <h3 style="font-family:'Cormorant',serif;font-size:1.4rem;margin-bottom:12px">✏️ تحرير المقال</h3>
-      <input id="blog-title" class="di" placeholder="عنوان المقال" style="margin-bottom:10px;width:100%">
-      <select id="blog-cat" class="di" style="margin-bottom:10px;width:100%">
-        <option value="مالية">💰 مالية</option>
-        <option value="إسلامية">☪️ إسلامية</option>
-        <option value="أعمال">💼 أعمال</option>
-        <option value="تعليمية">📚 تعليمية</option>
-      </select>
-      <textarea id="blog-content" class="di" rows="6" placeholder="محتوى المقال..." style="margin-bottom:10px;width:100%"></textarea>
-      <div style="display:flex;gap:10px">
-        <button class="bsub" style="flex:1;padding:10px" onclick="saveBlogPost()">💾 نشر المقال</button>
-        <button class="db2" style="background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border);padding:10px 20px" onclick="document.getElementById('blog-editor').style.display='none'">إلغاء</button>
-      </div>
-      <div id="blog-msg" style="margin-top:10px;font-size:.78rem"></div>
     </div>
   </div>
 </section>
@@ -3303,6 +3272,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="licenses" onclick="swD('licenses',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('licenses',this);}"><span>🔑</span><span>Licenses</span></div>
       <div class="dmi" data-sec="notifications" onclick="swD('notifications',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('notifications',this);}"><span>🔔</span><span>Notifications</span></div>
       <div class="dmi" data-sec="support" onclick="swD('support',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('support',this);}"><span>🎧</span><span>Support</span></div>
+      <div class="dmi" data-sec="articles" onclick="swD('articles',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('articles',this);}"><span>📝</span><span>Articles</span></div>
+      <div class="dmi" data-sec="reviews" onclick="swD('reviews',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('reviews',this);}"><span>⭐</span><span>Reviews</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
       <div class="dmi" data-sec="promos" onclick="swD('promos',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('promos',this);}"><span>🎉</span><span>Promotions</span></div>
@@ -3753,6 +3724,55 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <div style="color:var(--t3);font-size:.8rem">Loading...</div>
         </div>
       </div>
+      <!-- ARTICLES & REVIEWS -->
+      <div class="dsec" id="ds-articles">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Articles <span style="color:var(--gold)">📝</span></h2>
+
+        <div class="dcard" style="margin-bottom:18px">
+          <div class="dct">مقال جديد / تعديل</div>
+          <input class="di" id="art-title" placeholder="عنوان المقال"/>
+          <select class="di" id="art-platform">
+            <option value="all">كل المنصات</option>
+          </select>
+          <textarea class="di" id="art-content" rows="5" placeholder="محتوى المقال..."></textarea>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+            <div>
+              <label class="fl" style="font-size:.68rem">تاريخ النشر (فارغ = فوري)</label>
+              <input class="di" type="datetime-local" id="art-publish-at" style="margin-bottom:0"/>
+            </div>
+            <div>
+              <label class="fl" style="font-size:.68rem">الحالة</label>
+              <select class="di" id="art-status" style="margin-bottom:0">
+                <option value="published">✅ منشور</option>
+                <option value="draft">📝 مسودة</option>
+              </select>
+            </div>
+          </div>
+          <input type="hidden" id="art-edit-id"/>
+          <div style="display:flex;gap:8px">
+            <button class="bsub" style="flex:1;padding:10px" onclick="azSaveArticle()">💾 حفظ المقال</button>
+            <button class="db2" style="padding:10px 16px;background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)" onclick="azResetArticleForm()">مقال جديد فارغ</button>
+          </div>
+          <div id="art-save-msg" style="margin-top:8px;font-size:.78rem"></div>
+        </div>
+
+        <div class="dct" style="margin-bottom:10px">كل المقالات</div>
+        <div id="articles-dash-list" style="display:flex;flex-direction:column;gap:10px">
+          <div style="color:var(--t3);font-size:.8rem">Loading...</div>
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <div class="dsec" id="ds-reviews">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Reviews <span style="color:var(--gold)">⭐</span></h2>
+        <select class="di" id="rev-filter-platform" style="width:auto;margin-bottom:16px" onchange="azRenderReviews()">
+          <option value="all">كل المنصات</option>
+        </select>
+        <div id="reviews-dash-list" style="display:flex;flex-direction:column;gap:10px">
+          <div style="color:var(--t3);font-size:.8rem">Loading...</div>
+        </div>
+      </div>
+
       <!-- PROMOTIONS -->
       <div class="dsec" id="ds-promos">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Promotions & Offers <span style="color:var(--gold)">🎉</span></h2>
@@ -5766,6 +5786,231 @@ function azApplyAfiVisibility(visible){
   if(toggle) toggle.checked = (visible !== false);
 }
 
+/* ══ ARTICLES DASHBOARD — إدارة كاملة CRUD ══ */
+var AZ_ARTICLES_CACHE = [];
+
+async function azLoadArticlesDash(){
+  var platSel = document.getElementById('art-platform');
+  if(platSel && platSel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+    Object.keys(AZ_PLATFORMS_DATA).forEach(function(k){
+      var opt = document.createElement('option');
+      opt.value = k; opt.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+      platSel.appendChild(opt);
+    });
+  }
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_ARTICLES_CACHE = config.articles || [];
+    azRenderArticlesDash();
+  }catch(e){
+    var el = document.getElementById('articles-dash-list');
+    if(el) el.innerHTML = '<div style="color:#f87171;font-size:.8rem">فشل تحميل المقالات</div>';
+  }
+}
+
+function azRenderArticlesDash(){
+  var el = document.getElementById('articles-dash-list');
+  if(!el) return;
+  if(!AZ_ARTICLES_CACHE.length){
+    el.innerHTML = '<div style="color:var(--t3);font-size:.8rem">لا توجد مقالات بعد</div>';
+    return;
+  }
+  var sorted = AZ_ARTICLES_CACHE.slice().sort(function(a,b){ return new Date(b.createdAt) - new Date(a.createdAt); });
+  el.innerHTML = sorted.map(function(a){
+    var idx = AZ_ARTICLES_CACHE.indexOf(a);
+    var statusLabel = a.status === 'published' ? '✅ منشور' : '📝 مسودة';
+    var scheduledNote = (a.publishAt && new Date(a.publishAt) > new Date()) ? ' · ⏰ مجدوَل: '+new Date(a.publishAt).toLocaleString('ar-EG') : '';
+    return '<div class="dcard">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">'+
+        '<strong>'+a.title+'</strong>'+
+        '<span style="font-size:.72rem;color:var(--t3);white-space:nowrap">'+statusLabel+'</span>'+
+      '</div>'+
+      '<div style="font-size:.72rem;color:var(--t3);margin-top:4px">'+(a.platform==='all'?'كل المنصات':a.platform)+' · '+new Date(a.createdAt).toLocaleDateString('ar-EG')+scheduledNote+'</div>'+
+      '<div style="display:flex;gap:6px;margin-top:10px">'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azEditArticle('+idx+')">✏️ تعديل</button>'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azToggleArticleStatus('+idx+')">'+(a.status==='published'?'📝 تحويل لمسودة':'✅ نشر الآن')+'</button>'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#f87171" onclick="azDeleteArticle('+idx+')">🗑️ حذف</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function azResetArticleForm(){
+  document.getElementById('art-edit-id').value = '';
+  document.getElementById('art-title').value = '';
+  document.getElementById('art-content').value = '';
+  document.getElementById('art-platform').value = 'all';
+  document.getElementById('art-publish-at').value = '';
+  document.getElementById('art-status').value = 'published';
+  document.getElementById('art-save-msg').textContent = '';
+}
+
+function azEditArticle(idx){
+  var a = AZ_ARTICLES_CACHE[idx];
+  if(!a) return;
+  document.getElementById('art-edit-id').value = idx;
+  document.getElementById('art-title').value = a.title || '';
+  document.getElementById('art-content').value = a.content || '';
+  document.getElementById('art-platform').value = a.platform || 'all';
+  document.getElementById('art-publish-at').value = a.publishAt ? a.publishAt.slice(0,16) : '';
+  document.getElementById('art-status').value = a.status || 'published';
+  document.getElementById('ds-articles').scrollIntoView({behavior:'smooth'});
+}
+
+async function azSaveArticle(){
+  var editId = document.getElementById('art-edit-id').value;
+  var title = document.getElementById('art-title').value.trim();
+  var content = document.getElementById('art-content').value.trim();
+  var platform = document.getElementById('art-platform').value;
+  var publishAtRaw = document.getElementById('art-publish-at').value;
+  var status = document.getElementById('art-status').value;
+  var msg = document.getElementById('art-save-msg');
+
+  if(!title || !content){ msg.style.color = '#f87171'; msg.textContent = '⚠️ العنوان والمحتوى مطلوبان'; return; }
+
+  var publishAt = publishAtRaw ? new Date(publishAtRaw).toISOString() : new Date().toISOString();
+
+  if(editId !== ''){
+    AZ_ARTICLES_CACHE[parseInt(editId,10)] = Object.assign({}, AZ_ARTICLES_CACHE[parseInt(editId,10)], {
+      title: title, content: content, platform: platform, publishAt: publishAt, status: status
+    });
+  } else {
+    AZ_ARTICLES_CACHE.unshift({
+      id: 'art_'+Date.now(), title: title, content: content, platform: platform,
+      publishAt: publishAt, status: status, author: 'Axiom Zones', createdAt: new Date().toISOString()
+    });
+  }
+  await azSaveArticlesToServer('✅ تم حفظ المقال');
+  azResetArticleForm();
+}
+
+async function azToggleArticleStatus(idx){
+  var a = AZ_ARTICLES_CACHE[idx];
+  if(!a) return;
+  a.status = a.status === 'published' ? 'draft' : 'published';
+  await azSaveArticlesToServer(a.status === 'published' ? '✅ تم النشر' : '📝 تحوَّل لمسودة');
+}
+
+async function azDeleteArticle(idx){
+  if(!confirm('حذف هذا المقال نهائياً؟')) return;
+  AZ_ARTICLES_CACHE.splice(idx, 1);
+  await azSaveArticlesToServer('🗑️ تم الحذف');
+}
+
+async function azSaveArticlesToServer(successMsg){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.articles = AZ_ARTICLES_CACHE;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Articles updated: '+successMsg })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast(successMsg, 'success');
+      azRenderArticlesDash();
+    } else {
+      toast('⚠️ فشل الحفظ', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال بالخادم', 'error');
+  }
+}
+
+/* ══ REVIEWS DASHBOARD — إدارة كاملة CRUD ══ */
+var AZ_REVIEWS_CACHE = [];
+
+async function azLoadReviewsDash(){
+  var platSel = document.getElementById('rev-filter-platform');
+  if(platSel && platSel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+    Object.keys(AZ_PLATFORMS_DATA).forEach(function(k){
+      var opt = document.createElement('option');
+      opt.value = k; opt.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+      platSel.appendChild(opt);
+    });
+  }
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_REVIEWS_CACHE = config.reviews || [];
+    azRenderReviews();
+  }catch(e){
+    var el = document.getElementById('reviews-dash-list');
+    if(el) el.innerHTML = '<div style="color:#f87171;font-size:.8rem">فشل تحميل الآراء</div>';
+  }
+}
+
+function azRenderReviews(){
+  var el = document.getElementById('reviews-dash-list');
+  if(!el) return;
+  var platFilter = document.getElementById('rev-filter-platform').value;
+  var filtered = AZ_REVIEWS_CACHE.filter(function(r){
+    return platFilter === 'all' || r.platform === platFilter;
+  }).sort(function(a,b){ return new Date(b.createdAt) - new Date(a.createdAt); });
+
+  if(!filtered.length){
+    el.innerHTML = '<div style="color:var(--t3);font-size:.8rem">لا توجد آراء مطابقة</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(function(r){
+    var idx = AZ_REVIEWS_CACHE.indexOf(r);
+    var stars = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+    return '<div class="dcard" style="'+(r.status==='hidden'?'opacity:.55':'')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<strong>'+r.userName+'</strong><span style="font-size:.85rem">'+stars+'</span>'+
+      '</div>'+
+      '<div style="font-size:.72rem;color:var(--t3);margin:4px 0">'+r.platform+' · '+r.userEmail+' · '+new Date(r.createdAt).toLocaleDateString('ar-EG')+'</div>'+
+      (r.comment ? '<div style="font-size:.82rem;color:var(--t2)">'+r.comment+'</div>' : '')+
+      '<div style="display:flex;gap:6px;margin-top:10px">'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azToggleReviewVisibility('+idx+')">'+(r.status==='visible'?'🙈 إخفاء':'👁️ إظهار')+'</button>'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#f87171" onclick="azDeleteReview('+idx+')">🗑️ حذف نهائي</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+async function azToggleReviewVisibility(idx){
+  var r = AZ_REVIEWS_CACHE[idx];
+  if(!r) return;
+  r.status = r.status === 'visible' ? 'hidden' : 'visible';
+  await azSaveReviewsToServer(r.status === 'visible' ? '👁️ الرأي ظاهر الآن' : '🙈 الرأي مخفي الآن');
+}
+
+async function azDeleteReview(idx){
+  if(!confirm('حذف هذا الرأي نهائياً؟')) return;
+  AZ_REVIEWS_CACHE.splice(idx, 1);
+  await azSaveReviewsToServer('🗑️ تم الحذف');
+}
+
+async function azSaveReviewsToServer(successMsg){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.reviews = AZ_REVIEWS_CACHE;
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Reviews updated: '+successMsg })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      toast(successMsg, 'success');
+      azRenderReviews();
+    } else {
+      toast('⚠️ فشل الحفظ', 'error');
+    }
+  }catch(e){
+    toast('⚠️ فشل الاتصال بالخادم', 'error');
+  }
+}
+
 function azRenderNotifKPIs(){
   var unreadEl = document.getElementById('notif-unread-kv');
   var unreadChEl = document.getElementById('notif-unread-ch');
@@ -6154,6 +6399,8 @@ function swD(sec,el){
   if(sec === 'settings'){ azLoadMaintenanceSettings(); azLoadCompanyInfo(); azLoadAfiSources(); }
   if(sec === 'promos') azLoadPromotions();
   if(sec === 'support') azLoadSupportTickets();
+  if(sec === 'articles') azLoadArticlesDash();
+  if(sec === 'reviews') azLoadReviewsDash();
 }
 /* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
 async function azSavePlatformField(key, field, value, logDetail){
@@ -7784,43 +8031,9 @@ function v5ShareQuiz(){
 }
 
 /* ══ BLOG RENDER ══ */
-var BLOG_POSTS=[
-  {cat:'📊 Financial Education',title:'5 طرق تُخفي بها البنوك التكلفة الحقيقية لقرضك',excerpt:'البنوك لا تكذب — لكنها تختار ما تُظهره. هذه الـ 5 تقنيات التي تجعل قرضاً بـ 11% يبدو بـ 6%...',full:'الحيلة الأولى: الإعلان عن القسط لا الإجمالي.<br><br>الحيلة الثانية: الفائدة البسيطة vs الحقيقية.<br><br>الحيلة الثالثة: تمديد المدة لخفض القسط.<br><br>الحيلة الرابعة: رسوم مخفية تُحسب عليها فائدة.<br><br>الحيلة الخامسة: التسويق العاطفي "امتلك حلمك اليوم".',time:'5 min · 2,847 views'},
-  {cat:'☪️ Islamic Finance',title:'المرابحة vs القرض التقليدي — أيهما أقل تكلفةً؟',excerpt:'كثيرون يظنون التمويل الإسلامي أغلى دائماً. الحقيقة تحتاج حساباً دقيقاً — والنتائج تفاجئ...',full:'مثال حقيقي: سيارة بـ 100,000 ريال<br><br>مرابحة إسلامية: 120,000 ريال (20% هامش)<br>قرض تقليدي "6%": إجمالي 124,800 ريال<br><br>إذن المرابحة أقل تكلفةً بـ 4,800 ريال في هذا المثال!<br><br>لكن النتيجة تختلف حسب المدة والشروط. استخدم Kashf للمقارنة الدقيقة.',time:'7 min · 1,923 views'},
-  {cat:'💡 Smart Money',title:'متى يكون القرض مبرراً مالياً — 4 معايير حاسمة',excerpt:'ليس كل قرض سيئاً. هذه المعايير الأربعة تحدد متى يكون الاقتراض قراراً ذكياً فعلاً...',full:'المعيار ①: عائد الاستثمار > تكلفة القرض (IRR)<br><br>المعيار ②: الأصل يرتفع لا ينخفض (عقار vs هاتف)<br><br>المعيار ③: نسبة DTI أقل من 36% من دخلك<br><br>المعيار ④: صندوق طوارئ 3-6 أشهر قبل الاقتراض',time:'6 min · 3,102 views'}
-];
-function v5RenderBlog(){
-  var grid=document.getElementById('v5-blog-grid');if(!grid||grid.children.length>0)return;
-  BLOG_POSTS.forEach(function(post,i){
-    var card=document.createElement('div');
-    card.className='v5-blog-card';
-    card.id='blog-card-'+i;
-    var btn_style='font-family:DM Mono,monospace;font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:#c9a84c;background:none;border:none;cursor:pointer';
-    var launch_style='margin-top:12px;padding:8px 16px;border-radius:7px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-family:Syne,sans-serif;font-size:.76rem;border:none;cursor:pointer';
-    card.innerHTML=
-      '<div class="v5-blog-cat">'+post.cat+'</div>'+
-      '<div class="v5-blog-title">'+post.title+'</div>'+
-      '<div class="v5-blog-excerpt">'+post.excerpt+'</div>'+
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">'+
-        '<div class="v5-blog-meta">'+post.time+'</div>'+
-        '<button onclick="v5ToggleBlog('+i+')" style="'+btn_style+'" id="blog-btn-'+i+'">اقرأ المزيد ▾</button>'+
-      '</div>'+
-      '<div class="v5-blog-expand" id="blog-expand-'+i+'">'+
-        '<div class="v5-blog-full">'+post.full+'</div>'+
-        '<button onclick="v5KashfDemo()" style="'+launch_style+'">جرّب الأداة مجاناً &#x2192;</button>'+
-      '</div>';
-    grid.appendChild(card);
-  });
-}
-function v5ToggleBlog(i){
-  var card=document.getElementById('blog-card-'+i);
-  var btn=document.getElementById('blog-btn-'+i);
-  if(!card)return;
-  var open=card.classList.contains('open');
-  document.querySelectorAll('.v5-blog-card.open').forEach(function(c){c.classList.remove('open');});
-  document.querySelectorAll('[id^="blog-btn-"]').forEach(function(b){b.textContent='اقرأ المزيد ▾';});
-  if(!open){card.classList.add('open');if(btn)btn.textContent='إغلاق ▴';}
-}
+/* ══ نظام المدونة القديم (BLOG_POSTS الثابتة + v5RenderBlog + v5ToggleBlog) حُذف بالكامل هنا —
+   استُبدل بنظام المقالات الموحَّد الحقيقي (azLoadArticles/azRenderArticles أدناه) ══ */
+
 
 /* ══ LOAN ALERT ══ */
 function v5SetAlert(){
@@ -7947,7 +8160,7 @@ function v5GoTo(id){
 /* ══ INIT v5 ══ */
 window.addEventListener('load',function(){
   v5InitQuiz();
-  v5RenderBlog();
+  azLoadArticles();
   v5StartLiveCounters();
   setTimeout(v5PersonalizePain,600);
 });
@@ -9604,13 +9817,110 @@ function openPltModal(key) {
   mbody.appendChild(featTitle);
   mbody.appendChild(featGrid);
   mbody.appendChild(cta);
+
+  /* ══ قسم الآراء والتقييمات — يُبنى ديناميكياً ويُحمَّل من config.reviews الحقيقية ══ */
+  var reviewsBox = document.createElement('div');
+  reviewsBox.style.cssText = 'margin-top:24px;padding-top:20px;border-top:1px solid var(--border)';
+  reviewsBox.innerHTML = '<h4 style="font-family:\'Cormorant\',serif;font-size:1.1rem;margin-bottom:4px;color:var(--t1)">⭐ آراء المستخدمين</h4>'+
+    '<div id="plt-reviews-summary" style="font-size:.78rem;color:var(--t2);margin-bottom:12px">جاري التحميل...</div>'+
+    '<div id="plt-reviews-list" style="display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;margin-bottom:14px"></div>'+
+    '<div id="plt-review-form-box"></div>';
+  mbody.appendChild(reviewsBox);
   box.appendChild(mbody);
+
+  azLoadPlatformReviews(key);
 
   overlay.style.display = 'flex';
   overlay.style.alignItems = 'center';
   overlay.style.justifyContent = 'center';
   overlay.style.padding = '20px';
   overlay.style.overflowY = 'auto';
+}
+
+/* ══ تحميل وعرض آراء منصة معيّنة داخل المودال ══ */
+async function azLoadPlatformReviews(platformKey){
+  var summary = document.getElementById('plt-reviews-summary');
+  var list = document.getElementById('plt-reviews-list');
+  var formBox = document.getElementById('plt-review-form-box');
+  if(!summary || !list) return;
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    var reviews = (config.reviews || []).filter(function(r){
+      return r.platform === platformKey && r.status === 'visible';
+    });
+
+    if(!reviews.length){
+      summary.textContent = 'لا توجد آراء بعد — كن أول من يقيّم';
+      list.innerHTML = '';
+    } else {
+      var avg = reviews.reduce(function(s,r){ return s + r.rating; }, 0) / reviews.length;
+      summary.innerHTML = '⭐ '+avg.toFixed(1)+' — '+reviews.length+' رأي';
+      list.innerHTML = reviews.slice(0, 10).map(function(r){
+        var stars = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return '<div style="padding:10px;background:rgba(255,255,255,.03);border-radius:8px">'+
+          '<div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.82rem">'+r.userName+'</strong><span style="font-size:.7rem">'+stars+'</span></div>'+
+          (r.comment ? '<div style="font-size:.78rem;color:var(--t2);margin-top:4px">'+r.comment+'</div>' : '')+
+        '</div>';
+      }).join('');
+    }
+
+    /* نموذج كتابة رأي — فقط لو المستخدم مسجّل دخول فعلياً */
+    if(formBox){
+      var uRes = await fetch('/api/user-verify', { credentials:'include' });
+      var uData = await uRes.json();
+      if(uData && uData.valid){
+        formBox.innerHTML = '<div style="padding:12px;background:rgba(255,255,255,.02);border-radius:10px;border:1px solid var(--border)">'+
+          '<div style="font-size:.78rem;color:var(--t2);margin-bottom:6px">شارك رأيك:</div>'+
+          '<div id="plt-star-picker" style="font-size:1.3rem;margin-bottom:8px;cursor:pointer">'+
+            [1,2,3,4,5].map(function(n){ return '<span onclick="azSetReviewRating('+n+')" id="star-'+n+'" style="opacity:.3">⭐</span>'; }).join('')+
+          '</div>'+
+          '<textarea class="di" id="plt-review-comment" rows="2" placeholder="تعليقك (اختياري)" style="margin-bottom:8px"></textarea>'+
+          '<button class="bsub" style="padding:8px 18px;font-size:.78rem" onclick="azSubmitReview(\''+platformKey+'\')">إرسال الرأي</button>'+
+          '<div id="plt-review-msg" style="margin-top:6px;font-size:.76rem"></div>'+
+        '</div>';
+      } else {
+        formBox.innerHTML = '<div style="font-size:.78rem;color:var(--t3);text-align:center;padding:10px">سجّل دخولك لكتابة رأي</div>';
+      }
+    }
+  }catch(e){
+    summary.textContent = 'فشل تحميل الآراء';
+  }
+}
+
+var AZ_SELECTED_RATING = 0;
+function azSetReviewRating(n){
+  AZ_SELECTED_RATING = n;
+  for(var i=1;i<=5;i++){
+    var el = document.getElementById('star-'+i);
+    if(el) el.style.opacity = (i<=n) ? '1' : '.3';
+  }
+}
+
+async function azSubmitReview(platformKey){
+  var msg = document.getElementById('plt-review-msg');
+  if(!AZ_SELECTED_RATING){ if(msg){ msg.style.color='#f87171'; msg.textContent='⚠️ اختر تقييماً بالنجوم أولاً'; } return; }
+  var comment = document.getElementById('plt-review-comment') ? document.getElementById('plt-review-comment').value.trim() : '';
+  try{
+    var res = await fetch('/api/review-submit', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ platform: platformKey, rating: AZ_SELECTED_RATING, comment: comment })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      if(msg){ msg.style.color='#4ade80'; msg.textContent='✅ شكراً لرأيك!'; }
+      AZ_SELECTED_RATING = 0;
+      azLoadPlatformReviews(platformKey);
+    } else if(res.status === 429){
+      if(msg){ msg.style.color='#f87171'; msg.textContent='⚠️ وصلت للحد الأقصى من الآراء اليوم'; }
+    } else {
+      if(msg){ msg.style.color='#f87171'; msg.textContent='⚠️ فشل الإرسال'; }
+    }
+  }catch(e){
+    if(msg){ msg.style.color='#f87171'; msg.textContent='⚠️ خطأ في الاتصال'; }
+  }
 }
 
 function closePltModal(e) {
@@ -9649,54 +9959,38 @@ window.azAddPlatformCard = function(key, data) {
 };
 
 /* ══ BLOG SYSTEM — v26 ══ */
-var BLOG_POSTS = JSON.parse(localStorage.getItem('az_blog_posts') || '[]');
+/* ══ ARTICLES SYSTEM — نظام حقيقي موحَّد (يستبدل نظامي المدونة القديمين المعزولين) ══ */
+async function azLoadArticles(){
+  var grid = document.getElementById('articles-grid');
+  if(!grid) return;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    var articles = config.articles || [];
+    var now = new Date();
+    var published = articles.filter(function(a){
+      return a.status === 'published' &&
+        (a.platform === 'all' || !a.platform) &&
+        (!a.publishAt || new Date(a.publishAt) <= now);
+    }).sort(function(a,b){ return new Date(b.publishAt || b.createdAt) - new Date(a.publishAt || a.createdAt); });
 
-function renderBlog() {
-  var grid = document.getElementById('blog-grid');
-  if (!grid) return;
-  if (BLOG_POSTS.length === 0) {
-    grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--t3);font-size:.9rem;border:1px dashed var(--border);border-radius:12px">📝 لا توجد مقالات بعد — انقر "+ مقال جديد" لكتابة أول مقال</div>';
-    return;
+    if(!published.length){
+      grid.innerHTML = '<div style="color:var(--t3);font-size:.85rem;grid-column:1/-1;text-align:center;padding:20px">لا توجد مقالات منشورة بعد</div>';
+      return;
+    }
+    grid.innerHTML = published.slice(0, 6).map(function(a){
+      var excerpt = (a.content || '').replace(/<[^>]+>/g, '').substring(0, 140);
+      return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .3s">'+
+        '<h3 style="font-family:\'Cormorant\',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--t1)">'+a.title+'</h3>'+
+        '<p style="font-size:.8rem;color:var(--t2);line-height:1.8">'+excerpt+'...</p>'+
+        '<div style="font-size:.65rem;color:var(--t3);font-family:\'DM Mono\',monospace;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">'+new Date(a.publishAt || a.createdAt).toLocaleDateString('ar-EG')+' · '+(a.author || 'Axiom Zones')+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){
+    grid.innerHTML = '<div style="color:#f87171;font-size:.85rem;grid-column:1/-1;text-align:center">فشل تحميل المقالات</div>';
   }
-  grid.innerHTML = BLOG_POSTS.slice().reverse().map(function(post, idx) {
-    var realIdx = BLOG_POSTS.length - 1 - idx;
-    return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .3s" onmouseover="this.style.borderColor=\'rgba(201,168,76,.3)\';this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.borderColor=\'\';this.style.transform=\'\'">' +
-      '<div style="font-family:\'DM Mono\',monospace;font-size:.6rem;letter-spacing:1px;color:#c9a84c;margin-bottom:6px">' + (post.cat || 'عام') + '</div>' +
-      '<h3 style="font-family:\'Cormorant\',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px">' + (post.title || 'بدون عنوان') + '</h3>' +
-      '<p style="font-size:.8rem;color:var(--t2);line-height:1.8;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">' + (post.content || '').substring(0, 200) + '...</p>' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">' +
-        '<span style="font-size:.65rem;color:var(--t3);font-family:\'DM Mono\',monospace">' + (post.date || new Date().toLocaleDateString()) + '</span>' +
-        '<div style="display:flex;gap:6px">' +
-          '<button onclick="deleteBlogPost(' + realIdx + ')" style="background:none;border:none;color:#ef4444;font-size:.7rem;cursor:pointer">🗑️\uFE0F</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
 }
-
-function saveBlogPost() {
-  var title = document.getElementById('blog-title').value.trim();
-  var content = document.getElementById('blog-content').value.trim();
-  var cat = document.getElementById('blog-cat').value;
-  var msg = document.getElementById('blog-msg');
-  if (!title || !content) { msg.style.color = '#ef4444'; msg.textContent = '\u26A0\uFE0F العنوان والمحتوى مطلوبان'; return; }
-  BLOG_POSTS.push({ title: title, content: content, cat: cat, date: new Date().toLocaleDateString() });
-  localStorage.setItem('az_blog_posts', JSON.stringify(BLOG_POSTS));
-  document.getElementById('blog-title').value = '';
-  document.getElementById('blog-content').value = '';
-  msg.style.color = '#22c55e'; msg.textContent = '\u2705 تم نشر المقال بنجاح!';
-  renderBlog();
-  setTimeout(function() { document.getElementById('blog-editor').style.display = 'none'; msg.textContent = ''; }, 2000);
-}
-
-function deleteBlogPost(idx) {
-  if (!confirm('حذف هذا المقال؟')) return;
-  BLOG_POSTS.splice(idx, 1);
-  localStorage.setItem('az_blog_posts', JSON.stringify(BLOG_POSTS));
-  renderBlog();
-}
-
-window.addEventListener('load', function() { renderBlog(); });
 
 /* ══ SMART GREETING — v26 ══ */
 function showSmartGreeting() {
