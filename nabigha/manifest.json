@@ -1,0 +1,26 @@
+{
+  "name": "نابغة — Nabigha",
+  "short_name": "نابغة",
+  "description": "منصة تعلّم الحساب الذهني بالعداد (السوروبان) عبر تسعة مستويات متدرّجة",
+  "start_url": "./nabigha-v3-secure.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F0EAD9",
+  "theme_color": "#c9a84c",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
