@@ -45,6 +45,12 @@ export async function onRequestGet(context) {
     }
   }
 
+  // ── فحص جلسة المالك/المدير أولاً — وصول كامل تلقائي بلا أي قيد (يسبق كل الفحوصات التالية) ──
+  const ownerAccess = await checkOwnerOrAdminSession(request, env);
+  if (ownerAccess) {
+    return new Response(JSON.stringify({ ok: true, status: 'full', role: ownerAccess, visibility: visibilityStatus, noindex: seoNoindex }), { headers });
+  }
+
   // ── تحقق من جلسة المستخدم (نفس منطق user-verify.js بالضبط) ──
   const cookieHeader = request.headers.get('Cookie') || '';
   const match = cookieHeader.match(/az_user_session=([^;]+)/);
@@ -117,4 +123,58 @@ export async function onRequestGet(context) {
 function base64url(bytes) {
   let str = btoa(String.fromCharCode(...bytes));
   return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/* ══ فحص جلسة المالك أو المدير — يمنح وصولاً كاملاً تلقائياً لكل المنصات بلا استثناء ══ */
+async function checkOwnerOrAdminSession(request, env) {
+  const cookieHeader = request.headers.get('Cookie') || '';
+  const secret = env.OWNER_SECRET || env.OWNER_CODE || '';
+
+  // ── جلسة المالك (az_owner_session) — الصيغة: owner.exp.sig ──
+  const ownerMatch = cookieHeader.match(/az_owner_session=([^;]+)/);
+  if (ownerMatch) {
+    try {
+      const token = decodeURIComponent(ownerMatch[1]);
+      const parts = token.split('.');
+      if (parts.length === 3) {
+        const [tag, expStr, sig] = parts;
+        const exp = parseInt(expStr, 10);
+        if (tag === 'owner' && exp && Date.now() <= exp) {
+          const payload = `${tag}.${expStr}`;
+          const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+          const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+          if (base64url(new Uint8Array(sigBuf)) === sig) return 'owner';
+        }
+      }
+    } catch (e) {}
+  }
+
+  // ── جلسة المدير (az_admin_session) — الصيغة: admin.emailB64.exp.sig ──
+  const adminMatch = cookieHeader.match(/az_admin_session=([^;]+)/);
+  if (adminMatch && env.AZ_ADMINS_KV) {
+    try {
+      const token = decodeURIComponent(adminMatch[1]);
+      const parts = token.split('.');
+      if (parts.length === 4) {
+        const [tag, emailB64, expStr, sig] = parts;
+        const exp = parseInt(expStr, 10);
+        if (tag === 'admin' && exp && Date.now() <= exp) {
+          const adminSecret = env.OWNER_SECRET || 'fallback-secret-change-me';
+          const payload = `${tag}.${emailB64}.${expStr}`;
+          const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(adminSecret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+          const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+          if (base64url(new Uint8Array(sigBuf)) === sig) {
+            const email = atob(emailB64);
+            const raw = await env.AZ_ADMINS_KV.get('admin:' + email);
+            if (raw) {
+              const rec = JSON.parse(raw);
+              if (!rec.disabled) return 'admin';
+            }
+          }
+        }
+      }
+    } catch (e) {}
+  }
+
+  return null;
 }
