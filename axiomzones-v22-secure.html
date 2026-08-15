@@ -6403,23 +6403,38 @@ function swD(sec,el){
   if(sec === 'reviews') azLoadReviewsDash();
 }
 /* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
+/* ══ طابور حفظ مركزي (Save Queue) — يمنع تعارض "قراءة قديمة تكتب فوق حفظ حديث"
+   لما المستخدم يعمل كذا تعديل بسرعة ورا بعض (زي إخفاء منصات كتير متتالية).
+   كل عملية حفظ لازم تستنى دورها في الطابور قبل ما تقرأ الكونفيج — يضمن
+   إن كل قراءة فعلاً "طازة" وتشمل كل التعديلات السابقة، لا نسخة قديمة ══ */
+var AZ_SAVE_QUEUE = Promise.resolve();
+
+function azQueuedSave(mutatorFn, logDetail){
+  var resultPromise = AZ_SAVE_QUEUE.then(async function(){
+    try{
+      var res = await fetch('/api/config-get');
+      var data = await res.json();
+      var config = (data && data.config) || {};
+      mutatorFn(config);
+      var saveRes = await fetch('/api/config-set', {
+        method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ config: config, logDetail: logDetail || 'Config updated' })
+      });
+      var saveData = null;
+      try{ saveData = await saveRes.json(); }catch(e){}
+      return !!(saveRes.ok && saveData && saveData.ok);
+    }catch(e){ return false; }
+  });
+  AZ_SAVE_QUEUE = resultPromise.catch(function(){}); // الطابور يكمل حتى لو عملية فشلت
+  return resultPromise;
+}
+
 async function azSavePlatformField(key, field, value, logDetail){
-  try{
-    var res = await fetch('/api/config-get');
-    var data = await res.json();
-    var config = (data && data.config) || {};
+  return azQueuedSave(function(config){
     if(!config.platforms) config.platforms = {};
     if(!config.platforms[key]) config.platforms[key] = {};
     config.platforms[key][field] = value;
-
-    var saveRes = await fetch('/api/config-set', {
-      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ config: config, logDetail: logDetail || ('Changed '+field+' for platform "'+key+'" to '+value) })
-    });
-    var saveData = null;
-    try{ saveData = await saveRes.json(); }catch(e){}
-    return !!(saveRes.ok && saveData && saveData.ok);
-  }catch(e){ return false; }
+  }, logDetail || ('Changed '+field+' for platform "'+key+'" to '+value));
 }
 
 async function azToggleSubPlatformDisabled(key, el){
@@ -6449,27 +6464,19 @@ async function toggleP(key, el){
   var checked = el.checked;
   el.disabled = true;
   try{
-    var res = await fetch('/api/config-get');
-    var data = await res.json();
-    var config = (data && data.config) || {};
-    if(!config.platforms) config.platforms = {};
-    if(!config.platforms[key]) config.platforms[key] = {};
-    config.platforms[key].active = checked;
+    var ok = await azQueuedSave(function(config){
+      if(!config.platforms) config.platforms = {};
+      if(!config.platforms[key]) config.platforms[key] = {};
+      config.platforms[key].active = checked;
+    }, 'Set active status for platform "'+key+'" to '+checked);
 
-    var saveRes = await fetch('/api/config-set', {
-      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ config: config })
-    });
-    var saveData = null;
-    try{ saveData = await saveRes.json(); }catch(e){}
-
-    if(saveRes.ok && saveData && saveData.ok){
+    if(ok){
       toast('✦ ' + key + (checked ? ' activated' : ' paused'));
       var labelEl = document.getElementById('plat-status-'+key);
       if(labelEl){ labelEl.textContent = checked ? 'Active' : 'Inactive'; labelEl.style.color = checked ? '#4ade80' : '#f87171'; }
     } else {
       el.checked = !checked;
-      toast(saveRes.status === 401 ? 'ليس لديك صلاحية تعديل المنصات' : 'فشل الحفظ — حاول تاني');
+      toast('فشل الحفظ — حاول تاني');
     }
   }catch(e){
     el.checked = !checked;
