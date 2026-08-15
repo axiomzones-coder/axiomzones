@@ -6339,9 +6339,54 @@ function azResetAdminNavFilter(){
 }
 
 async function openDash(){
-  /* ⚠️ كانت هذه الدالة تعمل prompt() مباشر دائماً بلا أي تحقق من الجلسة الموجودة —
-     الآن تستخدم نفس منطق openLogin() (تحقق تلقائي من owner-verify/admin-verify أولاً) */
-  await openLogin();
+  /* ⚠️ إصلاح: هذه الدالة كانت تستدعي openLogin() مباشرة، والتي يفتح مسارها
+     الاحتياطي نافذة "الأعضاء" (Member Access) الخاصة بالمستخدمين العاديين —
+     غير صحيح إطلاقاً لزر الترس ⚙ الخاص بالمالك/المدير. الآن: نفس التحقق
+     التلقائي من الجلسة، لكن بمسار احتياطي صحيح (كود المالك أو دخول مدير) */
+  try{
+    var ownerRes = await fetch('/api/owner-verify', { credentials:'include' });
+    if(ownerRes.ok){
+      var od = await ownerRes.json();
+      if(od && od.valid){
+        AZ_CURRENT_ROLE = 'owner';
+        var rl = document.getElementById('dash-role-label'); if(rl) rl.textContent = 'OWNER DASHBOARD';
+        document.getElementById('dash').classList.add('open');
+        document.body.style.overflow='hidden';
+        openDashUnlocked();
+        return;
+      }
+    }
+  }catch(e){}
+  try{
+    var adminRes = await fetch('/api/admin-verify', { credentials:'include' });
+    if(adminRes.ok){
+      var ad = await adminRes.json();
+      if(ad && ad.valid){
+        AZ_CURRENT_ROLE = 'admin';
+        AZ_ADMIN_PERMISSIONS = ad.permissions || {};
+        document.getElementById('dash').classList.add('open');
+        document.body.style.overflow='hidden';
+        openDashUnlocked();
+        return;
+      }
+    }
+  }catch(e){}
+  /* لا توجد جلسة صالحة — نطلب كود المالك مباشرة (لا نافذة الأعضاء العاديين) */
+  if(azOwnerLocked()){ toast('محاولات كثيرة — حاول لاحقاً'); return; }
+  var code = prompt('🔐 كود المالك (أو اتركه فارغاً لدخول مدير):');
+  if(code === null) return;
+  if(code){
+    if(await azCheckOwnerCode(code)){
+      AZ_CURRENT_ROLE = 'owner';
+      var rl2 = document.getElementById('dash-role-label'); if(rl2) rl2.textContent = 'OWNER DASHBOARD';
+      openDashUnlocked();
+    } else {
+      toast('كود غير صحيح');
+    }
+  } else {
+    document.getElementById('admin-login-modal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
 }
 function openDashUnlocked(){
   document.getElementById('dash').classList.add('open');
