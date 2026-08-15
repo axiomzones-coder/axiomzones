@@ -24,6 +24,10 @@
 /kashf                    /kashf-v6-secure.html             200
 /kashf/v1                 /kashf-v1.html             200
 
+# ═══ NABIGHA (نابِغة) ═══
+/nabigha                                   /nabigha/nabigha-v3-secure.html   200
+https://nabigha.axiomzones.com/*           https://axiomzones.com/nabigha/:splat   301
+
 # ═══ LEGAL ═══
 /privacy                  /privacy-policy.html       200
 /terms                    /terms-of-service.html     200
