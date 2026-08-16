@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" prefix="og: https://ogp.me/ns#">
 <head>
+    <script>
+    /* ══ تحويل فوري مضمون للدومينات الفرعية المخصَّصة — لا يعتمد على صيغة Cloudflare _redirects
+       المُلتبسة، لأنها أثبتت عدم موثوقية 100% في الاختبار الفعلي. أي دومين فرعي جديد يُضاف
+       مستقبلاً (لمنصة فرعية أخرى) يُضاف كسطر جديد في الكائن أدناه فقط ══ */
+    (function(){
+      var SUBDOMAIN_MAP = {
+        'nabigha.axiomzones.com': '/nabigha/'
+        /* أضف أي دومين فرعي جديد هنا: 'platform-key.axiomzones.com': '/platform-key/', */
+      };
+      var target = SUBDOMAIN_MAP[window.location.hostname];
+      if (target && window.location.pathname !== target) {
+        window.location.replace('https://axiomzones.com' + target);
+      }
+    })();
+    </script>
     <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.paddle.com https://checkout.paddle.com https://js.paddle.com https://fonts.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.anthropic.com https://checkout.paddle.com https://api.paddle.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://cloudflareinsights.com https://static.cloudflareinsights.com; frame-src 'self' https://checkout.paddle.com;">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
@@ -4540,7 +4555,15 @@ function azRenderMarquee(){
   var track = document.getElementById('mq-track');
   if(!track || typeof AZ_PLATFORMS_DATA === 'undefined') return;
   var lang = document.documentElement.lang || 'en';
-  var liveKeys = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; });
+  var liveKeys = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){
+    var p = AZ_PLATFORMS_DATA[k];
+    if (p.status !== 'live') return false;
+    var vis = p.visibility || 'visible';
+    if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+      vis = p.scheduledVisibility.mode;
+    }
+    return vis === 'visible';
+  });
   var items = liveKeys.map(function(k){
     var p = AZ_PLATFORMS_DATA[k];
     return (lang === 'ar' ? p.name_ar : p.name_en) || k;
@@ -7632,7 +7655,15 @@ function updatePlatformCount(){
   var liveEl = document.getElementById('az-live-count');
   var totalEl = document.getElementById('az-total-count');
   var keys = Object.keys(AZ_PLATFORMS_DATA);
-  var liveN = keys.filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+  var liveN = keys.filter(function(k){
+    var p = AZ_PLATFORMS_DATA[k];
+    if (p.status !== 'live') return false;
+    var vis = p.visibility || 'visible';
+    if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+      vis = p.scheduledVisibility.mode;
+    }
+    return vis === 'visible';
+  }).length;
   if(liveEl) liveEl.textContent = liveN;
   if(totalEl) totalEl.textContent = keys.length;
 }
@@ -7695,7 +7726,15 @@ function buildCategorySection(cat) {
 
   /* Count platforms available */
   var available = (cat.all || []).filter(function(k) { return AZ_PLATFORMS_DATA[k]; });
-  var liveCount = available.filter(function(k) { return AZ_PLATFORMS_DATA[k] && AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+  var liveCount = available.filter(function(k) {
+    var p = AZ_PLATFORMS_DATA[k];
+    if (!p || p.status !== 'live') return false;
+    var vis = p.visibility || 'visible';
+    if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+      vis = p.scheduledVisibility.mode;
+    }
+    return vis === 'visible';
+  }).length;
 
   var countBadge = document.createElement('span');
   countBadge.className = 'cat-count-badge';
@@ -9172,7 +9211,16 @@ function azRenderFooterPlatforms(){
      لأنه كان يُتخطّى بالكامل لو config.platforms/customPlatforms/customCategories كلهم فارغين، رغم
      أن عدّ AZ_PLATFORMS_DATA الثابت لا يحتاج أي بيانات خارجية أصلاً ليكون صحيحاً ══ */
   (function azUpdatePlatformCounters(){
-    var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+    var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){
+      var p = AZ_PLATFORMS_DATA[k];
+      if (p.status !== 'live') return false;
+      /* ══ مهم: منصة "مباشرة" لكن "مخفية" من الداشبورد لا تُحسَب كمنصة نشطة ظاهرة للزوار ══ */
+      var vis = p.visibility || 'visible';
+      if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+        vis = p.scheduledVisibility.mode;
+      }
+      return vis === 'visible';
+    }).length;
     var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
     document.querySelectorAll('[data-count="4"]').forEach(function(el){
       el.setAttribute('data-count', liveCount);
