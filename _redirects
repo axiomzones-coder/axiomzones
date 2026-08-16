@@ -1,3 +1,12 @@
+# ⚠️ قواعد الدومينات الفرعية المخصَّصة (host-specific) — يجب أن تبقى دائماً
+# في أعلى هذا الملف، قبل أي قاعدة عامة بالمسار فقط (مثل '/' أدناه في MAIN
+# ROUTES) — Cloudflare يفحص القواعد بالترتيب من أعلى لأسفل، وأول تطابق يكسب.
+# قاعدة عامة قبل قاعدة الدومين المخصَّص = القاعدة العامة بتكسب دايماً بالغلط.
+
+# ═══ NABIGHA (نابِغة) ═══
+/nabigha                                   /nabigha/nabigha-v3-secure.html   200
+https://nabigha.axiomzones.com/*           https://axiomzones.com/nabigha/:splat   301
+
 # Axiom Zones — Cloudflare Pages Redirects
 # ==========================================
 
@@ -23,10 +32,6 @@
 # ═══ KASHF ═══
 /kashf                    /kashf-v6-secure.html             200
 /kashf/v1                 /kashf-v1.html             200
-
-# ═══ NABIGHA (نابِغة) ═══
-/nabigha                                   /nabigha/nabigha-v3-secure.html   200
-https://nabigha.axiomzones.com/*           https://axiomzones.com/nabigha/:splat   301
 
 # ═══ LEGAL ═══
 /privacy                  /privacy-policy.html       200
