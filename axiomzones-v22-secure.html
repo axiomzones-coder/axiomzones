@@ -2441,7 +2441,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
     <button class="btn-ng btn-n" onclick="azV4GoTo('pricing')" data-i18n="nav.start">Get Started</button>
     <button class="btn-no btn-n" style="font-size:.9rem;padding:8px 13px" onclick="openDash()" title="Owner Dashboard" aria-label="Owner Dashboard">⚙</button>
     <!-- HAMBURGER — mobile only -->
-    <button id="mob-btn" onclick="openAZv4SB()" onclick="toggleMobMenu()" aria-label="Menu" aria-expanded="false">
+    <button id="mob-btn" onclick="toggleMobMenu()" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -9286,14 +9286,23 @@ function azRenderFooterPlatforms(){
           return vis === 'visible';
         }).length;
         var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
-        document.querySelectorAll('[data-count="4"]').forEach(function(el){
-          el.setAttribute('data-count', liveCount);
-          el.textContent = liveCount;
-        });
-        var totalEl = document.getElementById('stat-total-plats');
-        if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
-        var liveEl2 = document.getElementById('stat-live-plats');
-        if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
+        function azForceCounterValues(){
+          document.querySelectorAll('[data-count="4"]').forEach(function(el){
+            el.setAttribute('data-count', liveCount);
+            el.textContent = liveCount;
+          });
+          var totalEl = document.getElementById('stat-total-plats');
+          if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
+          var liveEl2 = document.getElementById('stat-live-plats');
+          if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
+        }
+        azForceCounterValues();
+        /* ══ تصحيح متأخر إلزامي: أنيميشن العدّ التصاعدي (animCount) يعمل بشكل مستقل عبر
+           IntersectionObserver عند ظهور أي قسم أثناء التمرير — لو هذا الأنيميشن بدأ قبل
+           اكتمال هذا التحديث (سباق توقيت حقيقي مُكتشَف)، يستمر بعرض قيمته القديمة المُلتقَطة
+           رغم تحديثنا الفوري أعلاه. هذا الفرض المتأخر (بعد انتهاء أي أنيميشن ممكنة تمامًا)
+           يضمن أن القيمة الصحيحة النهائية تفوز دائمًا، بصرف النظر عن التوقيت ══ */
+        setTimeout(azForceCounterValues, 3000);
         if(typeof updatePlatformCount === 'function') updatePlatformCount();
         if(typeof azUpdateAnnounceCounts === 'function') azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
       })();
