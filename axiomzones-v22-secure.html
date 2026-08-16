@@ -429,6 +429,7 @@ function setLang(l){
 <meta name="theme-color" content="#060912" id="theme-color-meta"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<script src="/AZ_SHARED_I18N.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
 /* ══════════════════════════════════════
@@ -2816,8 +2817,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div style="max-width:1200px;margin:0 auto;padding:0 28px">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span>📝 المدونة</div>
-        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px">آخر <em style="font-weight:300;font-style:italic;color:var(--t2)">المقالات</em></h2>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:20px;height:1px;background:#c9a84c;display:inline-block"></span><span data-i18n="articles.label">📝 المدونة</span></div>
+        <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-1px"><span data-i18n="articles.h1">آخر</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="articles.h2">المقالات</em></h2>
       </div>
     </div>
     <div id="articles-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
@@ -2926,40 +2927,40 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 <section id="support" class="sec" aria-label="Support" style="border-top:1px solid rgba(255,255,255,.05)">
   <div style="max-width:640px;margin:0 auto;padding:0 28px">
     <div style="text-align:center;margin-bottom:28px">
-      <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px">🎧 مركز الدعم</div>
-      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700">احتاج <em style="font-weight:300;font-style:italic;color:var(--t2)">مساعدة؟</em></h2>
+      <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:8px" data-i18n="support.label">🎧 مركز الدعم</div>
+      <h2 style="font-family:'Cormorant',Georgia,serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700"><span data-i18n="support.h1">احتاج</span> <em style="font-weight:300;font-style:italic;color:var(--t2)" data-i18n="support.h2">مساعدة؟</em></h2>
     </div>
 
     <div style="display:flex;gap:10px;margin-bottom:20px;justify-content:center;flex-wrap:wrap">
-      <button class="db2" id="sup-tab-new" onclick="azSupSwitchTab('new')" style="padding:9px 18px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#c9a84c">📩 تذكرة جديدة</button>
-      <button class="db2" id="sup-tab-check" onclick="azSupSwitchTab('check')" style="padding:9px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--t2)">🔍 تتبّع تذكرة</button>
-      <a id="sup-whatsapp-link" href="#" target="_blank" style="display:none;padding:9px 18px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#22c55e;border-radius:8px;text-decoration:none;font-size:.85rem;font-family:'Syne',sans-serif">💬 واتساب فوري (عاجل)</a>
+      <button class="db2" id="sup-tab-new" onclick="azSupSwitchTab('new')" style="padding:9px 18px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#c9a84c" data-i18n="support.tabNew">📩 تذكرة جديدة</button>
+      <button class="db2" id="sup-tab-check" onclick="azSupSwitchTab('check')" style="padding:9px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--t2)" data-i18n="support.tabCheck">🔍 تتبّع تذكرة</button>
+      <a id="sup-whatsapp-link" href="#" target="_blank" style="display:none;padding:9px 18px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#22c55e;border-radius:8px;text-decoration:none;font-size:.85rem;font-family:'Syne',sans-serif" data-i18n="support.whatsapp">💬 واتساب فوري (عاجل)</a>
     </div>
 
     <!-- نموذج تذكرة جديدة -->
     <div id="sup-panel-new" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-        <input class="di" id="sup-name" placeholder="اسمك"/>
-        <input class="di" id="sup-email" type="email" placeholder="إيميلك"/>
+        <input class="di" id="sup-name" placeholder="اسمك" data-i18n-ph="support.namePh"/>
+        <input class="di" id="sup-email" type="email" placeholder="إيميلك" data-i18n-ph="support.emailPh"/>
       </div>
       <select class="di" id="sup-category" style="margin-bottom:10px">
-        <option value="general">💬 استفسار عام</option>
-        <option value="technical">🛠️ مشكلة تقنية في استخدام أداة</option>
-        <option value="financial">💰 مشكلة في الدفع أو الاشتراك</option>
+        <option value="general" data-i18n="support.catGeneral">💬 استفسار عام</option>
+        <option value="technical" data-i18n="support.catTechnical">🛠️ مشكلة تقنية في استخدام أداة</option>
+        <option value="financial" data-i18n="support.catFinancial">💰 مشكلة في الدفع أو الاشتراك</option>
       </select>
-      <input class="di" id="sup-subject" placeholder="عنوان المشكلة (سطر واحد)" style="margin-bottom:10px"/>
-      <textarea class="di" id="sup-message" rows="4" placeholder="اشرح المشكلة بالتفصيل..." style="margin-bottom:14px"></textarea>
-      <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSupmitTicket()">إرسال التذكرة</button>
+      <input class="di" id="sup-subject" placeholder="عنوان المشكلة (سطر واحد)" style="margin-bottom:10px" data-i18n-ph="support.subjectPh"/>
+      <textarea class="di" id="sup-message" rows="4" placeholder="اشرح المشكلة بالتفصيل..." style="margin-bottom:14px" data-i18n-ph="support.messagePh"></textarea>
+      <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSupmitTicket()" data-i18n="support.submitBtn">إرسال التذكرة</button>
       <div id="sup-submit-msg" style="margin-top:10px;font-size:.82rem"></div>
     </div>
 
     <!-- تتبّع تذكرة -->
     <div id="sup-panel-check" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-        <input class="di" id="sup-check-id" placeholder="رقم التذكرة (SUP-XXXX-XXXX)" style="margin-bottom:0"/>
-        <input class="di" id="sup-check-email" type="email" placeholder="إيميلك" style="margin-bottom:0"/>
+        <input class="di" id="sup-check-id" placeholder="رقم التذكرة (SUP-XXXX-XXXX)" style="margin-bottom:0" data-i18n-ph="support.ticketIdPh"/>
+        <input class="di" id="sup-check-email" type="email" placeholder="إيميلك" style="margin-bottom:0" data-i18n-ph="support.emailPh"/>
       </div>
-      <button class="bsub" style="width:auto;padding:10px 24px" onclick="azCheckTicketStatus()">تحقق من الحالة</button>
+      <button class="bsub" style="width:auto;padding:10px 24px" onclick="azCheckTicketStatus()" data-i18n="support.checkBtn">تحقق من الحالة</button>
       <div id="sup-check-result" style="margin-top:16px"></div>
     </div>
   </div>
@@ -4227,6 +4228,13 @@ function setCurr(c){ CURR=c; syncCurrSelects(c); refreshPrices(); }
 var STATIC = {
   en:{
     'nav.p':'Platforms','nav.a':'About','nav.pr':'Pricing','nav.c':'Contact','nav.login':'Login','nav.start':'Get Started',
+    'support.label':'🎧 Support Center','support.h1':'Need','support.h2':'help?',
+    'support.tabNew':'📩 New Ticket','support.tabCheck':'🔍 Track Ticket','support.whatsapp':'💬 Instant WhatsApp (Urgent)',
+    'support.namePh':'Your name','support.emailPh':'Your email',
+    'support.catGeneral':'💬 General inquiry','support.catTechnical':'🛠️ Technical issue using a tool','support.catFinancial':'💰 Billing or subscription issue',
+    'support.subjectPh':'Issue subject (one line)','support.messagePh':'Describe the issue in detail...',
+    'support.submitBtn':'Send Ticket','support.ticketIdPh':'Ticket ID (SUP-XXXX-XXXX)','support.checkBtn':'Check Status',
+    'articles.label':'📝 Blog','articles.h1':'Latest','articles.h2':'Articles',
     'announce.txt':'Axiom Zones platform — 8 platforms live now · 30 platforms coming · axiomzones.com',
     'stat.live':'Live Now','stat.lang':'Languages Supported','stat.curr':'Currencies Supported','stat.free':'Free to Try',
     'pwa.title':'Add to Home Screen','pwa.sub':'Works offline','pwa.btn':'Install',
@@ -4333,6 +4341,13 @@ var STATIC = {
   },
   ar:{
     'nav.p':'المنصات','nav.a':'من نحن','nav.pr':'الباقات','nav.c':'تواصل','nav.login':'دخول','nav.start':'ابدأ الآن',
+    'support.label':'🎧 مركز الدعم','support.h1':'احتاج','support.h2':'مساعدة؟',
+    'support.tabNew':'📩 تذكرة جديدة','support.tabCheck':'🔍 تتبّع تذكرة','support.whatsapp':'💬 واتساب فوري (عاجل)',
+    'support.namePh':'اسمك','support.emailPh':'إيميلك',
+    'support.catGeneral':'💬 استفسار عام','support.catTechnical':'🛠️ مشكلة تقنية في استخدام أداة','support.catFinancial':'💰 مشكلة في الدفع أو الاشتراك',
+    'support.subjectPh':'عنوان المشكلة (سطر واحد)','support.messagePh':'اشرح المشكلة بالتفصيل...',
+    'support.submitBtn':'إرسال التذكرة','support.ticketIdPh':'رقم التذكرة (SUP-XXXX-XXXX)','support.checkBtn':'تحقق من الحالة',
+    'articles.label':'📝 المدونة','articles.h1':'آخر','articles.h2':'المقالات',
     'announce.txt':'منصة Axiom Zones — 8 منصات مباشرة الآن · 30 منصة قادمة · axiomzones.com',
     'stat.live':'مباشرة الآن','stat.lang':'لغة مدعومة','stat.curr':'عملة مدعومة','stat.free':'مجاني للتجربة',
     'pwa.title':'أضف للشاشة الرئيسية','pwa.sub':'يعمل بدون إنترنت','pwa.btn':'تثبيت',
@@ -4439,6 +4454,13 @@ var STATIC = {
   },
   fr:{
     'nav.p':'Plateformes','nav.a':'À propos','nav.pr':'Tarifs','nav.c':'Contact','nav.login':'Connexion','nav.start':'Commencer',
+    'support.label':'🎧 Centre d\'aide','support.h1':'Besoin d\'','support.h2':'aide ?',
+    'support.tabNew':'📩 Nouveau ticket','support.tabCheck':'🔍 Suivre un ticket','support.whatsapp':'💬 WhatsApp instantané (urgent)',
+    'support.namePh':'Votre nom','support.emailPh':'Votre e-mail',
+    'support.catGeneral':'💬 Question générale','support.catTechnical':'🛠️ Problème technique avec un outil','support.catFinancial':'💰 Problème de facturation ou d\'abonnement',
+    'support.subjectPh':'Sujet du problème (une ligne)','support.messagePh':'Décrivez le problème en détail...',
+    'support.submitBtn':'Envoyer le ticket','support.ticketIdPh':'ID du ticket (SUP-XXXX-XXXX)','support.checkBtn':'Vérifier le statut',
+    'articles.label':'📝 Blog','articles.h1':'Derniers','articles.h2':'Articles',
     'h.eye':'✦ Premier Venture Studio Digital Mondial', 'h.search':'Quel service recherchez-vous ? Décrivez votre besoin…',
     'h.desc':'Un écosystème mondial de plateformes technologiques avancées — pour chaque individu, entreprise et institution, partout dans le monde. Chaînes d\'approvisionnement, immobilier, talents, finance. À l\'échelle impériale.',
     'h.cta1':'🚀 Explorer les Plateformes','h.cta2':'Voir les Tarifs ↓',
@@ -4539,10 +4561,19 @@ function applyT(lang, T){
   if(document.getElementById('quiz-question') && typeof v5ShowQuizQuestion==='function' && typeof quizCurrent!=='undefined' && quizCurrent < (getQuizData().length)) v5ShowQuizQuestion();
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k = el.dataset.i18n, v = T[k];
+    /* ══ خط احتياطي: المكتبة المشتركة (AZ_SHARED_I18N) — تُفحص فقط لو المفتاح غير موجود محلياً ══ */
+    if(v === undefined && typeof AZ_SHARED_I18N !== 'undefined'){
+      var sharedT = AZ_SHARED_I18N[lang] || AZ_SHARED_I18N.en || AZ_SHARED_I18N.ar;
+      v = sharedT ? sharedT[k] : undefined;
+    }
     if(v !== undefined) el.textContent = v;
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
     var k = el.dataset.i18nPh, v = T[k];
+    if(v === undefined && typeof AZ_SHARED_I18N !== 'undefined'){
+      var sharedTPh = AZ_SHARED_I18N[lang] || AZ_SHARED_I18N.en || AZ_SHARED_I18N.ar;
+      v = sharedTPh ? sharedTPh[k] : undefined;
+    }
     if(v !== undefined) el.setAttribute('placeholder', v);
   });
 }
@@ -6573,7 +6604,10 @@ async function azLoadPlatformToggles(){
     var scheduled = saved.scheduledVisibility || null;
     var scheduledInfo = scheduled ? ('<div style="font-size:.66rem;color:#38bdf8;margin-top:4px">⏰ سيتحول إلى "'+(scheduled.mode==='visible'?'ظاهرة':scheduled.mode==='hidden'?'مخفية':'قائمة انتظار')+'" في '+new Date(scheduled.at).toLocaleString('ar-EG',{dateStyle:'short',timeStyle:'short'})+'</div>') : '';
 
-    return '<div class="dcard" style="padding:16px" data-plat-key="'+key+'">'+
+    var activeCardStyle = isActive
+      ? 'padding:16px;border:1px solid rgba(34,197,94,.4);background:linear-gradient(135deg,rgba(34,197,94,.07),rgba(34,197,94,.02))'
+      : 'padding:16px';
+    return '<div class="dcard" style="'+activeCardStyle+'" data-plat-key="'+key+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
         '<div style="font-size:1.2rem;margin-bottom:6px">'+(p.icon||'🔷')+'</div>'+
         '<input type="checkbox" class="plat-bulk-check" data-key="'+key+'" onchange="azBulkUpdateCount()" style="accent-color:var(--gold);width:16px;height:16px"/>'+
@@ -7697,7 +7731,15 @@ function buildCategorySection(cat) {
   var featRow = document.createElement('div');
   featRow.className = 'cat-featured';
 
-  var featKeys = (cat.featured || []).filter(function(k) { return AZ_PLATFORMS_DATA[k] && AZ_PLATFORMS_DATA[k].hiddenFromHub !== true; }).slice(0, 3);
+  var featKeys = (cat.featured || []).filter(function(k) {
+    var p = AZ_PLATFORMS_DATA[k];
+    if (!p) return false;
+    var vis = p.visibility || 'visible';
+    if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+      vis = p.scheduledVisibility.mode;
+    }
+    return vis === 'visible';
+  }).slice(0, 3);
   featKeys.forEach(function(key) {
     var plt = AZ_PLATFORMS_DATA[key];
     if (!plt) return;
@@ -9085,7 +9127,15 @@ function azAddCategoryFilterButton(catId, cc){
 function azRenderFooterPlatforms(){
   var box = document.getElementById('footer-platforms-list');
   if(!box) return;
-  var keys = Object.keys(AZ_PLATFORMS_DATA); // كل المنصات الحقيقية — 17 الأساسية + أي منصة مخصصة تُضاف لاحقاً
+  var keys = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ // كل المنصات الحقيقية الظاهرة فقط — نفس منطق buildPlatformCard بالضبط
+    var p = AZ_PLATFORMS_DATA[k];
+    if(!p) return false;
+    var vis = p.visibility || 'visible';
+    if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+      vis = p.scheduledVisibility.mode;
+    }
+    return vis === 'visible';
+  });
   box.innerHTML = keys.map(function(key){
     var p = AZ_PLATFORMS_DATA[key];
     if(!p) return '';
@@ -9118,7 +9168,25 @@ function azRenderFooterPlatforms(){
       if (data.config.afiUpdatedAt) azShowAfiUpdatedDate(data.config.afiUpdatedAt);
       azApplyAfiVisibility(data.config.afiVisible);
 
-      if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
+      /* ══ تحديث عدّاد "المنصات النشطة" ليعكس العدد الحقيقي الفعلي — نُقل خارج شرط الخروج المبكر التالي عمداً،
+     لأنه كان يُتخطّى بالكامل لو config.platforms/customPlatforms/customCategories كلهم فارغين، رغم
+     أن عدّ AZ_PLATFORMS_DATA الثابت لا يحتاج أي بيانات خارجية أصلاً ليكون صحيحاً ══ */
+  (function azUpdatePlatformCounters(){
+    var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
+    var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
+    document.querySelectorAll('[data-count="4"]').forEach(function(el){
+      el.setAttribute('data-count', liveCount);
+      el.textContent = liveCount;
+    });
+    var totalEl = document.getElementById('stat-total-plats');
+    if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
+    var liveEl2 = document.getElementById('stat-live-plats');
+    if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
+    if(typeof updatePlatformCount === 'function') updatePlatformCount();
+    if(typeof azUpdateAnnounceCounts === 'function') azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
+  })();
+
+  if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
       var overrides = data.config.platforms || {};
       Object.keys(overrides).forEach(function(key){
         if (!AZ_PLATFORMS_DATA[key]) return;
@@ -9185,19 +9253,7 @@ function azRenderFooterPlatforms(){
         });
       }
 
-      /* ══ تحديث عدّاد "المنصات النشطة" ليعكس العدد الحقيقي الفعلي، بدل الرقم الثابت في الكود ══ */
-      var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){ return AZ_PLATFORMS_DATA[k].status === 'live'; }).length;
-      var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
-      document.querySelectorAll('[data-count="4"]').forEach(function(el){
-        el.setAttribute('data-count', liveCount);
-        el.textContent = liveCount;
-      });
-      var totalEl = document.getElementById('stat-total-plats');
-      if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
-      var liveEl2 = document.getElementById('stat-live-plats');
-      if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
-      if(typeof updatePlatformCount === 'function') updatePlatformCount();
-      azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
+      /* تحديث العداد نُفِّذ بالفعل أعلاه خارج الشرط (azUpdatePlatformCounters) — لا تكرار هنا */
       azRenderMarquee();
 
       azRenderFooterPlatforms();
@@ -9386,6 +9442,12 @@ function azSmartSearch(query){
   var results = [];
   Object.keys(AZ_PLATFORMS_DATA).forEach(function(key){
     var p = AZ_PLATFORMS_DATA[key];
+    /* استبعاد المنصات المخفية/قائمة الانتظار من نتائج البحث — نفس منطق buildPlatformCard بالضبط */
+    var vis = p.visibility || 'visible';
+    if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+      vis = p.scheduledVisibility.mode;
+    }
+    if (vis !== 'visible') return;
     var score = 0;
     score += azScoreField(qTokens, azNormalizeSearch(p.name_ar), 10);
     score += azScoreField(qTokens, azNormalizeSearch(p.name_en), 10);
