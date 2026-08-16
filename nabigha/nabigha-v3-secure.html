@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
+<script>
+/* ══ تنظيف الرابط الظاهر من رقم الإصدار — مضمون بغض النظر عن سلوك Cloudflare
+   الداخلي (قاعدة الـ200 لم تُثبِت موثوقية كاملة في الاختبار الفعلي). لا يُعيد
+   تحميل الصفحة، فقط يُحدِّث شريط العنوان بصمت باستخدام history.replaceState ══ */
+(function(){
+  if (window.location.pathname.indexOf('nabigha-v3-secure') !== -1) {
+    history.replaceState(null, '', '/nabigha');
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نابِغة — Nabigha | من طفلك... إلى نابغة</title>
@@ -4498,6 +4508,31 @@ if('serviceWorker' in navigator){
 })();
 </script>
 
+<!-- ══ إشعار تثبيت PWA — نفس نمط الموقع الرئيسي، مُهيَّأ لمنصة نابغة تحديداً ══ -->
+<div id="nab-pwa-banner" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9990;background:var(--bg-elev,#161F35);border:1px solid rgba(201,168,76,.3);border-radius:14px;padding:14px 18px;max-width:360px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.6);align-items:center;gap:12px">
+  <div style="font-size:1.6rem">🧮</div>
+  <div style="flex:1">
+    <div style="font-family:'Cairo',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:2px;color:var(--ink,#EEF0F6)">أضف نابِغة للشاشة الرئيسية</div>
+    <div style="font-family:monospace;font-size:.62rem;color:var(--ink-soft,#8C93A8);letter-spacing:1px">يعمل بدون إنترنت</div>
+  </div>
+  <button onclick="nabPWAInstall()" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:700;font-size:.78rem;border:none;cursor:pointer;white-space:nowrap">تثبيت</button>
+  <button onclick="document.getElementById('nab-pwa-banner').style.display='none'" style="background:none;border:none;color:var(--ink-soft,#8C93A8);cursor:pointer;font-size:1.2rem;padding:0 4px">✕</button>
+</div>
+<script>
+var _nabD=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault(); _nabD=e;
+  setTimeout(function(){ var b=document.getElementById('nab-pwa-banner'); if(b) b.style.display='flex'; }, 15000);
+});
+window.nabPWAInstall=function(){
+  if(!_nabD) return;
+  _nabD.prompt();
+  _nabD.userChoice.then(function(res){
+    if(res && res.outcome==='accepted'){ var b=document.getElementById('nab-pwa-banner'); if(b) b.style.display='none'; }
+    _nabD=null;
+  }).catch(function(){ _nabD=null; });
+};
+</script>
 
 </body>
 </html>
