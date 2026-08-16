@@ -1243,7 +1243,10 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   .n-links{display:none}
   footer{padding:48px 18px 22px}
   .pgwrap{grid-template-columns:1fr}
-  .dsb{display:none}
+  .dsb{transform:translateX(100%);transition:transform .3s ease;z-index:2100}
+  body.ltr .dsb{transform:translateX(-100%)}
+  .dsb.dash-mob-open{transform:translateX(0)}
+  #dash-mob-toggle{display:inline-block!important}
   .dbody{margin-inline-start:0}
   .frow{grid-template-columns:1fr}
   .ftop{grid-template-columns:1fr}
@@ -3272,6 +3275,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:4px"><span style="background:linear-gradient(135deg,var(--gold-d),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AXIOM ZONES</span> <span style="color:var(--t3);font-size:.68rem;letter-spacing:2px;vertical-align:middle;font-family:'DM Mono',monospace" id="dash-role-label">OWNER DASHBOARD</span></div>
     </div>
     <div style="display:flex;align-items:center;gap:9px">
+      <button onclick="azToggleDashMobNav()" id="dash-mob-toggle" style="display:none;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:6px 10px;border-radius:7px;cursor:none;font-size:1rem">☰</button>
       <span style="font-size:.7rem;color:var(--t3);font-family:'DM Mono',monospace">sync: <span style="color:var(--gold)" id="d-time"></span></span>
       <span style="width:6px;height:6px;background:#4ade80;border-radius:50%;box-shadow:0 0 6px #4ade80;display:inline-block"></span>
       <span style="font-size:.7rem;color:#4ade80;font-family:'DM Mono',monospace">LIVE</span>
@@ -6476,6 +6480,10 @@ async function azLoadRecentActivity(){
   }catch(e){ tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#f87171;padding:16px">Connection error</td></tr>'; }
 }
 function closeDash(){ document.getElementById('dash').classList.remove('open'); document.body.style.overflow=''; }
+
+function azToggleDashMobNav(){
+  document.querySelectorAll('.dsb').forEach(function(el){ el.classList.toggle('dash-mob-open'); });
+}
 async function azOwnerLogout(){
   var endpoint = (AZ_CURRENT_ROLE === 'admin') ? '/api/admin-logout' : '/api/owner-logout';
   try{ await fetch(endpoint, {method:'POST', credentials:'include'}); }catch(e){}
@@ -6490,6 +6498,7 @@ function swD(sec,el){
   document.querySelectorAll('.dmi').forEach(function(m){m.classList.remove('on');});
   var ds=document.getElementById('ds-'+sec); if(ds) ds.classList.add('on');
   if(el) el.classList.add('on');
+  document.querySelectorAll('.dsb').forEach(function(dsb){ dsb.classList.remove('dash-mob-open'); }); /* إغلاق قائمة الموبايل تلقائياً بعد الاختيار */
   if(sec === 'analytics') azLoadRealAnalytics();
   if(sec === 'admins') azLoadAdmins();
   if(sec === 'platforms') azLoadPlatformToggles();
@@ -9207,34 +9216,10 @@ function azRenderFooterPlatforms(){
       if (data.config.afiUpdatedAt) azShowAfiUpdatedDate(data.config.afiUpdatedAt);
       azApplyAfiVisibility(data.config.afiVisible);
 
-      /* ══ تحديث عدّاد "المنصات النشطة" ليعكس العدد الحقيقي الفعلي — نُقل خارج شرط الخروج المبكر التالي عمداً،
-     لأنه كان يُتخطّى بالكامل لو config.platforms/customPlatforms/customCategories كلهم فارغين، رغم
-     أن عدّ AZ_PLATFORMS_DATA الثابت لا يحتاج أي بيانات خارجية أصلاً ليكون صحيحاً ══ */
-  (function azUpdatePlatformCounters(){
-    var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){
-      var p = AZ_PLATFORMS_DATA[k];
-      if (p.status !== 'live') return false;
-      /* ══ مهم: منصة "مباشرة" لكن "مخفية" من الداشبورد لا تُحسَب كمنصة نشطة ظاهرة للزوار ══ */
-      var vis = p.visibility || 'visible';
-      if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
-        vis = p.scheduledVisibility.mode;
-      }
-      return vis === 'visible';
-    }).length;
-    var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
-    document.querySelectorAll('[data-count="4"]').forEach(function(el){
-      el.setAttribute('data-count', liveCount);
-      el.textContent = liveCount;
-    });
-    var totalEl = document.getElementById('stat-total-plats');
-    if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
-    var liveEl2 = document.getElementById('stat-live-plats');
-    if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
-    if(typeof updatePlatformCount === 'function') updatePlatformCount();
-    if(typeof azUpdateAnnounceCounts === 'function') azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
-  })();
-
-  if (!data.config.platforms && !data.config.customPlatforms && !data.config.customCategories) return;
+      /* ══ الكتلة أدناه (تطبيق الرؤية + العداد) تُنفَّذ دائماً بلا شرط خروج مبكر —
+         العداد يجب أن يُحسَب بعد تطبيق الرؤية دائماً، لا قبله، وإلا فهو يحسب على بيانات
+         لم تُدمَج بعد (باج مُكتشَف: كان العداد يحسب من بيانات افتراضية دائماً "ظاهرة") ══ */
+      if (data.config.platforms || data.config.customPlatforms || data.config.customCategories) {
       var overrides = data.config.platforms || {};
       Object.keys(overrides).forEach(function(key){
         if (!AZ_PLATFORMS_DATA[key]) return;
@@ -9287,6 +9272,31 @@ function azRenderFooterPlatforms(){
           azInjectPlatformSEO(key, AZ_PLATFORMS_DATA[key]);
         });
       }
+      } /* ══ إغلاق شرط وجود إعدادات مخصَّصة — كل ما بعده يعمل دائماً بلا شرط ══ */
+
+      /* ══ تحديث عدّاد "المنصات النشطة" — الآن بعد اكتمال تطبيق الرؤية فعلياً على البيانات، لا قبله ══ */
+      (function azUpdatePlatformCounters(){
+        var liveCount = Object.keys(AZ_PLATFORMS_DATA).filter(function(k){
+          var p = AZ_PLATFORMS_DATA[k];
+          if (p.status !== 'live') return false;
+          var vis = p.visibility || 'visible';
+          if (p.scheduledVisibility && p.scheduledVisibility.at && new Date(p.scheduledVisibility.at) <= new Date()) {
+            vis = p.scheduledVisibility.mode;
+          }
+          return vis === 'visible';
+        }).length;
+        var totalCount = Object.keys(AZ_PLATFORMS_DATA).length;
+        document.querySelectorAll('[data-count="4"]').forEach(function(el){
+          el.setAttribute('data-count', liveCount);
+          el.textContent = liveCount;
+        });
+        var totalEl = document.getElementById('stat-total-plats');
+        if(totalEl){ totalEl.setAttribute('data-count', totalCount); totalEl.textContent = totalCount + '+'; }
+        var liveEl2 = document.getElementById('stat-live-plats');
+        if(liveEl2){ liveEl2.setAttribute('data-count', liveCount); liveEl2.textContent = liveCount; }
+        if(typeof updatePlatformCount === 'function') updatePlatformCount();
+        if(typeof azUpdateAnnounceCounts === 'function') azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
+      })();
 
       /* ══ إعادة الرسم مع احترام وضع العرض الحالي (تصنيفات أو شبكة) — لا نفرض الشبكة المسطّحة دائماً ══ */
       if (AZ_VIEW_MODE === 'categories' && typeof renderCategoryView === 'function') {
