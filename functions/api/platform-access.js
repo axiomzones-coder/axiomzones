@@ -97,7 +97,18 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({ ok: true, status: 'full', visibility: visibilityStatus, noindex: seoNoindex }), { headers });
   }
 
-  // ── ٢) لا يوجد اشتراك — تحقق من التجربة المجانية الخاصة بهذه المنصة تحديداً ──
+  // ── ١.٥) هل هذه المنصة "مُهداة" له من المالك؟ (دائمة أو بتاريخ انتهاء) ──
+  const gifts = record.giftedAccess || {};
+  const giftExpiry = gifts[platform];
+  if (giftExpiry !== undefined) {
+    if (giftExpiry === null || new Date(giftExpiry) > new Date()) {
+      return new Response(JSON.stringify({ ok: true, status: 'full', gifted: true, visibility: visibilityStatus, noindex: seoNoindex }), { headers });
+    }
+    // الهدية انتهت — تُعامَل كأي اشتراك منتهٍ، لا نعيدها لحالة "تجربة" مجدداً
+    return new Response(JSON.stringify({ ok: true, status: 'expired', wasGifted: true, visibility: visibilityStatus, noindex: seoNoindex }), { headers });
+  }
+
+  // ── ٢) لا يوجد اشتراك أو هدية — تحقق من التجربة المجانية الخاصة بهذه المنصة تحديداً ──
   const trials = record.platformTrials || {};
   const trialStartedAt = trials[platform];
 
