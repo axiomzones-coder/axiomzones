@@ -9302,7 +9302,15 @@ function azRenderFooterPlatforms(){
            اكتمال هذا التحديث (سباق توقيت حقيقي مُكتشَف)، يستمر بعرض قيمته القديمة المُلتقَطة
            رغم تحديثنا الفوري أعلاه. هذا الفرض المتأخر (بعد انتهاء أي أنيميشن ممكنة تمامًا)
            يضمن أن القيمة الصحيحة النهائية تفوز دائمًا، بصرف النظر عن التوقيت ══ */
-        setTimeout(azForceCounterValues, 3000);
+        /* ══ حل نهائي أقوى من التأخير الواحد: تكرار الفرض كل 500ms لمدة 15 ثانية —
+           يضمن الفوز على أنيميشن animCount بصرف النظر عن وقت ظهور القسم فعلياً
+           (بدل الرهان على توقيت واحد قد لا يكفي لو المستخدم تصفّح ببطء) ══ */
+        var azCounterFixAttempts = 0;
+        var azCounterFixInterval = setInterval(function(){
+          azForceCounterValues();
+          azCounterFixAttempts++;
+          if(azCounterFixAttempts >= 30) clearInterval(azCounterFixInterval); /* 30×500ms = 15 ثانية */
+        }, 500);
         if(typeof updatePlatformCount === 'function') updatePlatformCount();
         if(typeof azUpdateAnnounceCounts === 'function') azUpdateAnnounceCounts(liveCount, totalCount - liveCount);
       })();
