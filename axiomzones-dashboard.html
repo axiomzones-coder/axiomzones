@@ -1149,19 +1149,19 @@ var PLAN_CONFIG = {
 };
 
 var PLAN_FEATURES = {
-  free:     ['Prism Suite — basic','Kashf — basic','Kyanat','5 analyses/day'],
-  growth:   ['Prism Clear','Kashf Pro','Kyanat','UniUber Starter','Mizan Pro','Unlimited analyses'],
-  pro:      ['Prism Pro','Kashf Advisor','All 7 platforms','Master 365','ProSuite 365','API access'],
-  expert:   ['All 8 platforms','Expert tier everywhere','Client reports','Custom branding','Priority support'],
-  lifetime: ['All 8 platforms — forever','Expert tier everywhere','All future platforms','No monthly fees','VIP support'],
+  free:     ['Kashf — basic','Prism Suite — basic','5 analyses/day'],
+  growth:   ['Kashf Pro','Prism Clear','Dar','Aqar','Unlimited analyses'],
+  pro:      ['All active platforms','Kashf Advisor','Prism Pro','UniUber','API access'],
+  expert:   ['All active platforms','Expert tier everywhere','Client reports','Custom branding','Priority support'],
+  lifetime: ['All active platforms — forever','Expert tier everywhere','All future platforms','No monthly fees','VIP support'],
 };
 
 var UPGRADE_OPTIONS = [
-  {plan:'free',    price:0,   aPrice:0,   label:'Free',    popular:false,  feats:['5 analyses/day','Prism + Kashf basic','Kyanat',{no:'UniUber'},{no:'Master 365'}]},
-  {plan:'growth',  price:29,  aPrice:20,  label:'Growth',  popular:false,  feats:['Unlimited analyses','Prism Clear','Kashf Pro','UniUber','Mizan Pro',{no:'Master 365'}]},
-  {plan:'pro',     price:69,  aPrice:48,  label:'Pro All', popular:true,   feats:['All 7 platforms','Prism Pro','Kashf Advisor','Master 365','ProSuite 365','API access']},
-  {plan:'expert',  price:129, aPrice:90,  label:'Expert',  popular:false,  feats:['All 8 platforms','Expert everywhere','Client reports','Custom branding','Priority support']},
-  {plan:'lifetime',price:399, aPrice:399, label:'Lifetime 🔥',popular:false,feats:['All 8 platforms forever','All future platforms','No monthly fees','VIP support','$399 one-time']},
+  {plan:'free',    price:0,   aPrice:0,   label:'Free',    popular:false,  feats:['5 analyses/day','Kashf + Prism basic',{no:'UniUber'},{no:'Dar / Aqar'}]},
+  {plan:'growth',  price:29,  aPrice:20,  label:'Growth',  popular:false,  feats:['Unlimited analyses','Kashf Pro','Prism Clear','Dar','Aqar',{no:'UniUber'}]},
+  {plan:'pro',     price:69,  aPrice:48,  label:'Pro All', popular:true,   feats:['All active platforms','Kashf Advisor','Prism Pro','UniUber','API access']},
+  {plan:'expert',  price:129, aPrice:90,  label:'Expert',  popular:false,  feats:['All active platforms','Expert everywhere','Client reports','Custom branding','Priority support']},
+  {plan:'lifetime',price:399, aPrice:399, label:'Lifetime 🔥',popular:false,feats:['All active platforms forever','All future platforms','No monthly fees','VIP support','$399 one-time']},
 ];
 
 /* ══ LOGIN ══ */
@@ -1188,7 +1188,7 @@ function doSignIn() {
       if (r.data && r.data.ok && r.data.user) {
         currentUser = Object.assign({
           since: new Date().toISOString().split('T')[0],
-          analyses: 0, saved: 0, platforms: ['prism'],
+          analyses: 0, saved: 0, platforms: [],
           avatar: '👤', notifCount: 1
         }, r.data.user);
         launchDashboard();
@@ -1276,7 +1276,7 @@ function doLogout() {
       if (data && data.valid && data.user) {
         currentUser = Object.assign({
           since: new Date().toISOString().split('T')[0],
-          analyses: 0, saved: 0, platforms: ['prism'],
+          analyses: 0, saved: 0, platforms: [],
           avatar: '👤', notifCount: 1
         }, data.user);
         launchDashboard();
@@ -1460,16 +1460,17 @@ function renderSubscription() {
 function renderUsage() {
   var el = document.getElementById('usage-bars'); if(!el)return;
   var u = currentUser;
+  var totalVisiblePlatforms = ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id);}).length;
   var items = [
     {label:'Analyses Run',val:u.analyses,max:u.plan==='free'?5*30:9999,color:'var(--pu)'},
-    {label:'Platforms Active',val:ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id) && canAccess(p.id);}).length,max:8,color:'var(--gold)'},
-    {label:'Storage Used',val:2.4,max:u.plan==='free'?5:100,color:'var(--cy)',sfx:'MB'},
+    {label:'Platforms Active',val:ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id) && canAccess(p.id);}).length,max:totalVisiblePlatforms || 1,color:'var(--gold)'},
+    {label:'Storage Used',val:0,max:u.plan==='free'?5:100,color:'var(--cy)',sfx:'MB'},
   ];
   el.innerHTML='';
   items.forEach(function(item){
     var pct=Math.min(100,Math.round((item.val/item.max)*100));
     var div=document.createElement('div');div.style.cssText='margin-bottom:14px';
-    div.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.8rem"><span>'+item.label+'</span><span style="font-family:var(--fm);color:var(--t2)">'+item.val+(item.sfx||'')+' / '+(item.max===9999?'Unlimited':item.max+(item.sfx||''))+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+item.color+'"></div></div>';
+    div.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.8rem"><span>'+item.label+'</span><span dir="ltr" style="font-family:var(--fm);color:var(--t2);unicode-bidi:isolate">'+item.val+(item.sfx||'')+' / '+(item.max===9999?'Unlimited':item.max+(item.sfx||''))+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+item.color+'"></div></div>';
     el.appendChild(div);
   });
 }
