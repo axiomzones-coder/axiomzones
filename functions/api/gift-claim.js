@@ -69,9 +69,13 @@ export async function onRequestPost(context) {
     }
     const userRecord = JSON.parse(userRaw);
     userRecord.giftedAccess = userRecord.giftedAccess || {};
-    const expiryDate = gift.durationDays
-      ? new Date(Date.now() + gift.durationDays * 24 * 60 * 60 * 1000).toISOString()
-      : null; // null = دائم
+    /* ══ فحص صريح 100%: "دائم" فقط لو durationDays رقم NULL بالضبط —
+       أي قيمة رقمية صحيحة موجبة أخرى تُحسَب كأيام فعلية، لا اعتماد على
+       truthy/falsy (كان durationDays=0 سيُعامَل خطأً كـ"دائم" سابقًا) ══ */
+    const isPermanent = (gift.durationDays === null || gift.durationDays === undefined);
+    const expiryDate = isPermanent
+      ? null
+      : new Date(Date.now() + Number(gift.durationDays) * 24 * 60 * 60 * 1000).toISOString();
     userRecord.giftedAccess[gift.platform] = expiryDate;
     await env.AZ_USERS_KV.put('user:' + email, JSON.stringify(userRecord));
 

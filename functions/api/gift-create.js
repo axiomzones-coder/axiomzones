@@ -23,7 +23,15 @@ export async function onRequestPost(context) {
   }
 
   const platform = String((body && body.platform) || '').trim().toLowerCase();
-  const durationDays = (body && body.durationDays !== undefined) ? body.durationDays : null; // null = دائم
+  /* ══ فحص صريح 100% للدوام — لا اعتماد على truthy/falsy الذي قد يُخفي
+     أخطاءً (مثال: durationDays=0 كان سيُعامَل خطأً كـ"دائم" بفحص truthy بسيط).
+     القيمة المُخزَّنة نهائياً دائماً: null (دائم) أو رقم صحيح موجب (أيام) ══ */
+  let durationDays = null;
+  const rawDuration = body && body.durationDays;
+  if (rawDuration !== null && rawDuration !== undefined && rawDuration !== 'permanent') {
+    const parsed = parseInt(rawDuration, 10);
+    if (!isNaN(parsed) && parsed > 0) durationDays = parsed;
+  }
   const purpose = String((body && body.purpose) || '').slice(0, 300);
   const count = Math.min(Math.max(parseInt((body && body.count) || 1, 10), 1), 100); // بين 1 و100 رابط دفعة واحدة
 
