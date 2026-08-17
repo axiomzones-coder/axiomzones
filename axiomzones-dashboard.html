@@ -1531,10 +1531,11 @@ function renderInvoices() {
 /* ══ NOTIFICATIONS ══ */
 function renderNotifications() {
   var el = document.getElementById('notifs-list'); if(!el||el.children.length>0)return;
+  /* ══ إشعار ترحيب صادق واحد فقط — أُزيلت الإشعارات الوهمية القديمة
+     (كانت تذكر Prism/Kashf كمجانيين، وتعرض "73 مكان متبقي" تسويقياً
+     مزيَّفاً بلا أي عرض حقيقي قائم) ══ */
   var notifs = [
-    {icon:'🎉',bg:'rgba(34,197,94,.1)',title:'Welcome to Axiom Zones!',body:'Your account is ready. Start with Prism Suite or Kashf — both free.',time:'Just now',unread:true},
-    {icon:'💡',bg:'rgba(201,168,76,.1)',title:'Try the Kashf Loan Analyzer',body:'See what your bank is hiding. Enter any loan offer and get the Beautification Score instantly.',time:'2 hours ago',unread:true},
-    {icon:'🔥',bg:'rgba(239,68,68,.1)',title:'Lifetime Deal — 73 spots left',body:'$399 once, Pro All-Access forever. First 100 accounts only. Don\'t miss it.',time:'1 day ago',unread:true},
+    {icon:'🎉',bg:'rgba(34,197,94,.1)',title:'Welcome to Axiom Zones!',body:'Your account is ready. Explore your available platforms from "My Platforms".',time:'Just now',unread:true},
   ];
   el.innerHTML='';
   notifs.forEach(function(n){
