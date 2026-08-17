@@ -6496,14 +6496,24 @@ document.addEventListener('keydown', function(e){
   var dash = document.getElementById('dash');
   if(!dash || !dash.classList.contains('open')) return; /* فقط والداشبورد مفتوح */
   var items = Array.prototype.slice.call(document.querySelectorAll('.dsb .dmi'));
-  if(!items.length) return;
   var active = document.activeElement;
   var idx = items.indexOf(active);
+
+  if(idx !== -1){
+    /* التركيز على عنصر بالقائمة الجانبية — تنقّل بين الأقسام */
+    e.preventDefault();
+    var nextIdx = e.key === 'ArrowDown' ? Math.min(idx + 1, items.length - 1) : Math.max(idx - 1, 0);
+    items[nextIdx].focus();
+    items[nextIdx].scrollIntoView({block:'nearest'});
+    return;
+  }
+
+  /* لا تركيز على عنصر قائمة محدَّد — مرّر منطقة المحتوى الرئيسية (بطاقات
+     التحكم بالمنصات وغيرها) مباشرة، بديل حقيقي لعجلة الماوس */
+  var isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.tagName === 'SELECT');
+  if(isTyping) return; /* لا تتدخل أثناء الكتابة في حقل نصي */
   e.preventDefault();
-  if(idx === -1){ items[0].focus(); return; }
-  var nextIdx = e.key === 'ArrowDown' ? Math.min(idx + 1, items.length - 1) : Math.max(idx - 1, 0);
-  items[nextIdx].focus();
-  items[nextIdx].scrollIntoView({block:'nearest'});
+  dash.scrollBy({ top: e.key === 'ArrowDown' ? 120 : -120, behavior: 'smooth' });
 });
 async function azOwnerLogout(){
   var endpoint = (AZ_CURRENT_ROLE === 'admin') ? '/api/admin-logout' : '/api/owner-logout';
