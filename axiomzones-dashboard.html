@@ -538,9 +538,8 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
         <button class="dsb-item" onclick="goTo('referral')"><span class="dsb-icon">🎁</span>Refer & Earn</button>
         <button class="dsb-item" onclick="goTo('settings')"><span class="dsb-icon">⚙️</span>Settings</button>
         <div class="dsb-section">Platforms</div>
-        <button class="dsb-item" onclick="window.open('prism-v2r8.html','_blank')"><span class="dsb-icon">🔮</span>Prism ↗</button>
-        <button class="dsb-item" onclick="window.open('kashf-v2.html','_blank')"><span class="dsb-icon">👁️</span>Kashf ↗</button>
-        <button class="dsb-item" onclick="window.open('axiomzones.html','_blank')"><span class="dsb-icon">🌐</span>Main Site ↗</button>
+        <div id="dsb-platforms-list-1"></div>
+        <button class="dsb-item" onclick="window.open('/','_blank')"><span class="dsb-icon">🌐</span>Main Site ↗</button>
       </nav>
       <div class="dsb-footer">
         <div class="dsb-user">
@@ -812,12 +811,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
           <!-- Quick Actions -->
           <div style="font-family:var(--fm);font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--t3);margin-bottom:10px" class="rv d1">Quick Actions</div>
           <div class="qa-grid rv d1">
-            <button class="qa-btn" onclick="window.open('prism-v2r8.html','_blank')">
-              <span class="qa-icon">🔮</span><span class="qa-label">Open Prism</span>
-            </button>
-            <button class="qa-btn" onclick="window.open('kashf-v2.html','_blank')">
-              <span class="qa-icon">👁️</span><span class="qa-label">Open Kashf</span>
-            </button>
+            <div id="qa-dynamic-platforms" style="display:contents"></div>
             <button class="qa-btn" onclick="goTo('subscriptions')">
               <span class="qa-icon">⬆️</span><span class="qa-label">Upgrade Plan</span>
             </button>
@@ -1065,8 +1059,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
     <button class="dsb-item" onclick="closeMobSB();goTo('referral')"><span class="dsb-icon">🎁</span>Refer & Earn</button>
     <button class="dsb-item" onclick="closeMobSB();goTo('settings')"><span class="dsb-icon">⚙️</span>Settings</button>
     <div style="border-top:1px solid rgba(255,255,255,.06);margin:8px 0"></div>
-    <button class="dsb-item" onclick="window.open('prism-v2r8.html','_blank')"><span class="dsb-icon">🔮</span>Prism ↗</button>
-    <button class="dsb-item" onclick="window.open('kashf-v2.html','_blank')"><span class="dsb-icon">👁️</span>Kashf ↗</button>
+    <div id="dsb-platforms-list-2"></div>
     <div style="border-top:1px solid rgba(255,255,255,.06);margin:8px 0"></div>
     <button class="dsb-item" style="color:var(--rd)" onclick="doLogout()"><span class="dsb-icon">⎋</span>Logout</button>
   </div>
@@ -1339,19 +1332,34 @@ function renderOverview() {
 
 function renderActivity() {
   var el = document.getElementById('recent-activity'); if(!el)return;
-  var activities = [
-    {icon:'🔮',text:'Ran Prism Compare analysis — saved $2,400',time:'2 hours ago',color:'var(--pu)'},
-    {icon:'👁️',text:'Checked bank offer with Kashf — Score: 72/100',time:'Yesterday',color:'#7c3aed'},
-    {icon:'💳',text:'Subscribed to ' + (PLAN_CONFIG[currentUser.plan]||{}).name + ' plan',time:currentUser.since,color:'var(--gold)'},
-  ];
-  el.innerHTML='';
-  activities.forEach(function(a){
-    var d=document.createElement('div');
-    d.style.cssText='display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.04)';
-    d.innerHTML='<div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0">'+a.icon+'</div><div style="flex:1"><div style="font-size:.8rem;line-height:1.5">'+a.text+'</div><div style="font-family:var(--fm);font-size:.62rem;color:'+a.color+';margin-top:3px">'+a.time+'</div></div>';
-    el.appendChild(d);
-  });
+  /* ══ لا نشاط وهمي بعد الآن — حساب جديد فعلاً بلا أي نشاط حقيقي مسجَّل.
+     نظام تتبّع نشاط حقيقي (فتح منصة، تحليل، إلخ) بند مستقبلي مؤجَّل،
+     لا نص وهمي يوحي بنشاط لم يحدث فعلياً (كان يحتوي أيضاً باجاً ظاهراً:
+     "Subscribed to undefined plan") ══ */
+  el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--t3);font-size:.82rem">لا يوجد نشاط بعد — ابدأ باستخدام إحدى منصاتك من "My Platforms"</div>';
 }
+
+/* ══ ملء الحاويات الديناميكية الثلاث (قائمتا الجانب + Quick Actions) بالمنصات
+   الظاهرة والمتاحة فعلياً فقط — نفس مصدر البيانات الحقيقي AZ_PLATFORM_STATUS ══ */
+function azRenderQuickPlatformLinks(){
+  var visibleAccessible = ALL_PLATFORMS.filter(function(p){ return isPlatformVisible(p.id) && canAccess(p.id); });
+
+  ['dsb-platforms-list-1','dsb-platforms-list-2'].forEach(function(containerId){
+    var c = document.getElementById(containerId);
+    if(!c) return;
+    c.innerHTML = visibleAccessible.map(function(p){
+      return '<button class="dsb-item" onclick="window.open(\''+p.url+'\',\'_blank\')"><span class="dsb-icon">'+p.icon+'</span>'+p.name+' ↗</button>';
+    }).join('');
+  });
+
+  var qa = document.getElementById('qa-dynamic-platforms');
+  if(qa){
+    qa.innerHTML = visibleAccessible.slice(0, 2).map(function(p){
+      return '<button class="qa-btn" onclick="window.open(\''+p.url+'\',\'_blank\')"><span class="qa-icon">'+p.icon+'</span><span class="qa-label">Open '+p.name.split('—')[0].trim()+'</span></button>';
+    }).join('');
+  }
+}
+
 
 /* ══ PLATFORMS ══ */
 /* ══ حالة كل منصة الحقيقية — تُملأ عبر platform-access.js، لا نظام باقات وهمي ══ */
@@ -1366,6 +1374,7 @@ async function azLoadRealPlatformStatus(){
   });
   await Promise.all(checks);
   renderPlatforms();
+  azRenderQuickPlatformLinks();
   if(typeof renderOverview === 'function') renderOverview(); /* تحديث إحصائية "Platforms Active" بعد وصول البيانات الحقيقية */
 }
 
