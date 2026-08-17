@@ -4770,8 +4770,9 @@ async function doLogin(){
   var e=document.getElementById('l-em').value.trim();
   var p=document.getElementById('l-pw').value;
 
-  // كود المالك يبقى بديل سريع في حقل كلمة المرور — كما كان بالضبط
-  if(p && await azCheckOwnerCode(p)){ clo('login-modal'); openDashUnlocked(); return; }
+  /* ⚠️ إزالة اختصار "كود المالك في حقل الباسورد" — كان يُرسِل باسورد كل عضو عادي
+     كمحاولة كود مالك، ملوِّثاً عداد محاولات المالك الفاشلة (قفل زائف بعد اختبارات
+     عادية متكررة). المالك له مسار دخول مستقل تمامًا عبر زر الترس ⚙ (openDash) */
 
   if(!e || !p){ toast(azT('err.fillFields')); return; }
 
