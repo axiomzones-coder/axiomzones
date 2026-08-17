@@ -1098,81 +1098,53 @@ var currentUser = null;
 var currentPage = 'overview';
 
 
-/* ══ ALL 8 PLATFORMS CONFIG ══ */
+/* ══ قائمة المنصات الحقيقية — مطابقة تماماً لما هو موجود فعلياً في AZ_PLATFORMS_DATA
+   بالملف الرئيسي و_redirects (لا قائمة وهمية منفصلة بعد الآن) ══ */
 var ALL_PLATFORMS = [
-  {
-    id:'prism', name:'Prism Suite', icon:'🔮', color:'#8b5cf6',
-    tag:'Financial Truth · 3 Tools',
-    desc:'Real APR & IRR calculation, sensitivity analysis, 3-offer comparison, early payoff optimizer, refinancing analyzer.',
-    tags:['IRR Exact','Sensitivity','3-Offer','Payoff'],
-    url:'prism-v2r8.html',
-    requiredPlan: 'free',
-    plans:['free','growth','pro','expert','lifetime']
-  },
   {
     id:'kashf', name:'Kashf — كشف', icon:'👁️', color:'#7c3aed',
     tag:'Bank Truth · Loan Exposure',
     desc:'Beautification Score 0-100, Loan Danger Score, 5-trick expose, 3-bank comparison, refinancing analyzer.',
     tags:['Beauty Score','Danger Score','5 Tricks'],
-    url:'kashf-v2.html',
-    requiredPlan: 'free',
-    plans:['free','growth','pro','expert','lifetime']
+    url:'/kashf'
+  },
+  {
+    id:'prism', name:'Prism Suite', icon:'🔮', color:'#8b5cf6',
+    tag:'Financial Truth · 3 Tools',
+    desc:'Real APR & IRR calculation, sensitivity analysis, 3-offer comparison, early payoff optimizer, refinancing analyzer.',
+    tags:['IRR Exact','Sensitivity','3-Offer','Payoff'],
+    url:'/prism'
+  },
+  {
+    id:'dar', name:'Dar — دار', icon:'🏠', color:'#0891b2',
+    tag:'Real Estate Feasibility',
+    desc:'Real estate purchase feasibility analysis and property comparison tools.',
+    tags:['Feasibility','Comparison'],
+    url:'/dar'
+  },
+  {
+    id:'aqar', name:'Aqar — عقار', icon:'🏢', color:'#059669',
+    tag:'Property Analysis',
+    desc:'Comprehensive property analysis and real estate decision support.',
+    tags:['Analysis','Decision Support'],
+    url:'/aqar'
   },
   {
     id:'uniuber', name:'UniUber', icon:'👔', color:'#0891b2',
     tag:'Global Uniform Sourcing · B2B',
-    desc:'Connect with 1,000+ verified factories. Send RFQs, manage bulk orders, direct factory messaging.',
+    desc:'Connect with verified factories. Send RFQs, manage bulk orders, direct factory messaging.',
     tags:['RFQ','Factories','B2B'],
-    url:'#',
-    requiredPlan: 'growth',
-    plans:['growth','pro','expert','lifetime']
+    url:'/uniuber'
   },
   {
-    id:'master', name:'Master 365 Ops', icon:'📊', color:'#0f766e',
-    tag:'Sales Operations',
-    desc:'15 reps, 20 branches, real-time dashboards, custom reports. 50+ languages, 114 currencies.',
-    tags:['15 Reps','20 Branches','Reports'],
-    url:'#',
-    requiredPlan: 'pro',
-    plans:['pro','expert','lifetime']
-  },
-  {
-    id:'mizan', name:'Mizan Pro', icon:'⚖️', color:'#1d4ed8',
-    tag:'Break-Even Analysis',
-    desc:'Multi-product WACM/WACMR, 11 pages, Excel export, scenario modeling, investor-ready reports.',
-    tags:['WACM','Scenarios','Excel'],
-    url:'#',
-    requiredPlan: 'growth',
-    plans:['growth','pro','expert','lifetime']
-  },
-  {
-    id:'kyanat', name:'Kyanat — كيانات', icon:'🇸🇦', color:'#047857',
-    tag:'Saudi Economic Entities',
-    desc:'5,020 Saudi entities, Google Maps integration, 30 languages, real-time search.',
-    tags:['5,020 Entities','Maps','Saudi'],
-    url:'#',
-    requiredPlan: 'free',
-    plans:['free','growth','pro','expert','lifetime']
-  },
-  {
-    id:'prosuite', name:'ProSuite 365', icon:'💼', color:'#6d28d9',
-    tag:'Business Management',
-    desc:'14+ modules, AXZ licensing, CRM, inventory, HR and financial overview.',
-    tags:['14+ Modules','CRM','Licensing'],
-    url:'#',
-    requiredPlan: 'pro',
-    plans:['pro','expert','lifetime']
-  },
-  {
-    id:'tripedia', name:'Tripedia', icon:'✈️', color:'#b45309',
-    tag:'Global Travel · Q2 2025',
-    desc:'7 live APIs, 14-table schema, unified routes, PWA offline. Travel intelligence platform.',
-    tags:['7 APIs','Live Data','PWA'],
-    url:'#',
-    requiredPlan: 'expert',
-    plans:['expert','lifetime']
+    id:'nabigha', name:'نابِغة — Nabigha', icon:'🧮', color:'#c9a84c',
+    tag:'Mental Math · Soroban',
+    desc:'منصة تعلّم الحساب الذهني بالعداد (السوروبان) عبر تسعة مستويات متدرّجة لأطفالك.',
+    tags:['9 Levels','Certificates','Live Tests'],
+    url:'/nabigha'
   }
 ];
+
 
 /* ══ PLAN CONFIG ══ */
 var PLAN_CONFIG = {
@@ -1286,7 +1258,7 @@ function launchDashboard() {
   document.getElementById('dashboard').style.display = 'block';
   populateUser();
   renderOverview();
-  renderPlatforms();
+  azLoadRealPlatformStatus(); /* تحميل حقيقي عبر platform-access.js — يستدعي renderPlatforms() داخلياً بعد اكتمال الفحص */
   renderSubscription();
   renderInvoices();
   renderNotifications();
@@ -1382,42 +1354,54 @@ function renderActivity() {
 }
 
 /* ══ PLATFORMS ══ */
+/* ══ حالة كل منصة الحقيقية — تُملأ عبر platform-access.js، لا نظام باقات وهمي ══ */
+var AZ_PLATFORM_STATUS = {};
+
+async function azLoadRealPlatformStatus(){
+  var checks = ALL_PLATFORMS.map(function(p){
+    return fetch('/api/platform-access?platform=' + p.id, { credentials: 'include' })
+      .then(function(res){ return res.json(); })
+      .then(function(data){ AZ_PLATFORM_STATUS[p.id] = data; })
+      .catch(function(){ AZ_PLATFORM_STATUS[p.id] = { status: 'login_required' }; });
+  });
+  await Promise.all(checks);
+  renderPlatforms();
+}
+
 function canAccess(platformId) {
-  if (!currentUser) return false;
-  var plt = ALL_PLATFORMS.find(function(p){return p.id===platformId;});
-  if (!plt) return false;
-  var planOrder = ['free','growth','pro','expert','lifetime'];
-  var userPlanIdx = planOrder.indexOf(currentUser.plan);
-  var reqPlanIdx = planOrder.indexOf(plt.requiredPlan);
-  return userPlanIdx >= reqPlanIdx;
+  var s = AZ_PLATFORM_STATUS[platformId];
+  return !!(s && (s.status === 'full' || s.status === 'trial'));
 }
 
 function renderPlatforms() {
   var grid = document.getElementById('platforms-grid'); if(!grid)return;
   grid.innerHTML='';
   ALL_PLATFORMS.forEach(function(p){
+    var statusInfo = AZ_PLATFORM_STATUS[p.id] || { status: 'login_required' };
     var accessible = canAccess(p.id);
     var card = document.createElement('div');
     card.className = 'plt-card' + (accessible?'':' locked');
     card.style.setProperty('--pcc', p.color);
-    var launchable = accessible && p.url !== '#';
+    var launchable = accessible;
+    var statusBadge = '';
+    if(statusInfo.status === 'trial') statusBadge = '<span style="color:#facc15;font-size:.7rem">⏳ '+statusInfo.daysLeft+' days left in trial</span>';
+    else if(statusInfo.status === 'full') statusBadge = '<span style="color:#4ade80;font-size:.7rem">✓ Full access</span>';
+    else if(statusInfo.status === 'expired') statusBadge = '<span style="color:#f87171;font-size:.7rem">Trial expired</span>';
     card.innerHTML =
       '<div class="plt-hd">' +
         '<div class="plt-ico" style="background:'+p.color+'18;border-color:'+p.color+'28">'+p.icon+'</div>' +
         '<div><div class="plt-nm" style="color:'+p.color+'">'+p.name+'</div><div class="plt-tg">'+p.tag+'</div></div>' +
         '</div>' +
       '<p class="plt-desc">'+p.desc+'</p>' +
-      '<div class="plt-meta">'+p.tags.map(function(t){return '<span class="pmtag">'+t+'</span>';}).join('')+'</div>' +
+      '<div class="plt-meta">'+p.tags.map(function(t){return '<span class="pmtag">'+t+'</span>';}).join('')+' '+statusBadge+'</div>' +
       '<div class="plt-actions">' +
         (launchable
           ? '<button class="btn-launch" onclick="window.open(\''+p.url+'\',\'_blank\')">Launch '+p.name+' →</button>'
-          : accessible
-            ? '<button class="btn-launch" disabled>Coming Soon</button>'
-            : '') +
+          : '') +
         '<button class="btn-sm-out" onclick="showPlatformInfo(\''+p.id+'\')">Info</button>' +
       '</div>' +
       (!accessible
-        ? '<div class="lock-overlay"><div class="lock-icon">🔒</div><div class="lock-txt">Upgrade Required</div><div class="lock-sub">This platform requires a '+p.requiredPlan.charAt(0).toUpperCase()+p.requiredPlan.slice(1)+' plan or higher.</div><button class="btn-unlock" onclick="goTo(\'subscriptions\')">Unlock →</button></div>'
+        ? '<div class="lock-overlay"><div class="lock-icon">🔒</div><div class="lock-txt">' + (statusInfo.status === 'expired' ? 'Trial Expired' : 'Login Required') + '</div><div class="lock-sub">' + (statusInfo.status === 'expired' ? 'Your 7-day free trial has ended.' : 'Please log in to start your free trial.') + '</div><button class="btn-unlock" onclick="window.open(\''+p.url+'\',\'_blank\')">' + (statusInfo.status === 'expired' ? 'Subscribe →' : 'Open →') + '</button></div>'
         : '') ;
     grid.appendChild(card);
   });
