@@ -50,7 +50,7 @@ export async function onRequestPost(context) {
 
   headers.append('Set-Cookie', `az_user_session=${encodeURIComponent(token)}; Path=/; Max-Age=2592000; Secure; HttpOnly; SameSite=Lax`);
 
-  return new Response(JSON.stringify({ ok: true, user: { email, name: userRecord.name } }), { headers });
+  return new Response(JSON.stringify({ ok: true, user: { email, name: userRecord.name, plan: userRecord.plan || 'free' } }), { headers });
 }
 
 function base64url(bytes) {

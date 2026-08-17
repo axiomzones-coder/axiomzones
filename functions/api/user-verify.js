@@ -37,10 +37,10 @@ export async function onRequestGet(context) {
       const raw = await env.AZ_USERS_KV.get('user:' + email);
       if (!raw) return new Response(JSON.stringify({ valid: false }), { headers });
       const userRecord = JSON.parse(raw);
-      return new Response(JSON.stringify({ valid: true, user: { email, name: userRecord.name } }), { headers });
+      return new Response(JSON.stringify({ valid: true, user: { email, name: userRecord.name, plan: userRecord.plan || 'free' } }), { headers });
     }
 
-    return new Response(JSON.stringify({ valid: true, user: { email } }), { headers });
+    return new Response(JSON.stringify({ valid: true, user: { email, plan: 'free' } }), { headers });
   } catch (e) {
     return new Response(JSON.stringify({ valid: false }), { headers });
   }
