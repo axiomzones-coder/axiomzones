@@ -3296,6 +3296,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="articles" onclick="swD('articles',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('articles',this);}"><span>📝</span><span>Articles</span></div>
       <div class="dmi" data-sec="reviews" onclick="swD('reviews',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('reviews',this);}"><span>⭐</span><span>Reviews</span></div>
       <div class="dmi" data-sec="gifts" onclick="swD('gifts',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('gifts',this);}"><span>🎁</span><span>Gifts</span></div>
+      <div class="dmi" data-sec="pricing" onclick="swD('pricing',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('pricing',this);}"><span>💳</span><span>Pricing</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
       <div class="dmi" data-sec="promos" onclick="swD('promos',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('promos',this);}"><span>🎉</span><span>Promotions</span></div>
@@ -3792,6 +3793,21 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         </select>
         <div id="reviews-dash-list" style="display:flex;flex-direction:column;gap:10px">
           <div style="color:var(--t3);font-size:.8rem">Loading...</div>
+        </div>
+      </div>
+
+      <!-- PRICING -->
+      <div class="dsec" id="ds-pricing">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Pricing Management <span style="color:var(--gold)">💳</span></h2>
+
+        <select class="di" id="pricing-platform-select" style="width:auto;margin-bottom:20px" onchange="azLoadPricingForm()">
+          <option value="">اختر منصة...</option>
+        </select>
+
+        <div id="pricing-form-box" style="display:none">
+          <div id="pricing-tiers-list" style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px"></div>
+          <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSavePricing()">💾 حفظ إعدادات التسعير</button>
+          <div id="pricing-save-msg" style="margin-top:10px;font-size:.82rem"></div>
         </div>
       </div>
 
@@ -6278,6 +6294,127 @@ function azRenderGifts(){
   }).join('');
 }
 
+/* ══ PRICING MANAGEMENT — تسعير مستقل تماماً لكل منصة، ولكل مستوى داخلها ══ */
+var AZ_PRICING_CONFIG = {};
+var AZ_DEFAULT_TIERS = {
+  free:     { enabled: true,  name: 'Free',     monthlyPrice: 0,   annualDiscount: 0  },
+  growth:   { enabled: false, name: 'Growth',   monthlyPrice: 29,  annualDiscount: 30 },
+  pro:      { enabled: false, name: 'Pro',      monthlyPrice: 69,  annualDiscount: 30 },
+  expert:   { enabled: false, name: 'Expert',   monthlyPrice: 129, annualDiscount: 30 },
+  lifetime: { enabled: false, name: 'Lifetime', price: 399, maxCount: 100, claimedCount: 0 },
+};
+var AZ_TIER_ORDER = ['free', 'growth', 'pro', 'expert', 'lifetime'];
+
+async function azLoadPricingDash(){
+  var sel = document.getElementById('pricing-platform-select');
+  if(sel && sel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+    Object.keys(AZ_PLATFORMS_DATA).forEach(function(k){
+      var opt = document.createElement('option');
+      opt.value = k; opt.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+      sel.appendChild(opt);
+    });
+  }
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_PRICING_CONFIG = config.pricing || {};
+  }catch(e){
+    toast('⚠️ فشل تحميل إعدادات التسعير', 'error');
+  }
+}
+
+function azLoadPricingForm(){
+  var platform = document.getElementById('pricing-platform-select').value;
+  var box = document.getElementById('pricing-form-box');
+  var list = document.getElementById('pricing-tiers-list');
+  if(!platform){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+
+  var platformPricing = AZ_PRICING_CONFIG[platform] || {};
+  var tiers = platformPricing.tiers || {};
+
+  list.innerHTML = AZ_TIER_ORDER.map(function(tierKey){
+    var defaults = AZ_DEFAULT_TIERS[tierKey];
+    var t = Object.assign({}, defaults, tiers[tierKey] || {});
+    var isLifetime = (tierKey === 'lifetime');
+    var soldOut = isLifetime && t.maxCount > 0 && t.claimedCount >= t.maxCount;
+
+    return '<div class="dcard" data-tier="'+tierKey+'" style="'+(t.enabled?'border-color:rgba(34,197,94,.4)':'')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+        '<label style="display:flex;align-items:center;gap:8px;cursor:pointer">'+
+          '<input type="checkbox" class="tier-enabled" '+(t.enabled?'checked':'')+' style="width:16px;height:16px"/>'+
+          '<strong>'+tierKey.toUpperCase()+'</strong>'+
+        '</label>'+
+        (soldOut ? '<span style="font-size:.7rem;color:#f87171">🔴 نفدت الكمية</span>' : (t.enabled ? '<span style="font-size:.7rem;color:#4ade80">● مفعَّل</span>' : '<span style="font-size:.7rem;color:var(--t3)">○ معطَّل</span>'))+
+      '</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+        '<div><label class="fl" style="font-size:.65rem">الاسم الظاهر</label><input class="di tier-name" value="'+t.name+'" style="margin-bottom:0"/></div>'+
+        (isLifetime
+          ? '<div><label class="fl" style="font-size:.65rem">السعر (مرة واحدة)</label><input class="di tier-price" type="number" value="'+t.price+'" style="margin-bottom:0"/></div>'
+          : '<div><label class="fl" style="font-size:.65rem">السعر الشهري ($)</label><input class="di tier-monthly" type="number" value="'+t.monthlyPrice+'" style="margin-bottom:0"/></div>'
+        )+
+      '</div>'+
+      (isLifetime
+        ? '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
+            '<div><label class="fl" style="font-size:.65rem">الحد الأقصى للعدد</label><input class="di tier-maxcount" type="number" value="'+t.maxCount+'" style="margin-bottom:0"/></div>'+
+            '<div><label class="fl" style="font-size:.65rem">تم بيع (يدوي حالياً)</label><input class="di tier-claimedcount" type="number" value="'+t.claimedCount+'" style="margin-bottom:0"/></div>'+
+          '</div>'
+        : '<div style="margin-top:8px"><label class="fl" style="font-size:.65rem">نسبة خصم الدفع السنوي (%)</label><input class="di tier-discount" type="number" value="'+t.annualDiscount+'" style="margin-bottom:0"/></div>'
+      )+
+    '</div>';
+  }).join('');
+}
+
+async function azSavePricing(){
+  var platform = document.getElementById('pricing-platform-select').value;
+  var msg = document.getElementById('pricing-save-msg');
+  if(!platform){ return; }
+
+  var tiers = {};
+  document.querySelectorAll('#pricing-tiers-list [data-tier]').forEach(function(card){
+    var tierKey = card.getAttribute('data-tier');
+    var isLifetime = (tierKey === 'lifetime');
+    var tierData = {
+      enabled: card.querySelector('.tier-enabled').checked,
+      name: card.querySelector('.tier-name').value.trim(),
+    };
+    if(isLifetime){
+      tierData.price = parseFloat(card.querySelector('.tier-price').value) || 0;
+      tierData.maxCount = parseInt(card.querySelector('.tier-maxcount').value, 10) || 0;
+      tierData.claimedCount = parseInt(card.querySelector('.tier-claimedcount').value, 10) || 0;
+    } else {
+      tierData.monthlyPrice = parseFloat(card.querySelector('.tier-monthly').value) || 0;
+      tierData.annualDiscount = parseFloat(card.querySelector('.tier-discount').value) || 0;
+    }
+    tiers[tierKey] = tierData;
+  });
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.pricing = config.pricing || {};
+    config.pricing[platform] = { tiers: tiers };
+
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Pricing updated for platform "'+platform+'"' })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color = '#4ade80'; msg.textContent = '✅ تم حفظ إعدادات التسعير';
+      AZ_PRICING_CONFIG[platform] = config.pricing[platform];
+      azLoadPricingForm();
+    } else {
+      msg.style.color = '#f87171'; msg.textContent = '⚠️ فشل الحفظ';
+    }
+  }catch(e){
+    msg.style.color = '#f87171'; msg.textContent = '⚠️ خطأ في الاتصال بالخادم';
+  }
+}
+
 function azRenderNotifKPIs(){
   var unreadEl = document.getElementById('notif-unread-kv');
   var unreadChEl = document.getElementById('notif-unread-ch');
@@ -6748,6 +6885,7 @@ function swD(sec,el){
   if(sec === 'articles') azLoadArticlesDash();
   if(sec === 'reviews') azLoadReviewsDash();
   if(sec === 'gifts') azLoadGiftsDash();
+  if(sec === 'pricing') azLoadPricingDash();
 }
 /* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
 /* ══ طابور حفظ مركزي (Save Queue) — يمنع تعارض "قراءة قديمة تكتب فوق حفظ حديث"
