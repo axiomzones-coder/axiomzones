@@ -1325,7 +1325,7 @@ function renderOverview() {
   if(wb){ wb.textContent = pc.name + ' Plan' + (u.trial?' (Trial)':''); wb.className = 'wb-plan ' + pc.class; }
   setText('wb-since', u.since);
   // Stats
-  var plats = ALL_PLATFORMS.filter(function(p){return canAccess(p.id);}).length;
+  var plats = ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id) && canAccess(p.id);}).length;
   setText('stat-plat', plats);
   setText('stat-analyses', u.analyses.toLocaleString());
   setText('stat-saved', u.saved>0?'$'+u.saved.toLocaleString():'—');
@@ -1362,10 +1362,19 @@ async function azLoadRealPlatformStatus(){
     return fetch('/api/platform-access?platform=' + p.id, { credentials: 'include' })
       .then(function(res){ return res.json(); })
       .then(function(data){ AZ_PLATFORM_STATUS[p.id] = data; })
-      .catch(function(){ AZ_PLATFORM_STATUS[p.id] = { status: 'login_required' }; });
+      .catch(function(){ AZ_PLATFORM_STATUS[p.id] = { status: 'login_required', visibility: 'visible' }; });
   });
   await Promise.all(checks);
   renderPlatforms();
+  if(typeof renderOverview === 'function') renderOverview(); /* تحديث إحصائية "Platforms Active" بعد وصول البيانات الحقيقية */
+}
+
+function isPlatformVisible(platformId){
+  var s = AZ_PLATFORM_STATUS[platformId];
+  /* ══ نفس منطق إخفاء المالك من الداشبورد الرئيسية — منصة "مخفية" من المنصة
+     الرئيسية لا تظهر هنا في "My Platforms" أيضاً، حتى لو كان لدى العضو تجربة
+     نشطة فيها فعلياً (اتساق كامل مع تجربة الموقع العامة) ══ */
+  return !s || s.visibility !== 'hidden';
 }
 
 function canAccess(platformId) {
@@ -1377,6 +1386,7 @@ function renderPlatforms() {
   var grid = document.getElementById('platforms-grid'); if(!grid)return;
   grid.innerHTML='';
   ALL_PLATFORMS.forEach(function(p){
+    if(!isPlatformVisible(p.id)) return; /* منصة مخفية من الداشبورد الرئيسية — لا تُعرَض هنا أيضاً */
     var statusInfo = AZ_PLATFORM_STATUS[p.id] || { status: 'login_required' };
     var accessible = canAccess(p.id);
     var card = document.createElement('div');
@@ -1443,7 +1453,7 @@ function renderUsage() {
   var u = currentUser;
   var items = [
     {label:'Analyses Run',val:u.analyses,max:u.plan==='free'?5*30:9999,color:'var(--pu)'},
-    {label:'Platforms Active',val:ALL_PLATFORMS.filter(function(p){return canAccess(p.id);}).length,max:8,color:'var(--gold)'},
+    {label:'Platforms Active',val:ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id) && canAccess(p.id);}).length,max:8,color:'var(--gold)'},
     {label:'Storage Used',val:2.4,max:u.plan==='free'?5:100,color:'var(--cy)',sfx:'MB'},
   ];
   el.innerHTML='';
