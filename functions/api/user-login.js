@@ -1,5 +1,7 @@
 // functions/api/user-login.js
 // POST /api/user-login — Body: { email, password }
+// يتحقق من بيانات عضو موجود، يضبط جلسة (az_user_session) بنفس صيغة
+// HMAC المُستخدَمة في platform-access.js/review-submit.js بالضبط.
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -18,57 +20,43 @@ export async function onRequestPost(context) {
   const password = String((body && body.password) || '');
 
   if (!email || !password) {
-    return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), { status: 400, headers });
+    return new Response(JSON.stringify({ ok: false, error: 'invalid_fields' }), { status: 400, headers });
   }
 
   const raw = await env.AZ_USERS_KV.get('user:' + email);
   if (!raw) {
-    // نفس رسالة الخطأ لبريد غير موجود أو كلمة مرور خاطئة — يمنع اكتشاف أي بريد مسجَّل فعلاً
+    return new Response(JSON.stringify({ ok: false, error: 'invalid_credentials' }), { status: 401, headers });
+  }
+  const userRecord = JSON.parse(raw);
+
+  // ── تحقق كلمة المرور بنفس ملح PBKDF2 المُخزَّن وقت التسجيل ──
+  const salt = base64urlDecode(userRecord.salt);
+  const passKey = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+  const hashBuf = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, passKey, 256);
+  const passwordHash = base64url(new Uint8Array(hashBuf));
+
+  if (passwordHash !== userRecord.passwordHash) {
     return new Response(JSON.stringify({ ok: false, error: 'invalid_credentials' }), { status: 401, headers });
   }
 
-  const record = JSON.parse(raw);
-  const salt = base64urlDecode(record.salt);
-  const computedHash = await hashPassword(password, salt);
-  const match = base64url(computedHash) === record.passwordHash;
-
-  if (!match) {
-    return new Response(JSON.stringify({ ok: false, error: 'invalid_credentials' }), { status: 401, headers });
-  }
-
-  const token = await makeSessionToken(email, env.OWNER_SECRET || 'fallback-secret-change-me');
-  headers.append('Set-Cookie', `az_user_session=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=2592000`);
-
-  return new Response(JSON.stringify({
-    ok: true,
-    user: { email: record.email, name: record.name, plan: record.plan }
-  }), { status: 200, headers });
-}
-
-async function hashPassword(password, salt) {
-  const enc = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
-  const bits = await crypto.subtle.deriveBits(
-    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
-    keyMaterial,
-    256
-  );
-  return new Uint8Array(bits);
-}
-
-async function makeSessionToken(email, secret) {
+  const secret = env.OWNER_SECRET || 'fallback-secret-change-me';
+  const emailB64 = btoa(email);
   const exp = Date.now() + 30 * 24 * 60 * 60 * 1000;
-  const payload = `user.${btoa(email)}.${exp}`;
+  const payload = `user.${emailB64}.${exp}`;
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
-  return `${payload}.${base64url(new Uint8Array(sigBuf))}`;
+  const sig = base64url(new Uint8Array(sigBuf));
+  const token = `${payload}.${sig}`;
+
+  headers.append('Set-Cookie', `az_user_session=${encodeURIComponent(token)}; Path=/; Max-Age=2592000; Secure; HttpOnly; SameSite=Lax`);
+
+  return new Response(JSON.stringify({ ok: true, user: { email, name: userRecord.name } }), { headers });
 }
 
 function base64url(bytes) {
   let str = btoa(String.fromCharCode(...bytes));
   return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
-
 function base64urlDecode(str) {
   str = str.replace(/-/g, '+').replace(/_/g, '/');
   while (str.length % 4) str += '=';
