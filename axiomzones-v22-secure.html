@@ -1165,7 +1165,7 @@ footer{border-top:1px solid var(--border);padding:64px 44px 28px;position:relati
 #dash.open{display:block}
 .dn{background:rgba(3,3,10,.96);border-bottom:1px solid var(--border);padding:13px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(40px)}
 [data-theme="light"] .dn{background:rgba(237,233,222,.96)}
-.dsb{width:216px;min-height:calc(100vh - 54px);background:rgba(7,7,26,.75);border-inline-end:1px solid var(--border);padding:14px 0;position:fixed;top:54px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.4) transparent}
+.dsb{width:216px;height:calc(100vh - 54px);max-height:calc(100vh - 54px);background:rgba(7,7,26,.75);border-inline-end:1px solid var(--border);padding:14px 0;position:fixed;top:54px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.4) transparent}
 .dsb::-webkit-scrollbar{width:6px}
 .dsb::-webkit-scrollbar-track{background:transparent}
 .dsb::-webkit-scrollbar-thumb{background:rgba(201,168,76,.4);border-radius:3px}
@@ -1179,6 +1179,7 @@ body.ltr .dsb{left:0}
 .dmi:hover{color:var(--t1);background:rgba(255,255,255,.02)}
 [data-theme="light"] .dmi:hover{background:rgba(0,0,0,.03)}
 .dmi.on{color:var(--gold);background:rgba(201,168,76,.05);border-inline-start-color:var(--gold)}
+.dmi:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;background:rgba(201,168,76,.08)}
 .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:22px}
 .kc{padding:18px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid var(--border);transition:all .3s}
 [data-theme="light"] .kc{background:rgba(0,0,0,.02)}
@@ -6487,6 +6488,23 @@ function closeDash(){ document.getElementById('dash').classList.remove('open'); 
 function azToggleDashMobNav(){
   document.querySelectorAll('.dsb').forEach(function(el){ el.classList.toggle('dash-mob-open'); });
 }
+
+/* ══ تنقّل بالأسهم (Up/Down) بين عناصر القائمة الجانبية بالداشبورد — طبقة
+   وصول إضافية، مستقلة تماماً عن وضوح/عمل السكرول بالماوس ══ */
+document.addEventListener('keydown', function(e){
+  if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+  var dash = document.getElementById('dash');
+  if(!dash || !dash.classList.contains('open')) return; /* فقط والداشبورد مفتوح */
+  var items = Array.prototype.slice.call(document.querySelectorAll('.dsb .dmi'));
+  if(!items.length) return;
+  var active = document.activeElement;
+  var idx = items.indexOf(active);
+  e.preventDefault();
+  if(idx === -1){ items[0].focus(); return; }
+  var nextIdx = e.key === 'ArrowDown' ? Math.min(idx + 1, items.length - 1) : Math.max(idx - 1, 0);
+  items[nextIdx].focus();
+  items[nextIdx].scrollIntoView({block:'nearest'});
+});
 async function azOwnerLogout(){
   var endpoint = (AZ_CURRENT_ROLE === 'admin') ? '/api/admin-logout' : '/api/owner-logout';
   try{ await fetch(endpoint, {method:'POST', credentials:'include'}); }catch(e){}
