@@ -3820,7 +3820,16 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
               <input class="di" type="number" id="gift-count" value="1" min="1" max="100" style="margin-bottom:0"/>
             </div>
           </div>
-          <textarea class="di" id="gift-purpose" rows="2" placeholder="الغرض من الإهداء (اختياري، يظهر للمستلم)" style="margin-bottom:10px"></textarea>
+          <label class="fl" style="font-size:.68rem">رسالة الهدية (يظهر للمستلم)</label>
+          <select class="di" id="gift-purpose-select" onchange="azToggleGiftCustomPurpose()" style="margin-bottom:8px">
+            <option value="🎁 هديتك الدائمة من نابغة">🎁 هديتك الدائمة من نابغة</option>
+            <option value="✦ عضويتك المجانية مدى الحياة">✦ عضويتك المجانية مدى الحياة</option>
+            <option value="🎁 وصول كامل ومجاني — بلا مواعيد انتهاء">🎁 وصول كامل ومجاني — بلا مواعيد انتهاء</option>
+            <option value="🎁 أنت من أهل نابغة الآن">🎁 أنت من أهل نابغة الآن</option>
+            <option value="⭐ هدية مستمرة — استخدمها كما تشاء">⭐ هدية مستمرة — استخدمها كما تشاء</option>
+            <option value="__custom__">✏️ كتابة نص مخصص</option>
+          </select>
+          <textarea class="di" id="gift-purpose" rows="2" placeholder="اكتب رسالتك الخاصة هنا..." style="margin-bottom:10px;display:none"></textarea>
           <button class="bsub" style="width:auto;padding:10px 24px" onclick="azCreateGifts()">🎁 توليد الروابط</button>
           <div id="gift-create-msg" style="margin-top:10px;font-size:.82rem"></div>
           <div id="gift-links-result" style="margin-top:12px"></div>
@@ -6198,11 +6207,20 @@ async function azLoadGiftsDash(){
   }
 }
 
+function azToggleGiftCustomPurpose(){
+  var sel = document.getElementById('gift-purpose-select');
+  var box = document.getElementById('gift-purpose');
+  box.style.display = (sel.value === '__custom__') ? 'block' : 'none';
+}
+
 async function azCreateGifts(){
   var platform = document.getElementById('gift-platform').value;
   var durationRaw = document.getElementById('gift-duration').value;
   var count = parseInt(document.getElementById('gift-count').value, 10) || 1;
-  var purpose = document.getElementById('gift-purpose').value.trim();
+  var purposeSelect = document.getElementById('gift-purpose-select').value;
+  var purpose = (purposeSelect === '__custom__')
+    ? document.getElementById('gift-purpose').value.trim()
+    : purposeSelect;
   var msg = document.getElementById('gift-create-msg');
   var resultBox = document.getElementById('gift-links-result');
 
@@ -6244,7 +6262,7 @@ function azRenderGifts(){
     return;
   }
   el.innerHTML = filtered.map(function(g){
-    var durationLabel = g.durationDays ? g.durationDays+' يوم' : 'دائم مستمر';
+    var durationLabel = (g.durationDays === null || g.durationDays === undefined) ? 'دائم مستمر' : g.durationDays+' يوم';
     var statusLabel = g.claimed
       ? '✅ تم الاستلام — '+g.claimedBy
       : '⏳ لم يُستلَم بعد';
