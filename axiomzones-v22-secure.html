@@ -6328,6 +6328,7 @@ async function azDeleteAdmin(email){
     azLoadAdmins();
   }catch(e){ toast('Failed to delete admin'); }
 }
+var AZ_LOGIN_MODE = 'login'; /* ⚠️ كان هذا التعريف مفقوداً تماماً — سبب جذري لتعطّل تسجيل الدخول/الحساب بالكامل (ReferenceError) */
 function azToggleLoginMode(){
   AZ_LOGIN_MODE = (AZ_LOGIN_MODE === 'login') ? 'signup' : 'login';
   var btn = document.getElementById('lo-submit-btn');
