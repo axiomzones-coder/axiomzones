@@ -6449,6 +6449,7 @@ async function openDash(){
 function openDashUnlocked(){
   document.getElementById('dash').classList.add('open');
   document.body.style.overflow='hidden';
+  var pwaB = document.getElementById('az-pwa-banner'); if(pwaB) pwaB.style.display='none'; /* منع التداخل مع الداشبورد */
   document.getElementById('d-time').textContent=new Date().toLocaleString();
   refreshPrices();
   azLoadRealStats();
