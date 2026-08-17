@@ -1149,11 +1149,11 @@ var PLAN_CONFIG = {
 };
 
 var PLAN_FEATURES = {
-  free:     ['Kashf — basic','Prism Suite — basic','5 analyses/day'],
-  growth:   ['Kashf Pro','Prism Clear','Dar','Aqar','Unlimited analyses'],
-  pro:      ['All active platforms','Kashf Advisor','Prism Pro','UniUber','API access'],
-  expert:   ['All active platforms','Expert tier everywhere','Client reports','Custom branding','Priority support'],
-  lifetime: ['All active platforms — forever','Expert tier everywhere','All future platforms','No monthly fees','VIP support'],
+  free:     ['5 analyses/day'],
+  growth:   ['Unlimited analyses'],
+  pro:      ['Unlimited analyses','API access'],
+  expert:   ['Unlimited analyses','Client reports','Custom branding','Priority support'],
+  lifetime: ['Unlimited analyses','No monthly fees','VIP support'],
 };
 
 var UPGRADE_OPTIONS = [
@@ -1447,7 +1447,13 @@ function renderSubscription() {
   var feats = document.getElementById('cur-plan-feats');
   if(feats){
     feats.innerHTML='';
-    (PLAN_FEATURES[u.plan]||[]).forEach(function(f){
+    /* ══ المنصات المتضمَّنة تُبنى ديناميكياً من الحالة الحقيقية (نفس مصدر
+       My Platforms)، لا قائمة ثابتة قد تذكر منصات مخفية/غير متاحة فعلياً ══ */
+    var accessiblePlatformNames = ALL_PLATFORMS
+      .filter(function(p){ return isPlatformVisible(p.id) && canAccess(p.id); })
+      .map(function(p){ return p.name; });
+    var allFeats = accessiblePlatformNames.concat(PLAN_FEATURES[u.plan]||[]);
+    allFeats.forEach(function(f){
       var div=document.createElement('div');div.className='sub-feat';div.textContent=f;feats.appendChild(div);
     });
   }
