@@ -3297,6 +3297,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="reviews" onclick="swD('reviews',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('reviews',this);}"><span>⭐</span><span>Reviews</span></div>
       <div class="dmi" data-sec="gifts" onclick="swD('gifts',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('gifts',this);}"><span>🎁</span><span>Gifts</span></div>
       <div class="dmi" data-sec="pricing" onclick="swD('pricing',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('pricing',this);}"><span>💳</span><span>Pricing</span></div>
+      <div class="dmi" data-sec="bundles" onclick="swD('bundles',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('bundles',this);}"><span>📦</span><span>Bundles</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
       <div class="dmi" data-sec="promos" onclick="swD('promos',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('promos',this);}"><span>🎉</span><span>Promotions</span></div>
@@ -3811,7 +3812,49 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         </div>
       </div>
 
-      <!-- GIFTS -->
+      <!-- BUNDLES -->
+      <div class="dsec" id="ds-bundles">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Bundle Offers <span style="color:var(--gold)">📦</span></h2>
+
+        <div class="dcard" style="margin-bottom:18px">
+          <div class="dct">باقة مُجمَّعة جديدة</div>
+          <input class="di" id="bundle-name" placeholder="اسم الباقة (مثال: باقة العائلة الشاملة)"/>
+
+          <label class="fl" style="font-size:.68rem">المنصات المشمولة</label>
+          <div id="bundle-platforms-checklist" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding:10px;background:rgba(255,255,255,.02);border-radius:8px;border:1px solid var(--border)"></div>
+
+          <label class="fl" style="font-size:.68rem">نوع الاشتراك</label>
+          <select class="di" id="bundle-type" onchange="azToggleBundleFields()">
+            <option value="monthly">شهري</option>
+            <option value="annual">سنوي</option>
+            <option value="lifetime_limited">مدى الحياة — عرض محدود بالوقت</option>
+          </select>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+            <div>
+              <label class="fl" style="font-size:.68rem">السعر ($)</label>
+              <input class="di" id="bundle-price" type="number" style="margin-bottom:0"/>
+            </div>
+            <div>
+              <label class="fl" style="font-size:.68rem">نسبة الخصم (%) — اختياري</label>
+              <input class="di" id="bundle-discount" type="number" value="0" style="margin-bottom:0"/>
+            </div>
+          </div>
+
+          <div id="bundle-expiry-box" style="display:none;margin-bottom:10px">
+            <label class="fl" style="font-size:.68rem">تاريخ انتهاء العرض نفسه (لا الوصول)</label>
+            <input class="di" id="bundle-offer-expiry" type="date" style="margin-bottom:0"/>
+          </div>
+
+          <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSaveBundle()">💾 حفظ الباقة</button>
+          <div id="bundle-save-msg" style="margin-top:10px;font-size:.82rem"></div>
+        </div>
+
+        <div class="dct" style="margin-bottom:10px">كل الباقات المُجمَّعة</div>
+        <div id="bundles-dash-list" style="display:flex;flex-direction:column;gap:10px">
+          <div style="color:var(--t3);font-size:.8rem">Loading...</div>
+        </div>
+      </div>
       <div class="dsec" id="ds-gifts">
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Gift Subscriptions <span style="color:var(--gold)">🎁</span></h2>
 
@@ -6415,6 +6458,135 @@ async function azSavePricing(){
   }
 }
 
+/* ══ BUNDLE OFFERS — باقات تجمع منصة أو أكثر بسعر وخصم مستقلين، منفصلة عن تسعير كل منصة لوحدها ══ */
+var AZ_BUNDLES_CACHE = [];
+
+async function azLoadBundlesDash(){
+  var checklist = document.getElementById('bundle-platforms-checklist');
+  if(checklist && checklist.children.length === 0 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+    checklist.innerHTML = Object.keys(AZ_PLATFORMS_DATA).map(function(k){
+      var p = AZ_PLATFORMS_DATA[k];
+      return '<label style="display:flex;align-items:center;gap:5px;font-size:.78rem;cursor:pointer;background:rgba(255,255,255,.03);padding:5px 10px;border-radius:6px">'+
+        '<input type="checkbox" class="bundle-plat-check" value="'+k+'" style="width:14px;height:14px"/>'+(p.name_ar || k)+
+      '</label>';
+    }).join('');
+  }
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_BUNDLES_CACHE = config.bundles || [];
+    azRenderBundlesDash();
+  }catch(e){
+    var el = document.getElementById('bundles-dash-list');
+    if(el) el.innerHTML = '<div style="color:#f87171;font-size:.8rem">فشل تحميل الباقات</div>';
+  }
+}
+
+function azToggleBundleFields(){
+  var type = document.getElementById('bundle-type').value;
+  document.getElementById('bundle-expiry-box').style.display = (type === 'lifetime_limited') ? 'block' : 'none';
+}
+
+async function azSaveBundle(){
+  var name = document.getElementById('bundle-name').value.trim();
+  var platforms = Array.from(document.querySelectorAll('.bundle-plat-check:checked')).map(function(c){ return c.value; });
+  var type = document.getElementById('bundle-type').value;
+  var price = parseFloat(document.getElementById('bundle-price').value) || 0;
+  var discount = parseFloat(document.getElementById('bundle-discount').value) || 0;
+  var offerExpiry = document.getElementById('bundle-offer-expiry').value || null;
+  var msg = document.getElementById('bundle-save-msg');
+
+  if(!name){ msg.style.color='#f87171'; msg.textContent='⚠️ اكتب اسم الباقة'; return; }
+  if(!platforms.length){ msg.style.color='#f87171'; msg.textContent='⚠️ اختر منصة واحدة على الأقل'; return; }
+
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.bundles = config.bundles || [];
+    config.bundles.unshift({
+      id: 'bundle_' + Date.now(),
+      name: name, platforms: platforms, type: type,
+      price: price, discount: discount,
+      offerExpiry: (type === 'lifetime_limited') ? offerExpiry : null,
+      enabled: true,
+      createdAt: new Date().toISOString(),
+    });
+
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Bundle created: '+name })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      msg.style.color='#4ade80'; msg.textContent='✅ تم حفظ الباقة';
+      document.getElementById('bundle-name').value = '';
+      document.querySelectorAll('.bundle-plat-check').forEach(function(c){ c.checked = false; });
+      document.getElementById('bundle-price').value = '';
+      document.getElementById('bundle-discount').value = '0';
+      azLoadBundlesDash();
+    } else {
+      msg.style.color='#f87171'; msg.textContent='⚠️ فشل الحفظ';
+    }
+  }catch(e){
+    msg.style.color='#f87171'; msg.textContent='⚠️ خطأ في الاتصال بالخادم';
+  }
+}
+
+function azRenderBundlesDash(){
+  var el = document.getElementById('bundles-dash-list');
+  if(!el) return;
+  if(!AZ_BUNDLES_CACHE.length){
+    el.innerHTML = '<div style="color:var(--t3);font-size:.8rem">لا توجد باقات مُجمَّعة بعد</div>';
+    return;
+  }
+  var typeLabels = { monthly: 'شهري', annual: 'سنوي', lifetime_limited: 'مدى الحياة (عرض محدود)' };
+  el.innerHTML = AZ_BUNDLES_CACHE.map(function(b){
+    var idx = AZ_BUNDLES_CACHE.indexOf(b);
+    var platformNames = b.platforms.map(function(k){ return (AZ_PLATFORMS_DATA[k] && AZ_PLATFORMS_DATA[k].name_ar) || k; }).join('، ');
+    var expiryNote = (b.type === 'lifetime_limited' && b.offerExpiry) ? ' · ينتهي العرض: '+b.offerExpiry : '';
+    return '<div class="dcard" style="'+(b.enabled?'':'opacity:.5')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<strong>'+b.name+'</strong>'+
+        '<span style="font-size:.72rem;color:'+(b.enabled?'#4ade80':'var(--t3)')+'">'+(b.enabled?'● مفعَّلة':'○ مُعطَّلة')+'</span>'+
+      '</div>'+
+      '<div style="font-size:.75rem;color:var(--t2);margin:4px 0">📦 '+platformNames+'</div>'+
+      '<div style="font-size:.72rem;color:var(--t3)">'+typeLabels[b.type]+' · $'+b.price+(b.discount>0?' · خصم '+b.discount+'%':'')+expiryNote+'</div>'+
+      '<div style="display:flex;gap:6px;margin-top:10px">'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azToggleBundleEnabled('+idx+')">'+(b.enabled?'إيقاف':'تفعيل')+'</button>'+
+        '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#f87171" onclick="azDeleteBundle('+idx+')">🗑️ حذف</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+async function azToggleBundleEnabled(idx){
+  AZ_BUNDLES_CACHE[idx].enabled = !AZ_BUNDLES_CACHE[idx].enabled;
+  await azSaveBundlesToServer();
+}
+async function azDeleteBundle(idx){
+  if(!confirm('حذف هذه الباقة نهائياً؟')) return;
+  AZ_BUNDLES_CACHE.splice(idx, 1);
+  await azSaveBundlesToServer();
+}
+async function azSaveBundlesToServer(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.bundles = AZ_BUNDLES_CACHE;
+    await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Bundle list updated' })
+    });
+    azRenderBundlesDash();
+  }catch(e){
+    toast('⚠️ فشل الحفظ', 'error');
+  }
+}
+
 function azRenderNotifKPIs(){
   var unreadEl = document.getElementById('notif-unread-kv');
   var unreadChEl = document.getElementById('notif-unread-ch');
@@ -6886,6 +7058,7 @@ function swD(sec,el){
   if(sec === 'reviews') azLoadReviewsDash();
   if(sec === 'gifts') azLoadGiftsDash();
   if(sec === 'pricing') azLoadPricingDash();
+  if(sec === 'bundles') azLoadBundlesDash();
 }
 /* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
 /* ══ طابور حفظ مركزي (Save Queue) — يمنع تعارض "قراءة قديمة تكتب فوق حفظ حديث"
