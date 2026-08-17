@@ -11,6 +11,8 @@ https://nabigha.axiomzones.com/*           https://axiomzones.com/nabigha/:splat
 # ==========================================
 
 # ═══ MAIN ROUTES ═══
+/claim-gift               /axiomzones-v22-secure.html            200
+
 /                         /axiomzones-v22-secure.html           200
 /home                     /axiomzones-v22-secure.html           200
 

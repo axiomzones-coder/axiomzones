@@ -3295,6 +3295,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="support" onclick="swD('support',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('support',this);}"><span>🎧</span><span>Support</span></div>
       <div class="dmi" data-sec="articles" onclick="swD('articles',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('articles',this);}"><span>📝</span><span>Articles</span></div>
       <div class="dmi" data-sec="reviews" onclick="swD('reviews',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('reviews',this);}"><span>⭐</span><span>Reviews</span></div>
+      <div class="dmi" data-sec="gifts" onclick="swD('gifts',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('gifts',this);}"><span>🎁</span><span>Gifts</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
       <div class="dmi" data-sec="promos" onclick="swD('promos',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('promos',this);}"><span>🎉</span><span>Promotions</span></div>
@@ -3790,6 +3791,46 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <option value="all">كل المنصات</option>
         </select>
         <div id="reviews-dash-list" style="display:flex;flex-direction:column;gap:10px">
+          <div style="color:var(--t3);font-size:.8rem">Loading...</div>
+        </div>
+      </div>
+
+      <!-- GIFTS -->
+      <div class="dsec" id="ds-gifts">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:20px">Gift Subscriptions <span style="color:var(--gold)">🎁</span></h2>
+
+        <div class="dcard" style="margin-bottom:18px">
+          <div class="dct">إهداء منصة جديد</div>
+          <select class="di" id="gift-platform">
+            <option value="">اختر المنصة...</option>
+          </select>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+            <div>
+              <label class="fl" style="font-size:.68rem">المدة</label>
+              <select class="di" id="gift-duration" style="margin-bottom:0">
+                <option value="7">7 أيام</option>
+                <option value="14">14 يوم</option>
+                <option value="30">30 يوم</option>
+                <option value="90">90 يوم</option>
+                <option value="permanent">دائم مستمر</option>
+              </select>
+            </div>
+            <div>
+              <label class="fl" style="font-size:.68rem">عدد الأشخاص (روابط منفصلة)</label>
+              <input class="di" type="number" id="gift-count" value="1" min="1" max="100" style="margin-bottom:0"/>
+            </div>
+          </div>
+          <textarea class="di" id="gift-purpose" rows="2" placeholder="الغرض من الإهداء (اختياري، يظهر للمستلم)" style="margin-bottom:10px"></textarea>
+          <button class="bsub" style="width:auto;padding:10px 24px" onclick="azCreateGifts()">🎁 توليد الروابط</button>
+          <div id="gift-create-msg" style="margin-top:10px;font-size:.82rem"></div>
+          <div id="gift-links-result" style="margin-top:12px"></div>
+        </div>
+
+        <div class="dct" style="margin-bottom:10px">كل الإهداءات</div>
+        <select class="di" id="gift-filter-platform" style="width:auto;margin-bottom:12px" onchange="azRenderGifts()">
+          <option value="all">كل المنصات</option>
+        </select>
+        <div id="gifts-dash-list" style="display:flex;flex-direction:column;gap:10px">
           <div style="color:var(--t3);font-size:.8rem">Loading...</div>
         </div>
       </div>
@@ -4767,6 +4808,58 @@ document.addEventListener('keydown',function(e){
 /* ══════════════════════════════════════
    LOGIN
 ══════════════════════════════════════ */
+/* ══ نظام إهداء الاشتراكات — معالجة رابط المطالبة (/claim-gift?id=...) ══ */
+async function azClaimGift(giftId){
+  var box = document.getElementById('gift-claim-status');
+  try{
+    var res = await fetch('/api/gift-claim', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ giftId: giftId })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      if(box) box.innerHTML = '<div style="text-align:center;padding:40px 20px"><div style="font-size:3rem;margin-bottom:12px">🎁</div><h2 style="font-family:Cormorant,serif;color:var(--gold);margin-bottom:8px">تم تفعيل الهدية!</h2>' +
+        (data.purpose ? '<p style="color:var(--t2);font-style:italic;margin-bottom:16px">"'+data.purpose+'"</p>' : '') +
+        '<p style="color:var(--t2)">جاري تحويلك للمنصة...</p></div>';
+      setTimeout(function(){ window.location.href = AZ_PLATFORMS_DATA[data.platform] ? AZ_PLATFORMS_DATA[data.platform].path : '/'; }, 2000);
+    } else {
+      var errMsg = (data && data.error === 'already_claimed') ? 'هذا الرابط تم استخدامه بالفعل من قبل شخص آخر.' : 'حدث خطأ أثناء تفعيل الهدية.';
+      if(box) box.innerHTML = '<div style="text-align:center;padding:40px 20px"><div style="font-size:3rem;margin-bottom:12px">⚠️</div><h2 style="font-family:Cormorant,serif;color:#f87171;margin-bottom:8px">'+errMsg+'</h2><a href="/" style="color:var(--gold)">🏛️ الرجوع للمنظومة الرئيسية</a></div>';
+    }
+  }catch(e){
+    if(box) box.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#f87171">فشل الاتصال بالخادم</div>';
+  }
+}
+
+(function azHandleGiftClaimLink(){
+  if(window.location.pathname !== '/claim-gift') return;
+  var giftId = new URLSearchParams(window.location.search).get('id');
+  if(!giftId) return;
+
+  document.addEventListener('DOMContentLoaded', async function(){
+    /* نبني شاشة حالة بسيطة فوق أي محتوى آخر بالصفحة */
+    var overlay = document.createElement('div');
+    overlay.id = 'gift-claim-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:var(--abyss,#060912);display:flex;align-items:center;justify-content:center';
+    overlay.innerHTML = '<div id="gift-claim-status" style="max-width:420px;width:90%"><div style="text-align:center;padding:40px;color:var(--t2)">جاري التحقق...</div></div>';
+    document.body.appendChild(overlay);
+
+    try{
+      var uRes = await fetch('/api/user-verify', { credentials:'include' });
+      var uData = await uRes.json();
+      if(uData && uData.valid){
+        azClaimGift(giftId);
+      } else {
+        sessionStorage.setItem('az_pending_gift', giftId);
+        document.getElementById('gift-claim-status').innerHTML =
+          '<div style="text-align:center;padding:20px"><div style="font-size:3rem;margin-bottom:12px">🎁</div><h2 style="font-family:Cormorant,serif;color:var(--gold);margin-bottom:8px">لديك هدية بانتظارك!</h2><p style="color:var(--t2);margin-bottom:20px">سجّل دخولك أو أنشئ حساباً مجانياً لاستلامها.</p><button class="bsub" style="padding:12px 28px" onclick="document.getElementById(\'gift-claim-overlay\').remove();openLogin();">تسجيل الدخول / إنشاء حساب</button></div>';
+      }
+    }catch(e){
+      document.getElementById('gift-claim-status').innerHTML = '<div style="text-align:center;padding:40px;color:#f87171">فشل الاتصال بالخادم</div>';
+    }
+  });
+})();
+
 async function doLogin(){
   var e=document.getElementById('l-em').value.trim();
   var p=document.getElementById('l-pw').value;
@@ -4796,6 +4889,14 @@ async function doLogin(){
       var uname = (data.user && (data.user.name || e.split('@')[0])) || '';
       toast((isSignup ? azT('lo.created') : azT('lo.welcome')) + ' ' + uname + ' ✦');
       try{ fetch('/api/track', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type: isSignup ? 'signup' : 'login' }) }); }catch(err){}
+      /* ══ لو فيه هدية معلَّقة (المستخدم جه من رابط إهداء قبل ما يسجّل دخول)، نكمّل
+         المطالبة بيها الآن تلقائياً بدل التوجيه العادي للداشبورد ══ */
+      var pendingGiftId = sessionStorage.getItem('az_pending_gift');
+      if(pendingGiftId){
+        sessionStorage.removeItem('az_pending_gift');
+        setTimeout(function(){ azClaimGift(pendingGiftId); }, 800);
+        return;
+      }
       setTimeout(function(){ window.location.href = 'axiomzones-dashboard.html'; }, 1100);
       return;
     }
@@ -6071,6 +6172,94 @@ async function azSaveReviewsToServer(successMsg){
   }
 }
 
+/* ══ GIFTS DASHBOARD — إدارة كاملة لإهداء الاشتراكات ══ */
+var AZ_GIFTS_CACHE = [];
+
+async function azLoadGiftsDash(){
+  var platSel = document.getElementById('gift-platform');
+  var filterSel = document.getElementById('gift-filter-platform');
+  if(platSel && platSel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
+    Object.keys(AZ_PLATFORMS_DATA).forEach(function(k){
+      var opt1 = document.createElement('option'); opt1.value = k; opt1.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+      platSel.appendChild(opt1);
+      var opt2 = document.createElement('option'); opt2.value = k; opt2.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
+      filterSel.appendChild(opt2);
+    });
+  }
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_GIFTS_CACHE = config.gifts || [];
+    azRenderGifts();
+  }catch(e){
+    var el = document.getElementById('gifts-dash-list');
+    if(el) el.innerHTML = '<div style="color:#f87171;font-size:.8rem">فشل تحميل الإهداءات</div>';
+  }
+}
+
+async function azCreateGifts(){
+  var platform = document.getElementById('gift-platform').value;
+  var durationRaw = document.getElementById('gift-duration').value;
+  var count = parseInt(document.getElementById('gift-count').value, 10) || 1;
+  var purpose = document.getElementById('gift-purpose').value.trim();
+  var msg = document.getElementById('gift-create-msg');
+  var resultBox = document.getElementById('gift-links-result');
+
+  if(!platform){ msg.style.color='#f87171'; msg.textContent='⚠️ اختر منصة أولاً'; return; }
+
+  var durationDays = durationRaw === 'permanent' ? null : parseInt(durationRaw, 10);
+
+  try{
+    var res = await fetch('/api/gift-create', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ platform: platform, durationDays: durationDays, purpose: purpose, count: count })
+    });
+    var data = await res.json();
+    if(res.ok && data && data.ok){
+      msg.style.color='#4ade80'; msg.textContent='✅ تم توليد '+data.gifts.length+' رابط بنجاح';
+      resultBox.innerHTML = '<div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:12px;max-height:200px;overflow-y:auto">' +
+        data.gifts.map(function(g, i){
+          return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:.72rem;color:var(--t3);min-width:20px">'+(i+1)+'.</span><input class="di" readonly value="'+g.url+'" style="margin-bottom:0;font-size:.72rem;flex:1" onclick="this.select()"/><button class="db2" style="padding:5px 10px;font-size:.7rem" onclick="navigator.clipboard.writeText(\''+g.url+'\');toast(\'✅ تم النسخ\',\'success\')">نسخ</button></div>';
+        }).join('') + '</div>';
+      azLoadGiftsDash();
+    } else {
+      msg.style.color='#f87171'; msg.textContent='⚠️ فشل التوليد';
+    }
+  }catch(e){
+    msg.style.color='#f87171'; msg.textContent='⚠️ خطأ في الاتصال بالخادم';
+  }
+}
+
+function azRenderGifts(){
+  var el = document.getElementById('gifts-dash-list');
+  if(!el) return;
+  var platFilter = document.getElementById('gift-filter-platform').value;
+  var filtered = AZ_GIFTS_CACHE.filter(function(g){
+    return platFilter === 'all' || g.platform === platFilter;
+  });
+
+  if(!filtered.length){
+    el.innerHTML = '<div style="color:var(--t3);font-size:.8rem">لا توجد إهداءات مطابقة</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(function(g){
+    var durationLabel = g.durationDays ? g.durationDays+' يوم' : 'دائم مستمر';
+    var statusLabel = g.claimed
+      ? '✅ تم الاستلام — '+g.claimedBy
+      : '⏳ لم يُستلَم بعد';
+    return '<div class="dcard">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<strong>'+g.platform+'</strong>'+
+        '<span style="font-size:.72rem;color:'+(g.claimed?'#4ade80':'#facc15')+'">'+statusLabel+'</span>'+
+      '</div>'+
+      '<div style="font-size:.72rem;color:var(--t3);margin:4px 0">المدة: '+durationLabel+' · أُنشئ: '+new Date(g.createdAt).toLocaleDateString('ar-EG')+
+        (g.claimedAt ? ' · استُلم: '+new Date(g.claimedAt).toLocaleDateString('ar-EG') : '')+'</div>'+
+      (g.purpose ? '<div style="font-size:.78rem;color:var(--t2);font-style:italic">"'+g.purpose+'"</div>' : '')+
+    '</div>';
+  }).join('');
+}
+
 function azRenderNotifKPIs(){
   var unreadEl = document.getElementById('notif-unread-kv');
   var unreadChEl = document.getElementById('notif-unread-ch');
@@ -6540,6 +6729,7 @@ function swD(sec,el){
   if(sec === 'support') azLoadSupportTickets();
   if(sec === 'articles') azLoadArticlesDash();
   if(sec === 'reviews') azLoadReviewsDash();
+  if(sec === 'gifts') azLoadGiftsDash();
 }
 /* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
 /* ══ طابور حفظ مركزي (Save Queue) — يمنع تعارض "قراءة قديمة تكتب فوق حفظ حديث"
