@@ -81,6 +81,18 @@ export async function onRequestPost(context) {
     const configRaw = await env.AZ_CONFIG_KV.get('az_master_config');
     const config = configRaw ? JSON.parse(configRaw) : {};
     config.reviews = config.reviews || [];
+
+    /* ══ قيد "مراجعة واحدة فقط لكل عضو لكل منصة" — لو موجودة مسبقًا،
+       نحدِّثها (تسمح بالتعديل) بدل إنشاء مراجعة مكررة جديدة ══ */
+    const existingIdx = config.reviews.findIndex(r => r.userEmail === email && r.platform === platform);
+    if (existingIdx !== -1) {
+      config.reviews[existingIdx] = Object.assign({}, config.reviews[existingIdx], {
+        rating, comment, updatedAt: new Date().toISOString(),
+      });
+      await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));
+      return new Response(JSON.stringify({ ok: true, review: config.reviews[existingIdx], updated: true }), { headers });
+    }
+
     config.reviews.unshift(review);
     config.reviews = config.reviews.slice(0, 1000); // الاحتفاظ بآخر 1000 رأي
     await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));

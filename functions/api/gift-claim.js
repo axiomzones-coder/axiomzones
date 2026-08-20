@@ -50,6 +50,19 @@ export async function onRequestPost(context) {
   }
 
   try {
+    /* ══ آلية قفل مؤقت (Claim Lock) — تقليل نافذة السباق بين شخصين يطالبان
+       بنفس الرابط في نفس اللحظة تقريباً. Cloudflare KV لا يوفر "compare-
+       and-swap" أصيلاً، فهذا تخفيف عملي (Best-Effort) لا ضمان رياضي
+       مطلق 100%، لكنه يُغلق الثغرة العملية الواقعية بدرجة كبيرة جداً:
+       نكتب مفتاحاً مستقلاً بريدنا، نقرأه فوراً، ولا نكمل إلا لو كنا
+       فعلاً من كتبه (لا شخص آخر سبقنا في نفس اللحظة) ══ */
+    const lockKey = 'gift_lock:' + giftId;
+    await env.AZ_CONFIG_KV.put(lockKey, email, { expirationTtl: 20 });
+    const lockCheck = await env.AZ_CONFIG_KV.get(lockKey);
+    if (lockCheck !== email) {
+      return new Response(JSON.stringify({ ok: false, error: 'already_claimed' }), { status: 409, headers });
+    }
+
     const configRaw = await env.AZ_CONFIG_KV.get('az_master_config');
     const config = configRaw ? JSON.parse(configRaw) : {};
     const gifts = config.gifts || [];
