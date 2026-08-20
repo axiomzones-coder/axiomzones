@@ -3861,8 +3861,16 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 
         <div class="dcard" style="margin-bottom:18px">
           <div class="dct">إهداء منصة جديد</div>
+          <label class="fl" style="font-size:.68rem">نوع الإهداء</label>
+          <select class="di" id="gift-type" onchange="azToggleGiftType()">
+            <option value="platform">منصة واحدة</option>
+            <option value="bundle">باقة كاملة (منصات متعددة)</option>
+          </select>
           <select class="di" id="gift-platform">
             <option value="">اختر المنصة...</option>
+          </select>
+          <select class="di" id="gift-bundle" style="display:none">
+            <option value="">اختر الباقة...</option>
           </select>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
             <div>
@@ -3896,9 +3904,12 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         </div>
 
         <div class="dct" style="margin-bottom:10px">كل الإهداءات</div>
-        <select class="di" id="gift-filter-platform" style="width:auto;margin-bottom:12px" onchange="azRenderGifts()">
-          <option value="all">كل المنصات</option>
-        </select>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+          <select class="di" id="gift-filter-platform" style="width:auto;margin-bottom:0" onchange="azRenderGifts()">
+            <option value="all">كل المنصات</option>
+          </select>
+          <button class="db2" style="padding:8px 16px" onclick="azExportGifts()">⬇️ تصدير الأكواد</button>
+        </div>
         <div id="gifts-dash-list" style="display:flex;flex-direction:column;gap:10px">
           <div style="color:var(--t3);font-size:.8rem">Loading...</div>
         </div>
@@ -6247,6 +6258,7 @@ var AZ_GIFTS_CACHE = [];
 async function azLoadGiftsDash(){
   var platSel = document.getElementById('gift-platform');
   var filterSel = document.getElementById('gift-filter-platform');
+  var bundleSel = document.getElementById('gift-bundle');
   if(platSel && platSel.options.length <= 1 && typeof AZ_PLATFORMS_DATA !== 'undefined'){
     Object.keys(AZ_PLATFORMS_DATA).forEach(function(k){
       var opt1 = document.createElement('option'); opt1.value = k; opt1.textContent = AZ_PLATFORMS_DATA[k].name_ar || k;
@@ -6260,11 +6272,24 @@ async function azLoadGiftsDash(){
     var data = await res.json();
     var config = (data && data.config) || {};
     AZ_GIFTS_CACHE = config.gifts || [];
+    /* ملء قائمة الباقات المتاحة للإهداء */
+    if(bundleSel && bundleSel.options.length <= 1){
+      (config.bundles || []).forEach(function(b){
+        var opt = document.createElement('option'); opt.value = b.id; opt.textContent = b.name + ' ('+b.platforms.length+' منصات)';
+        bundleSel.appendChild(opt);
+      });
+    }
     azRenderGifts();
   }catch(e){
     var el = document.getElementById('gifts-dash-list');
     if(el) el.innerHTML = '<div style="color:#f87171;font-size:.8rem">فشل تحميل الإهداءات</div>';
   }
+}
+
+function azToggleGiftType(){
+  var type = document.getElementById('gift-type').value;
+  document.getElementById('gift-platform').style.display = (type === 'platform') ? 'block' : 'none';
+  document.getElementById('gift-bundle').style.display = (type === 'bundle') ? 'block' : 'none';
 }
 
 function azToggleGiftCustomPurpose(){
@@ -6274,7 +6299,9 @@ function azToggleGiftCustomPurpose(){
 }
 
 async function azCreateGifts(){
+  var giftType = document.getElementById('gift-type').value;
   var platform = document.getElementById('gift-platform').value;
+  var bundleId = document.getElementById('gift-bundle').value;
   var durationRaw = document.getElementById('gift-duration').value;
   var count = parseInt(document.getElementById('gift-count').value, 10) || 1;
   var purposeSelect = document.getElementById('gift-purpose-select').value;
@@ -6284,14 +6311,22 @@ async function azCreateGifts(){
   var msg = document.getElementById('gift-create-msg');
   var resultBox = document.getElementById('gift-links-result');
 
-  if(!platform){ msg.style.color='#f87171'; msg.textContent='⚠️ اختر منصة أولاً'; return; }
+  var bundlePlatforms = null;
+  if(giftType === 'bundle'){
+    if(!bundleId){ msg.style.color='#f87171'; msg.textContent='⚠️ اختر باقة أولاً'; return; }
+    var bundle = AZ_BUNDLES_CACHE.find(function(b){ return b.id === bundleId; });
+    if(!bundle){ msg.style.color='#f87171'; msg.textContent='⚠️ الباقة غير موجودة'; return; }
+    bundlePlatforms = bundle.platforms;
+  } else {
+    if(!platform){ msg.style.color='#f87171'; msg.textContent='⚠️ اختر منصة أولاً'; return; }
+  }
 
   var durationDays = durationRaw === 'permanent' ? null : parseInt(durationRaw, 10);
 
   try{
     var res = await fetch('/api/gift-create', {
       method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ platform: platform, durationDays: durationDays, purpose: purpose, count: count })
+      body: JSON.stringify({ platform: platform, bundlePlatforms: bundlePlatforms, durationDays: durationDays, purpose: purpose, count: count })
     });
     var data = await res.json();
     if(res.ok && data && data.ok){
@@ -6314,7 +6349,9 @@ function azRenderGifts(){
   if(!el) return;
   var platFilter = document.getElementById('gift-filter-platform').value;
   var filtered = AZ_GIFTS_CACHE.filter(function(g){
-    return platFilter === 'all' || g.platform === platFilter;
+    if(platFilter === 'all') return true;
+    if(g.platform) return g.platform === platFilter;
+    return Array.isArray(g.bundlePlatforms) && g.bundlePlatforms.indexOf(platFilter) !== -1;
   });
 
   if(!filtered.length){
@@ -6323,19 +6360,70 @@ function azRenderGifts(){
   }
   el.innerHTML = filtered.map(function(g){
     var durationLabel = (g.durationDays === null || g.durationDays === undefined) ? 'دائم مستمر' : g.durationDays+' يوم';
-    var statusLabel = g.claimed
-      ? '✅ تم الاستلام — '+g.claimedBy
-      : '⏳ لم يُستلَم بعد';
+    var isCancelled = g.claimed && g.claimedBy === '__CANCELLED__';
+    var statusLabel = isCancelled ? '🚫 أُلغيَت قبل الاستخدام' : (g.claimed ? '✅ تم الاستلام — '+g.claimedBy : '⏳ لم يُستلَم بعد');
+    var targetLabel = g.platform ? g.platform : ('📦 باقة: '+(g.bundlePlatforms||[]).join(', '));
     return '<div class="dcard">'+
       '<div style="display:flex;justify-content:space-between;align-items:center">'+
-        '<strong>'+g.platform+'</strong>'+
-        '<span style="font-size:.72rem;color:'+(g.claimed?'#4ade80':'#facc15')+'">'+statusLabel+'</span>'+
+        '<strong>'+targetLabel+'</strong>'+
+        '<span style="font-size:.72rem;color:'+(isCancelled?'var(--t3)':g.claimed?'#4ade80':'#facc15')+'">'+statusLabel+'</span>'+
       '</div>'+
       '<div style="font-size:.72rem;color:var(--t3);margin:4px 0">المدة: '+durationLabel+' · أُنشئ: '+new Date(g.createdAt).toLocaleDateString('ar-EG')+
-        (g.claimedAt ? ' · استُلم: '+new Date(g.claimedAt).toLocaleDateString('ar-EG') : '')+'</div>'+
+        (g.claimedAt && !isCancelled ? ' · استُلم: '+new Date(g.claimedAt).toLocaleDateString('ar-EG') : '')+'</div>'+
       (g.purpose ? '<div style="font-size:.78rem;color:var(--t2);font-style:italic">"'+g.purpose+'"</div>' : '')+
+      (!g.claimed ? '<button class="db2" style="margin-top:8px;padding:5px 12px;font-size:.7rem;color:#f87171" onclick="azCancelGift(\''+g.id+'\')">🚫 إلغاء قبل الاستخدام</button>' : '')+
     '</div>';
   }).join('');
+}
+
+async function azCancelGift(giftId){
+  if(!confirm('إلغاء هذا الرابط نهائياً؟ لن يعمل بعد ذلك لأي شخص.')) return;
+  var gift = AZ_GIFTS_CACHE.find(function(g){ return g.id === giftId; });
+  if(!gift) return;
+  gift.claimed = true;
+  gift.claimedBy = '__CANCELLED__';
+  gift.claimedAt = new Date().toISOString();
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.gifts = AZ_GIFTS_CACHE;
+    await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Gift cancelled: '+giftId })
+    });
+    toast('🚫 تم إلغاء الرابط');
+    azRenderGifts();
+  }catch(e){
+    toast('⚠️ فشل الإلغاء', 'error');
+  }
+}
+
+function azExportGifts(){
+  var platFilter = document.getElementById('gift-filter-platform').value;
+  var filtered = AZ_GIFTS_CACHE.filter(function(g){
+    if(platFilter === 'all') return true;
+    if(g.platform) return g.platform === platFilter;
+    return Array.isArray(g.bundlePlatforms) && g.bundlePlatforms.indexOf(platFilter) !== -1;
+  });
+  if(!filtered.length){ toast('⚠️ لا توجد إهداءات للتصدير', 'error'); return; }
+
+  var lines = ['المعرِّف,الهدف,المدة,الحالة,الرابط'];
+  filtered.forEach(function(g){
+    var target = g.platform || ('bundle:'+(g.bundlePlatforms||[]).join('+'));
+    var duration = (g.durationDays === null || g.durationDays === undefined) ? 'دائم' : g.durationDays+' يوم';
+    var status = g.claimed ? (g.claimedBy === '__CANCELLED__' ? 'ملغى' : 'مُستلَم') : 'متاح';
+    var url = 'https://axiomzones.com/claim-gift?id=' + g.id;
+    lines.push([g.id, target, duration, status, url].join(','));
+  });
+
+  var blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'gifts-export-' + Date.now() + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('✅ تم تصدير الملف');
 }
 
 /* ══ PRICING MANAGEMENT — تسعير مستقل تماماً لكل منصة، ولكل مستوى داخلها.
