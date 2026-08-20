@@ -23,6 +23,11 @@ export async function onRequestPost(context) {
   }
 
   const platform = String((body && body.platform) || '').trim().toLowerCase();
+  /* ══ دعم إهداء باقة كاملة (منصات متعددة) — اختياري، بديل عن "platform"
+     الواحدة. لو موجودة، تأخذ الأولوية على platform ══ */
+  const bundlePlatforms = Array.isArray(body && body.bundlePlatforms) && body.bundlePlatforms.length
+    ? body.bundlePlatforms.map(p => String(p).trim().toLowerCase())
+    : null;
   /* ══ فحص صريح 100% للدوام — لا اعتماد على truthy/falsy الذي قد يُخفي
      أخطاءً (مثال: durationDays=0 كان سيُعامَل خطأً كـ"دائم" بفحص truthy بسيط).
      القيمة المُخزَّنة نهائياً دائماً: null (دائم) أو رقم صحيح موجب (أيام) ══ */
@@ -35,7 +40,7 @@ export async function onRequestPost(context) {
   const purpose = String((body && body.purpose) || '').slice(0, 300);
   const count = Math.min(Math.max(parseInt((body && body.count) || 1, 10), 1), 100); // بين 1 و100 رابط دفعة واحدة
 
-  if (!platform) {
+  if (!platform && !bundlePlatforms) {
     return new Response(JSON.stringify({ ok: false, error: 'missing_platform' }), { status: 400, headers });
   }
 
@@ -48,7 +53,9 @@ export async function onRequestPost(context) {
     for (let i = 0; i < count; i++) {
       const gift = {
         id: 'gift_' + crypto.randomUUID(),
-        platform, durationDays, purpose,
+        platform: bundlePlatforms ? null : platform,
+        bundlePlatforms: bundlePlatforms,
+        durationDays, purpose,
         createdAt: new Date().toISOString(),
         claimed: false,
         claimedBy: null,

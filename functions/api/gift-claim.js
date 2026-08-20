@@ -89,7 +89,12 @@ export async function onRequestPost(context) {
     const expiryDate = isPermanent
       ? null
       : new Date(Date.now() + Number(gift.durationDays) * 24 * 60 * 60 * 1000).toISOString();
-    userRecord.giftedAccess[gift.platform] = expiryDate;
+    /* ══ لو هدية باقة (منصات متعددة)، تُمنح كل المنصات المذكورة دفعة
+       واحدة؛ غير ذلك، منصة واحدة كالسابق تماماً ══ */
+    var targetPlatforms = Array.isArray(gift.bundlePlatforms) && gift.bundlePlatforms.length
+      ? gift.bundlePlatforms
+      : [gift.platform];
+    targetPlatforms.forEach(function(p){ userRecord.giftedAccess[p] = expiryDate; });
     await env.AZ_USERS_KV.put('user:' + email, JSON.stringify(userRecord));
 
     // ── قفل الرابط نهائياً — لا يمكن لأي شخص آخر استخدامه ──
@@ -98,7 +103,7 @@ export async function onRequestPost(context) {
     gift.claimedAt = new Date().toISOString();
     await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));
 
-    return new Response(JSON.stringify({ ok: true, platform: gift.platform, expiresAt: expiryDate, purpose: gift.purpose }), { headers });
+    return new Response(JSON.stringify({ ok: true, platform: gift.platform, platforms: targetPlatforms, expiresAt: expiryDate, purpose: gift.purpose }), { headers });
   } catch (e) {
     return new Response(JSON.stringify({ ok: false, error: 'claim_failed' }), { status: 500, headers });
   }
