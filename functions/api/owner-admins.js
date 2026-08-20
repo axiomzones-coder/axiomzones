@@ -135,9 +135,18 @@ export async function onRequestPost(context) {
   }
 
   if (action === 'delete') {
-    await env.AZ_ADMINS_KV.delete(key);
-    await writeLog(env, 'admin', 'owner', `Deleted admin: ${email}`);
-    return new Response(JSON.stringify({ ok: true }), { headers });
+    /* ══ لا حذف نهائي — تعطيل وأرشفة بدلاً منه (بند صريح من الدستور:
+       "لا تُحذَف سجلاته التاريخية، عطّل الحساب أو أرشفه، احتفظ بسجلات
+       Audit Logs"). تعطيل الحساب (disabled:true) يمنع تسجيل الدخول
+       فوراً — نفس الأثر العملي المطلوب، لكن مع حفظ السجل كاملاً ══ */
+    const raw = await env.AZ_ADMINS_KV.get(key);
+    if (!raw) return new Response(JSON.stringify({ ok: false, error: 'not_found' }), { status: 404, headers });
+    const rec = JSON.parse(raw);
+    rec.disabled = true;
+    rec.archivedAt = new Date().toISOString();
+    await env.AZ_ADMINS_KV.put(key, JSON.stringify(rec));
+    await writeLog(env, 'admin', 'owner', `Archived (disabled) admin: ${email}`);
+    return new Response(JSON.stringify({ ok: true, archived: true }), { headers });
   }
 
   return new Response(JSON.stringify({ ok: false, error: 'invalid_action' }), { status: 400, headers });
