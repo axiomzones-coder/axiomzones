@@ -3806,7 +3806,8 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
         </select>
 
         <div id="pricing-form-box" style="display:none">
-          <div id="pricing-tiers-list" style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px"></div>
+          <div id="pricing-tiers-list" style="display:flex;flex-direction:column;gap:14px;margin-bottom:12px"></div>
+          <button class="db2" style="padding:8px 18px;margin-bottom:20px" onclick="azAddNewTier()">+ إضافة مستوى جديد</button>
           <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSavePricing()">💾 حفظ إعدادات التسعير</button>
           <div id="pricing-save-msg" style="margin-top:10px;font-size:.82rem"></div>
         </div>
@@ -6337,16 +6338,17 @@ function azRenderGifts(){
   }).join('');
 }
 
-/* ══ PRICING MANAGEMENT — تسعير مستقل تماماً لكل منصة، ولكل مستوى داخلها ══ */
+/* ══ PRICING MANAGEMENT — تسعير مستقل تماماً لكل منصة، ولكل مستوى داخلها.
+   المستويات ديناميكية بالكامل الآن — إضافة/حذف حر، لا 5 مستويات ثابتة ══ */
 var AZ_PRICING_CONFIG = {};
 var AZ_DEFAULT_TIERS = {
-  free:     { enabled: true,  name: 'Free',     monthlyPrice: 0,   annualDiscount: 0  },
-  growth:   { enabled: false, name: 'Growth',   monthlyPrice: 29,  annualDiscount: 30 },
-  pro:      { enabled: false, name: 'Pro',      monthlyPrice: 69,  annualDiscount: 30 },
-  expert:   { enabled: false, name: 'Expert',   monthlyPrice: 129, annualDiscount: 30 },
-  lifetime: { enabled: false, name: 'Lifetime', price: 399, maxCount: 100, claimedCount: 0 },
+  free:     { enabled: true,  name: 'Free',     monthlyPrice: 0,   annualDiscount: 0, currency: 'USD' },
+  growth:   { enabled: false, name: 'Growth',   monthlyPrice: 29,  annualDiscount: 30, currency: 'USD' },
+  pro:      { enabled: false, name: 'Pro',      monthlyPrice: 69,  annualDiscount: 30, currency: 'USD' },
+  expert:   { enabled: false, name: 'Expert',   monthlyPrice: 129, annualDiscount: 30, currency: 'USD' },
+  lifetime: { enabled: false, name: 'Lifetime', price: 399, maxCount: 100, claimedCount: 0, currency: 'USD' },
 };
-var AZ_TIER_ORDER = ['free', 'growth', 'pro', 'expert', 'lifetime'];
+var AZ_CURRENT_TIER_KEYS = []; /* مبنية ديناميكياً من إعدادات المنصة الفعلية + الافتراضيات، لا مصفوفة ثابتة بعد الآن */
 
 async function azLoadPricingDash(){
   var sel = document.getElementById('pricing-platform-select');
@@ -6367,46 +6369,87 @@ async function azLoadPricingDash(){
   }
 }
 
+function azAddNewTier(){
+  var newKey = prompt('مفتاح المستوى الجديد (حروف إنجليزية بدون مسافات، مثال: student):');
+  if(!newKey) return;
+  newKey = newKey.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  if(!newKey){ toast('⚠️ مفتاح غير صالح', 'error'); return; }
+  if(AZ_CURRENT_TIER_KEYS.indexOf(newKey) !== -1){ toast('⚠️ هذا المفتاح موجود بالفعل', 'error'); return; }
+  AZ_CURRENT_TIER_KEYS.push(newKey);
+  var defaults = { enabled: true, name: newKey.charAt(0).toUpperCase() + newKey.slice(1), monthlyPrice: 0, annualDiscount: 0, currency: 'USD' };
+  azRenderPricingTiers(Object.assign({}, AZ_DEFAULT_TIERS, {}), defaults, newKey);
+}
+
+function azDeleteTier(tierKey){
+  if(!confirm('حذف هذا المستوى نهائياً؟ لا يمكن التراجع بعد الحفظ.')) return;
+  AZ_CURRENT_TIER_KEYS = AZ_CURRENT_TIER_KEYS.filter(function(k){ return k !== tierKey; });
+  document.querySelector('#pricing-tiers-list [data-tier="'+tierKey+'"]').remove();
+}
+
 function azLoadPricingForm(){
   var platform = document.getElementById('pricing-platform-select').value;
   var box = document.getElementById('pricing-form-box');
-  var list = document.getElementById('pricing-tiers-list');
   if(!platform){ box.style.display = 'none'; return; }
   box.style.display = 'block';
 
   var platformPricing = AZ_PRICING_CONFIG[platform] || {};
   var tiers = platformPricing.tiers || {};
 
-  list.innerHTML = AZ_TIER_ORDER.map(function(tierKey){
-    var defaults = AZ_DEFAULT_TIERS[tierKey];
-    var t = Object.assign({}, defaults, tiers[tierKey] || {});
-    var isLifetime = (tierKey === 'lifetime');
-    var soldOut = isLifetime && t.maxCount > 0 && t.claimedCount >= t.maxCount;
+  /* ══ بناء قائمة المستويات ديناميكياً: كل مفتاح موجود فعلياً في بيانات
+     المنصة المحفوظة + المفاتيح الافتراضية الخمسة كنقطة بداية مألوفة —
+     لا اقتصار على الخمسة فقط، أي مفتاح إضافي محفوظ سابقاً يظهر أيضاً ══ */
+  var allKeys = Object.keys(AZ_DEFAULT_TIERS);
+  Object.keys(tiers).forEach(function(k){ if(allKeys.indexOf(k) === -1) allKeys.push(k); });
+  AZ_CURRENT_TIER_KEYS = allKeys;
 
-    return '<div class="dcard" data-tier="'+tierKey+'" style="'+(t.enabled?'border-color:rgba(34,197,94,.4)':'')+'">'+
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
-        '<label style="display:flex;align-items:center;gap:8px;cursor:pointer">'+
-          '<input type="checkbox" class="tier-enabled" '+(t.enabled?'checked':'')+' style="width:16px;height:16px"/>'+
-          '<strong>'+tierKey.toUpperCase()+'</strong>'+
-        '</label>'+
+  var list = document.getElementById('pricing-tiers-list');
+  list.innerHTML = '';
+  allKeys.forEach(function(tierKey){
+    var defaults = AZ_DEFAULT_TIERS[tierKey] || { enabled: false, name: tierKey, monthlyPrice: 0, annualDiscount: 0, currency: 'USD' };
+    var t = Object.assign({}, defaults, tiers[tierKey] || {});
+    azRenderPricingTiers(tiers, t, tierKey, true);
+  });
+}
+
+function azRenderPricingTiers(tiersObj, t, tierKey, append){
+  var list = document.getElementById('pricing-tiers-list');
+  var isLifetime = /lifetime|life_time|مدى/.test(tierKey) || t.price !== undefined;
+  var soldOut = isLifetime && t.maxCount > 0 && t.claimedCount >= t.maxCount;
+
+  var card = document.createElement('div');
+  card.className = 'dcard';
+  card.setAttribute('data-tier', tierKey);
+  card.setAttribute('data-is-lifetime', isLifetime ? '1' : '0');
+  if(t.enabled) card.style.borderColor = 'rgba(34,197,94,.4)';
+
+  card.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+      '<label style="display:flex;align-items:center;gap:8px;cursor:pointer">'+
+        '<input type="checkbox" class="tier-enabled" '+(t.enabled?'checked':'')+' style="width:16px;height:16px"/>'+
+        '<strong>'+tierKey.toUpperCase()+'</strong>'+
+      '</label>'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
         (soldOut ? '<span style="font-size:.7rem;color:#f87171">🔴 نفدت الكمية</span>' : (t.enabled ? '<span style="font-size:.7rem;color:#4ade80">● مفعَّل</span>' : '<span style="font-size:.7rem;color:var(--t3)">○ معطَّل</span>'))+
+        '<button type="button" onclick="azDeleteTier(\''+tierKey+'\')" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:.85rem" title="حذف هذا المستوى">🗑️</button>'+
       '</div>'+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
-        '<div><label class="fl" style="font-size:.65rem">الاسم الظاهر</label><input class="di tier-name" value="'+t.name+'" style="margin-bottom:0"/></div>'+
-        (isLifetime
-          ? '<div><label class="fl" style="font-size:.65rem">السعر (مرة واحدة)</label><input class="di tier-price" type="number" value="'+t.price+'" style="margin-bottom:0"/></div>'
-          : '<div><label class="fl" style="font-size:.65rem">السعر الشهري ($)</label><input class="di tier-monthly" type="number" value="'+t.monthlyPrice+'" style="margin-bottom:0"/></div>'
-        )+
-      '</div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px">'+
+      '<div><label class="fl" style="font-size:.65rem">الاسم الظاهر</label><input class="di tier-name" value="'+(t.name||'')+'" style="margin-bottom:0"/></div>'+
       (isLifetime
-        ? '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
-            '<div><label class="fl" style="font-size:.65rem">الحد الأقصى للعدد</label><input class="di tier-maxcount" type="number" value="'+t.maxCount+'" style="margin-bottom:0"/></div>'+
-            '<div><label class="fl" style="font-size:.65rem">تم بيع (يدوي حالياً)</label><input class="di tier-claimedcount" type="number" value="'+t.claimedCount+'" style="margin-bottom:0"/></div>'+
-          '</div>'
-        : '<div style="margin-top:8px"><label class="fl" style="font-size:.65rem">نسبة خصم الدفع السنوي (%)</label><input class="di tier-discount" type="number" value="'+t.annualDiscount+'" style="margin-bottom:0"/></div>'
+        ? '<div><label class="fl" style="font-size:.65rem">السعر (مرة واحدة)</label><input class="di tier-price" type="number" value="'+(t.price||0)+'" style="margin-bottom:0"/></div>'
+        : '<div><label class="fl" style="font-size:.65rem">السعر الشهري</label><input class="di tier-monthly" type="number" value="'+(t.monthlyPrice||0)+'" style="margin-bottom:0"/></div>'
       )+
-    '</div>';
-  }).join('');
+      '<div><label class="fl" style="font-size:.65rem">العملة</label><input class="di tier-currency" value="'+(t.currency||'USD')+'" maxlength="3" style="margin-bottom:0;text-transform:uppercase"/></div>'+
+    '</div>'+
+    (isLifetime
+      ? '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">'+
+          '<div><label class="fl" style="font-size:.65rem">الحد الأقصى للعدد</label><input class="di tier-maxcount" type="number" value="'+(t.maxCount||0)+'" style="margin-bottom:0"/></div>'+
+          '<div><label class="fl" style="font-size:.65rem">تم بيع (يدوي حالياً)</label><input class="di tier-claimedcount" type="number" value="'+(t.claimedCount||0)+'" style="margin-bottom:0"/></div>'+
+        '</div>'
+      : '<div style="margin-top:8px"><label class="fl" style="font-size:.65rem">نسبة خصم الدفع السنوي (%)</label><input class="di tier-discount" type="number" value="'+(t.annualDiscount||0)+'" style="margin-bottom:0"/></div>'
+    );
+
+  list.appendChild(card);
 }
 
 async function azSavePricing(){
@@ -6417,10 +6460,11 @@ async function azSavePricing(){
   var tiers = {};
   document.querySelectorAll('#pricing-tiers-list [data-tier]').forEach(function(card){
     var tierKey = card.getAttribute('data-tier');
-    var isLifetime = (tierKey === 'lifetime');
+    var isLifetime = card.getAttribute('data-is-lifetime') === '1';
     var tierData = {
       enabled: card.querySelector('.tier-enabled').checked,
       name: card.querySelector('.tier-name').value.trim(),
+      currency: (card.querySelector('.tier-currency').value.trim().toUpperCase() || 'USD'),
     };
     if(isLifetime){
       tierData.price = parseFloat(card.querySelector('.tier-price').value) || 0;
@@ -7103,6 +7147,16 @@ async function azToggleSubPlatformDisabled(key, el){
   el.disabled = false;
 }
 
+async function azTogglePlatformFlag(key, fieldName, el){
+  el.disabled = true;
+  var ok = await azSavePlatformField(key, fieldName, el.checked);
+  var labels = { maintenanceMode: 'وضع الصيانة', archived: 'الأرشفة' };
+  var label = labels[fieldName] || fieldName;
+  if(ok){ toast(el.checked ? '🔧 '+label+' مفعَّلة لـ' + key : '✅ '+label+' معطَّلة لـ' + key); }
+  else { el.checked = !el.checked; toast('فشل الحفظ — حاول تاني'); }
+  el.disabled = false;
+}
+
 function azToggleBadgeMode(key, mode){
   var inputEl = document.getElementById('badge-input-' + key);
   if(inputEl) inputEl.style.display = (mode === 'custom') ? 'block' : 'none';
@@ -7210,6 +7264,8 @@ async function azLoadPlatformToggles(){
       '</div>'+
       '<div class="twrap" style="margin-top:8px"><span style="font-size:.72rem;color:var(--t2)">🔍 السماح بفهرسة جوجل (SEO)</span><label class="tog"><input type="checkbox" '+(saved.seoNoindex===true?'':'checked')+' onchange="azToggleSeoIndexing(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
       '<div class="twrap" style="margin-top:8px"><span style="font-size:.72rem;color:var(--t2)">🚫 تعطيل المنصة الفرعية</span><label class="tog"><input type="checkbox" '+(isSubDisabled?'checked':'')+' onchange="azToggleSubPlatformDisabled(\''+key+'\',this)"/><span class="tsl"></span></label></div>'+
+      '<div class="twrap" style="margin-top:8px"><span style="font-size:.72rem;color:#facc15">🔧 وضع الصيانة (يحجب الجميع مؤقتاً، شامل المشتركين)</span><label class="tog"><input type="checkbox" '+(saved.maintenanceMode===true?'checked':'')+' onchange="azTogglePlatformFlag(\''+key+'\',\'maintenanceMode\',this)"/><span class="tsl"></span></label></div>'+
+      '<div class="twrap" style="margin-top:8px"><span style="font-size:.72rem;color:#fb923c">📦 أرشفة (تمنع اشتراكات/تجارب جديدة، تُبقي وصول الحاليين)</span><label class="tog"><input type="checkbox" '+(saved.archived===true?'checked':'')+' onchange="azTogglePlatformFlag(\''+key+'\',\'archived\',this)"/><span class="tsl"></span></label></div>'+
       '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">'+
         '<button class="db2" style="width:100%;padding:5px;font-size:.7rem" onclick="azOpenScheduleBox(\''+key+'\')">⏰ جدولة تغيير تلقائي</button>'+
         '<div id="schedule-box-'+key+'" style="display:none;margin-top:6px">'+
