@@ -37,6 +37,12 @@ export async function onRequestGet(context) {
       if (platCfg.subPlatformDisabled === true) {
         return new Response(JSON.stringify({ ok: true, status: 'disabled', visibility: 'hidden', noindex: true }), { headers });
       }
+      /* ══ حالة "الصيانة" — تحجب الجميع مؤقتاً بما فيهم المشتركون الحاليون
+         (خلافاً للأرشفة)، مع رسالة مؤقتة واضحة، ومنفصلة عن visibility ══ */
+      if (platCfg.maintenanceMode === true) {
+        return new Response(JSON.stringify({ ok: true, status: 'maintenance', visibility: 'hidden', noindex: true }), { headers });
+      }
+      var isArchived = platCfg.archived === true;
       visibilityStatus = platCfg.visibility || (platCfg.hiddenFromHub === true ? 'hidden' : 'visible');
       if (platCfg.scheduledVisibility && platCfg.scheduledVisibility.at && new Date(platCfg.scheduledVisibility.at) <= new Date()) {
         visibilityStatus = platCfg.scheduledVisibility.mode;
@@ -113,6 +119,12 @@ export async function onRequestGet(context) {
   const trialStartedAt = trials[platform];
 
   if (!trialStartedAt) {
+    /* ══ منصة مؤرشَفة: لا تجارب جديدة — "تختفي من البيع الجديد" بالضبط،
+       لكن هذا الشرط لا يمس أي مستخدم لديه بالفعل وصول أو تجربة سابقة
+       (تلك الحالات عولجت بالكامل في الفحوصات الأعلى، لن تصل هنا) ══ */
+    if (isArchived) {
+      return new Response(JSON.stringify({ ok: true, status: 'archived', visibility: visibilityStatus, noindex: seoNoindex }), { headers });
+    }
     // أول زيارة لهذه المنصة تحديداً — تبدأ التجربة الآن وتُحفظ فوراً
     trials[platform] = new Date().toISOString();
     record.platformTrials = trials;
