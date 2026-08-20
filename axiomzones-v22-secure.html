@@ -7592,6 +7592,41 @@ async function sub(plan){
 /* ══ تنظيف HTML إلزامي لأي محتوى يكتبه المستخدم قبل إدراجه في الصفحة —
    يمنع هجمات XSS المخزَّنة (Stored XSS) عبر أسماء المستخدمين، تعليقات
    المراجعات، أو أي نص حر آخر يُعرَض لاحقاً لزوار آخرين ══ */
+/* ══ طبقة API مركزية — للاستخدام في كل كود جديد من الآن فصاعداً (شامل
+   بوابة الدفع القادمة). لا تُستبدَل بها الـ118 نداء fetch القديمة
+   الموجودة بالفعل بالملف — إعادة هيكلتها كلها دفعة واحدة خطر حقيقي غير
+   مبرَّر (احتمال كسر ميزة شغّالة)، وتستحق جلسة مخصَّصة منفصلة ومتأنية ══ */
+var AZ_PENDING_REQUESTS = 0;
+async function apiRequest(path, options){
+  options = options || {};
+  AZ_PENDING_REQUESTS++;
+  try{
+    var response = await fetch(path, Object.assign({
+      credentials: 'include',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, options.headers || {}),
+    }, options));
+
+    var data = null;
+    try{ data = await response.json(); }catch(e){ /* رد بلا JSON — يُعامَل كخطأ عام أدناه */ }
+
+    if(response.status === 401){
+      /* جلسة منتهية أو غير موجودة — لا نوجّه تلقائياً هنا (كل استدعاء
+         يقرر بنفسه هل يحتاج فتح شاشة الدخول أم لا)، فقط نُرجِع الحالة
+         واضحة للمُستدعي */
+      return { ok: false, status: 401, error: (data && data.error) || 'unauthorized', data: data };
+    }
+    if(!response.ok){
+      return { ok: false, status: response.status, error: (data && data.error) || 'request_failed', data: data };
+    }
+    return Object.assign({ ok: true, status: response.status }, data || {});
+  }catch(networkErr){
+    /* خطأ شبكة حقيقي (لا اتصال، انقطاع) — لا نُظهِر تفاصيل داخلية للمستخدم */
+    return { ok: false, status: 0, error: 'network_error' };
+  }finally{
+    AZ_PENDING_REQUESTS = Math.max(0, AZ_PENDING_REQUESTS - 1);
+  }
+}
+
 function azEscapeHtml(str){
   if(str === null || str === undefined) return '';
   return String(str)
