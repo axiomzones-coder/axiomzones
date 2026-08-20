@@ -3831,15 +3831,30 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
             <option value="lifetime_limited">مدى الحياة — عرض محدود بالوقت</option>
           </select>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 70px;gap:10px;margin-bottom:10px">
             <div>
-              <label class="fl" style="font-size:.68rem">السعر ($)</label>
+              <label class="fl" style="font-size:.68rem">السعر</label>
               <input class="di" id="bundle-price" type="number" style="margin-bottom:0"/>
             </div>
             <div>
               <label class="fl" style="font-size:.68rem">نسبة الخصم (%) — اختياري</label>
               <input class="di" id="bundle-discount" type="number" value="0" style="margin-bottom:0"/>
             </div>
+            <div>
+              <label class="fl" style="font-size:.68rem">العملة</label>
+              <input class="di" id="bundle-currency" value="USD" maxlength="3" style="margin-bottom:0;text-transform:uppercase"/>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-bottom:10px">
+            <div>
+              <label class="fl" style="font-size:.68rem">ترتيب العرض (رقم أصغر = يظهر أولاً)</label>
+              <input class="di" id="bundle-sort" type="number" value="0" style="margin-bottom:0"/>
+            </div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding-top:16px">
+              <input type="checkbox" id="bundle-featured" style="width:16px;height:16px"/>
+              <span style="font-size:.78rem">⭐ مميَّزة</span>
+            </label>
           </div>
 
           <div id="bundle-expiry-box" style="display:none;margin-bottom:10px">
@@ -6626,6 +6641,9 @@ async function azSaveBundle(){
   var type = document.getElementById('bundle-type').value;
   var price = parseFloat(document.getElementById('bundle-price').value) || 0;
   var discount = parseFloat(document.getElementById('bundle-discount').value) || 0;
+  var currency = (document.getElementById('bundle-currency').value.trim().toUpperCase() || 'USD');
+  var sortOrder = parseInt(document.getElementById('bundle-sort').value, 10) || 0;
+  var featured = document.getElementById('bundle-featured').checked;
   var offerExpiry = document.getElementById('bundle-offer-expiry').value || null;
   var msg = document.getElementById('bundle-save-msg');
 
@@ -6640,7 +6658,8 @@ async function azSaveBundle(){
     config.bundles.unshift({
       id: 'bundle_' + Date.now(),
       name: name, platforms: platforms, type: type,
-      price: price, discount: discount,
+      price: price, discount: discount, currency: currency,
+      sortOrder: sortOrder, featured: featured, archived: false,
       offerExpiry: (type === 'lifetime_limited') ? offerExpiry : null,
       enabled: true,
       createdAt: new Date().toISOString(),
@@ -6658,6 +6677,8 @@ async function azSaveBundle(){
       document.querySelectorAll('.bundle-plat-check').forEach(function(c){ c.checked = false; });
       document.getElementById('bundle-price').value = '';
       document.getElementById('bundle-discount').value = '0';
+      document.getElementById('bundle-sort').value = '0';
+      document.getElementById('bundle-featured').checked = false;
       azLoadBundlesDash();
     } else {
       msg.style.color='#f87171'; msg.textContent='⚠️ فشل الحفظ';
@@ -6670,37 +6691,60 @@ async function azSaveBundle(){
 function azRenderBundlesDash(){
   var el = document.getElementById('bundles-dash-list');
   if(!el) return;
-  if(!AZ_BUNDLES_CACHE.length){
+  /* ══ المؤرشَفة لا تُعرَض في القائمة العادية — قسم منفصل تحتها ══ */
+  var active = AZ_BUNDLES_CACHE.filter(function(b){ return !b.archived; });
+  var archived = AZ_BUNDLES_CACHE.filter(function(b){ return b.archived; });
+  /* ترتيب حسب sortOrder، الأصغر أولاً */
+  active.sort(function(a,b){ return (a.sortOrder||0) - (b.sortOrder||0); });
+
+  if(!active.length && !archived.length){
     el.innerHTML = '<div style="color:var(--t3);font-size:.8rem">لا توجد باقات مُجمَّعة بعد</div>';
     return;
   }
   var typeLabels = { monthly: 'شهري', annual: 'سنوي', lifetime_limited: 'مدى الحياة (عرض محدود)' };
-  el.innerHTML = AZ_BUNDLES_CACHE.map(function(b){
+
+  function renderCard(b){
     var idx = AZ_BUNDLES_CACHE.indexOf(b);
     var platformNames = b.platforms.map(function(k){ return (AZ_PLATFORMS_DATA[k] && AZ_PLATFORMS_DATA[k].name_ar) || k; }).join('، ');
     var expiryNote = (b.type === 'lifetime_limited' && b.offerExpiry) ? ' · ينتهي العرض: '+b.offerExpiry : '';
-    return '<div class="dcard" style="'+(b.enabled?'':'opacity:.5')+'">'+
+    return '<div class="dcard" style="'+(b.enabled&&!b.archived?'':'opacity:.5')+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:center">'+
-        '<strong>'+b.name+'</strong>'+
-        '<span style="font-size:.72rem;color:'+(b.enabled?'#4ade80':'var(--t3)')+'">'+(b.enabled?'● مفعَّلة':'○ مُعطَّلة')+'</span>'+
+        '<strong>'+(b.featured?'⭐ ':'')+b.name+'</strong>'+
+        '<span style="font-size:.72rem;color:'+(b.archived?'#fb923c':b.enabled?'#4ade80':'var(--t3)')+'">'+(b.archived?'📦 مؤرشَفة':b.enabled?'● مفعَّلة':'○ مُعطَّلة')+'</span>'+
       '</div>'+
       '<div style="font-size:.75rem;color:var(--t2);margin:4px 0">📦 '+platformNames+'</div>'+
-      '<div style="font-size:.72rem;color:var(--t3)">'+typeLabels[b.type]+' · $'+b.price+(b.discount>0?' · خصم '+b.discount+'%':'')+expiryNote+'</div>'+
-      '<div style="display:flex;gap:6px;margin-top:10px">'+
-        '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azToggleBundleEnabled('+idx+')">'+(b.enabled?'إيقاف':'تفعيل')+'</button>'+
-        '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#f87171" onclick="azDeleteBundle('+idx+')">🗑️ حذف</button>'+
+      '<div style="font-size:.72rem;color:var(--t3)">'+typeLabels[b.type]+' · '+(b.price)+' '+(b.currency||'USD')+(b.discount>0?' · خصم '+b.discount+'%':'')+expiryNote+'</div>'+
+      '<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">'+
+        (!b.archived ? '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azToggleBundleEnabled('+idx+')">'+(b.enabled?'إيقاف':'تفعيل')+'</button>' : '')+
+        (!b.archived
+          ? '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#fb923c" onclick="azArchiveBundle('+idx+')">📦 أرشفة</button>'
+          : '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#4ade80" onclick="azUnarchiveBundle('+idx+')">↩️ استرجاع</button>')+
       '</div>'+
     '</div>';
-  }).join('');
+  }
+
+  var html = active.map(renderCard).join('');
+  if(archived.length){
+    html += '<div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);color:var(--t3);font-size:.72rem;text-transform:uppercase;letter-spacing:1px">مؤرشَفة (غير معروضة للزوار)</div>' + archived.map(renderCard).join('');
+  }
+  el.innerHTML = html;
 }
 
 async function azToggleBundleEnabled(idx){
   AZ_BUNDLES_CACHE[idx].enabled = !AZ_BUNDLES_CACHE[idx].enabled;
   await azSaveBundlesToServer();
 }
-async function azDeleteBundle(idx){
-  if(!confirm('حذف هذه الباقة نهائياً؟')) return;
-  AZ_BUNDLES_CACHE.splice(idx, 1);
+/* ══ أرشفة بدل حذف نهائي — تحتفظ بالسجل التاريخي كاملاً (بند صريح من
+   الدستور: "حذف الباقة لا يحذف المعاملات التاريخية")، تختفي من العرض
+   العام فقط ══ */
+async function azArchiveBundle(idx){
+  if(!confirm('أرشفة هذه الباقة؟ ستختفي من العرض العام لكن يبقى سجلها كاملاً.')) return;
+  AZ_BUNDLES_CACHE[idx].archived = true;
+  AZ_BUNDLES_CACHE[idx].enabled = false;
+  await azSaveBundlesToServer();
+}
+async function azUnarchiveBundle(idx){
+  AZ_BUNDLES_CACHE[idx].archived = false;
   await azSaveBundlesToServer();
 }
 async function azSaveBundlesToServer(){
