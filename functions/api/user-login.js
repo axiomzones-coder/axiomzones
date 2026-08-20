@@ -23,8 +23,20 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ ok: false, error: 'invalid_fields' }), { status: 400, headers });
   }
 
+  /* ══ Rate Limiting صريح: 5 محاولات كل 15 دقيقة — لكل (بريد + IP) معاً،
+     يمنع هجمات القوة العمياء (Brute Force) بلا حجب مستخدم شرعي بسبب IP
+     مشترك (شبكة عامة/شركة) ══ */
+  const clientIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const rlKey = `ratelimit:login:${email}:${clientIp}`;
+  const rlRaw = env.AZ_CONFIG_KV ? await env.AZ_CONFIG_KV.get(rlKey) : null;
+  const rlCount = rlRaw ? (JSON.parse(rlRaw).count || 0) : 0;
+  if (rlCount >= 5) {
+    return new Response(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429, headers });
+  }
+
   const raw = await env.AZ_USERS_KV.get('user:' + email);
   if (!raw) {
+    if (env.AZ_CONFIG_KV) await env.AZ_CONFIG_KV.put(rlKey, JSON.stringify({ count: rlCount + 1 }), { expirationTtl: 900 });
     return new Response(JSON.stringify({ ok: false, error: 'invalid_credentials' }), { status: 401, headers });
   }
   const userRecord = JSON.parse(raw);
@@ -36,8 +48,13 @@ export async function onRequestPost(context) {
   const passwordHash = base64url(new Uint8Array(hashBuf));
 
   if (passwordHash !== userRecord.passwordHash) {
+    if (env.AZ_CONFIG_KV) await env.AZ_CONFIG_KV.put(rlKey, JSON.stringify({ count: rlCount + 1 }), { expirationTtl: 900 });
     return new Response(JSON.stringify({ ok: false, error: 'invalid_credentials' }), { status: 401, headers });
   }
+
+  /* ══ دخول ناجح — نصفّر العدَّاد فوراً، لا داعي لبقاء أثر محاولات فاشلة
+     قديمة بعد دخول شرعي مؤكَّد ══ */
+  if (env.AZ_CONFIG_KV) await env.AZ_CONFIG_KV.delete(rlKey);
 
   const secret = env.OWNER_SECRET || 'fallback-secret-change-me';
   const emailB64 = btoa(email);

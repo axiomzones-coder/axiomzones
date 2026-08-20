@@ -23,6 +23,17 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ ok: false, error: 'invalid_fields' }), { status: 400, headers });
   }
 
+  /* ══ Rate Limiting صريح: 10 طلبات تسجيل كل ساعة لكل IP — يمنع إنشاء
+     حسابات وهمية بالجملة (Spam Signups) ══ */
+  const clientIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const rlKey = `ratelimit:signup:${clientIp}`;
+  const rlRaw = env.AZ_CONFIG_KV ? await env.AZ_CONFIG_KV.get(rlKey) : null;
+  const rlCount = rlRaw ? (JSON.parse(rlRaw).count || 0) : 0;
+  if (rlCount >= 10) {
+    return new Response(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429, headers });
+  }
+  if (env.AZ_CONFIG_KV) await env.AZ_CONFIG_KV.put(rlKey, JSON.stringify({ count: rlCount + 1 }), { expirationTtl: 3600 });
+
   const existing = await env.AZ_USERS_KV.get('user:' + email);
   if (existing) {
     return new Response(JSON.stringify({ ok: false, error: 'email_exists' }), { status: 409, headers });
