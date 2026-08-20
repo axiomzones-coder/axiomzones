@@ -4914,7 +4914,7 @@ async function azClaimGift(giftId){
     var data = await res.json().catch(function(){ return null; });
     if(res.ok && data && data.ok){
       if(box) box.innerHTML = '<div style="text-align:center;padding:40px 20px"><div style="font-size:3rem;margin-bottom:12px">🎁</div><h2 style="font-family:Cormorant,serif;color:var(--gold);margin-bottom:8px">تم تفعيل الهدية!</h2>' +
-        (data.purpose ? '<p style="color:var(--t2);font-style:italic;margin-bottom:16px">"'+data.purpose+'"</p>' : '') +
+        (data.purpose ? '<p style="color:var(--t2);font-style:italic;margin-bottom:16px">"'+azEscapeHtml(data.purpose)+'"</p>' : '') +
         '<p style="color:var(--t2)">جاري تحويلك للمنصة...</p></div>';
       setTimeout(function(){ window.location.href = AZ_PLATFORMS_DATA[data.platform] ? AZ_PLATFORMS_DATA[data.platform].path : '/'; }, 2000);
     } else {
@@ -6219,10 +6219,10 @@ function azRenderReviews(){
     var stars = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
     return '<div class="dcard" style="'+(r.status==='hidden'?'opacity:.55':'')+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:center">'+
-        '<strong>'+r.userName+'</strong><span style="font-size:.85rem">'+stars+'</span>'+
+        '<strong>'+azEscapeHtml(r.userName)+'</strong><span style="font-size:.85rem">'+stars+'</span>'+
       '</div>'+
       '<div style="font-size:.72rem;color:var(--t3);margin:4px 0">'+r.platform+' · '+r.userEmail+' · '+new Date(r.createdAt).toLocaleDateString('ar-EG')+'</div>'+
-      (r.comment ? '<div style="font-size:.82rem;color:var(--t2)">'+r.comment+'</div>' : '')+
+      (r.comment ? '<div style="font-size:.82rem;color:var(--t2)">'+azEscapeHtml(r.comment)+'</div>' : '')+
       '<div style="display:flex;gap:6px;margin-top:10px">'+
         '<button class="db2" style="padding:5px 12px;font-size:.72rem" onclick="azToggleReviewVisibility('+idx+')">'+(r.status==='visible'?'🙈 إخفاء':'👁️ إظهار')+'</button>'+
         '<button class="db2" style="padding:5px 12px;font-size:.72rem;color:#f87171" onclick="azDeleteReview('+idx+')">🗑️ حذف نهائي</button>'+
@@ -6385,7 +6385,7 @@ function azRenderGifts(){
       '</div>'+
       '<div style="font-size:.72rem;color:var(--t3);margin:4px 0">المدة: '+durationLabel+' · أُنشئ: '+new Date(g.createdAt).toLocaleDateString('ar-EG')+
         (g.claimedAt && !isCancelled ? ' · استُلم: '+new Date(g.claimedAt).toLocaleDateString('ar-EG') : '')+'</div>'+
-      (g.purpose ? '<div style="font-size:.78rem;color:var(--t2);font-style:italic">"'+g.purpose+'"</div>' : '')+
+      (g.purpose ? '<div style="font-size:.78rem;color:var(--t2);font-style:italic">"'+azEscapeHtml(g.purpose)+'"</div>' : '')+
       (!g.claimed ? '<button class="db2" style="margin-top:8px;padding:5px 12px;font-size:.7rem;color:#f87171" onclick="azCancelGift(\''+g.id+'\')">🚫 إلغاء قبل الاستخدام</button>' : '')+
     '</div>';
   }).join('');
@@ -7589,6 +7589,19 @@ async function sub(plan){
 /* ══════════════════════════════════════
    TOAST
 ══════════════════════════════════════ */
+/* ══ تنظيف HTML إلزامي لأي محتوى يكتبه المستخدم قبل إدراجه في الصفحة —
+   يمنع هجمات XSS المخزَّنة (Stored XSS) عبر أسماء المستخدمين، تعليقات
+   المراجعات، أو أي نص حر آخر يُعرَض لاحقاً لزوار آخرين ══ */
+function azEscapeHtml(str){
+  if(str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function toast(msg, type){
   var el=document.getElementById('toast-el');
   var txt=document.getElementById('toast-txt');
@@ -10806,8 +10819,8 @@ async function azLoadPlatformReviews(platformKey){
       list.innerHTML = reviews.slice(0, 10).map(function(r){
         var stars = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
         return '<div style="padding:10px;background:rgba(255,255,255,.03);border-radius:8px">'+
-          '<div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.82rem">'+r.userName+'</strong><span style="font-size:.7rem">'+stars+'</span></div>'+
-          (r.comment ? '<div style="font-size:.78rem;color:var(--t2);margin-top:4px">'+r.comment+'</div>' : '')+
+          '<div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.82rem">'+azEscapeHtml(r.userName)+'</strong><span style="font-size:.7rem">'+stars+'</span></div>'+
+          (r.comment ? '<div style="font-size:.78rem;color:var(--t2);margin-top:4px">'+azEscapeHtml(r.comment)+'</div>' : '')+
         '</div>';
       }).join('');
     }
