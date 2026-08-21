@@ -8336,6 +8336,11 @@ function azRenderPublicBundles(){
 /* ══ الشراء الفعلي — يحاول /api/checkout الحقيقي أولاً، ولو البوابة
    لسه مش مفعّلة/مفاتيحها غير مضبوطة، يرجع بصدق لنموذج تسجيل الاهتمام
    بدل رسالة خطأ عامة (نفس نمط nabSelectTierFallback في نابغة) ══ */
+/* ⚠️ تفعيل حقيقي مؤكَّد — 22 أغسطس 2026: functions/api/webhooks/stripe.js
+   اتحدَّث فعلياً ليقرأ metadata.bundlePlatforms ويمنح وصولاً لكل منصات
+   الباقة دفعة واحدة (`node --check` ✅). القفل مرفوع الآن. */
+var AZ_BUNDLE_CHECKOUT_LIVE = true;
+
 async function azBuyBundle(bundleId){
   if(AZ_BUNDLE_CHECKOUT_BUSY) return;
   var bundle = (AZ_BUNDLES_PUBLIC || []).find(function(b){ return b.id === bundleId; });
@@ -8361,28 +8366,30 @@ async function azBuyBundle(bundleId){
       return;
     }
 
-    var res = await fetch('/api/checkout', {
-      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
-      body: JSON.stringify({ bundleId: bundleId })
-    });
-    var data = await res.json().catch(function(){ return null; });
+    if(AZ_BUNDLE_CHECKOUT_LIVE){
+      var res = await fetch('/api/checkout', {
+        method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+        body: JSON.stringify({ bundleId: bundleId })
+      });
+      var data = await res.json().catch(function(){ return null; });
 
-    if(res.ok && data && data.ok && data.checkoutUrl){
-      window.location.href = data.checkoutUrl;
-      return;
+      if(res.ok && data && data.ok && data.checkoutUrl){
+        window.location.href = data.checkoutUrl;
+        return;
+      }
+
+      var err = data && data.error;
+      if(err === 'sold_out' || err === 'bundle_not_available' || err === 'tier_not_available'){
+        azLoadPublicBundles(); /* الباقة اتغيّرت أو نفدت — أعد تحميل القائمة الحقيقية */
+        toast('⚠️ هذه الباقة لم تعد متاحة — تم تحديث القائمة');
+        return;
+      }
     }
 
-    var err = data && data.error;
-    if(err === 'sold_out' || err === 'bundle_not_available' || err === 'tier_not_available'){
-      azLoadPublicBundles(); /* الباقة اتغيّرت أو نفدت — أعد تحميل القائمة الحقيقية */
-      toast('⚠️ هذه الباقة لم تعد متاحة — تم تحديث القائمة');
-      return;
-    }
-
-    /* ⚠️ ملاحظة صريحة: checkout.js الحالي لا يدعم bundleId بعد (بُني
-       لمنصة+مستوى فقط) — أي استدعاء هنا سيرجع خطأ حتى بعد تفعيل
-       Stripe، لحين توسيع checkout.js + webhook ليدعما الباقات فعلياً.
-       الرجوع الصادق التالي مقصود، وليس مجرد fallback مؤقت لمفاتيح غير مضبوطة. */
+    /* ⚠️ AZ_BUNDLE_CHECKOUT_LIVE = true الآن — الطلب يصل فعلياً لـ
+       /api/checkout. هذا المسار (تسجيل اهتمام) يُستخدَم فقط لو
+       checkout.js رجّع خطأ غير متوقَّع (بوابة معطَّلة، مفاتيح غير
+       مضبوطة، إلخ) — وليس السلوك الافتراضي بعد الآن. */
     var res2 = await fetch('/api/contact-submit', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ kind:'subscribe_interest', email:userEmail, message:'اهتمام بباقة "'+bundleName+'" ('+bundleId+')' })
