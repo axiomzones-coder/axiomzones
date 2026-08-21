@@ -1,4 +1,4 @@
-// functions/api/webhooks-stripe.js
+// functions/api/webhooks/stripe.js
 // POST /api/webhooks/stripe — يُستدعى من Stripe مباشرة عند نجاح الدفع
 //
 // خطوات إلزامية بالترتيب: (١) قراءة الجسم الخام (raw body) — التوقيع
@@ -6,7 +6,10 @@
 // من التوقيع (Stripe-Signature) — رفض أي طلب لم يوقِّعه Stripe فعلياً.
 // (٣) فحص Idempotency — منع معالجة نفس الحدث مرتين لو Stripe أعاد
 // الإرسال (يحدث فعلياً، ليس افتراضاً نظرياً). (٤) منح الوصول الفعلي —
-// الجسر الوحيد الناقص طوال الليل، مكتمل الآن.
+// مساران بديلان حسب نوع الطلب اللي بناه checkout.js:
+//   (أ) منصة واحدة + مستوى: metadata.platform + metadata.tier
+//   (ب) باقة مُجمَّعة: metadata.isBundle='1' + metadata.bundlePlatforms
+//       (قائمة مفصولة بفواصل) — يمنح وصولاً لكل منصة فيها دفعة واحدة.
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -40,30 +43,44 @@ export async function onRequestPost(context) {
     const session = event.data.object;
     const meta = session.metadata || {};
     const email = meta.userEmail;
+    const isBundle = meta.isBundle === '1';
     const platform = meta.platform;
     const tierKey = meta.tier;
     const cycle = meta.cycle;
     const isLifetime = meta.isLifetime === '1';
+    const bundleId = meta.bundleId;
+    /* ══ metadata لا تدعم مصفوفات — checkout.js يبعتها كنص مفصول
+       بفواصل، نفكّها هنا لمصفوفة حقيقية ══ */
+    const bundlePlatforms = (meta.bundlePlatforms || '').split(',').map(function (p) { return p.trim(); }).filter(Boolean);
 
-    if (email && platform) {
+    if (email && (isBundle ? bundlePlatforms.length : platform)) {
       const userRaw = await env.AZ_USERS_KV.get('user:' + email);
       if (userRaw) {
         const userRecord = JSON.parse(userRaw);
         userRecord.platformAccess = userRecord.platformAccess || { all: false, platforms: [] };
         if (!Array.isArray(userRecord.platformAccess.platforms)) userRecord.platformAccess.platforms = [];
-        if (!userRecord.platformAccess.platforms.includes(platform)) {
-          userRecord.platformAccess.platforms.push(platform);
+
+        if (isBundle) {
+          // ── باقة مُجمَّعة: منح وصول لكل منصة فيها دفعة واحدة ──
+          bundlePlatforms.forEach(function (p) {
+            if (!userRecord.platformAccess.platforms.includes(p)) {
+              userRecord.platformAccess.platforms.push(p);
+            }
+          });
+        } else {
+          // ── منصة واحدة + مستوى — كما كان بالضبط، بلا أي تغيير منطقي ──
+          if (!userRecord.platformAccess.platforms.includes(platform)) {
+            userRecord.platformAccess.platforms.push(platform);
+          }
         }
+
         /* ══ سجل معاملة داخل نفس سجل المستخدم — لا جدول transactions منفصل
            بعد (بند مؤجَّل)، لكن هذا يحفظ الحد الأدنى الضروري للتتبّع ══ */
         userRecord.transactions = userRecord.transactions || [];
-        userRecord.transactions.push({
-          id: event.id,
-          platform, tier: tierKey, cycle, isLifetime,
-          amount: session.amount_total,
-          currency: session.currency,
-          at: new Date().toISOString(),
-        });
+        userRecord.transactions.push(isBundle
+          ? { id: event.id, isBundle: true, bundleId, platforms: bundlePlatforms, cycle, isLifetime, amount: session.amount_total, currency: session.currency, at: new Date().toISOString() }
+          : { id: event.id, platform, tier: tierKey, cycle, isLifetime, amount: session.amount_total, currency: session.currency, at: new Date().toISOString() }
+        );
         await env.AZ_USERS_KV.put('user:' + email, JSON.stringify(userRecord));
 
         // ── لو مدى الحياة محدودة العدد، نزوِّد عدَّاد "تم بيع" تلقائياً ──
@@ -71,7 +88,14 @@ export async function onRequestPost(context) {
           try {
             const configRaw = await env.AZ_CONFIG_KV.get('az_master_config');
             const config = configRaw ? JSON.parse(configRaw) : {};
-            if (config.pricing && config.pricing[platform] && config.pricing[platform].tiers && config.pricing[platform].tiers[tierKey]) {
+            if (isBundle) {
+              /* ══ ملاحظة: بنية config.bundles الحالية (القسم (65) بقاعدة
+                 المعرفة) لا تحتوي claimedCount/maxCount أصلاً — عروض
+                 "مدى الحياة المحدودة" للباقات تُدار حالياً بـofferExpiry
+                 (تاريخ) فقط، لا بعدّاد كمية. لا شيء يُحدَّث هنا عمداً؛
+                 إضافة عدّاد كمية للباقات مستقبلاً = بند منفصل يحتاج
+                 تعديل checkout.js أيضاً (فحص sold_out بالكمية) ══ */
+            } else if (config.pricing && config.pricing[platform] && config.pricing[platform].tiers && config.pricing[platform].tiers[tierKey]) {
               config.pricing[platform].tiers[tierKey].claimedCount = (config.pricing[platform].tiers[tierKey].claimedCount || 0) + 1;
               await env.AZ_CONFIG_KV.put('az_master_config', JSON.stringify(config));
             }
