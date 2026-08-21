@@ -4118,21 +4118,14 @@ document.getElementById('currencySelect').addEventListener('change', (e)=>{
   state.currency = e.target.value;
   updatePricingDisplay();
 });
+/* ══ باج مُصحَّح: كانت تفتح شاشة "screen-pricing" القديمة الميتة بأسعار
+   وهمية ثابتة وزر "اشترك الآن" فيها كان يومض نص تحذير فقط بلا أي فعل
+   حقيقي. الزر الرئيسي في الشاشة الأولى الآن يفتح نظام التسعير الحقيقي
+   المربوط بـ config.pricing وبـ/api/checkout الفعلي (openNabPricing) ══ */
 document.getElementById('openPricingBtn').addEventListener('click', ()=>{
-  showScreen('pricing');
-  updatePricingDisplay();
+  if(typeof openNabPricing === 'function') openNabPricing();
 });
 document.getElementById('closePricingBtn').addEventListener('click', ()=> showScreen('select'));
-document.getElementById('subscribeProBtn').addEventListener('click', ()=> flashPricingNote());
-document.getElementById('subscribeYearBtn').addEventListener('click', ()=> flashPricingNote());
-function flashPricingNote(){
-  const note = document.querySelector('[data-i18n="pricingNote"]');
-  if(!note) return;
-  note.style.color = 'var(--danger)';
-  note.style.fontWeight = '800';
-  note.scrollIntoView({behavior:'smooth', block:'center'});
-  setTimeout(()=>{ note.style.color=''; note.style.fontWeight=''; }, 2500);
-}
 
 document.getElementById('clearAbacusBtn').addEventListener('click', (e)=>{
   e.stopPropagation();
@@ -4575,6 +4568,7 @@ var NAB_PRICING_DATA = null;
 var NAB_PRICING_CYCLE = 'monthly';
 var NAB_TIER_ORDER = ['free','growth','pro','expert','lifetime'];
 var NAB_SELECTED_TIER = null;
+var NAB_HUB_URL = 'https://axiomzones.com';
 
 function openNabPricing(){
   document.getElementById('nab-pricing-overlay').style.display = 'block';
@@ -4665,7 +4659,62 @@ function closeNabPricingAndSignup(){
   if(typeof openLogin === 'function') openLogin();
 }
 
+/* ══ نقطة الدخول عند الضغط على "اشترك الآن" — تحاول الدفع الفعلي أولاً
+   عبر /api/checkout الحقيقي، ولو البوابة لسه مش مفعّلة/مفاتيحها غير
+   مضبوطة (حالة متوقّعة حالياً)، ترجع بصدق لنموذج "سجّل اهتمامك" بدل
+   رسالة خطأ عامة تربك الزائر ══ */
 function nabSelectTier(tierKey, tierName){
+  NAB_SELECTED_TIER = tierKey;
+  nabInitiateCheckout(tierKey, tierName);
+}
+
+async function nabInitiateCheckout(tierKey, tierName){
+  var box = document.getElementById('nab-pricing-cards');
+  var prevHTML = box.innerHTML;
+  box.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-soft,#8C93A8)">⏳ جاري تجهيز صفحة الدفع...</div>';
+
+  try{
+    var res = await fetch('/api/checkout', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      credentials:'include',
+      body: JSON.stringify({ platform:'nabigha', tier: tierKey, cycle: NAB_PRICING_CYCLE })
+    });
+    var data = await res.json().catch(function(){ return null; });
+
+    if(res.ok && data && data.ok && data.checkoutUrl){
+      window.location.href = data.checkoutUrl; /* تحويل فعلي لصفحة دفع Stripe المستضافة */
+      return;
+    }
+
+    box.innerHTML = prevHTML; /* رجّع الكروت الأصلية في أي حالة تانية */
+
+    var err = data && data.error;
+
+    if(res.status === 401 || err === 'login_required'){
+      window.location.href = NAB_HUB_URL + '/?login=1';
+      return;
+    }
+
+    if(err === 'sold_out' || err === 'tier_not_available'){
+      /* الباقة اتغيّرت أو نفدت الكمية منذ آخر تحميل — أعد تحميل الأسعار الحقيقية */
+      NAB_PRICING_DATA = null;
+      nabLoadPricing();
+      return;
+    }
+
+    /* أي سبب آخر (gateway_disabled / payment_not_configured /
+       gateway_not_implemented / paddle_not_yet_implemented ...) = الدفع
+       الآلي لسه مش جاهز فنياً من جهة محمد (مفاتيح Stripe لم تُضبط بعد) —
+       رجوع صادق لنموذج "سجّل اهتمامك" بدل التظاهر بخطأ عابر */
+    nabSelectTierFallback(tierKey, tierName);
+  }catch(e){
+    box.innerHTML = prevHTML;
+    nabSelectTierFallback(tierKey, tierName);
+  }
+}
+
+function nabSelectTierFallback(tierKey, tierName){
   NAB_SELECTED_TIER = tierKey;
   document.getElementById('nab-interest-tier-name').textContent = tierName;
   document.getElementById('nab-interest-form').style.display = 'block';
