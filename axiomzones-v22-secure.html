@@ -3297,6 +3297,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
       <div class="dmi" data-sec="reviews" onclick="swD('reviews',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('reviews',this);}"><span>⭐</span><span>Reviews</span></div>
       <div class="dmi" data-sec="gifts" onclick="swD('gifts',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('gifts',this);}"><span>🎁</span><span>Gifts</span></div>
       <div class="dmi" data-sec="pricing" onclick="swD('pricing',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('pricing',this);}"><span>💳</span><span>Pricing</span></div>
+      <div class="dmi" data-sec="gateways" onclick="swD('gateways',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('gateways',this);}"><span>🔌</span><span>Gateways</span></div>
       <div class="dmi" data-sec="bundles" onclick="swD('bundles',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('bundles',this);}"><span>📦</span><span>Bundles</span></div>
       <div class="dmi" data-sec="content" onclick="swD('content',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('content',this);}"><span>✏️</span><span>Content Editor</span></div>
       <div class="dmi" data-sec="logs" onclick="swD('logs',this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();swD('logs',this);}"><span>📋</span><span>System Logs</span></div>
@@ -3811,6 +3812,13 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
           <button class="bsub" style="width:auto;padding:10px 24px" onclick="azSavePricing()">💾 حفظ إعدادات التسعير</button>
           <div id="pricing-save-msg" style="margin-top:10px;font-size:.82rem"></div>
         </div>
+      </div>
+
+      <!-- PAYMENT GATEWAYS -->
+      <div class="dsec" id="ds-gateways">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;margin-bottom:6px">Payment Gateways <span style="color:var(--gold)">🔌</span></h2>
+        <p style="font-size:.78rem;color:var(--t3);margin-bottom:20px">تقدري تفعّلي أكتر من بوابة مع بعض — كل بوابة مستقلة تماماً.</p>
+        <div id="gateways-list" style="display:flex;flex-direction:column;gap:14px"></div>
       </div>
 
       <!-- BUNDLES -->
@@ -6763,6 +6771,75 @@ async function azSaveBundlesToServer(){
   }
 }
 
+/* ══ PAYMENT GATEWAYS — سجل مركزي قابل للتوسعة. إضافة بوابة جديدة مستقبلاً
+   = سطر واحد هنا + ملف checkout منطقي لها + ملف webhook خاص بها —
+   لا حاجة لإعادة بناء أي جزء من النظام القائم ══ */
+var AZ_GATEWAY_REGISTRY = [
+  { id: 'stripe', name: 'Stripe', icon: '💳', status: 'ready', desc: 'بطاقات ائتمانية، Apple Pay، Google Pay — الأشهر عالمياً' },
+  { id: 'paddle', name: 'Paddle', icon: '🏓', status: 'not_built', desc: 'ضرائب تلقائية، دعم عالمي — لم يُبنَ بعد (بند مؤجَّل)' },
+];
+var AZ_GATEWAYS_CONFIG = {};
+
+async function azLoadGatewaysDash(){
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    AZ_GATEWAYS_CONFIG = config.paymentGateways || {};
+  }catch(e){}
+  azRenderGateways();
+}
+
+function azRenderGateways(){
+  var el = document.getElementById('gateways-list');
+  if(!el) return;
+  el.innerHTML = AZ_GATEWAY_REGISTRY.map(function(gw){
+    var saved = AZ_GATEWAYS_CONFIG[gw.id] || {};
+    var enabled = saved.enabled === true;
+    var isBuilt = (gw.status === 'ready');
+    return '<div class="dcard" style="'+(enabled?'border-color:rgba(34,197,94,.4)':'')+(isBuilt?'':';opacity:.55')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:1.3rem">'+gw.icon+'</span><strong>'+gw.name+'</strong></div>'+
+        (isBuilt
+          ? '<div class="twrap"><span style="font-size:.72rem;color:'+(enabled?'#4ade80':'var(--t3)')+'">'+(enabled?'مفعَّلة':'معطَّلة')+'</span><label class="tog"><input type="checkbox" '+(enabled?'checked':'')+' onchange="azToggleGateway(\''+gw.id+'\',this)"/><span class="tsl"></span></label></div>'
+          : '<span style="font-size:.68rem;color:#facc15;padding:3px 10px;background:rgba(250,204,21,.1);border-radius:999px">قريباً</span>')+
+      '</div>'+
+      '<div style="font-size:.75rem;color:var(--t3);margin-top:6px">'+gw.desc+'</div>'+
+      (isBuilt ? '<div style="font-size:.68rem;color:var(--t3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">⚠️ التفعيل هنا يتحكم بالعرض للزوار فقط — لازم كمان تضبطي مفاتيح Stripe الحقيقية (STRIPE_SECRET_KEY وSTRIPE_WEBHOOK_SECRET) كمتغيّرات بيئة في Cloudflare عشان تشتغل فعلياً.</div>' : '')+
+    '</div>';
+  }).join('');
+}
+
+async function azToggleGateway(gwId, el){
+  el.disabled = true;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    config.paymentGateways = config.paymentGateways || {};
+    config.paymentGateways[gwId] = { enabled: el.checked };
+
+    var saveRes = await fetch('/api/config-set', {
+      method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ config: config, logDetail: 'Payment gateway "'+gwId+'" ' + (el.checked?'enabled':'disabled') })
+    });
+    var saveData = null;
+    try{ saveData = await saveRes.json(); }catch(e){}
+    if(saveRes.ok && saveData && saveData.ok){
+      AZ_GATEWAYS_CONFIG[gwId] = { enabled: el.checked };
+      toast(el.checked ? '✅ '+gwId+' مفعَّلة الآن' : '⏸️ '+gwId+' معطَّلة الآن');
+      azRenderGateways();
+    } else {
+      el.checked = !el.checked;
+      toast('⚠️ فشل الحفظ', 'error');
+    }
+  }catch(e){
+    el.checked = !el.checked;
+    toast('⚠️ خطأ في الاتصال بالخادم', 'error');
+  }
+  el.disabled = false;
+}
+
 function azRenderNotifKPIs(){
   var unreadEl = document.getElementById('notif-unread-kv');
   var unreadChEl = document.getElementById('notif-unread-ch');
@@ -7234,6 +7311,7 @@ function swD(sec,el){
   if(sec === 'reviews') azLoadReviewsDash();
   if(sec === 'gifts') azLoadGiftsDash();
   if(sec === 'pricing') azLoadPricingDash();
+  if(sec === 'gateways') azLoadGatewaysDash();
   if(sec === 'bundles') azLoadBundlesDash();
 }
 /* ══ دالة عامة موحدة لحفظ أي خاصية إضافية للمنصة (إخفاء من الرئيسية / تعطيل المنصة الفرعية / نص شارة مخصص) ══ */
