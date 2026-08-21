@@ -1024,6 +1024,7 @@ body.ch #cur-r{width:56px;height:56px;border-color:var(--gold)}
 .snav-dot.s-projects.active { background: var(--uni-primary) }
 .snav-dot.s-about.active    { background: var(--logi-primary) }
 .snav-dot.s-pricing.active  { background: var(--prop-primary) }
+.snav-dot.s-bundles.active  { background: var(--gold) }
 .snav-dot.s-contact.active  { background: var(--tal-primary) }
 @media(max-width:768px){ #section-nav { display: none } }
 
@@ -2030,6 +2031,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   <div class="snav-dot s-projects"       data-section="projects" data-label="Platforms" onclick="scrollTo('projects')" title="Platforms"></div>
   <div class="snav-dot s-about"          data-section="about"    data-label="About"     onclick="scrollTo('about')"   title="About"></div>
   <div class="snav-dot s-pricing"        data-section="pricing"  data-label="Pricing"   onclick="scrollTo('pricing')" title="Pricing"></div>
+  <div class="snav-dot s-bundles"        data-section="bundles"  data-label="Bundles"   onclick="scrollTo('bundles')" title="Bundles"></div>
   <div class="snav-dot s-contact"        data-section="contact"  data-label="Contact"   onclick="scrollTo('contact')" title="Contact"></div>
 </nav>
 <div id="tbar" role="status" aria-live="polite">
@@ -2907,6 +2909,20 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
   </div>
 </section>
 
+<!-- BUNDLES — صفحة شراء عامة حقيقية، مصدرها config.bundles مباشرة (لا أسعار وهمية) -->
+<section id="bundles" class="sec" aria-label="Bundles">
+  <div class="sec-in">
+    <div class="ry" style="text-align:center;margin-bottom:16px">
+      <p class="stag" data-i18n="s.bntag">Bundles</p>
+      <h2 class="sh" data-i18n="s.bnh">Save More<br/><em style="color:var(--gold-p);font-style:italic">With Bundles</em></h2>
+      <p class="ssub" data-i18n="s.bnp" style="max-width:560px;margin:12px auto 0">Multiple platforms, one subscription, real savings.</p>
+    </div>
+    <div id="az-bundles-grid" class="pgwrap rsc">
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--t3)" data-i18n="bn.loading">Loading bundles...</div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" class="sec" aria-label="Contact Us" style="background:rgba(201,168,76,.01)">
   <div class="sec-in">
@@ -3194,7 +3210,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 <a onclick="azV4Toast('Kyanat coming soon!')">🇸🇦 Kyanat</a>
 <a onclick="azV4Toast('Tripedia Q2 2025!')">✈️ Tripedia</a>
 </div>
-      <div class="fcol"><div class="fct" data-i18n="ft.c2">Company</div><a href="#about" data-i18n="ft.about">About Us</a><a href="#pricing" data-i18n="ft.pricing">Pricing</a><a href="#contact" data-i18n="ft.contact">Contact</a><a href="#" onclick="openLogin();return false" data-i18n="ft.login">Member Portal</a></div>
+      <div class="fcol"><div class="fct" data-i18n="ft.c2">Company</div><a href="#about" data-i18n="ft.about">About Us</a><a href="#pricing" data-i18n="ft.pricing">Pricing</a><a href="#bundles" data-i18n="ft.bundles">Bundles</a><a href="#contact" data-i18n="ft.contact">Contact</a><a href="#" onclick="openLogin();return false" data-i18n="ft.login">Member Portal</a></div>
       <div class="fcol"><div class="fct" data-i18n="ft.c3">Legal</div><a href="#" onclick="openLegal('privacy');return false" data-i18n="ft.priv">Privacy Policy</a><a href="#" onclick="openLegal('terms');return false" data-i18n="ft.terms">Terms & Conditions</a><a href="#" onclick="openLegal('disc');return false" data-i18n="ft.disc">Disclaimer</a><a href="#" onclick="openLegal('refund');return false" data-i18n="ft.refund">Refund Policy</a></div>
     </div>
     <div class="fbot">
@@ -4492,13 +4508,16 @@ var STATIC = {
     'pl.ch':'Impact — Charity','pl.cht':'For NGOs & charities — 90% off','pl.chp':'/ month (90% off)','pl.chc':'Apply Now',
     'pf.4.1':'All Enterprise features','pf.4.2':'Automatic 90% discount','pf.4.3':'Priority support','pf.4.4':'Social partner certificate','pf.4.5':'Impact reports',
     'pr.note':'* Prices exclusive of VAT · Cancel anytime · All 200 currencies supported',
+    's.bntag':'Bundles','s.bnh':'Save More\nWith Bundles','s.bnp':'Multiple platforms, one subscription, real savings.',
+    'bn.loading':'Loading bundles...','bn.error':'Could not load bundles right now — try again shortly.','bn.none':'No bundles available right now — check back soon.',
+    'bn.buy':'Get This Bundle','bn.checking':'Checking...','bn.type.monthly':'Monthly','bn.type.annual':'Annual','bn.type.lifetime_limited':'Lifetime — Limited Offer',
     's.ctag':'Contact','s.ch':'Let\'s Build\nTogether','s.cp':'Our global team is ready to answer your questions and launch lasting strategic partnerships.',
     'c.el':'Email','c.hql':'Headquarters','c.hqv':'Global — Serving 195 Countries',
     'f.n':'Name','f.sub':'Subject','f.msg':'Message','f.send':'Send Message ✦',
     'f.sub1':'Request Quote','f.sub2':'Strategic Partnership','f.sub3':'Technical Inquiry','f.sub4':'Charity Plan',
     'ft.brand':'Global digital venture studio — building world-class technology platforms that create real impact across vital industries, for every market on earth.',
     'ft.c1':'Platforms','ft.c2':'Company','ft.c3':'Legal',
-    'ft.about':'About Us','ft.pricing':'Pricing','ft.contact':'Contact','ft.login':'Member Portal',
+    'ft.about':'About Us','ft.pricing':'Pricing','ft.bundles':'Bundles','ft.contact':'Contact','ft.login':'Member Portal',
     'ft.priv':'Privacy Policy','ft.terms':'Terms & Conditions','ft.disc':'Disclaimer','ft.refund':'Refund Policy','ft.rights':'All rights reserved',
     'lg.t':'Legal Framework','lg.p':'Privacy','lg.t2':'Terms','lg.d':'Disclaimer','lg.r':'Refund',
     'lo.t':'MEMBER ACCESS','lo.s':'Enter credentials to access your platforms','lo.b':'Sign In','lo.c':'Cancel',
@@ -4605,13 +4624,16 @@ var STATIC = {
     'pl.ch':'الأثر — خيري','pl.cht':'للهيئات الخيرية — خصم 90%','pl.chp':'/ شهرياً (خصم 90%)','pl.chc':'تقدم بطلب',
     'pf.4.1':'كل مميزات Enterprise','pf.4.2':'خصم 90% تلقائي','pf.4.3':'دعم أولوية','pf.4.4':'شهادة شريك اجتماعي','pf.4.5':'تقارير الأثر',
     'pr.note':'* الأسعار بدون ضريبة القيمة المضافة · إلغاء في أي وقت · جميع العملات الـ200 مدعومة',
+    's.bntag':'الباقات المُجمَّعة','s.bnh':'وفّر أكثر\nمع الباقات','s.bnp':'عدة منصات، اشتراك واحد، توفير حقيقي.',
+    'bn.loading':'جاري تحميل الباقات...','bn.error':'تعذَّر تحميل الباقات حالياً — حاول بعد قليل.','bn.none':'لا توجد باقات متاحة حالياً — تابعنا قريباً.',
+    'bn.buy':'احصل على الباقة','bn.checking':'جاري التحقق...','bn.type.monthly':'شهري','bn.type.annual':'سنوي','bn.type.lifetime_limited':'مدى الحياة — عرض محدود',
     's.ctag':'تواصل','s.ch':'نبني\nمعاً','s.cp':'فريقنا العالمي جاهز للإجابة على استفساراتك وإطلاق شراكات استراتيجية مستدامة.',
     'c.el':'البريد الإلكتروني','c.hql':'المقر الرئيسي','c.hqv':'عالمي — نخدم 195 دولة',
     'f.n':'الاسم','f.sub':'الموضوع','f.msg':'رسالتك','f.send':'إرسال الرسالة ✦',
     'f.sub1':'طلب عرض أسعار','f.sub2':'شراكة استراتيجية','f.sub3':'استفسار تقني','f.sub4':'باقة خيرية',
     'ft.brand':'استوديو مشاريع رقمية عالمي — نبني منصات تقنية تُحدث فرقاً حقيقياً في قطاعات حيوية لكل أسواق العالم.',
     'ft.c1':'المنصات','ft.c2':'الشركة','ft.c3':'قانوني',
-    'ft.about':'من نحن','ft.pricing':'الباقات','ft.contact':'تواصل','ft.login':'بوابة الاشتراكات',
+    'ft.about':'من نحن','ft.pricing':'الباقات','ft.bundles':'الباقات المُجمَّعة','ft.contact':'تواصل','ft.login':'بوابة الاشتراكات',
     'ft.priv':'سياسة الخصوصية','ft.terms':'الشروط والأحكام','ft.disc':'إخلاء المسؤولية','ft.refund':'سياسة الاسترجاع','ft.rights':'جميع الحقوق محفوظة',
     'lg.t':'الإطار القانوني','lg.p':'الخصوصية','lg.t2':'الشروط','lg.d':'إخلاء المسؤولية','lg.r':'الاسترجاع',
     'lo.t':'بوابة الأعضاء','lo.s':'سجّل دخولك للوصول لمنصاتك','lo.b':'دخول','lo.c':'إلغاء',
@@ -4647,7 +4669,7 @@ var STATIC = {
     'f.sub3':'Question technique','f.sub4':'Offre caritative','faq.a1':'Oui — définitivement. Chaque plateforme dispose d\'un palier gratuit sans expiration et sans carte bancaire. Ces paliers gratuits sont réellement utiles, pas de simples démos limitées. Nous préférons mériter votre abonnement par la valeur démontrée plutôt que de vous enfermer derrière un mur de paiement.','faq.a2':'Oui. Créez un seul compte Axiom Zones et il vous donne accès à toutes les plateformes auxquelles vous êtes abonné — sur le web, iOS, Android, Windows et macOS. Vos abonnements vous suivent sur tous vos appareils sans effort.','faq.a3':'Nous appliquons une remise de 50 % pour les utilisateurs d\'Égypte, du Maroc, de Jordanie, de Tunisie, d\'Algérie, de Libye, d\'Irak, de Syrie, du Yémen, du Soudan et du Liban. Cela est détecté automatiquement selon votre IP et la devise choisie. L\'objectif est l\'accessibilité — le monde arabe mérite des outils professionnels à des prix locaux justes.','faq.a4':'Non. Tous les calculs s\'exécutent dans votre navigateur. Aucun chiffre n\'est envoyé à nos serveurs. Lorsque vous partagez un lien, les données sont encodées dans l\'URL elle-même — nous ne les voyons jamais. Les données de votre compte (e-mail, statut d\'abonnement) sont stockées avec un chiffrement complet via Supabase.','faq.a5':'L\'offre à vie (399 $, paiement unique) donne un accès Pro complet à toutes les plateformes actuelles et futures, pour toujours. Elle se ferme définitivement après 100 comptes — non par tactique marketing, mais parce que nous ne pouvons soutenir durablement qu\'un nombre limité de comptes à vie. Une fois épuisée, elle disparaît pour de bon.','faq.a6':'Oui. Annulez depuis votre tableau de bord en un clic, sans aucune question. Vous gardez l\'accès jusqu\'à la fin de votre période de facturation, puis vous repassez automatiquement au palier gratuit. Aucun frais caché, aucun e-mail de rétention, aucune manipulation.',
     'faq.a7':'Toutes les plateformes sont déjà prêtes en PWA — installez-les depuis votre navigateur sur n\'importe quel appareil, elles fonctionnent comme des applications natives avec support hors ligne. Des applications dédiées App Store et Play Store sont en développement, prévues pour le T2 2025.','faq.a8':'Oui. Garantie de remboursement de 14 jours sur tous les plans payants, sans aucune question. Si Axiom Zones ne vous apporte pas de valeur claire durant vos deux premières semaines, contactez-nous et nous vous remboursons immédiatement. L\'offre à vie bénéficie aussi d\'une fenêtre de remboursement de 14 jours.','faq.q1':'Axiom Zones est-il vraiment gratuit pour commencer ?','faq.q2':'Un seul compte fonctionne-t-il sur toutes les plateformes ?','faq.q3':'Comment fonctionne la tarification pour le monde arabe ?','faq.q4':'Mes données financières sont-elles stockées ou partagées ?','faq.q5':'Qu\'est-ce que l\'offre à vie — va-t-elle vraiment se fermer ?','faq.q6':'Puis-je annuler mon abonnement à tout moment ?',
     'faq.q7':'Quand les applications mobiles seront-elles lancées ?','faq.q8':'Proposez-vous des remboursements ?','faq.title1':'Questions','faq.title2':'fréquentes','ft.about':'À propos de nous','ft.brand':'Studio de création mondial — nous construisons des plateformes technologiques de classe mondiale qui créent un impact réel dans des secteurs essentiels, pour chaque marché sur terre.','ft.c2':'Entreprise','ft.c3':'Mentions légales',
-    'ft.contact':'Contact','ft.disc':'Avertissement','ft.login':'Portail membre','ft.pricing':'Tarifs','ft.priv':'Politique de confidentialité','ft.refund':'Politique de remboursement','ft.staff':'Personnel','ft.terms':'Conditions générales',
+    'ft.contact':'Contact','ft.disc':'Avertissement','ft.login':'Portail membre','ft.pricing':'Tarifs','ft.bundles':'Offres groupées','ft.priv':'Politique de confidentialité','ft.refund':'Politique de remboursement','ft.staff':'Personnel','ft.terms':'Conditions générales',
     'isl.btn':'☪️ Activer le mode islamique','isl.d1':'Saisissez votre contrat Mourabaha et obtenez le coût réel par rapport au prix comptant — sans aucun riba calculé.','isl.d2':'Comparaison directe : lequel est réellement moins cher ? La banque islamique ou conventionnelle pour le même produit ? Avec des chiffres exacts.','isl.d3':'Pour chaque prêt : nous montrons les alternatives halal disponibles — Ijara, Mourabaha, Moucharaka, Qard Hasan, fonds familial.','isl.d4':'Liens vers des fatwas fiables émises par le Conseil des grands oulémas et des académies fiqh accréditées pour chaque type de financement.','isl.d5':'Calculez le coût réel de la Mourabaha — marge effective, taux de profit annuel, et comparaison avec d\'autres offres bancaires.','isl.d6':'Comparez les offres des banques islamiques saoudiennes et du Golfe — laquelle a la marge la plus basse et la plus grande transparence pour le même produit.','isl.sub':'Toutes nos plateformes financières prennent en charge un mode islamique complet — analyse de la Mourabaha, de l\'Ijara et de la Moucharaka décroissante, avec comparaison des alternatives halal.',
     'isl.t1':'Analyse de la Mourabaha','isl.t2':'Islamique contre conventionnel','isl.t3':'Alternatives halal','isl.t4':'Références charaïques','isl.t5':'Calculateur de Mourabaha','isl.t6':'Comparaison des banques islamiques','lc.curr':'💰 Devise','lc.lang':'🌐 Langue',
     'lc.title':'Langue et devise','leg.d.h1':'1. Nature du service','leg.d.h2':'2. Responsabilité','leg.d.p1':'Les plateformes sont des outils technologiques professionnels, non des conseils juridiques ou financiers.','leg.d.p2':'Les utilisateurs assument l\'entière responsabilité de vérifier leurs décisions commerciales et opérationnelles.','leg.p.h1':'1. Collecte des données','leg.p.h2':'2. Protection des données','leg.p.h3':'3. Vos droits',
@@ -4664,6 +4686,9 @@ var STATIC = {
     'pwa.btn':'Installer','pwa.sub':'Fonctionne hors ligne','pwa.title':'Ajouter à l\'écran d\'accueil','quiz.ofword':'sur','quiz.qword':'Question','quiz.retry':'Réessayer','quiz.share':'Partager mon score','quiz.sub':'10 questions · 60 secondes · découvrez comment vous vous comparez à 94 % des gens',
     'quiz.trykashf':'Essayer Kashf gratuitement →','s.ah':'Construire l\'avenir\\nnumérique mondial','s.ap':'Axiom Zones est un studio de création mondial spécialisé dans les plateformes SaaS de classe mondiale. Nous construisons, lançons et développons — avec une méthodologie éprouvée et une équipe experte.','s.atag':'À propos de nous','s.ch':'Construisons\\nensemble','s.cp':'Notre équipe mondiale est prête à répondre à vos questions et à lancer des partenariats stratégiques durables.','s.ctag':'Contact','s.prh':'Investissez dans\\nvotre avenir',
     's.prtag':'Tarifs','sb.allplat':'🧩 Toutes les plateformes','sb.dark':'🌙 Mode sombre','sb.faq':'❓ FAQ','sb.home':'🏠 Accueil','sb.how':'⚡ Comment ça marche','sb.ltd':'🔥 Offre à vie — 399 $','sb.nav':'Navigation',
+    's.bntag':'Offres groupées','s.bnh':'Économisez plus\navec nos offres','s.bnp':'Plusieurs plateformes, un seul abonnement, de vraies économies.',
+    'bn.loading':'Chargement des offres...','bn.error':'Impossible de charger les offres pour le moment — réessayez bientôt.','bn.none':'Aucune offre disponible pour le moment — revenez bientôt.',
+    'bn.buy':'Obtenir cette offre','bn.checking':'Vérification...','bn.type.monthly':'Mensuel','bn.type.annual':'Annuel','bn.type.lifetime_limited':'À vie — Offre limitée',
     'sb.openplat':'Ouvrir la plateforme','sb.pricing':'💳 Tarifs','sb.pro':'⭐ Accès Pro complet — 69 $/mois','sb.quickbuy':'💳 Achat rapide','sb.settings':'⚙️ Paramètres','sb.startfree':'🚀 Commencer gratuitement','staff.s':'Identifiants administrateur uniquement','staff.t':'ACCÈS PERSONNEL',
     'stat.curr':'Devises prises en charge','stat.free':'Gratuit à essayer','stat.lang':'Langues prises en charge','stat.live':'En direct','usr.dash':'Mon tableau de bord','usr.logout':'Déconnexion','view.label':'MODE D\'AFFICHAGE',
     'soc.eyebrow':'Preuve sociale','soc.title1':'Approuvé par les','soc.title2':'professionnels',
@@ -8211,7 +8236,7 @@ function clearLogs(){
   if(ls){ ls.innerHTML = '<div style="color:var(--t3);text-align:center;padding:20px">Log cleared</div>'; }
   toast('Logs cleared');
 }
-var sections = ['hero','projects','about','pricing','contact'];
+var sections = ['hero','projects','about','pricing','bundles','contact'];
 function scrollTo(id){
   var el = document.getElementById(id);
   if(el){var y=0,o=el;while(o){y+=o.offsetTop;o=o.offsetParent;}window.scrollTo({top:Math.max(0,y-80),behavior:'smooth'});}
@@ -8233,6 +8258,7 @@ function updateSNav(){
   if(active==='projects') body.classList.add('in-uni');
   else if(active==='about') body.classList.add('in-logi');
   else if(active==='pricing') body.classList.add('in-prop');
+  else if(active==='bundles') body.classList.add('in-prop');
   else if(active==='contact') body.classList.add('in-tal');
 }
 window.addEventListener('scroll', updateSNav, {passive:true});
@@ -8242,6 +8268,138 @@ applyT('en', STATIC.en);
 syncLangSelects('en');
 syncCurrSelects('USD');
 refreshPrices();
+azLoadPublicBundles();
+
+/* ══════════════════════════════════════
+   BUNDLES — صفحة شراء عامة حقيقية
+   المصدر الوحيد: config.bundles (نفس البيانات اللي بيديرها المالك من
+   الداشبورد، القسم 📦 Bundles). لا أسعار وهمية، ولا باقات مكتوبة يدوياً.
+══════════════════════════════════════ */
+var AZ_BUNDLES_PUBLIC = null;
+var AZ_BUNDLE_CHECKOUT_BUSY = false;
+
+async function azLoadPublicBundles(){
+  var grid = document.getElementById('az-bundles-grid');
+  if(!grid) return;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    var bundles = (config.bundles || []).filter(function(b){
+      if(b.enabled !== true || b.archived === true) return false;
+      /* عروض "مدى الحياة المحدودة" اللي انتهى وقتها تختفي تلقائياً من العرض العام */
+      if(b.type === 'lifetime_limited' && b.offerExpiry){
+        return new Date(b.offerExpiry) >= new Date();
+      }
+      return true;
+    });
+    bundles.sort(function(a,b){ return (a.sortOrder||0) - (b.sortOrder||0); });
+    AZ_BUNDLES_PUBLIC = bundles;
+    azRenderPublicBundles();
+  }catch(e){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#f87171">'+azT('bn.error')+'</div>';
+  }
+}
+
+function azRenderPublicBundles(){
+  var grid = document.getElementById('az-bundles-grid');
+  if(!grid || !AZ_BUNDLES_PUBLIC) return;
+
+  if(!AZ_BUNDLES_PUBLIC.length){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--t3)">'+azT('bn.none')+'</div>';
+    return;
+  }
+
+  grid.innerHTML = AZ_BUNDLES_PUBLIC.map(function(b){
+    var typeLabel = azT('bn.type.'+b.type) || b.type;
+    var platformNames = (b.platforms||[]).map(function(k){
+      return (typeof AZ_PLATFORMS_DATA !== 'undefined' && AZ_PLATFORMS_DATA[k] && (AZ_PLATFORMS_DATA[k].name_ar || AZ_PLATFORMS_DATA[k].name)) || k;
+    }).join(' · ');
+    var finalPrice = (b.price||0) * (1 - (b.discount||0)/100);
+    var priceHTML = '$' + (finalPrice % 1 === 0 ? finalPrice.toFixed(0) : finalPrice.toFixed(2));
+    var strikeHTML = (b.discount > 0) ? '<div style="text-decoration:line-through;color:var(--t3);font-size:.85rem">$'+b.price+'</div>' : '';
+    var badgeHTML = b.featured ? '<div class="phb">⭐</div>' : '';
+
+    return '<div class="plan'+(b.featured?' hot':'')+'" style="position:relative" data-bundle-id="'+azEscapeHtml(b.id)+'">' +
+      badgeHTML +
+      '<div class="pi">📦</div>' +
+      '<div class="pn">'+azEscapeHtml(b.name)+'</div>' +
+      '<div class="pt" style="font-size:.72rem">'+azEscapeHtml(platformNames)+'</div>' +
+      strikeHTML +
+      '<div class="pp">'+priceHTML+'</div>' +
+      '<div class="ppr">'+typeLabel+(b.discount>0?' · -'+b.discount+'%':'')+'</div>' +
+      '<button class="bplan bpo" onclick="azBuyBundle(\''+b.id+'\')">'+azT('bn.buy')+'</button>' +
+    '</div>';
+  }).join('');
+}
+
+/* ══ الشراء الفعلي — يحاول /api/checkout الحقيقي أولاً، ولو البوابة
+   لسه مش مفعّلة/مفاتيحها غير مضبوطة، يرجع بصدق لنموذج تسجيل الاهتمام
+   بدل رسالة خطأ عامة (نفس نمط nabSelectTierFallback في نابغة) ══ */
+async function azBuyBundle(bundleId){
+  if(AZ_BUNDLE_CHECKOUT_BUSY) return;
+  var bundle = (AZ_BUNDLES_PUBLIC || []).find(function(b){ return b.id === bundleId; });
+  var bundleName = bundle ? bundle.name : bundleId;
+
+  var btn = document.querySelector('[data-bundle-id="'+bundleId+'"] .bplan');
+  var prevText = btn ? btn.textContent : '';
+  if(btn){ btn.disabled = true; btn.textContent = azT('bn.checking'); }
+  AZ_BUNDLE_CHECKOUT_BUSY = true;
+
+  try{
+    /* تحقق من وجود حساب حقيقي مسجّل دخوله أولاً — نفس منطق sub(plan) */
+    var userEmail = null;
+    try{
+      var uRes = await fetch('/api/user-verify', { credentials:'include' });
+      var uData = await uRes.json();
+      if(uData && uData.valid && uData.user){ userEmail = uData.user.email; }
+    }catch(e){}
+
+    if(!userEmail){
+      toast('🔐 سجّل دخولك أو أنشئ حساباً أولاً للحصول على '+bundleName);
+      openLogin();
+      return;
+    }
+
+    var res = await fetch('/api/checkout', {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ bundleId: bundleId })
+    });
+    var data = await res.json().catch(function(){ return null; });
+
+    if(res.ok && data && data.ok && data.checkoutUrl){
+      window.location.href = data.checkoutUrl;
+      return;
+    }
+
+    var err = data && data.error;
+    if(err === 'sold_out' || err === 'bundle_not_available' || err === 'tier_not_available'){
+      azLoadPublicBundles(); /* الباقة اتغيّرت أو نفدت — أعد تحميل القائمة الحقيقية */
+      toast('⚠️ هذه الباقة لم تعد متاحة — تم تحديث القائمة');
+      return;
+    }
+
+    /* ⚠️ ملاحظة صريحة: checkout.js الحالي لا يدعم bundleId بعد (بُني
+       لمنصة+مستوى فقط) — أي استدعاء هنا سيرجع خطأ حتى بعد تفعيل
+       Stripe، لحين توسيع checkout.js + webhook ليدعما الباقات فعلياً.
+       الرجوع الصادق التالي مقصود، وليس مجرد fallback مؤقت لمفاتيح غير مضبوطة. */
+    var res2 = await fetch('/api/contact-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ kind:'subscribe_interest', email:userEmail, message:'اهتمام بباقة "'+bundleName+'" ('+bundleId+')' })
+    });
+    var data2 = await res2.json().catch(function(){ return null; });
+    if(res2.ok && data2 && data2.ok){
+      toast('✅ تم تسجيل رغبتك في '+bundleName+' — هنتواصل معاك فور تفعيل الدفع المباشر للباقات');
+    } else {
+      toast('⚠️ حصل خطأ، حاول تاني أو تواصل معنا على contact@axiomzones.com');
+    }
+  }catch(e){
+    toast('⚠️ خطأ في الاتصال — حاول تاني');
+  }finally{
+    AZ_BUNDLE_CHECKOUT_BUSY = false;
+    if(btn){ btn.disabled = false; btn.textContent = prevText; }
+  }
+}
 
 
 
