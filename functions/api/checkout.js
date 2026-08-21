@@ -1,11 +1,16 @@
 // functions/api/checkout.js
 // POST /api/checkout — يتطلب جلسة مستخدم صالحة
-// Body: { platform: 'nabigha', tier: 'growth', cycle: 'monthly'|'annual' }
+// Body: { platform: 'nabigha', tier: 'growth', cycle: 'monthly'|'annual', provider?: 'stripe'|'paddle' }
 //
 // ⚠️ مبدأ أمني جوهري: لا نثق أبداً بأي سعر يصل من المتصفح — الواجهة
 // ترسل فقط "أي منصة/مستوى/دورة"، والسيرفر يقرأ السعر الحقيقي من
-// config.pricing (نفس المصدر اللي بيتحكم فيه المالك من الداشبورد)،
-// ويبني جلسة الدفع بالسعر الحقيقي فقط.
+// config.pricing (نفس المصدر اللي بيتحكم فيه المالك من الداشبورد).
+//
+// ══ موجِّه حقيقي متعدد البوابات ══
+// المنطق المشترك (تحقق الجلسة، حساب السعر) يعمل مرة واحدة بغض النظر
+// عن البوابة. بعدها التوجيه لدالة البوابة المحدَّدة (buildStripeSession
+// أو buildPaddleSession). إضافة بوابة جديدة مستقبلاً = دالة جديدة هنا
+// + سطر واحد في PROVIDER_BUILDERS، بلا لمس أي منطق مشترك قائم.
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -14,11 +19,8 @@ export async function onRequestPost(context) {
   if (!env.AZ_CONFIG_KV || !env.AZ_USERS_KV) {
     return new Response(JSON.stringify({ ok: false, error: 'server_not_configured' }), { status: 500, headers });
   }
-  if (!env.STRIPE_SECRET_KEY) {
-    return new Response(JSON.stringify({ ok: false, error: 'payment_not_configured' }), { status: 503, headers });
-  }
 
-  // ── تحقق من جلسة المستخدم (نفس منطق كل الملفات الأخرى بالضبط) ──
+  // ── تحقق من جلسة المستخدم (مشترك، بغض النظر عن البوابة) ──
   const cookieHeader = request.headers.get('Cookie') || '';
   const match = cookieHeader.match(/az_user_session=([^;]+)/);
   if (!match) {
@@ -54,21 +56,31 @@ export async function onRequestPost(context) {
   const platform = String((body && body.platform) || '').trim().toLowerCase();
   const tierKey = String((body && body.tier) || '').trim().toLowerCase();
   const cycle = (body && body.cycle === 'annual') ? 'annual' : 'monthly';
+  let requestedProvider = String((body && body.provider) || '').trim().toLowerCase();
 
   if (!platform || !tierKey) {
     return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), { status: 400, headers });
   }
 
-  // ── ① قراءة السعر الحقيقي من config.pricing — المصدر الوحيد المعتمَد ──
+  // ── قراءة الإعدادات مرة واحدة (مشترك) ──
   const configRaw = await env.AZ_CONFIG_KV.get('az_master_config');
-  const configForGateway = configRaw ? JSON.parse(configRaw) : {};
-  /* ══ احترام تفعيل/إيقاف البوابة من الداشبورد — لو المالك عطَّل Stripe
-     يدوياً، نرفض حتى لو المفتاح السري مضبوط فعلياً في متغيّرات البيئة ══ */
-  const gatewayEnabled = configForGateway.paymentGateways && configForGateway.paymentGateways.stripe && configForGateway.paymentGateways.stripe.enabled === true;
-  if (!gatewayEnabled) {
+  const config = configRaw ? JSON.parse(configRaw) : {};
+  const gatewaysConfig = config.paymentGateways || {};
+
+  /* ══ اختيار البوابة: لو الواجهة حدَّدت واحدة صراحةً، نستخدمها (بشرط
+     كونها مفعَّلة). غير ذلك، نختار أول بوابة مفعَّلة تلقائيًا — يسمح
+     للواجهة مستقبلاً بعرض خيار للزائر لو أكثر من بوابة مفعَّلة معًا ══ */
+  if (!requestedProvider || !gatewaysConfig[requestedProvider] || gatewaysConfig[requestedProvider].enabled !== true) {
+    requestedProvider = Object.keys(gatewaysConfig).find(function (p) { return gatewaysConfig[p] && gatewaysConfig[p].enabled === true; }) || '';
+  }
+  if (!requestedProvider) {
     return new Response(JSON.stringify({ ok: false, error: 'gateway_disabled' }), { status: 503, headers });
   }
-  const config = configForGateway; // نفس الكائن المُحلَّل بالفعل أعلاه — لا داعي لتحليل JSON مرتين
+  if (!PROVIDER_BUILDERS[requestedProvider]) {
+    return new Response(JSON.stringify({ ok: false, error: 'gateway_not_implemented' }), { status: 501, headers });
+  }
+
+  // ── قراءة السعر الحقيقي من config.pricing — المصدر الوحيد المعتمَد (مشترك) ──
   const platformPricing = (config.pricing && config.pricing[platform] && config.pricing[platform].tiers) || {};
   const tier = platformPricing[tierKey];
 
@@ -77,53 +89,71 @@ export async function onRequestPost(context) {
   }
 
   const isLifetime = (tier.price !== undefined);
-  let amountCents, currency, mode, intervalLabel;
+  let amountCents, intervalLabel;
 
   if (isLifetime) {
-    // ── تحقق إضافي: لو الكمية محدودة ونفدت، ارفض الدفع حتى لو الرابط وصل ──
     if (tier.maxCount > 0 && (tier.claimedCount || 0) >= tier.maxCount) {
       return new Response(JSON.stringify({ ok: false, error: 'sold_out' }), { status: 410, headers });
     }
     amountCents = Math.round((tier.price || 0) * 100);
-    mode = 'payment'; // دفعة واحدة، لا اشتراك متكرر
   } else {
     const monthly = tier.monthlyPrice || 0;
     if (cycle === 'annual') {
       const discount = tier.annualDiscount || 0;
       amountCents = Math.round(monthly * 12 * (1 - discount / 100) * 100);
-      mode = 'payment'; // يُحصَّل سنوياً كدفعة واحدة (تبسيط أولي، لا اشتراك Stripe متكرر بعد)
       intervalLabel = 'سنوي';
     } else {
       amountCents = Math.round(monthly * 100);
-      mode = 'payment';
       intervalLabel = 'شهري';
     }
   }
-  currency = (tier.currency || 'USD').toLowerCase();
+  const currency = (tier.currency || 'USD').toLowerCase();
 
   if (amountCents <= 0) {
     return new Response(JSON.stringify({ ok: false, error: 'invalid_price' }), { status: 400, headers });
   }
 
-  // ── ② بناء جلسة Stripe Checkout عبر REST API مباشرة (لا حزمة SDK) ──
   const originUrl = new URL(request.url).origin;
-  const stripeParams = new URLSearchParams();
-  stripeParams.append('mode', mode);
-  stripeParams.append('success_url', originUrl + '/payment-success?session_id={CHECKOUT_SESSION_ID}');
-  stripeParams.append('cancel_url', originUrl + '/pricing-cancelled');
-  stripeParams.append('customer_email', email);
-  stripeParams.append('line_items[0][price_data][currency]', currency);
-  stripeParams.append('line_items[0][price_data][unit_amount]', String(amountCents));
-  stripeParams.append('line_items[0][price_data][product_data][name]', `${platform} — ${tier.name || tierKey}${intervalLabel ? ' (' + intervalLabel + ')' : ''}`);
-  stripeParams.append('line_items[0][quantity]', '1');
-  // ── metadata: تُقرَأ عند الـWebhook لتحديد بالضبط مين ياخد وصول لإيه ──
-  stripeParams.append('metadata[userEmail]', email);
-  stripeParams.append('metadata[platform]', platform);
-  stripeParams.append('metadata[tier]', tierKey);
-  stripeParams.append('metadata[cycle]', cycle);
-  stripeParams.append('metadata[isLifetime]', isLifetime ? '1' : '0');
+  const orderInfo = { email, platform, tierKey, tierName: tier.name || tierKey, cycle, isLifetime, amountCents, currency, intervalLabel, originUrl };
 
-  const stripeRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+  // ── التوجيه الفعلي لدالة البوابة المحدَّدة ──
+  try {
+    const result = await PROVIDER_BUILDERS[requestedProvider](orderInfo, env);
+    if (!result.ok) {
+      return new Response(JSON.stringify({ ok: false, error: result.error || 'gateway_error', detail: result.detail }), { status: result.status || 502, headers });
+    }
+    return new Response(JSON.stringify({ ok: true, provider: requestedProvider, checkoutUrl: result.checkoutUrl }), { headers });
+  } catch (e) {
+    return new Response(JSON.stringify({ ok: false, error: 'gateway_exception' }), { status: 502, headers });
+  }
+}
+
+/* ══ سجل دوال البوابات — إضافة بوابة جديدة = دالة جديدة + سطر واحد هنا ══ */
+const PROVIDER_BUILDERS = {
+  stripe: buildStripeSession,
+  paddle: buildPaddleSession,
+};
+
+async function buildStripeSession(order, env) {
+  if (!env.STRIPE_SECRET_KEY) {
+    return { ok: false, error: 'payment_not_configured', status: 503 };
+  }
+  const stripeParams = new URLSearchParams();
+  stripeParams.append('mode', 'payment');
+  stripeParams.append('success_url', order.originUrl + '/payment-success?session_id={CHECKOUT_SESSION_ID}');
+  stripeParams.append('cancel_url', order.originUrl + '/pricing-cancelled');
+  stripeParams.append('customer_email', order.email);
+  stripeParams.append('line_items[0][price_data][currency]', order.currency);
+  stripeParams.append('line_items[0][price_data][unit_amount]', String(order.amountCents));
+  stripeParams.append('line_items[0][price_data][product_data][name]', `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`);
+  stripeParams.append('line_items[0][quantity]', '1');
+  stripeParams.append('metadata[userEmail]', order.email);
+  stripeParams.append('metadata[platform]', order.platform);
+  stripeParams.append('metadata[tier]', order.tierKey);
+  stripeParams.append('metadata[cycle]', order.cycle);
+  stripeParams.append('metadata[isLifetime]', order.isLifetime ? '1' : '0');
+
+  const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + env.STRIPE_SECRET_KEY,
@@ -131,13 +161,18 @@ export async function onRequestPost(context) {
     },
     body: stripeParams.toString(),
   });
-
-  const stripeData = await stripeRes.json();
-  if (!stripeRes.ok) {
-    return new Response(JSON.stringify({ ok: false, error: 'stripe_error', detail: stripeData.error && stripeData.error.message }), { status: 502, headers });
+  const data = await res.json();
+  if (!res.ok) {
+    return { ok: false, error: 'stripe_error', detail: data.error && data.error.message, status: 502 };
   }
+  return { ok: true, checkoutUrl: data.url };
+}
 
-  return new Response(JSON.stringify({ ok: true, checkoutUrl: stripeData.url }), { headers });
+/* ══ Paddle — بنية جاهزة، منطق حقيقي غير مُنفَّذ بعد بصراحة كاملة.
+   يُرجِع خطأ واضح صريح بدل التظاهر بالعمل — يُستكمَل فور توفر حساب
+   Paddle حقيقي واختباره، دون أي حاجة لتعديل أي جزء آخر من هذا الملف ══ */
+async function buildPaddleSession(order, env) {
+  return { ok: false, error: 'paddle_not_yet_implemented', status: 501 };
 }
 
 function base64url(bytes) {
