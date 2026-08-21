@@ -1,16 +1,26 @@
 // functions/api/checkout.js
 // POST /api/checkout — يتطلب جلسة مستخدم صالحة
-// Body: { platform: 'nabigha', tier: 'growth', cycle: 'monthly'|'annual', provider?: 'stripe'|'paddle' }
+// مساران بديلان في نفس الـendpoint:
+//   (أ) منصة واحدة + مستوى: { platform: 'nabigha', tier: 'growth', cycle: 'monthly'|'annual', provider?: 'stripe'|'paddle' }
+//   (ب) باقة مُجمَّعة (Bundle): { bundleId: 'bundle_...', provider?: 'stripe'|'paddle' }
 //
 // ⚠️ مبدأ أمني جوهري: لا نثق أبداً بأي سعر يصل من المتصفح — الواجهة
-// ترسل فقط "أي منصة/مستوى/دورة"، والسيرفر يقرأ السعر الحقيقي من
-// config.pricing (نفس المصدر اللي بيتحكم فيه المالك من الداشبورد).
+// ترسل فقط "أي منصة/مستوى/دورة" أو "أي باقة"، والسيرفر يقرأ السعر
+// الحقيقي من config.pricing أو config.bundles (نفس المصدر اللي
+// بيتحكم فيه المالك من الداشبورد).
 //
 // ══ موجِّه حقيقي متعدد البوابات ══
-// المنطق المشترك (تحقق الجلسة، حساب السعر) يعمل مرة واحدة بغض النظر
-// عن البوابة. بعدها التوجيه لدالة البوابة المحدَّدة (buildStripeSession
-// أو buildPaddleSession). إضافة بوابة جديدة مستقبلاً = دالة جديدة هنا
-// + سطر واحد في PROVIDER_BUILDERS، بلا لمس أي منطق مشترك قائم.
+// المنطق المشترك (تحقق الجلسة) يعمل مرة واحدة بغض النظر عن البوابة أو
+// المسار. بعدها حساب السعر حسب المسار (منصة+مستوى أو باقة)، ثم التوجيه
+// لدالة البوابة المحدَّدة (buildStripeSession أو buildPaddleSession).
+// إضافة بوابة جديدة مستقبلاً = دالة جديدة هنا + سطر واحد في
+// PROVIDER_BUILDERS، بلا لمس أي منطق مشترك قائم.
+//
+// ⚠️ ناقص عمداً حتى الآن (موثَّق صراحة، القسم (68) بقاعدة المعرفة):
+// نجاح دفع باقة يبني جلسة Stripe صحيحة بميتاداتا isBundle+bundlePlatforms،
+// لكن functions/api/webhooks/stripe.js لم يُحدَّث بعد ليقرأ هذه
+// الميتاداتا ويمنح وصولاً فعلياً لكل منصات الباقة. لا تُفعَّل بيع
+// باقات حقيقي بمفاتيح Stripe حقيقية قبل تحديث الـwebhook.
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -20,7 +30,7 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ ok: false, error: 'server_not_configured' }), { status: 500, headers });
   }
 
-  // ── تحقق من جلسة المستخدم (مشترك، بغض النظر عن البوابة) ──
+  // ── تحقق من جلسة المستخدم (مشترك، بغض النظر عن المسار أو البوابة) ──
   const cookieHeader = request.headers.get('Cookie') || '';
   const match = cookieHeader.match(/az_user_session=([^;]+)/);
   if (!match) {
@@ -53,12 +63,14 @@ export async function onRequestPost(context) {
   try { body = await request.json(); } catch (e) {
     return new Response(JSON.stringify({ ok: false, error: 'bad_request' }), { status: 400, headers });
   }
+  const bundleId = String((body && body.bundleId) || '').trim();
   const platform = String((body && body.platform) || '').trim().toLowerCase();
   const tierKey = String((body && body.tier) || '').trim().toLowerCase();
   const cycle = (body && body.cycle === 'annual') ? 'annual' : 'monthly';
   let requestedProvider = String((body && body.provider) || '').trim().toLowerCase();
+  const isBundleRequest = !!bundleId;
 
-  if (!platform || !tierKey) {
+  if (!isBundleRequest && (!platform || !tierKey)) {
     return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), { status: 400, headers });
   }
 
@@ -80,43 +92,76 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ ok: false, error: 'gateway_not_implemented' }), { status: 501, headers });
   }
 
-  // ── قراءة السعر الحقيقي من config.pricing — المصدر الوحيد المعتمَد (مشترك) ──
-  const platformPricing = (config.pricing && config.pricing[platform] && config.pricing[platform].tiers) || {};
-  const tier = platformPricing[tierKey];
-
-  if (!tier || tier.enabled !== true) {
-    return new Response(JSON.stringify({ ok: false, error: 'tier_not_available' }), { status: 404, headers });
-  }
-
-  const isLifetime = (tier.price !== undefined);
-  let amountCents, intervalLabel;
-
-  if (isLifetime) {
-    if (tier.maxCount > 0 && (tier.claimedCount || 0) >= tier.maxCount) {
-      return new Response(JSON.stringify({ ok: false, error: 'sold_out' }), { status: 410, headers });
-    }
-    amountCents = Math.round((tier.price || 0) * 100);
-  } else {
-    const monthly = tier.monthlyPrice || 0;
-    if (cycle === 'annual') {
-      const discount = tier.annualDiscount || 0;
-      amountCents = Math.round(monthly * 12 * (1 - discount / 100) * 100);
-      intervalLabel = 'سنوي';
-    } else {
-      amountCents = Math.round(monthly * 100);
-      intervalLabel = 'شهري';
-    }
-  }
-  const currency = (tier.currency || 'USD').toLowerCase();
-
-  if (amountCents <= 0) {
-    return new Response(JSON.stringify({ ok: false, error: 'invalid_price' }), { status: 400, headers });
-  }
-
   const originUrl = new URL(request.url).origin;
-  const orderInfo = { email, platform, tierKey, tierName: tier.name || tierKey, cycle, isLifetime, amountCents, currency, intervalLabel, originUrl };
+  let orderInfo;
 
-  // ── التوجيه الفعلي لدالة البوابة المحدَّدة ──
+  if (isBundleRequest) {
+    // ══ مسار (ب): باقة مُجمَّعة — السعر والمنصات من config.bundles حصراً ══
+    const bundles = config.bundles || [];
+    const bundle = bundles.find(function (b) { return b.id === bundleId; });
+
+    if (!bundle || bundle.enabled !== true || bundle.archived === true) {
+      return new Response(JSON.stringify({ ok: false, error: 'bundle_not_available' }), { status: 404, headers });
+    }
+    if (bundle.type === 'lifetime_limited' && bundle.offerExpiry && new Date(bundle.offerExpiry) < new Date()) {
+      return new Response(JSON.stringify({ ok: false, error: 'offer_expired' }), { status: 410, headers });
+    }
+    if (!Array.isArray(bundle.platforms) || !bundle.platforms.length) {
+      return new Response(JSON.stringify({ ok: false, error: 'bundle_not_available' }), { status: 404, headers });
+    }
+
+    const isLifetime = bundle.type === 'lifetime_limited';
+    const amountCents = Math.round((bundle.price || 0) * (1 - (bundle.discount || 0) / 100) * 100);
+    if (amountCents <= 0) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_price' }), { status: 400, headers });
+    }
+    const currency = (bundle.currency || 'USD').toLowerCase();
+    const intervalLabel = bundle.type === 'monthly' ? 'شهري' : (bundle.type === 'annual' ? 'سنوي' : undefined);
+
+    orderInfo = {
+      email, originUrl, isBundle: true,
+      bundleId: bundle.id, bundleName: bundle.name || bundle.id, bundlePlatforms: bundle.platforms,
+      cycle: bundle.type === 'annual' ? 'annual' : 'monthly',
+      isLifetime, amountCents, currency, intervalLabel,
+    };
+  } else {
+    // ══ مسار (أ): منصة واحدة + مستوى — كما كان بالضبط، بلا أي تعديل منطقي ══
+    const platformPricing = (config.pricing && config.pricing[platform] && config.pricing[platform].tiers) || {};
+    const tier = platformPricing[tierKey];
+
+    if (!tier || tier.enabled !== true) {
+      return new Response(JSON.stringify({ ok: false, error: 'tier_not_available' }), { status: 404, headers });
+    }
+
+    const isLifetime = (tier.price !== undefined);
+    let amountCents, intervalLabel;
+
+    if (isLifetime) {
+      if (tier.maxCount > 0 && (tier.claimedCount || 0) >= tier.maxCount) {
+        return new Response(JSON.stringify({ ok: false, error: 'sold_out' }), { status: 410, headers });
+      }
+      amountCents = Math.round((tier.price || 0) * 100);
+    } else {
+      const monthly = tier.monthlyPrice || 0;
+      if (cycle === 'annual') {
+        const discount = tier.annualDiscount || 0;
+        amountCents = Math.round(monthly * 12 * (1 - discount / 100) * 100);
+        intervalLabel = 'سنوي';
+      } else {
+        amountCents = Math.round(monthly * 100);
+        intervalLabel = 'شهري';
+      }
+    }
+    const currency = (tier.currency || 'USD').toLowerCase();
+
+    if (amountCents <= 0) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_price' }), { status: 400, headers });
+    }
+
+    orderInfo = { email, originUrl, isBundle: false, platform, tierKey, tierName: tier.name || tierKey, cycle, isLifetime, amountCents, currency, intervalLabel };
+  }
+
+  // ── التوجيه الفعلي لدالة البوابة المحدَّدة (نفس المسار لكلا الحالتين) ──
   try {
     const result = await PROVIDER_BUILDERS[requestedProvider](orderInfo, env);
     if (!result.ok) {
@@ -138,6 +183,10 @@ async function buildStripeSession(order, env) {
   if (!env.STRIPE_SECRET_KEY) {
     return { ok: false, error: 'payment_not_configured', status: 503 };
   }
+  const productName = order.isBundle
+    ? `باقة — ${order.bundleName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`
+    : `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`;
+
   const stripeParams = new URLSearchParams();
   stripeParams.append('mode', 'payment');
   stripeParams.append('success_url', order.originUrl + '/payment-success?session_id={CHECKOUT_SESSION_ID}');
@@ -145,11 +194,19 @@ async function buildStripeSession(order, env) {
   stripeParams.append('customer_email', order.email);
   stripeParams.append('line_items[0][price_data][currency]', order.currency);
   stripeParams.append('line_items[0][price_data][unit_amount]', String(order.amountCents));
-  stripeParams.append('line_items[0][price_data][product_data][name]', `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`);
+  stripeParams.append('line_items[0][price_data][product_data][name]', productName);
   stripeParams.append('line_items[0][quantity]', '1');
   stripeParams.append('metadata[userEmail]', order.email);
-  stripeParams.append('metadata[platform]', order.platform);
-  stripeParams.append('metadata[tier]', order.tierKey);
+  if (order.isBundle) {
+    stripeParams.append('metadata[isBundle]', '1');
+    stripeParams.append('metadata[bundleId]', order.bundleId);
+    /* ⚠️ webhooks/stripe.js لازم يتحدَّث ليقرأ الحقل ده ويمنح وصولاً
+       لكل منصة فيه — غير منفَّذ من جهة الـwebhook حتى الآن */
+    stripeParams.append('metadata[bundlePlatforms]', order.bundlePlatforms.join(','));
+  } else {
+    stripeParams.append('metadata[platform]', order.platform);
+    stripeParams.append('metadata[tier]', order.tierKey);
+  }
   stripeParams.append('metadata[cycle]', order.cycle);
   stripeParams.append('metadata[isLifetime]', order.isLifetime ? '1' : '0');
 
