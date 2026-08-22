@@ -4556,6 +4556,7 @@ window.nabPWAInstall=function(){
     <div id="nab-interest-form" style="display:none;max-width:420px;margin:32px auto 0;background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:22px">
       <h3 style="font-family:'Tajawal',sans-serif;font-weight:700;color:var(--ink,#EEF0F6);margin-bottom:4px" id="nab-interest-title">سجّل اهتمامك بباقة <span id="nab-interest-tier-name"></span></h3>
       <p style="font-size:.78rem;color:var(--ink-soft,#8C93A8);margin-bottom:14px">الدفع الآلي لسه بيتجهّز — هنتواصل معاكِ لإتمام الاشتراك يدوياً في أقرب وقت.</p>
+      <input id="nab-interest-name" type="text" placeholder="اسمك" style="width:100%;padding:10px 14px;border-radius:8px;background:var(--bg,#0E1524);border:1px solid var(--rail,#2a3040);color:var(--ink,#EEF0F6);margin-bottom:10px;font-family:inherit"/>
       <input id="nab-interest-email" type="email" placeholder="بريدك الإلكتروني" style="width:100%;padding:10px 14px;border-radius:8px;background:var(--bg,#0E1524);border:1px solid var(--rail,#2a3040);color:var(--ink,#EEF0F6);margin-bottom:10px;font-family:inherit"/>
       <button onclick="nabSubmitInterest()" style="width:100%;padding:11px;border-radius:8px;background:linear-gradient(135deg,#c9a84c,#e8c86a);color:#060912;font-weight:800;border:none;cursor:pointer">إرسال</button>
       <div id="nab-interest-msg" style="margin-top:8px;font-size:.78rem;text-align:center"></div>
@@ -4573,7 +4574,14 @@ var NAB_HUB_URL = 'https://axiomzones.com';
 function openNabPricing(){
   document.getElementById('nab-pricing-overlay').style.display = 'block';
   document.body.style.overflow = 'hidden';
-  if(!NAB_PRICING_DATA) nabLoadPricing();
+  /* ⚠️ باج مُصحَّح: الشرط القديم if(!NAB_PRICING_DATA) كان بيمنع
+     إعادة التحميل بعد أول مرة — لو النتيجة الأولى كانت فاضية (مفيش
+     تِيرز مفعّلة وقتها)، كائن {} الفاضي "truthy" في JS، يعني الشرط
+     كان بيفشل للأبد طول عمر التاب المفتوح، حتى لو محمد ضاف أسعار
+     جديدة في الداشبورد بعد كده. الحل: إعادة تحميل حقيقية من الخادم
+     في كل مرة تُفتح فيها لوحة التسعير — استدعاء خفيف (endpoint واحد)
+     لا يستاهل التضحية بالدقة من أجله. */
+  nabLoadPricing();
 }
 
 async function nabLoadPricing(){
@@ -4722,19 +4730,25 @@ function nabSelectTierFallback(tierKey, tierName){
 }
 
 async function nabSubmitInterest(){
+  var name = document.getElementById('nab-interest-name').value.trim();
   var email = document.getElementById('nab-interest-email').value.trim();
   var msg = document.getElementById('nab-interest-msg');
-  if(!email || !email.includes('@')){ msg.style.color='#f87171'; msg.textContent='⚠️ اكتب بريد إلكتروني صحيح'; return; }
+  if(!name){ msg.style.color='#f87171'; msg.textContent='⚠️ اكتبي اسمك'; return; }
+  if(!email || !email.includes('@')){ msg.style.color='#f87171'; msg.textContent='⚠️ اكتبي بريد إلكتروني صحيح'; return; }
   try{
     var res = await fetch('/api/contact-submit', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ kind:'subscribe_interest', email: email, message: 'اهتمام بباقة "' + NAB_SELECTED_TIER + '" في نابغة (' + NAB_PRICING_CYCLE + ')' })
+      body: JSON.stringify({ kind:'subscribe_interest', name: name, email: email, plan: NAB_SELECTED_TIER, message: 'اهتمام بباقة "' + NAB_SELECTED_TIER + '" في نابغة (' + NAB_PRICING_CYCLE + ')' })
     });
     var data = await res.json().catch(function(){ return null; });
     if(res.ok && data && data.ok){
       msg.style.color='#4ade80'; msg.textContent='✅ تم التسجيل! هنتواصل معاكِ قريباً';
     } else {
-      msg.style.color='#f87171'; msg.textContent='⚠️ حدث خطأ، حاولي تاني';
+      var err = data && data.error;
+      msg.style.color='#f87171';
+      msg.textContent = err === 'rate_limited' ? '⚠️ عدد محاولات كتير، حاولي بعد شوية'
+        : err === 'missing_fields' ? '⚠️ برجاء ملء الاسم والبريد الإلكتروني'
+        : '⚠️ حدث خطأ، حاولي تاني';
     }
   }catch(e){
     msg.style.color='#f87171'; msg.textContent='⚠️ فشل الاتصال بالخادم';
