@@ -225,11 +225,61 @@ async function buildStripeSession(order, env) {
   return { ok: true, checkoutUrl: data.url };
 }
 
-/* ══ Paddle — بنية جاهزة، منطق حقيقي غير مُنفَّذ بعد بصراحة كاملة.
-   يُرجِع خطأ واضح صريح بدل التظاهر بالعمل — يُستكمَل فور توفر حساب
-   Paddle حقيقي واختباره، دون أي حاجة لتعديل أي جزء آخر من هذا الملف ══ */
 async function buildPaddleSession(order, env) {
-  return { ok: false, error: 'paddle_not_yet_implemented', status: 501 };
+  if (!env.PADDLE_API_KEY) {
+    return { ok: false, error: 'payment_not_configured', status: 503 };
+  }
+  const productName = order.isBundle
+    ? `باقة — ${order.bundleName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`
+    : `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`;
+  const currencyUpper = order.currency.toUpperCase();
+
+  /* ══ نفس بنية metadata المستخدمة في buildStripeSession بالضبط —
+     بنفس المفاتيح، حتى تقرأها webhooks/paddle.js بنفس منطق
+     webhooks/stripe.js بلا أي فرق. Paddle يستخدم اسم "custom_data"
+     بدل "metadata"، لكن القيم نفسها ══ */
+  const customData = order.isBundle
+    ? { userEmail: order.email, isBundle: '1', bundleId: order.bundleId, bundlePlatforms: order.bundlePlatforms.join(','), cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' }
+    : { userEmail: order.email, platform: order.platform, tier: order.tierKey, cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' };
+
+  /* ══ عنصر "غير مُنتمٍ لكتالوج" (non-catalog item) — سعر ديناميكي مباشر
+     بلا حاجة لإنشاء منتج مسبقاً في لوحة Paddle، بالضبط زي price_data
+     في Stripe. collection_mode:'automatic' يضمن رجوع رابط checkout
+     مباشر (transaction.checkout.url) بدل معاملة تتطلب Paddle.js ══ */
+  const paddleBase = env.PADDLE_ENVIRONMENT === 'sandbox' ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
+  const body = {
+    items: [{
+      quantity: 1,
+      price: {
+        description: productName,
+        name: productName,
+        unit_price: { amount: String(order.amountCents), currency_code: currencyUpper },
+        product: { name: productName, tax_category: 'saas' },
+      },
+    }],
+    currency_code: currencyUpper,
+    collection_mode: 'automatic',
+    customer: { email: order.email },
+    custom_data: customData,
+  };
+
+  const res = await fetch(paddleBase + '/transactions', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + env.PADDLE_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    return { ok: false, error: 'paddle_error', detail: data.error && data.error.detail, status: 502 };
+  }
+  const checkoutUrl = data.data && data.data.checkout && data.data.checkout.url;
+  if (!checkoutUrl) {
+    return { ok: false, error: 'paddle_checkout_url_missing', status: 502 };
+  }
+  return { ok: true, checkoutUrl };
 }
 
 function base64url(bytes) {
