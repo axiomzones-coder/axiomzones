@@ -8370,11 +8370,11 @@ async function azBuyBundle(bundleId){
 
   try{
     /* تحقق من وجود حساب حقيقي مسجّل دخوله أولاً — نفس منطق sub(plan) */
-    var userEmail = null;
+    var userEmail = null, userName = null;
     try{
       var uRes = await fetch('/api/user-verify', { credentials:'include' });
       var uData = await uRes.json();
-      if(uData && uData.valid && uData.user){ userEmail = uData.user.email; }
+      if(uData && uData.valid && uData.user){ userEmail = uData.user.email; userName = uData.user.name; }
     }catch(e){}
 
     if(!userEmail){
@@ -8409,7 +8409,7 @@ async function azBuyBundle(bundleId){
        مضبوطة، إلخ) — وليس السلوك الافتراضي بعد الآن. */
     var res2 = await fetch('/api/contact-submit', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ kind:'subscribe_interest', email:userEmail, message:'اهتمام بباقة "'+bundleName+'" ('+bundleId+')' })
+      body: JSON.stringify({ kind:'subscribe_interest', name:userName||userEmail, email:userEmail, plan:bundleName, message:'اهتمام بباقة "'+bundleName+'" ('+bundleId+')' })
     });
     var data2 = await res2.json().catch(function(){ return null; });
     if(res2.ok && data2 && data2.ok){
