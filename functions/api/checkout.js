@@ -158,7 +158,7 @@ export async function onRequestPost(context) {
       return new Response(JSON.stringify({ ok: false, error: 'invalid_price' }), { status: 400, headers });
     }
 
-    orderInfo = { email, originUrl, isBundle: false, platform, tierKey, tierName: tier.name || tierKey, cycle, isLifetime, amountCents, currency, intervalLabel };
+    orderInfo = { email, originUrl, isBundle: false, isEcosystem: (platform === 'ecosystem'), platform, tierKey, tierName: tier.name || tierKey, cycle, isLifetime, amountCents, currency, intervalLabel };
   }
 
   // ── التوجيه الفعلي لدالة البوابة المحدَّدة (نفس المسار لكلا الحالتين) ──
@@ -185,30 +185,53 @@ async function buildStripeSession(order, env) {
   }
   const productName = order.isBundle
     ? `باقة — ${order.bundleName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`
-    : `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`;
+    : order.isEcosystem
+      ? `اشتراك المنظومة الكاملة — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`
+      : `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`;
+
+  /* ══ اشتراك متكرر حقيقي — كل شيء غير "مدى الحياة" الآن يُنشأ كـ
+     Stripe Subscription فعلي (mode:'subscription') بتجديد تلقائي حقيقي
+     من Stripe نفسها، لا "دفعة واحدة" كما كان سابقاً. "مدى الحياة"
+     يبقى mode:'payment' كما هو، فهو بطبيعته دفعة واحدة نهائية ══ */
+  const isRecurring = !order.isLifetime;
+  const interval = order.cycle === 'annual' ? 'year' : 'month';
+
+  /* ══ نفس مجموعة metadata تُبنى مرة واحدة، وتُرسَل مكانين: (أ) على
+     الجلسة نفسها (session.metadata) — تكفي لحدث checkout.session.completed
+     الأول. (ب) على subscription_data.metadata — إلزامي للاشتراكات
+     المتكررة لأن أحداث التجديد المستقبلية (invoice.paid,
+     customer.subscription.*) تقرأ metadata الاشتراك نفسه، لا metadata
+     الجلسة التي لا تُنسَخ إليها تلقائياً ══ */
+  const meta = { userEmail: order.email, cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' };
+  if (order.isBundle) {
+    meta.isBundle = '1';
+    meta.bundleId = order.bundleId;
+    meta.bundlePlatforms = order.bundlePlatforms.join(',');
+  } else if (order.isEcosystem) {
+    meta.isEcosystem = '1';
+    meta.tier = order.tierKey;
+  } else {
+    meta.platform = order.platform;
+    meta.tier = order.tierKey;
+  }
 
   const stripeParams = new URLSearchParams();
-  stripeParams.append('mode', 'payment');
+  stripeParams.append('mode', isRecurring ? 'subscription' : 'payment');
   stripeParams.append('success_url', order.originUrl + '/payment-success?session_id={CHECKOUT_SESSION_ID}');
   stripeParams.append('cancel_url', order.originUrl + '/pricing-cancelled');
   stripeParams.append('customer_email', order.email);
   stripeParams.append('line_items[0][price_data][currency]', order.currency);
   stripeParams.append('line_items[0][price_data][unit_amount]', String(order.amountCents));
   stripeParams.append('line_items[0][price_data][product_data][name]', productName);
-  stripeParams.append('line_items[0][quantity]', '1');
-  stripeParams.append('metadata[userEmail]', order.email);
-  if (order.isBundle) {
-    stripeParams.append('metadata[isBundle]', '1');
-    stripeParams.append('metadata[bundleId]', order.bundleId);
-    /* ⚠️ webhooks/stripe.js لازم يتحدَّث ليقرأ الحقل ده ويمنح وصولاً
-       لكل منصة فيه — غير منفَّذ من جهة الـwebhook حتى الآن */
-    stripeParams.append('metadata[bundlePlatforms]', order.bundlePlatforms.join(','));
-  } else {
-    stripeParams.append('metadata[platform]', order.platform);
-    stripeParams.append('metadata[tier]', order.tierKey);
+  if (isRecurring) {
+    stripeParams.append('line_items[0][price_data][recurring][interval]', interval);
   }
-  stripeParams.append('metadata[cycle]', order.cycle);
-  stripeParams.append('metadata[isLifetime]', order.isLifetime ? '1' : '0');
+  stripeParams.append('line_items[0][quantity]', '1');
+
+  Object.keys(meta).forEach(function (k) {
+    stripeParams.append('metadata[' + k + ']', meta[k]);
+    if (isRecurring) stripeParams.append('subscription_data[metadata][' + k + ']', meta[k]);
+  });
 
   const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',
@@ -231,7 +254,9 @@ async function buildPaddleSession(order, env) {
   }
   const productName = order.isBundle
     ? `باقة — ${order.bundleName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`
-    : `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`;
+    : order.isEcosystem
+      ? `اشتراك المنظومة الكاملة — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`
+      : `${order.platform} — ${order.tierName}${order.intervalLabel ? ' (' + order.intervalLabel + ')' : ''}`;
   const currencyUpper = order.currency.toUpperCase();
 
   /* ══ نفس بنية metadata المستخدمة في buildStripeSession بالضبط —
@@ -240,7 +265,9 @@ async function buildPaddleSession(order, env) {
      بدل "metadata"، لكن القيم نفسها ══ */
   const customData = order.isBundle
     ? { userEmail: order.email, isBundle: '1', bundleId: order.bundleId, bundlePlatforms: order.bundlePlatforms.join(','), cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' }
-    : { userEmail: order.email, platform: order.platform, tier: order.tierKey, cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' };
+    : order.isEcosystem
+      ? { userEmail: order.email, isEcosystem: '1', tier: order.tierKey, cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' }
+      : { userEmail: order.email, platform: order.platform, tier: order.tierKey, cycle: order.cycle, isLifetime: order.isLifetime ? '1' : '0' };
 
   /* ══ عنصر "غير مُنتمٍ لكتالوج" (non-catalog item) — سعر ديناميكي مباشر
      بلا حاجة لإنشاء منتج مسبقاً في لوحة Paddle، بالضبط زي price_data
