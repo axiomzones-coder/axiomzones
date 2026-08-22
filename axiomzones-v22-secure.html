@@ -6801,7 +6801,7 @@ async function azSaveBundlesToServer(){
    لا حاجة لإعادة بناء أي جزء من النظام القائم ══ */
 var AZ_GATEWAY_REGISTRY = [
   { id: 'stripe', name: 'Stripe', icon: '💳', status: 'ready', desc: 'بطاقات ائتمانية، Apple Pay، Google Pay — الأشهر عالمياً' },
-  { id: 'paddle', name: 'Paddle', icon: '🏓', status: 'not_built', desc: 'ضرائب تلقائية، دعم عالمي — لم يُبنَ بعد (بند مؤجَّل)' },
+  { id: 'paddle', name: 'Paddle', icon: '🏓', status: 'ready', desc: 'ضرائب تلقائية (Merchant of Record)، دعم عالمي — لا يحتاج تسجيل منتجات مسبق' },
 ];
 var AZ_GATEWAYS_CONFIG = {};
 
@@ -6830,7 +6830,7 @@ function azRenderGateways(){
           : '<span style="font-size:.68rem;color:#facc15;padding:3px 10px;background:rgba(250,204,21,.1);border-radius:999px">قريباً</span>')+
       '</div>'+
       '<div style="font-size:.75rem;color:var(--t3);margin-top:6px">'+gw.desc+'</div>'+
-      (isBuilt ? '<div style="font-size:.68rem;color:var(--t3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">⚠️ التفعيل هنا يتحكم بالعرض للزوار فقط — لازم كمان تضبطي مفاتيح Stripe الحقيقية (STRIPE_SECRET_KEY وSTRIPE_WEBHOOK_SECRET) كمتغيّرات بيئة في Cloudflare عشان تشتغل فعلياً.</div>' : '')+
+      (isBuilt ? '<div style="font-size:.68rem;color:var(--t3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">⚠️ التفعيل هنا يتحكم بالعرض للزوار فقط — لازم كمان تضبطي مفاتيح '+gw.name+' الحقيقية ('+(gw.id==='stripe'?'STRIPE_SECRET_KEY وSTRIPE_WEBHOOK_SECRET':'PADDLE_API_KEY وPADDLE_WEBHOOK_SECRET')+') كمتغيّرات بيئة في Cloudflare عشان تشتغل فعلياً.</div>' : '')+
     '</div>';
   }).join('');
 }
