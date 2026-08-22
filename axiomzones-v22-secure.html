@@ -3211,7 +3211,7 @@ body:not(.ltr) .tog input:checked + .tsl::before{transform:translateX(-18px)}
 <a onclick="azV4Toast('Tripedia Q2 2025!')">✈️ Tripedia</a>
 </div>
       <div class="fcol"><div class="fct" data-i18n="ft.c2">Company</div><a href="#about" data-i18n="ft.about">About Us</a><a href="#pricing" data-i18n="ft.pricing">Pricing</a><a href="#bundles" data-i18n="ft.bundles">Bundles</a><a href="#contact" data-i18n="ft.contact">Contact</a><a href="#" onclick="openLogin();return false" data-i18n="ft.login">Member Portal</a></div>
-      <div class="fcol"><div class="fct" data-i18n="ft.c3">Legal</div><a href="#" onclick="openLegal('privacy');return false" data-i18n="ft.priv">Privacy Policy</a><a href="#" onclick="openLegal('terms');return false" data-i18n="ft.terms">Terms & Conditions</a><a href="#" onclick="openLegal('disc');return false" data-i18n="ft.disc">Disclaimer</a><a href="#" onclick="openLegal('refund');return false" data-i18n="ft.refund">Refund Policy</a></div>
+      <div class="fcol"><div class="fct" data-i18n="ft.c3">Legal</div><a href="#privacy" onclick="openLegal('privacy');return false" data-i18n="ft.priv">Privacy Policy</a><a href="#terms" onclick="openLegal('terms');return false" data-i18n="ft.terms">Terms & Conditions</a><a href="#disc" onclick="openLegal('disc');return false" data-i18n="ft.disc">Disclaimer</a><a href="#refund" onclick="openLegal('refund');return false" data-i18n="ft.refund">Refund Policy</a></div>
     </div>
     <div class="fbot">
       <div class="fcp">© 2024 <span style="color:var(--gold)">AXIOM ZONES</span> · <span data-i18n="ft.rights">All rights reserved</span> · <a href="javascript:void(0)" onclick="document.getElementById('admin-login-modal').classList.add('open');document.body.style.overflow='hidden';" style="color:var(--t3);text-decoration:none;font-size:.7rem;opacity:.6" data-i18n="ft.staff">Staff</a></div>
@@ -4897,13 +4897,38 @@ function addProj(){
 /* ══════════════════════════════════════
    LEGAL
 ══════════════════════════════════════ */
-function openLegal(tab){ document.getElementById('legal-modal').classList.add('open'); document.body.style.overflow='hidden'; swL(tab); }
+/* ⚠️ الأربع صفحات القانونية كانت روابط "#" ميتة بلا أي عنوان فعلي —
+   Paddle (وأي بوابة دفع أخرى Merchant of Record) تشترط رابطاً مباشراً
+   قابلاً للزيارة لكل صفحة قانونية للتحقق من الحساب. الحل: كل صفحة
+   لها الآن Hash حقيقي (#privacy, #terms, #disc, #refund) يُحدَّث في
+   شريط العنوان فعلياً (بلا return false يمنع ذلك)، + فحص عند تحميل
+   الصفحة يفتح النافذة تلقائياً لو الرابط يحتوي أحد هذه الـHash —
+   يجعل axiomzones.com/#privacy مثلاً رابطاً حقيقياً قابلاً للمشاركة
+   ولصقه مباشرة في نماذج مثل تحقق حساب Paddle ══ */
+function openLegal(tab){
+  document.getElementById('legal-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  swL(tab);
+  if(window.location.hash !== '#'+tab){
+    history.replaceState(null, '', '#'+tab);
+  }
+}
 function swL(tab){
   ['privacy','terms','disc','refund'].forEach(function(t){
     document.getElementById('lt-'+t).classList.toggle('on',t===tab);
     document.getElementById('lc-'+t).classList.toggle('on',t===tab);
   });
 }
+/* ══ فتح تلقائي عند زيارة رابط قانوني مباشرة (axiomzones.com/#terms
+   مثلاً) — ضروري لمراجعات آلية/يدوية من بوابات الدفع تتحقق من وجود
+   محتوى فعلي خلف الرابط، لا مجرد تحويل للصفحة الرئيسية بلا محتوى ══ */
+(function(){
+  var legalHashes = ['privacy','terms','disc','refund'];
+  var h = (window.location.hash || '').replace('#','');
+  if(legalHashes.indexOf(h) !== -1){
+    document.addEventListener('DOMContentLoaded', function(){ openLegal(h); });
+  }
+})();
 
 /* ══════════════════════════════════════
    OVERLAYS
