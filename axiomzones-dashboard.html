@@ -1139,30 +1139,11 @@ var ALL_PLATFORMS = [
 ];
 
 
-/* ══ PLAN CONFIG ══ */
-var PLAN_CONFIG = {
-  free:     {name:'Free',     price:0,   color:'var(--t2)',  class:'plan-free'},
-  growth:   {name:'Growth',   price:29,  color:'var(--pril)',class:'plan-growth'},
-  pro:      {name:'Pro',      price:69,  color:'var(--pu)',  class:'plan-pro'},
-  expert:   {name:'Expert',   price:129, color:'var(--gold)',class:'plan-expert'},
-  lifetime: {name:'Lifetime', price:0,   color:'var(--gold)',class:'plan-lifetime'},
-};
-
-var PLAN_FEATURES = {
-  free:     ['5 analyses/day'],
-  growth:   ['Unlimited analyses'],
-  pro:      ['Unlimited analyses','API access'],
-  expert:   ['Unlimited analyses','Client reports','Custom branding','Priority support'],
-  lifetime: ['Unlimited analyses','No monthly fees','VIP support'],
-};
-
-var UPGRADE_OPTIONS = [
-  {plan:'free',    price:0,   aPrice:0,   label:'Free',    popular:false,  feats:['5 analyses/day','Kashf + Prism basic',{no:'UniUber'},{no:'Dar / Aqar'}]},
-  {plan:'growth',  price:29,  aPrice:20,  label:'Growth',  popular:false,  feats:['Unlimited analyses','Kashf Pro','Prism Clear','Dar','Aqar',{no:'UniUber'}]},
-  {plan:'pro',     price:69,  aPrice:48,  label:'Pro All', popular:true,   feats:['All active platforms','Kashf Advisor','Prism Pro','UniUber','API access']},
-  {plan:'expert',  price:129, aPrice:90,  label:'Expert',  popular:false,  feats:['All active platforms','Expert everywhere','Client reports','Custom branding','Priority support']},
-  {plan:'lifetime',price:399, aPrice:399, label:'Lifetime 🔥',popular:false,feats:['All active platforms forever','All future platforms','No monthly fees','VIP support','$399 one-time']},
-];
+/* ══ PLAN CONFIG — ملغاة، كانت ثابتة تماماً ومفصولة عن الواقع.
+   الأسعار الحقيقية تُقرأ الآن من config.pricing.ecosystem.tiers عبر
+   azLoadEcosystemPricing() بالأسفل، بنفس نمط Pricing Management في
+   الداشبورد الرئيسي بالضبط (منصة وهمية "ecosystem" داخل نفس النظام) ══ */
+var AZ_ECOSYSTEM_TIERS = null;
 
 /* ══ LOGIN ══ */
 function lgTab(tab) {
@@ -1288,14 +1269,14 @@ function doLogout() {
 /* ══ POPULATE USER DATA ══ */
 function populateUser() {
   var u = currentUser;
-  var pc = PLAN_CONFIG[u.plan] || PLAN_CONFIG.free;
+  var full = hasFullEcosystemAccess();
   // Sidebar
   setText('sb-name', u.name);
-  setText('sb-plan', pc.name + (u.trial?' · Trial ':' ') + 'Plan');
+  setText('sb-plan', (full?'Full Access':'Free') + (u.trial?' · Trial ':' ') + 'Plan');
   setText('sb-avatar', u.avatar||'👤');
   // Upgrade btn
   var upBtn = document.getElementById('upgrade-btn');
-  if(upBtn) upBtn.style.display = (u.plan==='free'||u.plan==='growth') ? 'flex':'none';
+  if(upBtn) upBtn.style.display = full ? 'none':'flex';
   // Notif count
   setText('notif-count', u.notifCount||0);
   // Profile
@@ -1311,11 +1292,11 @@ function populateUser() {
 /* ══ OVERVIEW ══ */
 function renderOverview() {
   var u = currentUser;
-  var pc = PLAN_CONFIG[u.plan]||PLAN_CONFIG.free;
+  var full = hasFullEcosystemAccess();
   setText('wb-name', 'Welcome back, ' + u.name.split(' ')[0] + ' 👋');
   setText('wb-sub', 'You\'ve been a member since ' + u.since + '. Here\'s your account today.');
   var wb = document.getElementById('wb-plan');
-  if(wb){ wb.textContent = pc.name + ' Plan' + (u.trial?' (Trial)':''); wb.className = 'wb-plan ' + pc.class; }
+  if(wb){ wb.textContent = (full?'Full Access':'Free') + ' Plan' + (u.trial?' (Trial)':''); wb.className = 'wb-plan ' + (full?'plan-pro':'plan-free'); }
   setText('wb-since', u.since);
   // Stats
   var plats = ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id) && canAccess(p.id);}).length;
@@ -1375,7 +1356,12 @@ async function azLoadRealPlatformStatus(){
   await Promise.all(checks);
   renderPlatforms();
   azRenderQuickPlatformLinks();
-  if(typeof renderOverview === 'function') renderOverview(); /* تحديث إحصائية "Platforms Active" بعد وصول البيانات الحقيقية */
+  /* ══ تحديث كل العناصر المعتمِدة على hasFullEcosystemAccess() بعد
+     وصول البيانات الحقيقية — قبل هذه اللحظة كانت AZ_PLATFORM_STATUS
+     فاضية، فأي عرض سابق افترض "Free" حتى لو المستخدم فعلياً Full Access ══ */
+  if(typeof renderOverview === 'function') renderOverview();
+  if(typeof populateUser === 'function') populateUser();
+  if(typeof renderSubscription === 'function') renderSubscription();
 }
 
 function isPlatformVisible(platformId){
@@ -1431,18 +1417,29 @@ function showPlatformInfo(id) {
   if(p) showToast(p.name+' · '+p.tag);
 }
 
-/* ══ SUBSCRIPTION ══ */
+/* ══ SUBSCRIPTION — مربوطة الآن بـconfig.pricing.ecosystem الحقيقي +
+   AZ_PLATFORM_STATUS الحقيقي (نفس مصدر "My Platforms" بالضبط، لا
+   نظام موازٍ). "الخطة الحالية" تُشتق من: هل كل منصة ظاهرة حالياً
+   تُرجِع status='full'؟ — هذا يعادل access.all=true فعلياً في الخادم
+   بلا حاجة لـendpoint جديد مخصَّص لهذا السؤال بالذات ══ */
+function hasFullEcosystemAccess(){
+  var visible = ALL_PLATFORMS.filter(function(p){ return isPlatformVisible(p.id); });
+  if(!visible.length) return false;
+  return visible.every(function(p){
+    var s = AZ_PLATFORM_STATUS[p.id];
+    return !!(s && s.status === 'full');
+  });
+}
+
 function renderSubscription() {
-  var u = currentUser;
-  var pc = PLAN_CONFIG[u.plan]||PLAN_CONFIG.free;
-  setText('cur-plan-name', pc.name + (u.trial?' (Trial — '+u.trialDays+' days left)':''));
-  setText('cur-plan-price',
-    u.plan==='lifetime' ? '$399 · One-time payment · Forever' :
-    u.plan==='free' ? '$0/month · Free forever' :
-    '$'+pc.price+'/month · Billed monthly');
-  setText('next-billing',
-    u.plan==='free'||u.plan==='lifetime' ? '—' :
-    u.trial ? 'After trial ends' : '2024-04-01');
+  var full = hasFullEcosystemAccess();
+  setText('cur-plan-name', full ? 'Full Access' : 'Free');
+  setText('cur-plan-price', full ? 'اشتراك المنظومة الكاملة نشط' : '$0/month · Free forever');
+  /* ⚠️ تاريخ التجديد الفعلي يحتاج userRecord.subscriptions من جهة
+     الخادم — user-verify.js/user-login.js الحاليين غير مؤكَّد أنهما
+     يُرجعان هذا الحقل (بند مؤجَّل موثَّق بقاعدة المعرفة). نعرض "—"
+     بصدق بدل تاريخ وهمي لحين تأكيد ذلك. */
+  setText('next-billing', (currentUser && currentUser.subscriptions && currentUser.subscriptions.length) ? '—' : '—');
 
   var feats = document.getElementById('cur-plan-feats');
   if(feats){
@@ -1452,25 +1449,170 @@ function renderSubscription() {
     var accessiblePlatformNames = ALL_PLATFORMS
       .filter(function(p){ return isPlatformVisible(p.id) && canAccess(p.id); })
       .map(function(p){ return p.name; });
-    var allFeats = accessiblePlatformNames.concat(PLAN_FEATURES[u.plan]||[]);
-    allFeats.forEach(function(f){
+    accessiblePlatformNames.forEach(function(f){
       var div=document.createElement('div');div.className='sub-feat';div.textContent=f;feats.appendChild(div);
     });
   }
+
+  /* ⚠️ Cancel/Pause تحتاج subscriptionId حقيقي — غير متاح إلا لو
+     user-verify.js يُرجع userRecord.subscriptions. نُخفي الأزرار
+     بصدق بدل محاولة تعطيل اشتراك بمعرِّف وهمي */
+  var actionsBox = document.querySelector('.sub-actions');
+  var mySub = currentUser && Array.isArray(currentUser.subscriptions)
+    ? currentUser.subscriptions.find(function(s){ return s.kind==='ecosystem' && s.status==='active'; })
+    : null;
+  if(actionsBox){
+    if(mySub){
+      actionsBox.innerHTML =
+        '<button class="btn-launch" style="padding:9px 20px;font-size:.8rem" onclick="realCancelPlan(\''+mySub.id+'\')">Cancel Plan</button>' +
+        '<button class="btn-sm-out" onclick="realPausePlan(\''+mySub.id+'\')">Pause Subscription</button>';
+    } else {
+      actionsBox.innerHTML = full
+        ? '<div style="font-size:.76rem;color:var(--t3)">لإدارة اشتراكك، تواصل معنا على contact@axiomzones.com</div>'
+        : '';
+    }
+  }
+
   // Usage bars
   renderUsage();
   // Upgrade grid
-  renderUpgrade();
+  azLoadEcosystemPricing();
+}
+
+/* ══ جلب الأسعار الحقيقية لمنصة "ecosystem" الوهمية داخل Pricing
+   Management — نفس مصدر الحقيقة المستخدَم في نابغة وقسم الباقات
+   بالضبط، لا سعر ثابت مكتوب هنا خالص ══ */
+async function azLoadEcosystemPricing(){
+  var grid = document.getElementById('upgrade-grid'); if(!grid) return;
+  try{
+    var res = await fetch('/api/config-get');
+    var data = await res.json();
+    var config = (data && data.config) || {};
+    var tiers = (config.pricing && config.pricing.ecosystem && config.pricing.ecosystem.tiers) || {};
+    AZ_ECOSYSTEM_TIERS = tiers;
+    renderUpgrade();
+  }catch(e){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#f87171">تعذَّر تحميل الأسعار — حاول لاحقاً</div>';
+  }
+}
+
+var AZ_TIER_ORDER = ['free','growth','pro','expert','lifetime'];
+
+function renderUpgrade() {
+  var isAnnual = document.getElementById('annual-tog') && document.getElementById('annual-tog').checked;
+  var annSave = document.getElementById('ann-save');
+  if(annSave) annSave.style.display = isAnnual?'inline-block':'none';
+  var grid = document.getElementById('upgrade-grid'); if(!grid)return;
+  if(!AZ_ECOSYSTEM_TIERS){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--t3)">جاري تحميل الأسعار...</div>';
+    return;
+  }
+  var full = hasFullEcosystemAccess();
+  var enabledKeys = AZ_TIER_ORDER.filter(function(k){ return AZ_ECOSYSTEM_TIERS[k] && AZ_ECOSYSTEM_TIERS[k].enabled === true; });
+  if(!enabledKeys.length){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--t3)">لا توجد باقات متاحة حالياً — أضِفها من "Pricing Management" (منصة ecosystem)</div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  enabledKeys.forEach(function(tierKey){
+    var t = AZ_ECOSYSTEM_TIERS[tierKey];
+    var isLifetimeTier = (t.price !== undefined);
+    var isCurrent = (tierKey === 'free' && !full); /* لا نعرف التِير المدفوع الدقيق بلا subscriptions[]، فقط "مجاني" واضحة */
+    var priceVal = isLifetimeTier ? t.price : (isAnnual ? Math.round((t.monthlyPrice||0)*12*(1-(t.annualDiscount||0)/100)/12) : (t.monthlyPrice||0));
+    var card = document.createElement('div');
+    card.className = 'upgrade-card' + (isCurrent?' current':'') + (tierKey==='pro'?' popular':'');
+    var btnTxt = isCurrent?'Current Plan':isLifetimeTier?('Claim — $'+t.price):'Upgrade →';
+    var btnFn = isCurrent?'':('realUpgradeClick("'+tierKey+'")');
+    card.innerHTML =
+      (tierKey==='pro'?'<div class="up-pop-badge">Most Popular</div>':'') +
+      '<div class="up-name">'+(t.name||tierKey)+'</div>' +
+      '<div class="up-price">'+(priceVal===0?'$0':'$'+priceVal)+'</div>' +
+      '<div class="up-per">'+(priceVal===0?'Free forever':isLifetimeTier?'One-time payment':isAnnual?'/mo billed annually':'/month')+'</div>' +
+      '<button class="'+(isCurrent?'up-btn up-btn-dis':tierKey==='pro'?'up-btn up-btn-gold':'up-btn up-btn-out')+'"'+(btnFn?' onclick=\''+btnFn+'\'':'')+(isCurrent?' disabled':'')+'>'+btnTxt+'</button>';
+    grid.appendChild(card);
+  });
+}
+
+var AZ_UPGRADE_BUSY = false;
+async function realUpgradeClick(tierKey) {
+  if(AZ_UPGRADE_BUSY) return;
+  AZ_UPGRADE_BUSY = true;
+  var isAnnual = document.getElementById('annual-tog') && document.getElementById('annual-tog').checked;
+  showToast('⏳ جاري تجهيز صفحة الدفع...');
+  try{
+    var res = await fetch('/api/checkout', {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ platform:'ecosystem', tier: tierKey, cycle: isAnnual?'annual':'monthly' })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok && data.checkoutUrl){
+      window.location.href = data.checkoutUrl;
+      return;
+    }
+    var err = data && data.error;
+    if(err === 'login_required'){ showToast('🔐 سجّل دخولك أولاً'); return; }
+    if(err === 'tier_not_available'){ azLoadEcosystemPricing(); showToast('⚠️ هذه الباقة اتغيّرت — تم تحديث الأسعار'); return; }
+    if(err === 'gateway_disabled' || err === 'payment_not_configured' || err === 'gateway_not_implemented'){
+      showToast('⚠️ الدفع الفعلي لسه مش مفعّل — تواصل معنا على contact@axiomzones.com');
+      return;
+    }
+    showToast('⚠️ حصل خطأ، حاول تاني');
+  }catch(e){
+    showToast('⚠️ خطأ في الاتصال — حاول تاني');
+  }finally{
+    AZ_UPGRADE_BUSY = false;
+  }
+}
+
+async function realCancelPlan(subscriptionId){
+  if(!confirm('متأكدة إنك عايزة تلغي اشتراكك؟ هيفضل الوصول شغّال لحد نهاية الفترة المدفوعة الحالية.')) return;
+  try{
+    var res = await fetch('/api/cancel-subscription', {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ subscriptionId: subscriptionId })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      showToast('✅ تم جدولة الإلغاء — هيفضل وصولك شغّال لحد '+(data.periodEnd?new Date(data.periodEnd).toLocaleDateString():'نهاية الفترة الحالية'));
+      renderSubscription();
+    } else {
+      showToast('⚠️ '+(data && data.error === 'provider_not_supported' ? 'الإلغاء غير متاح لهذه البوابة حالياً' : 'تعذَّر الإلغاء، حاول تاني أو تواصل معنا'));
+    }
+  }catch(e){ showToast('⚠️ خطأ في الاتصال'); }
+}
+
+async function realPausePlan(subscriptionId){
+  try{
+    var res = await fetch('/api/pause-subscription', {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ subscriptionId: subscriptionId })
+    });
+    var data = await res.json().catch(function(){ return null; });
+    if(res.ok && data && data.ok){
+      showToast('⏸️ تم إيقاف الفوترة مؤقتاً — وصولك فاضل شغّال');
+      renderSubscription();
+    } else {
+      showToast('⚠️ تعذَّر الإيقاف، حاول تاني أو تواصل معنا');
+    }
+  }catch(e){ showToast('⚠️ خطأ في الاتصال'); }
 }
 
 function renderUsage() {
   var el = document.getElementById('usage-bars'); if(!el)return;
   var u = currentUser;
+  var full = hasFullEcosystemAccess();
   var totalVisiblePlatforms = ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id);}).length;
+  /* ⚠️ "Analyses Run" و"Storage Used" لا مصدر بيانات حقيقي لهما بعد —
+     لا endpoint يتتبّع عدد التحليلات الفعلي أو المساحة المستخدَمة لكل
+     مستخدم. القيم أدناه (0) صادقة (لا وهم بأرقام عشوائية)، والسقف
+     الأقصى مشتق من hasFullEcosystemAccess الحقيقي على الأقل. تتبّع
+     الاستخدام الفعلي = بند مستقبلي منفصل يحتاج تصميم قاعدة بيانات
+     جديدة بالكامل (عداد لكل تحليل/منصة). */
   var items = [
-    {label:'Analyses Run',val:u.analyses,max:u.plan==='free'?5*30:9999,color:'var(--pu)'},
+    {label:'Analyses Run',val:0,max:full?9999:5*30,color:'var(--pu)'},
     {label:'Platforms Active',val:ALL_PLATFORMS.filter(function(p){return isPlatformVisible(p.id) && canAccess(p.id);}).length,max:totalVisiblePlatforms || 1,color:'var(--gold)'},
-    {label:'Storage Used',val:0,max:u.plan==='free'?5:100,color:'var(--cy)',sfx:'MB'},
+    {label:'Storage Used',val:0,max:full?100:5,color:'var(--cy)',sfx:'MB'},
   ];
   el.innerHTML='';
   items.forEach(function(item){
@@ -1481,44 +1623,19 @@ function renderUsage() {
   });
 }
 
-function renderUpgrade() {
-  var isAnnual = document.getElementById('annual-tog') && document.getElementById('annual-tog').checked;
-  var annSave = document.getElementById('ann-save');
-  if(annSave) annSave.style.display = isAnnual?'inline-block':'none';
-  var grid = document.getElementById('upgrade-grid'); if(!grid)return;
-  grid.innerHTML='';
-  var u = currentUser;
-  UPGRADE_OPTIONS.forEach(function(opt){
-    var isCurrent = opt.plan === u.plan;
-    var card = document.createElement('div');
-    card.className = 'upgrade-card' + (isCurrent?' current':'') + (opt.popular?' popular':'');
-    var price = isAnnual && opt.plan!=='lifetime' ? Math.round(opt.aPrice) : opt.price;
-    var featsHTML = opt.feats.map(function(f){
-      if(typeof f==='object'&&f.no) return '<li class="up-feat no">'+f.no+'</li>';
-      return '<li class="up-feat">'+f+'</li>';
-    }).join('');
-    var btnCls = isCurrent?'up-btn up-btn-dis':opt.popular?'up-btn up-btn-gold':'up-btn up-btn-out';
-    var btnTxt = isCurrent?'Current Plan':opt.plan==='lifetime'?'Claim — $399':'Upgrade →';
-    var btnFn = isCurrent?'':('upgradeClick("'+opt.plan+'")');
-    card.innerHTML =
-      (opt.popular?'<div class="up-pop-badge">Most Popular</div>':'') +
-      '<div class="up-name">'+opt.label+'</div>' +
-      '<div class="up-price">'+(price===0?'$0':opt.plan==='lifetime'?'$399':'$'+price)+'</div>' +
-      '<div class="up-per">'+(price===0?'Free forever':opt.plan==='lifetime'?'One-time payment':isAnnual?'/mo billed annually':'/month')+'</div>' +
-      '<ul class="up-feats">'+featsHTML+'</ul>' +
-      '<button class="'+btnCls+'"'+(btnFn?' onclick="'+btnFn+'"':'')+(isCurrent?' disabled':'')+'>'+btnTxt+'</button>';
-    grid.appendChild(card);
-  });
-}
+/* ══ renderUpgrade() القديمة و upgradeClick() الوهمية محذوفتان —
+   استُبدلتا بالنسخة الحقيقية أعلى الملف (azLoadEcosystemPricing +
+   renderUpgrade + realUpgradeClick)، المربوطة فعلياً بـ
+   config.pricing.ecosystem و/api/checkout الحقيقي ══ */
 
-function upgradeClick(plan) {
-  showToast('Redirecting to checkout for ' + (PLAN_CONFIG[plan]||{}).name + ' plan... (Stripe integration required)');
-}
-
-/* ══ INVOICES ══ */
+/* ══ INVOICES — ⚠️ لا تزال وهمية جزئياً (بند مؤجَّل موثَّق بقاعدة
+   المعرفة): تحتاج userRecord.transactions[] الحقيقية (موجودة فعلاً في
+   الخادم منذ webhooks/stripe.js) لكن غير مُرسَلة بعد لهذا الملف عبر
+   user-verify.js/user-login.js. الشرط أدناه صُحِّح على الأقل ليعتمد
+   على hasFullEcosystemAccess الحقيقي بدل currentUser.plan غير الموجود ══ */
 function renderInvoices() {
   var tbody = document.getElementById('invoices-tbl'); if(!tbody||tbody.children.length>0)return;
-  var invoices = currentUser.plan==='free'?[]:[
+  var invoices = !hasFullEcosystemAccess()?[]:[
     {id:'INV-2024-003',date:'2024-03-01',plan:'Pro All',amount:69,method:'Stripe',status:'paid'},
     {id:'INV-2024-002',date:'2024-02-01',plan:'Pro All',amount:69,method:'Stripe',status:'paid'},
     {id:'INV-2024-001',date:'2024-01-15',plan:'Pro All',amount:69,method:'Stripe',status:'paid'},
